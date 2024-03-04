@@ -1,30 +1,43 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { Dimensions, ImageBackground, StyleSheet, Text, View } from "react-native"
+import ilpex from "../utils/ilpexUI";
 
-
-const SplashScreen = () =>{
+const SpalshScreen=()=>{
     return(
-        <View style={styles.splashContainer}>
-            <Text style={styles.splashText}>ILPex</Text>
+        <View style={styles.container}>
+           <ImageBackground style={styles.bg} source={require('../../assets/images/splash.png')}>
+            <View>
+                    <Text style={styles.text}>ILPex</Text>
+            </View>  
+           </ImageBackground>
         </View>
-    );
+    )
 }
+
+const screenWidth = Dimensions.get('window').width;
+const screenHeight = Dimensions.get('window').height;
 
 
 const styles = StyleSheet.create({
-    splashContainer:{
-        height: '100%',
-        backgroundColor: '#8518ff',
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-
-    splashText:{
-        fontWeight: 'bold',
-        fontSize: 30,
-        color: '#ffff'
-    }
+   text:{
+    fontSize:56,
+    textAlign:'center',
+    color:ilpex.white,
+    fontFamily:ilpex.fontSemiBold,
+   },
+   bg:{
+    // flex:1,
+    width:screenWidth,
+    height:screenHeight,
+    resizeMode: 'cover',
+    justifyContent: 'center',
+    alignItems: 'center',
+    
+   },
+   container:{
+    // flex:1,
+    width:screenWidth,
+    height:screenHeight,
+   }
 })
 
-
-export default SplashScreen;
+export default SpalshScreen;
