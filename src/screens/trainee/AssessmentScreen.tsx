@@ -43,10 +43,17 @@ const AssessmentScreen = () => {
       }, []);
     return ( 
         <View style={styles.container}>
-            <Text>Assessment screen</Text>  
-            <AssessmentCard assessment_id={1} assessmentName="Node and React" dueDate="2024-05-11T002311" batchName="ILP 2023-24 Batch" status={false}/>
-            <BarProgress progress={6} total={12}/>
-            <QuestionCard questionNumber={2} question="What is my name and what is my age please tell me why" radioButtons={radioButtons} selectedId={selectedId} setSelectedId={setSelectedId}  />
+            <View style={styles.topPartContainer}>
+                <Text style={styles.topPartText}>Assessment</Text> 
+            </View> 
+            
+            <View style={styles.contentContainer}>
+                <View style={styles.assessmentNameContainer}>
+                    <Text>Assessment Name</Text>
+                </View>
+                <QuestionCard questionNumber={2} question="What is my name and what is my age please tell me why" radioButtons={radioButtons} selectedId={selectedId} setSelectedId={setSelectedId}  />
+                <BarProgress progress={6} total={12}/>
+            </View>
         </View>
      );
 }
@@ -55,6 +62,31 @@ const styles = StyleSheet.create({
     container:{
         backgroundColor: ilpex.main,
         height: '100%',
+    },
+
+    assessmentNameContainer:{
+        backgroundColor: 'red',
+        justifyContent: 'center',
+        alignContent: 'center'
+    },
+
+    topPartContainer:{
+        height: 100,
+        justifyContent: 'center',
+    },
+
+    contentContainer:{
+        backgroundColor: ilpex.white,
+        height: '100%',
+        borderTopRightRadius: 20,
+        borderTopLeftRadius: 20
+    },
+
+    topPartText:{
+        textAlign: 'center',
+        color: ilpex.white,
+        fontFamily: ilpex.mainFont,
+        fontSize: 25
     }
 })
  
