@@ -2,6 +2,7 @@ import React from "react";
 import { View, StyleSheet, Text } from "react-native";
 import CircularProgress from "./CircularProgress";
 import Icon from "react-native-vector-icons/FontAwesome";
+import ilpex from "../utils/ilpexUI";
 
 type PropsType = { Day: number; duration: string; progressValue: number; status: boolean };
 
@@ -15,13 +16,13 @@ const Daywise = (props: PropsType) => {
           <Text style={styles.learningLabel}>Day {Day}</Text>
           {!status && (
             <View style={styles.lockedContainer}>
-              <Icon name="lock" color={"#737373"} size={40} style={{ position: 'relative', left: 270, bottom: 15 }} />
+              <Icon name="lock" color={ilpex.darkGrey} size={40} style={{ position: 'relative', left: 270, bottom: 15 }} />
             </View>
           )}
           {status && progressValue === 100 ? (
             <View style={styles.completeContainer}>
               <Text style={styles.learningTime}>{duration}</Text>
-              <Icon name="check" color={"#33DB76"} size={17} style={{ position:'relative', left:135}} />
+              <Icon name="check" color={ilpex.success} size={17} style={{ position:'relative', left:135}} />
               <Text style={styles.completeText}>Complete</Text>
             </View>
           ) : status ? (
@@ -50,7 +51,7 @@ const styles = StyleSheet.create({
   learningDay: {
     width: 350,
     borderRadius: 5,
-    backgroundColor: "#FAFAFA",
+    backgroundColor: ilpex.card,
     padding: 20,
     marginTop: 10,
     display: "flex",
@@ -68,10 +69,10 @@ const styles = StyleSheet.create({
     position:'relative',
     top:15,
     fontSize: 25,
-    color: "black",
+    color: ilpex.black,
   },
   learningTime: {
-    color: "#737373",
+    color: ilpex.darkGrey,
     fontSize: 15,
     position:'relative',
     top:10,
@@ -83,7 +84,7 @@ const styles = StyleSheet.create({
   lockedText: {
     fontSize: 14,
     fontWeight: "500",
-    color: "#737373",
+    color:ilpex.darkGrey,
   },
 
   completeContainer: {
@@ -94,7 +95,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "normal",
     marginRight: 10,
-    color: "#33DB76" ,
+    color: ilpex.success ,
     position:'relative',
     left:140,
   },
