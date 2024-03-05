@@ -5,7 +5,8 @@ import { Text } from "react-native";
 import { FlatList } from "react-native";
 import BatchCard from "../../components/BatchCard";
 import { useSelector } from "react-redux";
-
+import ilpex from "../../utils/ilpexUI";
+import ThreeDots from "../../components/ThreeDots";
 
 const BatchesScreen = ()=>{
     
@@ -13,6 +14,7 @@ const BatchesScreen = ()=>{
     // console.log('home page',token);
     return(
         <View style={styles.container}>
+            <ThreeDots></ThreeDots>
             <Text style = {styles.text}>Batches</Text>
             <View style={styles.box}>
                 <BatchDisplay></BatchDisplay>
@@ -66,14 +68,14 @@ const styles = StyleSheet.create({
     text:{
         textAlign:'center',
         fontSize:50,
-        fontWeight:"bold",
         color: "white",
-        marginTop:'15%'
+        marginTop:'17%',
+        fontFamily: ilpex.fontSemiBold
     },
     box :{
         backgroundColor:"white",
         height : "100%",
-        marginTop: '10%',
+        marginTop: '5%',
         borderTopEndRadius : 30,
         borderTopStartRadius : 30,
     }

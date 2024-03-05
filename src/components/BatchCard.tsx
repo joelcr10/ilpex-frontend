@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     },
     batchName:{
         margin:10,
-        marginBottom:5,
+        marginBottom:1,
         color : 'black',
         fontSize:18,
         fontFamily:ilpex.fontMedium
@@ -59,11 +59,11 @@ const styles = StyleSheet.create({
     traineeText:{
         marginLeft:10,
         fontSize:15,
-        fontFamily:ilpex.fontRegular
+        fontFamily:ilpex.fontMedium
     },
     traineeNo :{
         color:'#8F00FF',
-        fontSize:11
+        fontSize:11,
     },
     date : {
         marginLeft:10,
@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         alignItems: 'center',
         borderRadius:5,
+        alignSelf :'center'
     },
     circularProgress : {
         marginStart:40,
