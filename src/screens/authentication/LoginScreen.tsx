@@ -8,6 +8,9 @@ import Constants from '../../utils/Constants';
 import { userLogin } from '../../context/userSlice';
 import { userToken } from '../../context/tokenSlice';
 import { useState } from 'react';
+import BlackHeading from '../../components/BlackHeading';
+import InputField from '../../components/InputField';
+import Daywise from '../../components/DaywiseCard';
 
 const LoginScreen = () => {
 
@@ -52,7 +55,8 @@ const LoginScreen = () => {
     };
     return ( 
         <View>
-            <Text>Login screen</Text>
+            <BlackHeading heading='Login'/>
+            {/* <InputField label='User'/> */}
         </View>
      );
 }

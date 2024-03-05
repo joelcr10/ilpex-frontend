@@ -15,6 +15,7 @@ const ilpex = {
     chart1: '#A93AFF',
     chart2: "#4C0088",
     chart3: '#C50F5B',
+    black: '#000000',
 
 
     mainFont: 'Poppins-Bold',
