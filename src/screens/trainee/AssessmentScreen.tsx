@@ -1,9 +1,10 @@
-import { Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import AssessmentCard from "../../components/AssessmentCard";
 import BarProgress from "../../components/BarProgress";
 import QuestionCard from "../../components/QuestionCard";
 import { useEffect, useMemo, useState } from "react";
 import { getHook } from "../../network/getHook/getHook";
+import ilpex from "../../utils/ilpexUI";
 
 const AssessmentScreen = () => {
     const [selectedId,setSelectedId] = useState<string>('');
@@ -41,7 +42,7 @@ const AssessmentScreen = () => {
         percipioReport();
       }, []);
     return ( 
-        <View>
+        <View style={styles.container}>
             <Text>Assessment screen</Text>  
             <AssessmentCard assessment_id={1} assessmentName="Node and React" dueDate="2024-05-11T002311" batchName="ILP 2023-24 Batch" status={false}/>
             <BarProgress progress={6} total={12}/>
@@ -49,5 +50,12 @@ const AssessmentScreen = () => {
         </View>
      );
 }
+
+const styles = StyleSheet.create({
+    container:{
+        backgroundColor: ilpex.main,
+        height: '100%',
+    }
+})
  
 export default AssessmentScreen;
