@@ -9,10 +9,16 @@ import TraineeNavigation from "./navigation/TraineeNavigation";
 import AuthNavigation from "./navigation/AuthNavigation";
 import AdminNavigation from "./navigation/AdminNavigation";
 
+
+
 const Main = () =>{
+
+  // dotenv.config();
     const isLoggedIn = useSelector((state: any) => state.userReducer.isLoggedIn);
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState<boolean>(true);
+
+    console.log('home',process.env.IP_ADDRESS, process.env.BACKEND_PORT)
 
     const role_id: string = '103' //change this to '103' to navigate to Trainee screen
 
