@@ -12,6 +12,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import TraineeNavigation from "./navigation/TraineeNavigation";
 import AuthNavigation from "./navigation/AuthNavigation";
 import AdminNavigation from "./navigation/AdminNavigation";
+import TraineeDayScreen from "./screens/trainee/TraineeDayScreen";
 
 
 
