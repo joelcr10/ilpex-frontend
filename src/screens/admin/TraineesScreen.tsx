@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { FlatList, ScrollView, StyleSheet, View } from "react-native";
 import TraineeCard from "../../components/TraineeCard";
-import TraineeCardShimmer from "../../loading/TraineeCardShimmer";
+import TraineeCardShimmer from "../../components/loading/TraineeCardShimmer";
+
 const TraineeScreen = () => {
 
     const [isLoading, setLoading] = useState(true);     //To the Page designer, set it to false for proper working
