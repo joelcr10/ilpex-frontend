@@ -2,8 +2,9 @@ import { Text, View } from "react-native";
 import AssessmentCard from "../../components/AssessmentCard";
 import BarProgress from "../../components/BarProgress";
 import QuestionCard from "../../components/QuestionCard";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import React from "react";
+import { getHook } from "../../network/getHook/getHook";
 
 const AssessmentScreen = () => {
     const [selectedId,setSelectedId] = useState<string>('');
@@ -30,6 +31,16 @@ const AssessmentScreen = () => {
             value: 'Ashik',
         },
     ]), []);
+
+    useEffect(() => {
+        const percipioReport = async () =>{
+            const {responseData} = await getHook("/api/v3/trainee/6/days");
+            
+            console.log("percipio report ",responseData);
+        }
+
+        percipioReport();
+      }, []);
     return ( 
         <View>
             <Text>Assessment screen</Text>  
