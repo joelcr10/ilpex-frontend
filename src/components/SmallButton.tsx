@@ -1,6 +1,7 @@
 import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import Icon from "react-native-vector-icons/MaterialIcons";
 import ilpex from "../utils/ilpexUI";
+import React from "react";
 
 type ButtonProps = {name:string ;
   onPress: () => void;
