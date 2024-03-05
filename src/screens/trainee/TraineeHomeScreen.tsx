@@ -1,5 +1,6 @@
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import ilpex from "../../utils/ilpexUI";
+import AssessmentCard from "../../components/AssessmentCard";
 
 const TraineeHomeScreen = () => {
     return ( 

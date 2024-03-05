@@ -18,6 +18,9 @@ const ilpex = {
 
 
     mainFont: 'Poppins-Bold',
+    fontMedium: 'Poppins-Medium',
+    fontRegular: 'Poppins-Regular',
+    fontThin: 'Poppins-Thin',
 }
 
 

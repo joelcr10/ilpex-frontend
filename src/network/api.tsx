@@ -1,6 +1,9 @@
 import axios from "axios";
 
 var api = axios.create();
-api.defaults.baseURL = 'http://172.16.3.235:5432';
-api.defaults.headers.common['Content-Type'] = 'application/json'
+
+api.defaults.baseURL = `http://${process.env.IP_ADDRESS}:${process.env.BACKEND_PORT}`;
+api.defaults.headers.common['Content-Type'] = 'application/json';
+
+
 export default api;
