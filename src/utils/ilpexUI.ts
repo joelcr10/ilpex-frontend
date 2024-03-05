@@ -1,5 +1,5 @@
 const ilpex = {
-    main: '#B77ED6', //primary theme colour
+    main: '#8518FF', //primary theme colour
     card: '#FAFAFA', 
     active: '#BD00FF',
     inactive: '#8D8D8D',
