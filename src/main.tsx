@@ -8,6 +8,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import TraineeNavigation from "./navigation/TraineeNavigation";
 import AuthNavigation from "./navigation/AuthNavigation";
 import AdminNavigation from "./navigation/AdminNavigation";
+import TraineeDayScreen from "./screens/trainee/traineeDay/TraineeDayScreen";
 
 const Main = () =>{
     const isLoggedIn = useSelector((state: any) => state.userReducer.isLoggedIn);
@@ -31,16 +32,19 @@ const Main = () =>{
         })();
       }, []);
     
-    return isLoading ? (
-        <SplashScreen />
-      ) : (
-        <NavigationContainer>
-            {isLoggedIn ? (
-                role_id=='103'? 
-                <TraineeNavigation /> : <AdminNavigation/>
-            )  : <AuthNavigation />}
-        </NavigationContainer>
-      );
+    // return isLoading ? (
+    //     <SplashScreen />
+    //   ) : (
+    //     <NavigationContainer>
+    //         {isLoggedIn ? (
+    //             role_id=='103'? 
+    //             <TraineeNavigation /> : <AdminNavigation/>
+    //         )  : <AuthNavigation />}
+    //     </NavigationContainer>
+    //   );
+    return(
+      <TraineeDayScreen/>
+    )
 }
 
 

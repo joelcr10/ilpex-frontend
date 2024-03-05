@@ -3,6 +3,7 @@ import React from 'react';
 import CircularProgress from "./CircularProgressBar";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import ilpex from "../utils/ilpexUI";
+import SmallButton from "./SmallButton";
 
 
 type cardProps={name:string,duration:string,status:boolean}
@@ -12,7 +13,10 @@ const CourseCard=({name,duration,status}:cardProps)=>{
     return(
         <View style={styles.card}>
             <View>
-                <Text style={styles.day}>{name}</Text>
+                {name.length<25 &&
+                <Text style={styles.course}>{name}</Text>}
+                {name.length>25 &&
+                <Text style={styles.course} numberOfLines={2} ellipsizeMode="tail">{name}</Text>}
             </View>
             <View style={styles.container}>
             <Text style={styles.duration}>{duration}</Text>
@@ -55,26 +59,27 @@ const styles = StyleSheet.create({
               shadowRadius: 3,
               elevation: 2,
     },
-    day:{
-        fontSize:22,
-        fontWeight:'500',
-        color:"black",
+    course:{
+        fontFamily:ilpex.fontMedium,
+        fontSize:20,
+        color:'black',
         marginHorizontal:10,
         marginVertical:5,
     },
     duration:{
-        fontSize:14,
+        fontSize:18,
         color:ilpex.darkGrey,
-        fontWeight:'500',
         marginHorizontal:10,
         marginVertical:5,
+        textAlignVertical:'center',
     },
     status:{
         textAlignVertical:'center',
+        fontSize:16,
     },
     icon:{
-        fontSize:28,
-        marginHorizontal:20,
+        fontSize:20,
+        marginHorizontal:10,
         textAlignVertical:'center',
     },
     done:{

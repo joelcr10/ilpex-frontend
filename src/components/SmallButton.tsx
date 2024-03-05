@@ -19,17 +19,15 @@ const styles = StyleSheet.create({
     buttonContainer: {
       backgroundColor:ilpex.primary,
       borderRadius: 15,
-      paddingHorizontal:30,
+      paddingHorizontal:6,
       paddingVertical:5,
-      margin: 30,
-      marginHorizontal:80,
+      marginHorizontal:10,
     },
     buttonText: {
       color:ilpex.white,
       textAlign: 'center',
-      fontFamily:'Poppins-SemiBold',
+      fontFamily:ilpex.fontSemiBold,
       fontSize: 14,
-      fontWeight:"600",
     },
   });
 
