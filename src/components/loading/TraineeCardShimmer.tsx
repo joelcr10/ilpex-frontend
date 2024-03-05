@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import ShimmerPlaceholder from "react-native-shimmer-placeholder";
+import ilpex from '../../utils/ilpexUI';
 
 const TraineeCardShimmer = () => {
     return(
@@ -101,10 +102,10 @@ const shimmerStyles = StyleSheet.create({
         color : '#737373',
         fontSize : 18,
         paddingBottom : 2,
-        fontFamily : 'Poppins-Medium',
+        fontFamily : ilpex.fontMedium,
     },
     traineeName : {
-        fontFamily : 'Poppins-Medium',
+        fontFamily : ilpex.fontMedium,
         fontSize : 21,
         color : 'black',
     },
