@@ -1,5 +1,5 @@
+import { Text, View } from 'react-native';
 import * as React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { loginUser } from './AuthenticationHook';
