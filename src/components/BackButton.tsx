@@ -2,15 +2,28 @@ import React from "react"
 import { Image, StyleSheet, TouchableOpacity } from "react-native"
 import { useNavigation } from "@react-navigation/native"
 
-const BackButton = () => {
+type PropsType = {color : string};
+const BackButton = (props : PropsType) => {
+   
     const navigation = useNavigation();
-    return(
-        <TouchableOpacity onPress = {navigation.goBack}>
-            <Image 
-            style = {styles.backButton}
-            source = {require('../../assets/icons/back.png')}
-            />
-    </TouchableOpacity>
+    const {color} = props;
+    if(color === 'white')
+        return(
+            <TouchableOpacity onPress = {navigation.goBack}>
+                <Image 
+                style = {styles.backButton}
+                source = {require('../../assets/icons/backWhite.png')}
+                />
+        </TouchableOpacity>
+        )
+    else
+        return(
+            <TouchableOpacity onPress = {navigation.goBack}>
+                <Image 
+                style = {styles.backButton}
+                source = {require('../../assets/icons/backBlack.png')}
+                />
+        </TouchableOpacity>
     );
 }
 

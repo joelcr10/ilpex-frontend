@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
+import ilpex from "../utils/ilpexUI";
 
 type PropsType = {traineeName : string,  batchName: string};
 
@@ -63,10 +64,10 @@ const styles = StyleSheet.create({
         color : '#737373',
         fontSize : 18,
         paddingBottom : 2,
-        fontFamily : 'Poppins-Medium',
+        fontFamily : ilpex.fontMedium,
     },
     traineeName : {
-        fontFamily : 'Poppins-Medium',
+        fontFamily : ilpex.fontMedium,
         fontSize : 21,
         color : 'black',
     },

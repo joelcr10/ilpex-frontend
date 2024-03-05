@@ -12,6 +12,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import TraineeNavigation from "./navigation/TraineeNavigation";
 import AuthNavigation from "./navigation/AuthNavigation";
 import AdminNavigation from "./navigation/AdminNavigation";
+import TraineeDayScreen from "./screens/trainee/TraineeDayScreen";
 import { getItem } from "./utils/utils";
 import Constants from "./utils/Constants";
 
