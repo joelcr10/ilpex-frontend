@@ -19,8 +19,8 @@ const Main = () =>{
     useEffect(() => {
         setIsLoading(true);
         (async () => {
-        //   const isLogin = await getItem(constants.IS_LOGIN);
-          const isLogin = 'true';
+          const isLogin = await getItem(constants.IS_LOGIN);
+          // const isLogin = 'true';
     
           if (isLogin === 'true') {
             dispatch(userLogin(true));

@@ -3,6 +3,7 @@ import AssessmentCard from "../../components/AssessmentCard";
 import BarProgress from "../../components/BarProgress";
 import QuestionCard from "../../components/QuestionCard";
 import { useMemo, useState } from "react";
+import React from "react";
 
 const AssessmentScreen = () => {
     const [selectedId,setSelectedId] = useState<string>('');
