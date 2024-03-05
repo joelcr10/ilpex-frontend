@@ -36,7 +36,7 @@ const AssessmentScreen = () => {
         const percipioReport = async () =>{
             const {responseData} = await getHook("/api/v3/trainee/6/days");
             
-            console.log("percipio report ",responseData);
+            // console.log("percipio report ",responseData);
         }
 
         percipioReport();
@@ -53,7 +53,10 @@ const AssessmentScreen = () => {
                 </View>
                 <QuestionCard questionNumber={2} question="What is my name and what is my age please tell me why" radioButtons={radioButtons} selectedId={selectedId} setSelectedId={setSelectedId}  />
                 <BarProgress progress={6} total={12}/>
+                <AssessmentCard assessment_id={1} assessmentName="MySQL Assessment" batchName="ILP Batch 2023-24" dueDate="2024-10-10T1234567" status={true} />
             </View>
+
+           
         </View>
      );
 }
