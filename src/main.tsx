@@ -14,7 +14,7 @@ const Main = () =>{
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
-    const role_id: string = '103' //change this to '103' to navigate to Trainee screen
+    const role_id: string = '102' //change this to '103' to navigate to Trainee screen
 
     useEffect(() => {
         setIsLoading(true);
