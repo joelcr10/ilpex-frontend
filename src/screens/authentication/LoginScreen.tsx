@@ -3,7 +3,7 @@ import { Text, View, StyleSheet } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { loginUser } from './AuthenticationHook';
-import { getItem, setStringItem } from '../../utils/Utils';
+import { getItem, setStringItem } from '../../utils/utils';
 import Constants from '../../utils/Constants';
 import { userLogin } from '../../context/userSlice';
 import { userToken } from '../../context/tokenSlice';

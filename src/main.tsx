@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getItem } from "./utils/utils";
-import constants from "./utils/constants";
+// import { getItem } from "./utils/utils";
+// import constants from "./utils/constants";
 import { userLogin } from "./context/userSlice";
 import SplashScreen from "./screens/SplashScreen";
 import { NavigationContainer } from "@react-navigation/native";
@@ -25,8 +25,8 @@ const Main = () =>{
     useEffect(() => {
         setIsLoading(true);
         (async () => {
-          const isLogin = await getItem(constants.IS_LOGIN);
-          // const isLogin = 'true';
+          // const isLogin = await getItem(constants.IS_LOGIN);
+          const isLogin = 'true';
     
           if (isLogin === 'true') {
             dispatch(userLogin(true));
