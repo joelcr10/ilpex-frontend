@@ -24,7 +24,7 @@ const Main = () =>{
 
     console.log('home',process.env.IP_ADDRESS, process.env.BACKEND_PORT)
 
-    const role_id: string = '103' //change this to '103' to navigate to Trainee screen
+    const role_id: string = '102' //change this to '103' to navigate to Trainee screen
 
     useEffect(() => {
         setIsLoading(true);

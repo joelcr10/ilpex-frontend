@@ -3,11 +3,37 @@ import { FlatList, SafeAreaView, TouchableOpacity, View } from "react-native";
 import { Text } from "react-native";
 import { StyleSheet } from "react-native";
 import ilpex from "../utils/ilpexUI";
-// import CircularProgress from "./CircularProgress";
+import CircularProgress from "./CircularProgress";
 
 type BatchComponentProps = {batchName : string, traineeNo : string, date : string,progress : number};
 
 const BatchCard=({batchName,traineeNo,date,progress} : BatchComponentProps)=>{
+
+    const getMonthName=(month : number)=> {
+        const months = [
+          'Jan',
+          'Feb',
+          'March',
+          'April',
+          'May',
+          'June',
+          'July',
+          'Aug',
+          'Sep',
+          'Oct',
+          'Nov',
+          'Dec',
+        ];
+        return months[month]; // month numbers are zero-based, so subtract 1
+      }
+      const newDate = new Date(date);
+    // Extract day, month, and year from the current date
+    const day = newDate.getDate();
+    const month = newDate.getMonth() + 1; // Note: month is zero-based, so we add 1
+    const year = newDate.getFullYear();
+    const monthName = getMonthName(month);
+    const formattedDate = `${monthName} ${day} ${year}`;
+
     return(
         <TouchableOpacity>
         <View style={styles.container}>
@@ -23,10 +49,10 @@ const BatchCard=({batchName,traineeNo,date,progress} : BatchComponentProps)=>{
                 <Text style={styles.traineeNo}>{traineeNo}</Text>
             </View>
             </View>
-            <Text style={styles.date}>{date}</Text>
+            <Text style={styles.date}>{formattedDate}</Text>
             </View>
             <View style={styles.circularProgress}>
-                {/* <CircularProgress progress={progress}></CircularProgress> */}
+                <CircularProgress completeStatus={progress}></CircularProgress>
             </View>
         </View>
         </TouchableOpacity>
@@ -83,7 +109,7 @@ const styles = StyleSheet.create({
     },
     circularProgress : {
         marginStart:40,
-        marginTop:10
+        marginTop:20
     }
 })
 
