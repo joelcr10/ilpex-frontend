@@ -2,6 +2,7 @@ import React from "react";
 import { FlatList, SafeAreaView, TouchableOpacity, View } from "react-native";
 import { Text } from "react-native";
 import { StyleSheet } from "react-native";
+import ilpex from "../utils/ilpexUI";
 // import CircularProgress from "./CircularProgress";
 
 type BatchComponentProps = {batchName : string, traineeNo : string, date : string,progress : number};
@@ -10,7 +11,9 @@ const BatchCard=({batchName,traineeNo,date,progress} : BatchComponentProps)=>{
     return(
         <TouchableOpacity>
         <View style={styles.container}>
-            <View>
+            <View style={{
+                marginStart:10
+            }}>
             <Text style={styles.batchName}>{batchName}</Text>
             <View style = {{
                 flexDirection : 'row'
@@ -36,37 +39,37 @@ const styles = StyleSheet.create({
         backgroundColor:'#FAFAFA',
         borderRadius:10,
         // width:'80%',
-        height:90,
+        height:95,
         width : 300,
-        marginBottom : '10%',
+        marginBottom : '8%',
         // margin:'10%',
         elevation:5,
         shadowColor: '#000',
         shadowOffset:{ width: 0, height: 0 },
-        flexDirection:'row'
+        flexDirection:'row',
+        alignSelf:'center'
     },
     batchName:{
         margin:10,
         marginBottom:5,
         color : 'black',
-        fontWeight:'bold',
         fontSize:18,
+        fontFamily:ilpex.fontMedium
     },
     traineeText:{
         marginLeft:10,
-        fontWeight:'bold',
-        fontSize:15
+        fontSize:15,
+        fontFamily:ilpex.fontRegular
     },
     traineeNo :{
         color:'#8F00FF',
         fontSize:11
     },
     date : {
-        marginTop:5,
         marginLeft:10,
-        color:'#8F00FF',
-        fontWeight:'bold',
-        fontSize:15
+        color:ilpex.secondary,
+        fontSize:14,
+        fontFamily:ilpex.fontMedium
     },
     traineeBox : {
         width:23.13,
