@@ -1,3 +1,7 @@
+/* eslint-disable quotes */
+/* eslint-disable no-trailing-spaces */
+/* eslint-disable semi */
+/* eslint-disable prettier/prettier */
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getItem } from "./utils/utils";
@@ -8,6 +12,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import TraineeNavigation from "./navigation/TraineeNavigation";
 import AuthNavigation from "./navigation/AuthNavigation";
 import AdminNavigation from "./navigation/AdminNavigation";
+import TraineeDayScreen from "./screens/trainee/TraineeDayScreen";
 
 
 
