@@ -7,6 +7,7 @@ import BarGraph from "../../components/BarChart";
 import { getHook } from "../../network/getHook/getHook";
 import { getItem } from "../../utils/utils";
 import Constants from "../../utils/Constants";
+import { useSelector } from "react-redux";
 
 const TraineeProfile = () => {
 
@@ -19,15 +20,19 @@ const TraineeProfile = () => {
     const [resultID, setResultID] = useState<any[]>([]);
     const [highScore, setHighScore] = useState<any[]>([]);
     const [isloading, setLoading] = useState(false);
+    // const trainee_id = useSelector((state: any) => state.userDetailsReducer.trainee_id);
+
 
     useEffect(() => {
         const getTraineeProfile = async() => {
             try {
                 const trainee_id = await getItem(Constants.TRAINEE_ID);
                 const role_id = await getItem(Constants.ROLE_ID);
+                const user_id = await getItem(Constants.USER_ID);
                 console.log('Trainee ID ------', trainee_id)
-                console.log('role ID ------', role_id)
-                const {responseData, errorMessage} = await getHook(`/api/v3/profile/${trainee_id}`);
+                console.log('Role ID ------', role_id)
+                console.log('User ID ------', user_id)
+                const {responseData, errorMessage} = await getHook(`/api/v3/profile/${user_id}`);
                 if(responseData)
                 {
                     setTraineeName(responseData.profileDetails.user.user_name);

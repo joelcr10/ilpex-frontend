@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import { getHook } from "../../network/getHook/getHook";
 import DayWiseProgressBarProgress from "../../components/DayWiseProgressBarProgress";
 import React from "react";
+import { getItem } from "../../utils/utils";
+import Constants from "../../utils/Constants";
 
 const TraineeHomeScreen = () => {
     return ( 
@@ -70,6 +72,7 @@ const AssessmentDisplay =()=>{
     useEffect(() => {
       const getAssessments= async () => {
         try {
+          
           const {responseData} = await getHook(
             'api/v3/9/assessment',
           );
