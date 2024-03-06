@@ -19,8 +19,8 @@ const Daywise = (props: PropsType) => {
 
   return (
     <View style={styles.container}>
-      {/* <TouchableOpacity onPress={()=>goToDay(Day)}> */}
-      <TouchableOpacity>
+      <TouchableOpacity onPress={()=>goToDay(Day)}>
+      {/* <TouchableOpacity> */}
 
       <View style={styles.learningDay}>
         <View style={styles.cardContainer}>
