@@ -16,10 +16,10 @@ const CircularProgress= (Props :ProgressProps) => {
     radius={30}
     borderWidth={8}
     color="#D155FD"
-    shadowColor="#fff"
-    bgColor="#fff"
+    shadowColor="#FAFAFA"
+    bgColor="#FAFAFA"
 >
-    <Text style={{ fontSize: 15,fontWeight:"600" }}>{completeStatus}%</Text>
+    <Text style={{ fontSize: 17,fontWeight:"700" }}>{completeStatus}%</Text>
 </ProgressCircle>
   );
 };

@@ -20,12 +20,11 @@ const ilpex = {
 
 
     mainFont: 'Poppins-Bold',
+    fontSemiBold : 'Poppins-SemiBold',
     fontMedium: 'Poppins-Medium',
     fontRegular: 'Poppins-Regular',
     fontThin: 'Poppins-Thin',
-    fontSemiBold:'Poppins-SemiBold',
 }
-
 
 export default ilpex;
 
