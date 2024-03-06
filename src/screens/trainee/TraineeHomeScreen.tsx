@@ -5,6 +5,7 @@ import ThreeDots from "../../components/ThreeDots";
 import { useEffect, useState } from "react";
 import { getHook } from "../../network/getHook/getHook";
 import DayWiseProgressBarProgress from "../../components/DayWiseProgressBarProgress";
+import React from "react";
 
 const TraineeHomeScreen = () => {
     return ( 

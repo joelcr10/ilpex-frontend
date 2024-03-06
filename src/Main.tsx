@@ -4,8 +4,8 @@
 /* eslint-disable prettier/prettier */
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getItem } from "./utils/utils";
-import constants from "./utils/constants";
+// import { getItem } from "./utils/utils";
+// import constants from "./utils/constants";
 import { userLogin } from "./context/userSlice";
 import SplashScreen from "./screens/SplashScreen";
 import { NavigationContainer } from "@react-navigation/native";
@@ -13,13 +13,16 @@ import TraineeNavigation from "./navigation/TraineeNavigation";
 import AuthNavigation from "./navigation/AuthNavigation";
 import AdminNavigation from "./navigation/AdminNavigation";
 import TraineeDayScreen from "./screens/trainee/TraineeDayScreen";
+import { getItem } from "./utils/utils";
+import Constants from "./utils/Constants";
 
 
 
 const Main = () =>{
 
   // dotenv.config();
-    const isLoggedIn = useSelector((state: any) => state.userReducer.isLoggedIn);
+    // const isLoggedIn = useSelector((state: any) => state.userReducer.isLoggedIn);
+    const isLoggedIn = false;
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -30,8 +33,9 @@ const Main = () =>{
     useEffect(() => {
         setIsLoading(true);
         (async () => {
-        //   const isLogin = await getItem(constants.IS_LOGIN);
-          const isLogin = 'true';
+          const isLogin = await getItem(Constants.IS_LOGIN);
+          // const isLogin = 'true';
+          
     
           if (isLogin === 'true') {
             dispatch(userLogin(true));
@@ -39,7 +43,9 @@ const Main = () =>{
             dispatch(userLogin(false));
           }
           setIsLoading(false);
+         
         })();
+      
       }, []);
     
     return isLoading ? (
