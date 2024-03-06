@@ -10,7 +10,7 @@ const TraineeProfile = () => {
         <View style = {styles.pageContainer}>
             <BackButton color = 'black'/>
             <ThreeDots color = 'black'/>
-            <BarGraph></BarGraph>
+            <BarGraph data={[10,20,30,40,50,60,70,80,90]} labels={["A 1","A 2","A 3","A 4","day5","day6","day7","day8","day9"]}></BarGraph>
         </View>
     );
 }
