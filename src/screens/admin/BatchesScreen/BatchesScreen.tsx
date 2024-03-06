@@ -6,7 +6,7 @@ import { FlatList } from "react-native";
 import BatchCard from "../../../components/BatchCard";
 import ilpex from "../../../utils/ilpexUI";
 import ThreeDots from "../../../components/ThreeDots";
-import batchesAPI from "./BatchesScreenAPIHook";
+import { getHook } from "../../../network/getHook/getHook";
 
 const BatchesScreen = ()=>{
     
@@ -14,11 +14,11 @@ const BatchesScreen = ()=>{
     useEffect(()=>{
         const getBatches = async()=>{
             try{
-                const { success,statusCode,contentResp,errorMessage} = await batchesAPI('/api/v2/batch');
+                const { success,statusCode,responseData,errorMessage} = await getHook('/api/v2/batch');
                 console.log(success,statusCode);
                 if(success){
-                    if(contentResp){
-                    setBatchesList(contentResp);
+                    if(responseData){
+                    setBatchesList(responseData);
                     console.log("->>>>>>>>>>");
                     console.log('allBatchesList',allBatchesList);
                 }
