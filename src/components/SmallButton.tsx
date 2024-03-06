@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     buttonContainer: {
       backgroundColor:ilpex.primary,
       borderRadius: 15,
-      paddingHorizontal:6,
+      paddingHorizontal:20,
       paddingVertical:5,
       marginHorizontal:10,
     },

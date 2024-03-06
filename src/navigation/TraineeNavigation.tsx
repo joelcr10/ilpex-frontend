@@ -8,13 +8,13 @@ const Stack = createNativeStackNavigator();
 const TraineeNavigation = () =>{
         return(
             <Stack.Navigator>
-                {/* <Stack.Screen 
+                <Stack.Screen 
                     name="TraineeHome"
                     component={TraineeHomeScreen}
                     options={{
                         headerShown: false
                     }}
-                /> */}
+                />
                 {/* <Stack.Screen 
                     name="Assessment"
                     component={AssessmentScreen}

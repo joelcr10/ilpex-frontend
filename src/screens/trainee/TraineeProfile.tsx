@@ -3,6 +3,7 @@ import { Image, StyleSheet, Text, View } from "react-native";
 import ilpex from "../../utils/ilpexUI";
 import BackButton from "../../components/BackButton";
 import ThreeDots from "../../components/ThreeDots";
+import BarGraph from "../../components/BarChart";
 import { getHook } from "../../network/getHook/getHook";
 
 const TraineeProfile = () => {
@@ -13,6 +14,9 @@ const TraineeProfile = () => {
     const [averageAssessmentScore, setAverageAssessmentScore] = useState<any[]>([]);
     const [marksIndicatorColor, setMarkIndicatorColor] = useState('black');
     const [marksFeedback, setMarksFeedBack] = useState('placeholder');
+    const [resultID, setResultID] = useState<any[]>([]);
+    const [highScore, setHighScore] = useState<any[]>([]);
+
     useEffect(() => {
         const getTraineeProfile = async() => {
             try {
@@ -29,12 +33,23 @@ const TraineeProfile = () => {
 
         const getTraineeScores = async() => {
             try {
-                const {responseData, errorMessage} = await getHook('/api/v2/trainee/4/scores');
+                const {responseData, errorMessage} = await getHook('/api/v2/trainee/3/scores');
                 if(responseData)
                 {
                     console.log("Marks = ", responseData);
                     setAverageAssessmentScore(responseData.scoreDetails.ScoreAverage)
                     
+                    const resultIds: string[] = [];
+                    const highScores: string[] = [];
+
+                    responseData.scoreDetails.scores.forEach((score : any, index : number) => {
+                        resultIds.push(`A${index + 1}`);
+                        highScores.push(score.high_score);
+                    });
+                    
+                    setResultID(resultIds);
+                    setHighScore(highScores);
+
                     if(responseData.scoreDetails.ScoreAverage >= 90)
                     {
                         setMarkIndicatorColor('green')
@@ -141,6 +156,7 @@ const TraineeProfile = () => {
                     </View>
                 </View>
             </View>
+            <BarGraph></BarGraph>
         </View>
     );
 }

@@ -1,8 +1,9 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import LoginScreen from "../screens/authentication/LoginScreen";
-import BatchesScreen from "../screens/admin/BatchesScreen";
+import BatchesScreen from "../screens/admin/BatchesScreen/BatchesScreen";
 import TraineeScreen from "../screens/admin/TraineesScreen";
+import TraineeProfile from "../screens/trainee/TraineeProfile";
 
 const BottomTab = createBottomTabNavigator();
 
@@ -16,6 +17,18 @@ const BottomTabNavigation = () =>{
                 tabBarHideOnKeyboard: true
             }}
         >
+            <BottomTab.Screen
+                name = "Trainees"
+                component = {TraineeScreen}
+                options={{
+                    headerShown: false,
+                    tabBarIcon: ({color}) =>{
+                        return(
+                            <Icon name="users" size={30} color={color}/>
+                        )
+                    }
+                }}
+            />
             <BottomTab.Screen 
                 name="Batches"
                 component={BatchesScreen}   
@@ -29,8 +42,8 @@ const BottomTabNavigation = () =>{
                 }}
             /> 
             <BottomTab.Screen
-                name = "Trainees"
-                component = {TraineeScreen}
+                name = "Profile"
+                component = {TraineeProfile}
                 options={{
                     headerShown: false,
                     tabBarIcon: ({color}) =>{

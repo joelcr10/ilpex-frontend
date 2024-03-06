@@ -1,5 +1,5 @@
 const ilpex = {
-    main: '#B77ED6', //primary theme colour
+    main: '#8518FF', //primary theme colour
     card: '#FAFAFA', 
     active: '#BD00FF',
     inactive: '#8D8D8D',
@@ -16,15 +16,15 @@ const ilpex = {
     chart2: "#4C0088",
     chart3: '#C50F5B',
     pink: '#8518FF',
+    black: '#000000',
 
 
     mainFont: 'Poppins-Bold',
+    fontSemiBold : 'Poppins-SemiBold',
     fontMedium: 'Poppins-Medium',
     fontRegular: 'Poppins-Regular',
     fontThin: 'Poppins-Thin',
-    fontSemiBold:'Poppins-SemiBold',
 }
-
 
 export default ilpex;
 
