@@ -6,8 +6,11 @@ import { useEffect, useState } from "react";
 import { getHook } from "../../network/getHook/getHook";
 import DayWiseProgressBarProgress from "../../components/DayWiseProgressBarProgress";
 import React from "react";
+import { getItem } from "../../utils/utils";
+import Constants from "../../utils/Constants";
 
 const TraineeHomeScreen = () => {
+
     return ( 
         <ScrollView>
             <View style={styles.homeContainer}>

@@ -5,6 +5,9 @@ import BackButton from "../../components/BackButton";
 import ThreeDots from "../../components/ThreeDots";
 import BarGraph from "../../components/BarChart";
 
+
+
+
 const TraineeProfile = () => {
     return(
         <View style = {styles.pageContainer}>
