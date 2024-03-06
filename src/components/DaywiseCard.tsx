@@ -71,20 +71,17 @@ const styles = StyleSheet.create({
 
   container: {
     maxWidth: "100%",
-    padding: 20,  
 
   },
   learningDay: {
-    width: 350,
+    backgroundColor: ilpex.white,
     borderRadius: 15,
-    padding: 20,
+    elevation: 4,
+    paddingHorizontal: 20,
+    paddingVertical: 15,
     marginTop: 10,
-    elevation: 5, // Android shadow
-    shadowOffset: { width: 0, height: 5 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    fontWeight: "bold",
-    height: 100,
+    margin: 10,
+    zIndex: 10,
   },
   learningLabel: {
     position:'relative',
