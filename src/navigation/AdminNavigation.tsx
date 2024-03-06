@@ -7,6 +7,7 @@ const Stack = createNativeStackNavigator();
 const AdminNavigation = () =>{
         return(
             <Stack.Navigator>
+                
                 <Stack.Screen 
                     name="BatchDetails"
                     component={BatchDetailsPage}

@@ -1,16 +1,15 @@
-import React from 'react';
-import {StyleSheet, ScrollView, StatusBar, Text, View} from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import {StyleSheet, ScrollView, StatusBar, Text, View, Animated, Easing} from 'react-native';
 import PieChart from 'react-native-pie-chart';
-import { VictoryPie } from 'victory-pie';
+// import { VictoryPie } from 'victory-native';
 type chart ={excellent:string,good:string,poor:string}
 
 const ChartPie = (props:chart) => {
   const{excellent,good,poor} =props;
   console.log(excellent,good,poor)
   const widthAndHeight = 200;
-  const graphicData = [excellent,good,poor];
-  const graphicColor = [ '#A93AFF', '#4C0088','#1B0030'];
-  
+  const series = [excellent,good,poor];
+  const sliceColor = [ '#A93AFF', '#4C0088','#1B0030'];
   return (
     <ScrollView style={styles.scrollContainer}>
       <View style={styles.container}>
@@ -23,39 +22,34 @@ const ChartPie = (props:chart) => {
           <View style={styles.headPercentage}>
           <View style={styles.percentage1}>
           </View>
-          <Text style={{marginLeft:5}}>Above 95</Text>
+          <Text style={{marginLeft:5}}> &gt; 95%</Text>
           </View>
           
           <View style={styles.headPercentage}>
           <View style={styles.percentage2}>
           </View>
-          <Text style={{marginLeft:5}}>Above 25</Text>
+          <Text style={{marginLeft:5}}> &gt; 25%</Text>
           </View>
 
           <View style={styles.headPercentage}>
           <View style={styles.percentage3}>
           </View>
-          <Text style={{marginLeft:5}}>Under 25</Text>
+          <Text style={{marginLeft:5}}> &lt; 25%</Text>
           </View>
         </View>
         <View style={styles.chart}>
 
-        {/* <PieChart
+        <PieChart
           widthAndHeight={widthAndHeight}
           series={series}
           sliceColor={sliceColor}
           doughnut={true}
           coverRadius={0.45}
           coverFill={'#FFF'}
-        /> */}
-        <VictoryPie
-        animate={{ easing: 'exp' }}
-        data={graphicData}
-        width={250}
-        height={250}
-        colorScale={graphicColor}
-        innerRadius={50}
-      />
+        >
+              
+        </PieChart>
+        
 
         </View>
 
@@ -100,7 +94,7 @@ const styles = StyleSheet.create({
     flex: 1,
     // borderColor:'black',
     // borderWidth:3,
-    marginTop:100,
+    marginTop:30,
     marginHorizontal:30,
     borderRadius:30,
     elevation:8,
@@ -161,9 +155,9 @@ const styles = StyleSheet.create({
   },
   head:{
     display:'flex',
-    flexDirection:'column',
+    flexDirection:'row',
     justifyContent:'space-between',
-    marginLeft:30
+    marginHorizontal:30
   },
   headPercentage:{
     display:'flex',

@@ -35,7 +35,7 @@ export async function batchDetails(): Promise<LoginUserResponse> {
       'api/v2/batchAvg/1',
     
     );
-
+    console.log('entered')
     console.log('response', logInResponse);
     statusCode = logInResponse.status.toString();
     {
