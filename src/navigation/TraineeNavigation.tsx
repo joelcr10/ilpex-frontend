@@ -4,7 +4,6 @@ import AssessmentScreen from "../screens/trainee/AssessmentScreen";
 import TraineeDayScreen from "../screens/trainee/TraineeDayScreen";
 
 
-
 const Stack = createNativeStackNavigator();
 const TraineeNavigation = () =>{
         return(
@@ -23,13 +22,14 @@ const TraineeNavigation = () =>{
                         headerShown: false
                     }}
                 />
-                  <Stack.Screen 
-                    name="TraineeDaywise"
+                <Stack.Screen 
+                    name="Day"
                     component={TraineeDayScreen}
                     options={{
                         headerShown: false
                     }}
                 />
+
             </Stack.Navigator>
         )
 }

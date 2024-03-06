@@ -4,27 +4,24 @@ import { StyleSheet } from "react-native";
 import { Text } from "react-native";
 import { FlatList } from "react-native";
 import BatchCard from "../../../components/BatchCard";
-import { useSelector } from "react-redux";
 import ilpex from "../../../utils/ilpexUI";
 import ThreeDots from "../../../components/ThreeDots";
-import ChartsOverviewDemo from "../../../components/BarChart";
-import batchesAPI from "./BatchesScreenAPIHook";
+import { getHook } from "../../../network/getHook/getHook";
 
 const BatchesScreen = ()=>{
     
-    // const token = useSelector((state: any) => state.testReducer.token);
-    // console.log('home page',token);
     const [allBatchesList,setBatchesList] = useState<any>([]);
     useEffect(()=>{
         const getBatches = async()=>{
             try{
-                const { success,statusCode,contentResp,errorMessage} = await batchesAPI('/api/v2/batch');
-                if(contentResp){
-                    setBatchesList(contentResp);
-                    console.log(contentResp)
-                    // batch_name=contentResp.Batch;
+                const { success,statusCode,responseData,errorMessage} = await getHook('/api/v2/batch');
+                console.log(success,statusCode);
+                if(success){
+                    if(responseData){
+                    setBatchesList(responseData);
                     console.log("->>>>>>>>>>");
                     console.log('allBatchesList',allBatchesList);
+                }
                 }
             }
             catch(err){
@@ -38,16 +35,15 @@ const BatchesScreen = ()=>{
             <ThreeDots color='white'></ThreeDots>
             <Text style = {styles.text}>Batches</Text>
             <View style={styles.box}>
-                {/* <ChartsOverviewDemo></ChartsOverviewDemo> */}
                 <View style = {styles.dataContainer}>
                     <FlatList
                         showsHorizontalScrollIndicator={false}
                         horizontal={false}
                         data={allBatchesList.batches}
-                        renderItem={({ item }) => <BatchCard batchName={item.batch_name} traineeNo={"40"} date={item.start_date} progress={parseInt(item.progress)}/>}
+                        renderItem={({ item }) => <BatchCard batchName={item.batch_name} traineeNo={item.noOfTrainees} date={item.start_date} progress={parseInt(item.progress)}/>}
                         keyExtractor={item => item.id}
                     />
-        </View>
+                </View>
             </View>
         </View>
     )

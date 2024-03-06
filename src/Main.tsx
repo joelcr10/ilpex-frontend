@@ -15,30 +15,54 @@ import AdminNavigation from "./navigation/AdminNavigation";
 import TraineeDayScreen from "./screens/trainee/TraineeDayScreen";
 import { getItem } from "./utils/utils";
 import Constants from "./utils/Constants";
+import { userDetails } from "./context/userDetailsSlice";
 
 
 
-const Main = () =>{
+
+const Main =  () =>{
 
   // dotenv.config();
     const isLoggedIn = useSelector((state: any) => state.userReducer.isLoggedIn);
+    const role_id = useSelector((state: any) => state.userDetailsReducer.role_id);
+    const trainee_id = useSelector((state: any) => state.userDetailsReducer.trainee_id);
+    const user_id = useSelector((state: any) => state.userDetailsReducer.user_id);
     // const isLoggedIn = false;
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState<boolean>(true);
+    
+    // const role_id: string = '103' //change this to '103' to navigate to Trainee screen
+    console.log('role id ----------',role_id);
+    console.log('trainee_id ----------',trainee_id);
+    console.log('user_id ----------',user_id);
+    console.log('user details stored globally');
 
-    console.log('home',process.env.IP_ADDRESS, process.env.BACKEND_PORT)
-
-    const role_id: string = '102' //change this to '103' to navigate to Trainee screen
-
+    console.log("hi")
     useEffect(() => {
         setIsLoading(true);
         (async () => {
           const isLogin = await getItem(Constants.IS_LOGIN);
+
+
+          const token = await getItem(Constants.TOKEN);
+          const role_id = await getItem(Constants.ROLE_ID);
+          const user_id = await getItem(Constants.USER_ID);
+          const trainee_id = await getItem(Constants.TRAINEE_ID);
+
+          const loginResp = {
+            token: token||'',
+            role_id: role_id||'',
+            user_id: user_id||'',
+            trainee_id:trainee_id||'',
+          }
+          console.log(loginResp);
+
           // const isLogin = 'true';
           
-    
+
           if (isLogin === 'true') {
             dispatch(userLogin(true));
+            dispatch(userDetails(loginResp));
           } else {
             dispatch(userLogin(false));
           }
