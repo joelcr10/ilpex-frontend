@@ -44,25 +44,20 @@ const LoginScreen = () => {
           console.log("token is",token);
 
 
-          setStringItem(Constants.USER_ID, String(loginResp.user_id));
-          const user_idString = await getItem(Constants.USER_ID);
-          if (user_idString !== null) {
-          const user_idNumber = parseInt(user_idString, 10);
-          console.log(`user id is`,user_idNumber);}
+          setStringItem(Constants.USER_ID, loginResp.user_id);
+          const user_id = await getItem(Constants.USER_ID);
+          console.log(`user id is`,user_id);
 
 
-          setStringItem(Constants.ROLE_ID,String(loginResp.role_id));
-          const role_idString = await getItem(Constants.ROLE_ID)
-          if (role_idString !== null) {
-            const role_idNumber = parseInt(role_idString, 10);
-            console.log(`user id is`,role_idNumber);}
+          setStringItem(Constants.ROLE_ID,loginResp.role_id);
+          const role_id = await getItem(Constants.ROLE_ID)
+          console.log('role id is',role_id);
 
 
-          setStringItem(Constants.TRAINEE_ID,String(loginResp.trainee_id));
-          const trainee_idString = await getItem(Constants.TRAINEE_ID);
-          if (trainee_idString !== null) {
-            const trainee_idNumber = parseInt(trainee_idString, 10);
-            console.log(`user id is`,trainee_idNumber);}
+          setStringItem(Constants.TRAINEE_ID,loginResp.trainee_id);
+          const trainee_id = await getItem(Constants.TRAINEE_ID);
+          console.log('trainee id is',trainee_id);
+
           
            const userTokenString = await getItem(Constants.TOKEN)
            console.log(`token as string`,userTokenString);
