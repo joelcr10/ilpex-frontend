@@ -13,6 +13,7 @@ import ShimmerPlaceholder from "react-native-shimmer-placeholder";
 import LinearGradient from "react-native-linear-gradient";
 import BackButton from "../../components/BackButton";
 import ThreeDots from "../../components/ThreeDots";
+import CourseCardShimmer from "../../components/loading/CourseCardShimmer";
 
 
 
@@ -20,16 +21,16 @@ const TraineeDayScreen=()=>{
 
 
     // const route:any = useRoute();
-    // const day=route.params.number;
+    // const day_id=route.params.Day;
+
 
     const day_id=1;
-    const trainee_id=8;
-    const shimmerData = [ { id: '1' },{ id: '2' },{ id: '3' },{ id: '4' },{ id: '5' },{ id: '6' },{ id: '7' },{ id: '8' },{ id: '9' },];
-
+    const trainee_id=6;
 
     const [isLoading, setLoading] = useState(true);
 
     const [courselist, setCourse] = useState<any[]>([]);
+
 
     useEffect(() => {
         const getAssessment = async () => {
@@ -58,18 +59,7 @@ const TraineeDayScreen=()=>{
                         <Text style={styles.subTitle}>Learning Courses</Text>
                         <ScrollView>
                     {isLoading &&
-                        <FlatList
-                        scrollEnabled={true}
-                        horizontal={false}
-                        data={shimmerData}
-                        renderItem={({item})=><ShimmerPlaceholder
-                                                  LinearGradient={LinearGradient}
-                                                  visible={isLoading}
-                                                  style={{width:350,height:100,margin:20,borderRadius:10}}>
-                                                    </ShimmerPlaceholder>
-                                                    }
-                        keyExtractor={item => item.id}
-                      />
+                       <CourseCardShimmer/>
                     }
                     {!isLoading&&
                     <FlatList
@@ -82,7 +72,7 @@ const TraineeDayScreen=()=>{
                     }
                     </ScrollView>
                 </View>
-                <ThreeDots/>
+                <ThreeDots color='white'/>
             </View>
         </View>
     )
