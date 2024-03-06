@@ -1,6 +1,6 @@
 import React from "react";
-import { Dimensions, StyleSheet, Text, View } from "react-native";
-import { BarChart, LineChart, PieChart } from "react-native-gifted-charts";
+import {StyleSheet, Text, View } from "react-native";
+import { BarChart} from "react-native-gifted-charts";
 import ilpex from "../utils/ilpexUI";
 
 const data=[ {value:50}, {value:80}, {value:90}, {value:70},{value:50}, {value:80}, {value:90}, {value:70},{value:70},{value:50}, {value:80}, {value:90}, {value:70} ]
@@ -17,15 +17,35 @@ const BarGraph = ()=>{
                     marginStart:20,
                     alignItems:'center'
                 }}>
-           <BarChart barWidth={15} data = {data} backgroundColor={ilpex.card} dashGap={0} stepHeight={40} width={200} maxValue={100} stepValue={25} rulesType="line" initialSpacing={40} scrollAnimation scrollToEnd
-            barBorderRadius={20} color={ilpex.main} frontColor={ilpex.progress1}  xAxisLabelTexts={labels} spacing={30} barBorderBottomLeftRadius={0} barBorderBottomRightRadius={0} isAnimated
-            yAxisTextStyle={{
-                color : 'black',
-            }}
-           focusedBarConfig={{
-                roundedTop:true,
-           }}/>
-           </View>
+                    <BarChart 
+                        barWidth={15} 
+                        data = {data} 
+                        backgroundColor={ilpex.card} 
+                        dashGap={0} 
+                        stepHeight={40} 
+                        width={200} 
+                        maxValue={100} 
+                        stepValue={25} 
+                        rulesType="line" 
+                        initialSpacing={40} 
+                        scrollAnimation 
+                        scrollToEnd
+                        barBorderRadius={20} 
+                        color={ilpex.main} 
+                        frontColor={ilpex.progress1}  
+                        xAxisLabelTexts={labels} 
+                        spacing={30} 
+                        barBorderBottomLeftRadius={0} 
+                        barBorderBottomRightRadius={0} 
+                        isAnimated
+                        yAxisTextStyle={{
+                            color : 'black',
+                        }}
+                        focusedBarConfig={{
+                            roundedTop:true,
+                        }}
+                    />
+                </View>
             </View>
         </View>
     )
@@ -35,16 +55,16 @@ const styles = StyleSheet.create({
     container : {
         height : 300,
         width : 330,
-        backgroundColor : '#FAFAFA',
+        backgroundColor : ilpex.card,
         elevation:5,
-        shadowColor: '#000',
+        shadowColor: ilpex.black,
         shadowOffset:{ width: 0, height: 0 },
         alignSelf:'center',
         borderRadius:10,
         marginTop:400
     },
     head : {
-        color : 'black',
+        color : ilpex.black,
         fontSize:22,
         fontFamily:ilpex.fontSemiBold,
         marginTop : 12,
@@ -52,7 +72,7 @@ const styles = StyleSheet.create({
         marginBottom:25
     },
     barChart : {
-        backgroundColor:'#FAFAFA',
+        backgroundColor:ilpex.card,
 
     }
 })
