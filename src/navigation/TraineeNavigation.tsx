@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import TraineeHomeScreen from "../screens/trainee/TraineeHomeScreen";
-import AssessmentScreen from "../screens/trainee/AssessmentScreen";
+import AssessmentScreen from "../screens/trainee/Assessment/AssessmentScreen";
 import TraineeDayScreen from "../screens/trainee/TraineeDayScreen";
 import TraineeProfile from "../screens/trainee/TraineeProfile";
 
@@ -23,7 +23,7 @@ const TraineeNavigation = () =>{
                         headerShown: false
                 }}
                 />
-                {/* <Stack.Screen 
+                <Stack.Screen 
                     name="Assessment"
                     component={AssessmentScreen}
                     options={{
@@ -36,7 +36,7 @@ const TraineeNavigation = () =>{
                     options={{
                         headerShown: false
                     }}
-                />*/}
+                />
 
             </Stack.Navigator>
         )
