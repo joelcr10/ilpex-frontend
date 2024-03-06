@@ -24,10 +24,10 @@ const initialQuestionList: questionType[] = [];
 
 const AssessmentScreen = () => {
     const route: any = useRoute()
-    // const assessment_id:number = route.params["assessment_id"];
-    const assessment_id: number = 2;
-    // const assessment_name: string = route.params["assessment_name"];
-    const assessment_name: string = "Assessment name";
+    const assessment_id:number = route.params["assessment_id"];
+    // const assessment_id: number = 2;
+    const assessment_name: string = route.params["assessment_name"];
+    // const assessment_name: string = "Assessment name";
 
     console.log("assessment_name",assessment_name, "assessment_id",assessment_id);
 
