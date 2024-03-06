@@ -10,18 +10,18 @@ import Constants from "../../utils/Constants";
 import { useSelector } from "react-redux";
 import TraineeProfileShimmer from "../../components/loading/TraineeProfileShimmer";
 
-const TraineeProfile = () => {
+const TraineeProfileScreen = () => {
 
     const [traineeName, setTraineeName] = useState<any[]>([]);
     const [traineeBatch, setTraineeBatch] = useState<any[]>([]);
     const [currentDay, setCurrentDay] = useState(2);
-    const [averageAssessmentScore, setAverageAssessmentScore] = useState<any[]>([]);
+    const [averageAssessmentScore, setAverageAssessmentScore] = useState<any[] | number>([]);
     const [marksIndicatorColor, setMarkIndicatorColor] = useState('black');
     const [marksFeedback, setMarksFeedBack] = useState('placeholder');
     const [resultID, setResultID] = useState<any[]>([]);
     const [highScore, setHighScore] = useState<any[]>([]);
     const [isLoadingProfile, setLoadingProfile] = useState(false);
-
+    const [batchId, setBatchId] = useState(999);
 
     useEffect(() => {
         const getTraineeProfile = async() => {
@@ -36,6 +36,7 @@ const TraineeProfile = () => {
                 {
                     setTraineeName(responseData.profileDetails.user.user_name);
                     setTraineeBatch(responseData.profileDetails.batch.batch_name);
+                    setBatchId(responseData.profileDetails.batch_id);
                     setLoadingProfile(true);
                 }
             } catch(error) {
@@ -51,7 +52,10 @@ const TraineeProfile = () => {
                 if(responseData)
                 {
                     console.log("Marks = ", responseData);
-                    setAverageAssessmentScore(responseData.scoreDetails.ScoreAverage)
+                    if(responseData.scoreDetails.ScoreAverage === null)
+                        setAverageAssessmentScore(0)
+                    else
+                        setAverageAssessmentScore(responseData.scoreDetails.ScoreAverage)
                     
                     const resultIds: string[] = [];
                     const highScores: string[] = [];
@@ -93,11 +97,12 @@ const TraineeProfile = () => {
         const getCurrentDay = async() => {
             try {
                 const currentDate = new Date();
+                currentDate.setDate(currentDate.getDate() + 1);
                 const isoString = currentDate.toISOString();
                 const dateString = isoString.substring(0, isoString.indexOf('T'));
                 console.log("CurrentDate = ", dateString);
 
-                const {responseData, errorMessage} = await getHook(`/api/v3/batch/1/day/${dateString}`);
+                const {responseData, errorMessage} = await getHook(`/api/v3/batch/${batchId}/day/${dateString}`);
                 if(responseData)
                 {
                     setCurrentDay(responseData.current_day);
@@ -264,7 +269,9 @@ const styles = StyleSheet.create({
         backgroundColor : 'lime',
     },
     percentageAndColorContainer : {
-        flexDirection : 'row'
+        flexDirection : 'row',
+        justifyContent : 'center',
+        alignContent : 'center'
     }
 })
-export default TraineeProfile;
+export default TraineeProfileScreen;
