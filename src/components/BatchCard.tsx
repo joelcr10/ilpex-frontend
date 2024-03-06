@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
         fontFamily:ilpex.fontMedium
     },
     traineeNo :{
-        color:'#8F00FF',
+        color:ilpex.secondary,
         fontSize:11,
     },
     date : {
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     traineeBox : {
         width:23.13,
         height:17.33,
-        backgroundColor : '#D9D9D9',
+        backgroundColor : ilpex.lightGrey,
         marginStart: 5,
         justifyContent:'center',
         alignItems: 'center',
