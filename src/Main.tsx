@@ -24,13 +24,13 @@ const Main =  () =>{
 
   // dotenv.config();
     const isLoggedIn = useSelector((state: any) => state.userReducer.isLoggedIn);
+    const role_id = useSelector((state: any) => state.userDetailsReducer.role_id);
     // const isLoggedIn = false;
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState<boolean>(true);
-    console.log('home',process.env.IP_ADDRESS, process.env.BACKEND_PORT)
-    const [role_id, setRole_id]=useState('103');
+    
     // const role_id: string = '103' //change this to '103' to navigate to Trainee screen
-
+    console.log('role id ----------',role_id);
 
     useEffect(() => {
         setIsLoading(true);
@@ -50,7 +50,7 @@ const Main =  () =>{
             trainee_id:trainee_id||'',
           }
           console.log(loginResp);
-            setRole_id(loginResp.role_id);
+
           // const isLogin = 'true';
           
 
