@@ -37,6 +37,7 @@ const Main =  () =>{
     console.log('user_id ----------',user_id);
     console.log('user details stored globally');
 
+    console.log("hi")
     useEffect(() => {
         setIsLoading(true);
         (async () => {
