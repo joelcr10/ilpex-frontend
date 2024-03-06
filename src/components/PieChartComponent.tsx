@@ -2,10 +2,10 @@ import React, { useEffect, useRef } from 'react';
 import {StyleSheet, ScrollView, StatusBar, Text, View, Animated, Easing} from 'react-native';
 import PieChart from 'react-native-pie-chart';
 // import { VictoryPie } from 'victory-native';
-type chart ={excellent:string,good:string,poor:string}
+type chart ={excellent:string,good:string,poor:string,chartName:string,option1:string,option2:string,option3:string}
 
 const ChartPie = (props:chart) => {
-  const{excellent,good,poor} =props;
+  const{chartName,excellent,good,poor,option1,option2,option3} =props;
   console.log(excellent,good,poor)
   const widthAndHeight = 200;
   const series = [excellent,good,poor];
@@ -15,7 +15,7 @@ const ChartPie = (props:chart) => {
       <View style={styles.container}>
 
         <View style={styles.heading}>
-        <Text style={{fontWeight:'700',color:'black',fontSize:23}}>Assesment Score</Text>
+        <Text style={{fontWeight:'700',color:'black',fontSize:23}}>{chartName}</Text>
         </View>
         <View style={styles.head}>
 
@@ -24,12 +24,12 @@ const ChartPie = (props:chart) => {
           </View>
           <Text style={{marginLeft:5}}> &gt; 95%</Text>
           </View>
-          
-          <View style={styles.headPercentage}>
+
+          {good !== '0' &&<View style={styles.headPercentage}>
           <View style={styles.percentage2}>
           </View>
           <Text style={{marginLeft:5}}> &gt; 25%</Text>
-          </View>
+          </View>}
 
           <View style={styles.headPercentage}>
           <View style={styles.percentage3}>
@@ -60,21 +60,23 @@ const ChartPie = (props:chart) => {
             <View style={styles.percentage1} ></View>
             <Text style={styles.footPercentage}>{excellent}</Text>
           </View>
-          <Text style={{fontWeight:'700',color:'black',fontSize:17}}>excellent</Text>
+          <Text style={{fontWeight:'700',color:'black',fontSize:17}}>{option1}</Text>
         </View>
-        <View>
+        {good !== '0' &&<View>
           <View style={styles.footer}>
             <View style={styles.percentage2}></View>
             <Text style={styles.footPercentage}>{good}</Text>
           </View>
-          <Text style={{fontWeight:'700',color:'black',fontSize:17}}>Good</Text>
-        </View>
+          <Text style={{fontWeight:'700',color:'black',fontSize:17}}>{option2}</Text>
+        </View>}
+        
+
         <View>
           <View style={styles.footer}>
             <View style={styles.percentage3}></View>
             <Text style={styles.footPercentage}>{poor}</Text>
           </View>
-          <Text style={{fontWeight:'700',color:'black',fontSize:17}}>poor</Text>
+          <Text style={{fontWeight:'700',color:'black',fontSize:17}}>{option3}</Text>
         </View>
 
         </View>
@@ -138,7 +140,7 @@ const styles = StyleSheet.create({
   bottom:{
     display:'flex',
     flexDirection:'row',
-    justifyContent:'space-between',
+    justifyContent:'space-evenly',
     padding:30
   },
   footer:{
@@ -156,7 +158,7 @@ const styles = StyleSheet.create({
   head:{
     display:'flex',
     flexDirection:'row',
-    justifyContent:'space-between',
+    justifyContent:'space-evenly',
     marginHorizontal:30
   },
   headPercentage:{

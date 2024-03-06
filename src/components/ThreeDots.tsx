@@ -5,12 +5,25 @@ import { useDispatch } from "react-redux";
 import { setStringItem } from "../utils/utils";
 import { userLogin } from "../context/userSlice";
 import Constants from '../utils/Constants';
+import React from "react";
+import ilpex from "../utils/ilpexUI";
 
-const ThreeDots = () => {
+type PropsType = {color : string};
+const ThreeDots = (props : PropsType) => {
 
+    const {color} = props;
+    
+    // const [isIconColor, setIconColor] = useState(false);
     const [isPopupVisible, setPopupVisible] = useState(false);
     const [isLogoutBottomSheet, setLogoutBottomSheet] = useState(false);
     const dispatch = useDispatch();
+
+    const setColor = () =>{
+        if(color === 'black')
+            return true;
+        else
+            return false;
+    }
 
     const togglePopup = () => {
         setPopupVisible(!isPopupVisible);
@@ -47,12 +60,22 @@ const ThreeDots = () => {
 
     return (
         <View style = {styles.threeDotsContainer}>
-            <TouchableOpacity onPress={togglePopup}>
+            {setColor() ? (
+                <TouchableOpacity onPress={togglePopup}>
+                <Image 
+                    style = {styles.threeDots}
+                    source = {require('../../assets/icons/threedotsblack.png')}>
+                </Image>
+            </TouchableOpacity>
+            ) : (
+                <TouchableOpacity onPress={togglePopup}>
                 <Image 
                     style = {styles.threeDots}
                     source = {require('../../assets/icons/threedots.png')}>
                 </Image>
-            </TouchableOpacity>
+                </TouchableOpacity>
+            )}
+            
             {isPopupVisible && (
                 <View style = {styles.popup}>           
                     <View style = {styles.popupContent}> 
@@ -97,7 +120,7 @@ const styles = StyleSheet.create({
     logoutCaption : {
         paddingLeft : 30,
         paddingTop : 7,
-        fontFamily : 'Poppins-Regular',
+        fontFamily : ilpex.fontRegular,
         fontSize : 17,
     },
     popupicons : {
@@ -116,7 +139,7 @@ const styles = StyleSheet.create({
         paddingTop : 3,
         paddingLeft : 10,
         color : 'black',
-        fontFamily : 'Poppins-Regular',
+        fontFamily : ilpex.fontRegular,
         fontSize : 17,
     },
     popup : {
@@ -135,7 +158,7 @@ const styles = StyleSheet.create({
         textAlign:'center',
         color:'black',
         padding:20,
-        fontFamily : 'Poppins-Regular'
+        fontFamily : ilpex.fontRegular
     },
     container:{
         backgroundColor:'#87BBE0',

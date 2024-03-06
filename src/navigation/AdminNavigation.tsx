@@ -1,5 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import BatchesScreen from "../screens/admin/BatchesScreen";
+import BatchesScreen from "../screens/admin/BatchesScreen/BatchesScreen";
 import BottomTabNavigation from "./BottomTabNavigation";
 import BatchDetailsPage from "../screens/admin/BatchDetailsPage";
 

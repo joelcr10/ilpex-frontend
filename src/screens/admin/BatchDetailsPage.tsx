@@ -3,12 +3,37 @@ import { batchDetails } from "../../network/ApiHook";
 import ChartPie from "../../components/PieChartComponent";
 import { useEffect, useState } from "react";
 import { getHook } from "../../network/getHook/getHook";
+import IconButtonComponent from "../../components/IconButton";
 const BatchDetailsPage =()=>{
     const [feedList, setStoryList] = useState<any>([]);
     const [batchData,setBatchData] = useState<any>([]);
     const [currentDate,setCurrentDate] = useState<any>([]);
+    const [courseCompletion,setCourseCompletion] = useState<any>([]);
+    console.log(courseCompletion)
     useEffect(() => {
-        
+      const getStory = async () => {
+        try {
+          console.log('effect activated');
+          const {responseData, errorMessage} = await getHook('api/v2/analysis/1')
+          console.log("hi")
+          if(responseData)
+          {
+            console.log("return feedlist",feedList)
+            console.log("current date",currentDate)
+            setCourseCompletion(responseData);
+          }
+          if(errorMessage)
+            console.log(errorMessage)
+          
+        } catch (error) {
+          console.error('Error:', error);
+        }
+      };
+      getStory();
+  }, []);
+
+
+    useEffect(() => {
         const getStory = async () => {
           try {
             console.log('effect activated');
@@ -87,8 +112,11 @@ return(
                     </View>
                     </View>
                 </View>
-              <ChartPie  excellent={feedList.excellent} good={feedList.good} poor={feedList.poor}/>
-              <ChartPie  excellent={feedList.excellent} good={feedList.good} poor={feedList.poor}/>
+                {/* <View>
+                   <IconButtonComponent  name={'Report'} onPress={()=>{}} buttonPressed={false} icon={'description'}/>
+                </View> */}
+              <ChartPie  chartName={'Assesment Score'} excellent={feedList.excellent} good={feedList.good} poor={feedList.poor} option1="Excellent" option2="Good" option3="Poor"/>
+              <ChartPie  chartName={'Course Completion'} excellent={courseCompletion.onTrack} good={'0'} poor={courseCompletion.laggingBehind} option1="Completed" option2="Partial" option3="Incomplete"/>
                 
               </View>
                 
