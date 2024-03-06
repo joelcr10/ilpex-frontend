@@ -2,15 +2,15 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 interface UserDetailsState {
   token: string,
-  user_id: number|string,
-  role_id: number|string,
-  trainee_id:number|string,
+  user_id: string,
+  role_id: string,
+  trainee_id:string,
 }
 const initialState: UserDetailsState = {
   token: '',
-  user_id: 100,
-  role_id: 0,
-  trainee_id:0,
+  user_id: '',
+  role_id: '',
+  trainee_id:'',
 };
 export const userDetailsSlice = createSlice({
   name: 'userDetails',

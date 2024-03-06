@@ -43,18 +43,12 @@ const Main =  () =>{
           const user_id = await getItem(Constants.USER_ID);
           const trainee_id = await getItem(Constants.TRAINEE_ID);
 
-          const loginResp: {
-            token: string;
-            role_id: string | number;
-            user_id: string | number;
-            trainee_id: string | number;
-        } = {
-            token: token!,
-            role_id: role_id!,
-            user_id: user_id!,
-            trainee_id: trainee_id!,
-        };
-        
+          const loginResp = {
+            token: token||'',
+            role_id: role_id||'',
+            user_id: user_id||'',
+            trainee_id:trainee_id||'',
+          }
           console.log(loginResp);
 
           // const isLogin = 'true';
@@ -77,7 +71,7 @@ const Main =  () =>{
       ) : (
         <NavigationContainer>
             {isLoggedIn ? (
-                role_id===103? 
+                role_id=='103'? 
                 <TraineeNavigation /> : <AdminNavigation/>
             )  : <AuthNavigation />}
         </NavigationContainer>
