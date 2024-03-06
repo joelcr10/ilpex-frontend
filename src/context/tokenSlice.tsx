@@ -4,7 +4,7 @@ interface TokenState {
   token: string,
   user_id: string,
   role_id: number,
-
+  
 }
 const initialState: TokenState = {
   token: '',
