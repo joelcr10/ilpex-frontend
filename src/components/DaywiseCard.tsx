@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
   },
   learningDay: {
     width: 350,
-    borderRadius: 5,
+    borderRadius: 15,
     padding: 20,
     marginTop: 10,
     elevation: 5, // Android shadow
