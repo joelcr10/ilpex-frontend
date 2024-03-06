@@ -19,6 +19,7 @@ const LoginScreen = () => {
     const dispatch = useDispatch();
     const [buttonpressed, setButtonpressed] = useState(false);
   
+    console.log("hi");
     const handleLogin = async () => {
       try {
         
