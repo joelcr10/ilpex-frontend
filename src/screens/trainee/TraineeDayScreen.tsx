@@ -1,6 +1,5 @@
 import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useEffect, useState } from "react";
-import { getCourseHook } from "./traineeDay/getCourseHook";
 import CourseCard from "../../components/CourseCard";
 import { useRoute } from "@react-navigation/native";
 import ilpex from "../../utils/ilpexUI";
@@ -10,6 +9,10 @@ import IconButton from "../../components/IconButton";
 import FileUploadField from "../../components/FileUploadField";
 import React from "react";
 import { getHook } from "../../network/getHook/getHook";
+import ShimmerPlaceholder from "react-native-shimmer-placeholder";
+import LinearGradient from "react-native-linear-gradient";
+import BackButton from "../../components/BackButton";
+import ThreeDots from "../../components/ThreeDots";
 
 
 
@@ -21,9 +24,10 @@ const TraineeDayScreen=()=>{
 
     const day_id=1;
     const trainee_id=8;
+    const shimmerData = [ { id: '1' },{ id: '2' },{ id: '3' },{ id: '4' },{ id: '5' },{ id: '6' },{ id: '7' },{ id: '8' },{ id: '9' },];
 
 
-    const [isLoading, setLoading] = useState(false);
+    const [isLoading, setLoading] = useState(true);
 
     const [courselist, setCourse] = useState<any[]>([]);
 
@@ -45,11 +49,28 @@ const TraineeDayScreen=()=>{
         <View>
             <View style={{backgroundColor:ilpex.main}}>
                 <View style={styles.topbar}>
+                    {/* <BackButton/> */}
+                   
                     <Text style={styles.headerText}>{`Day ${day_id}`}</Text>
                 </View>
                     <View style={styles.container}>
-                        <FileUploadField/>
+                        {/* <FileUploadField/> */}
                         <Text style={styles.subTitle}>Learning Courses</Text>
+                        <ScrollView>
+                    {isLoading &&
+                        <FlatList
+                        scrollEnabled={true}
+                        horizontal={false}
+                        data={shimmerData}
+                        renderItem={({item})=><ShimmerPlaceholder
+                                                  LinearGradient={LinearGradient}
+                                                  visible={isLoading}
+                                                  style={{width:350,height:100,margin:20,borderRadius:10}}>
+                                                    </ShimmerPlaceholder>
+                                                    }
+                        keyExtractor={item => item.id}
+                      />
+                    }
                     {!isLoading&&
                     <FlatList
                         horizontal={false}
@@ -59,8 +80,9 @@ const TraineeDayScreen=()=>{
                         renderItem={({item})=><CourseCard name={item.course_name} duration={item.course_duration} status={item.status}/>}
                     />
                     }
-                    </View>
-
+                    </ScrollView>
+                </View>
+                <ThreeDots/>
             </View>
         </View>
     )

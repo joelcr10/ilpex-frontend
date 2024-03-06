@@ -1,6 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import TraineeHomeScreen from "../screens/trainee/TraineeHomeScreen";
 import AssessmentScreen from "../screens/trainee/AssessmentScreen";
+import TraineeDayScreen from "../screens/trainee/TraineeDayScreen";
 
 
 
@@ -18,6 +19,13 @@ const TraineeNavigation = () =>{
                 <Stack.Screen 
                     name="Assessment"
                     component={AssessmentScreen}
+                    options={{
+                        headerShown: false
+                    }}
+                />
+                  <Stack.Screen 
+                    name="TraineeDaywise"
+                    component={TraineeDayScreen}
                     options={{
                         headerShown: false
                     }}
