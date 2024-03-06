@@ -14,18 +14,23 @@ import LinearGradient from "react-native-linear-gradient";
 import BackButton from "../../components/BackButton";
 import ThreeDots from "../../components/ThreeDots";
 import CourseCardShimmer from "../../components/loading/CourseCardShimmer";
+import Constants from "../../utils/Constants";
+import { getItem } from "../../utils/utils";
 
 
 
 const TraineeDayScreen=()=>{
 
 
-    // const route:any = useRoute();
-    // const day_id=route.params.Day;
+    const route:any = useRoute();
+    const day_id=route.params.Day;
 
 
-    const day_id=1;
-    const trainee_id=6;
+    // const day_id=1;
+    // const trainee_id=6;
+
+
+
 
     const [isLoading, setLoading] = useState(true);
 
@@ -34,6 +39,7 @@ const TraineeDayScreen=()=>{
 
     useEffect(() => {
         const getAssessment = async () => {
+            const trainee_id=await getItem(Constants.TRAINEE_ID);
           try {
             const {responseData, errorMessage} = await getHook(`/api/v3/trainee/${trainee_id}/course/day/${day_id}`);
             setLoading(false);
