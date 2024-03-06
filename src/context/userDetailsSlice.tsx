@@ -8,7 +8,7 @@ interface UserDetailsState {
 }
 const initialState: UserDetailsState = {
   token: '',
-  user_id: '100',
+  user_id: '',
   role_id: '',
   trainee_id:'',
 };
