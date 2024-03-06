@@ -5,18 +5,23 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import ilpex from "../utils/ilpexUI";
 import { useNavigation } from "@react-navigation/native";
 
-type PropsType = { Day: number; duration: string; progressValue: number; status: boolean; day_id:string };
+type PropsType = { Day: number; duration: string; progressValue: number; status: boolean;  };
 
 const Daywise = (props: PropsType) => {
 
-  // const navigation: any = useNavigation();
+  const navigation: any = useNavigation();
+  const goToDay = (Day: number) =>{
+    navigation.navigate("Day",{Day});
+}
 
 
-  const { Day, duration, progressValue, status,day_id } = props;
+  const { Day, duration, progressValue, status } = props;
 
   return (
     <View style={styles.container}>
+      {/* <TouchableOpacity onPress={()=>goToDay(Day)}> */}
       <TouchableOpacity>
+
       <View style={styles.learningDay}>
         <View style={styles.cardContainer}>
               <View>
@@ -28,7 +33,7 @@ const Daywise = (props: PropsType) => {
                             <View style={{flexDirection: 'row'}}>
                   
                               <Icon name="check" color={ilpex.success} size={17} />
-                              <Text style={styles.completeText}>Complete</Text>
+                              <Text style={styles.completeText}>complete</Text>
                             </View>
                           )}
                 {!status && (

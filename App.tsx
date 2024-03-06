@@ -7,10 +7,9 @@ import Daywise from './src/components/DaywiseCard';
 
 const App = () => {
   return (
-    // <Provider store={store}>
-    //   <Main />
-    // </Provider>
-    <Daywise Day={1} status={true} progressValue={100} duration='2h 33min' />
+    <Provider store={store}>
+      <Main />
+    </Provider>
   );
 };
  
