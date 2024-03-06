@@ -10,14 +10,11 @@
     "test": "jest"
   },
   "dependencies": {
-<<<<<<< HEAD
     "@mui/x-charts": "^6.19.5",
     "@react-native-async-storage/async-storage": "^1.22.1",
     "@react-navigation/bottom-tabs": "^6.5.12",
-=======
     "@react-native-async-storage/async-storage": "^1.22.3",
     "@react-navigation/bottom-tabs": "^6.5.16",
->>>>>>> 485fa6c5c0a6ddab5b91865997ecbcc8ba867212
     "@react-navigation/material-bottom-tabs": "^6.2.20",
     "@react-navigation/native": "^6.1.10",
     "@react-navigation/native-stack": "^6.9.18",
