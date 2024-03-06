@@ -40,6 +40,7 @@ const TraineeDayScreen=()=>{
     useEffect(() => {
         const getAssessment = async () => {
             const trainee_id=await getItem(Constants.TRAINEE_ID);
+            console.log(trainee_id);
           try {
             const {responseData, errorMessage} = await getHook(`/api/v3/trainee/${trainee_id}/course/day/${day_id}`);
             setLoading(false);
