@@ -7,6 +7,13 @@ const Stack = createNativeStackNavigator();
 const AdminNavigation = () =>{
         return(
             <Stack.Navigator>
+                <Stack.Screen 
+                    name="AdminBottomTab"
+                    component={BottomTabNavigation}
+                    options={{
+                        headerShown: false
+                    }}
+                />
                 
                 <Stack.Screen 
                     name="BatchDetails"
@@ -15,13 +22,7 @@ const AdminNavigation = () =>{
                         headerShown: false
                     }}
                 />
-                <Stack.Screen 
-                    name="AdminBottomTab"
-                    component={BottomTabNavigation}
-                    options={{
-                        headerShown: false
-                    }}
-                />
+                
                 
             </Stack.Navigator>
         )

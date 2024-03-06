@@ -9,6 +9,8 @@ import TraineeCardShimmer from "../../../components/loading/TraineeCardShimmer";
 import QuestionCardShimmer from "../../../components/loading/QuestionCardShimmer";
 import { updateScoreAPI } from "./updateScoreAPI";
 import { useRoute } from "@react-navigation/native";
+import { getItem } from "../../../utils/utils";
+import Constants from "../../../utils/Constants";
 
 type questionType = {
     question_id: number,
@@ -23,6 +25,9 @@ type questionType = {
 const initialQuestionList: questionType[] = [];
 
 const AssessmentScreen = () => {
+
+    
+
     const route: any = useRoute()
     const assessment_id:number = route.params["assessment_id"];
     // const assessment_id: number = 2;
@@ -49,6 +54,9 @@ const AssessmentScreen = () => {
                 setIndex(0);
                 setIsLoading(false);
             }
+
+            const tid = await getItem(Constants.TRAINEE_ID);
+            console.log("tid: ",tid);
         }
 
         assessmentQuestion();
