@@ -3,10 +3,13 @@ import {StyleSheet, Text, View } from "react-native";
 import { BarChart} from "react-native-gifted-charts";
 import ilpex from "../utils/ilpexUI";
 
-const data=[ {value:50}, {value:80}, {value:90}, {value:70},{value:50}, {value:80}, {value:90}, {value:70},{value:70},{value:50}, {value:80}, {value:90}, {value:70} ]
- const labels = ["Day 1","Day 2","Day 3","Day 4","Day 5","Day 6","Day 7","Day 8","Day 9","Day 10","Day 11","Day 12","Day 13"]
 
-const BarGraph = ()=>{
+type BarGraphProps = {
+    data : number[],
+    labels : string[]
+} 
+const BarGraph = ({data,labels} : BarGraphProps)=>{
+    const chartData = Array.isArray(data) ? data.map(value => ({ value })) : [{ value: data }];
     return (
         <View style={{
             height:'100%'
@@ -18,8 +21,9 @@ const BarGraph = ()=>{
                     alignItems:'center'
                 }}>
                     <BarChart 
+                        isAnimated
                         barWidth={15} 
-                        data = {data} 
+                        data = {chartData} 
                         backgroundColor={ilpex.card} 
                         dashGap={0} 
                         stepHeight={40} 
@@ -37,7 +41,8 @@ const BarGraph = ()=>{
                         spacing={30} 
                         barBorderBottomLeftRadius={0} 
                         barBorderBottomRightRadius={0} 
-                        isAnimated
+                        yAxisThickness={0}
+                        xAxisThickness={1}
                         yAxisTextStyle={{
                             color : 'black',
                         }}
@@ -70,6 +75,9 @@ const styles = StyleSheet.create({
         marginTop : 12,
         marginStart: 20,
         marginBottom:25
+    },
+    xAxisLabel:{
+        fontSize:10
     },
     barChart : {
         backgroundColor:ilpex.card,
