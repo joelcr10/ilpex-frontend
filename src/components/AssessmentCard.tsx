@@ -1,8 +1,9 @@
 import React from "react";
-import { StyleSheet, Text,View } from "react-native";
+import { StyleSheet, Text,TouchableOpacity,View } from "react-native";
 // import SmallButtonComponent from "./SmallButton";
 import { useNavigation } from "@react-navigation/native";
 import ilpex from "../utils/ilpexUI";
+import SmallButton from "./SmallButton";
 
 type propsType = {assessment_id: number,assessmentName: string, batchName: string, dueDate: string, status: boolean}
 
@@ -34,14 +35,13 @@ const formatDate = (end_date: string): string =>{
 }
 
 const AssessmentCard = (props: propsType) =>{
-    const navigation = useNavigation();
+    const navigation: any = useNavigation();
 
     const {assessment_id,assessmentName,batchName,dueDate,status} = props;
 
-    // const goToAssessment = () =>{
-    //     console.log('assessment buttom')
-    //     navigation.navigate("Assessment",{assessment_id:assessment_id, assessment_name: assessmentName});
-    // }
+    const goToAssessment = (assessment_id: number) =>{
+        navigation.navigate("Assessment",{assessment_id:assessment_id, assessment_name: assessmentName});
+    }
 
 
     return(
@@ -50,8 +50,7 @@ const AssessmentCard = (props: propsType) =>{
             <Text style={styles.subText}>{batchName}</Text>
             <View style={styles.bottomContainer}>
                 <Text style={styles.date}>{formatDate(dueDate)}</Text>
-               
-                {/* <SmallButtonComponent buttonText="Take Test" apiFunction={goToAssessment}/> */}
+                <SmallButton name="Take test" onPress={()=>goToAssessment(assessment_id)}/>               
             </View>
         </View>
     )
@@ -60,12 +59,14 @@ const AssessmentCard = (props: propsType) =>{
 const styles = StyleSheet.create({
 
     assessmentCard:{
-        backgroundColor: 'white',
+        backgroundColor: ilpex.white,
         borderRadius: 15,
         elevation: 4,
-        padding: 20,
+        paddingHorizontal: 20,
+        paddingVertical: 15,
         marginTop: 10,
-        margin: 10
+        margin: 10,
+        zIndex: 10,
 
     },
 
@@ -78,7 +79,8 @@ const styles = StyleSheet.create({
 
     subText:{
         fontSize: 18,
-        marginTop: 5
+        marginTop: 5,
+        fontFamily: ilpex.fontMedium
     },
 
     bottomContainer:{

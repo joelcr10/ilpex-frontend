@@ -15,17 +15,18 @@ const ilpex = {
     chart1: '#A93AFF',
     chart2: "#4C0088",
     chart3: '#C50F5B',
+    pink: '#8518FF',
+    black: '#000000',
 
 
     mainFont: 'Poppins-Bold',
+    fontSemiBold : 'Poppins-SemiBold',
     fontMedium: 'Poppins-Medium',
     fontRegular: 'Poppins-Regular',
     fontThin: 'Poppins-Thin',
-    fontSemiBold:'Poppins-SemiBold',
     fontExtraLightItalic:'Poppins-ExtraLightItalic',
     fontLightItalic:'Poppins-LightItalic'
 }
-
 
 export default ilpex;
 
