@@ -42,9 +42,7 @@ const TraineeHomeScreen = () => {
 const UserName =()=>{
 
     const [userName, setUserName] = useState<any[]>([]);
-    const user_id = useSelector((state: any) => state.userDetailsReducer.user_id);
-    console.log("UserID--------------- ", user_id);
-    
+    const user_id = useSelector((state: any) => state.userDetailsReducer.user_id);    
     useEffect(() => {
       const getUserName= async () => {
         try {
@@ -67,11 +65,7 @@ const UserName =()=>{
 }
 const DaysDisplay =()=>{
   const trainee_id = useSelector((state: any) => state.userDetailsReducer.trainee_id);
-  
-
-
-
-    const [dayCardList, setDayCardList] = useState<any[]>([]);
+  const [dayCardList, setDayCardList] = useState<any[]>([]);
 
     useEffect(() => {
       const getDayCards= async () => {
