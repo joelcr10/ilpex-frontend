@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import ilpex from "../../utils/ilpexUI";
 import BackButton from "../../components/BackButton";
 import ThreeDots from "../../components/ThreeDots";
 import BarGraph from "../../components/BarChart";
 import { getHook } from "../../network/getHook/getHook";
+import { getItem } from "../../utils/utils";
+import Constants from "../../utils/Constants";
 
 const TraineeProfile = () => {
 
@@ -20,7 +22,11 @@ const TraineeProfile = () => {
     useEffect(() => {
         const getTraineeProfile = async() => {
             try {
-                const {responseData, errorMessage} = await getHook('/api/v3/profile/4');
+                const trainee_id = await getItem(Constants.TRAINEE_ID);
+                const role_id = await getItem(Constants.ROLE_ID);
+                console.log('Trainee ID ------', trainee_id)
+                console.log('role ID ------', role_id)
+                const {responseData, errorMessage} = await getHook(`/api/v3/profile/${trainee_id}`);
                 if(responseData)
                 {
                     setTraineeName(responseData.profileDetails.user.user_name);
@@ -79,7 +85,7 @@ const TraineeProfile = () => {
         const getCurrentDay = async() => {
             try {
                 const currentDate = new Date();
-                const isoString = currentDate.toISOString(); // Get ISO 8601 formatted date string
+                const isoString = currentDate.toISOString();
                 const dateString = isoString.substring(0, isoString.indexOf('T'));
                 console.log("CurrentDate = ", dateString);
 
@@ -87,7 +93,6 @@ const TraineeProfile = () => {
                 if(responseData)
                 {
                     setCurrentDay(responseData.current_day);
-                    // console.log(responseData)
                 }
             } catch(error) {
                 console.log('Error', error);
@@ -111,53 +116,54 @@ const TraineeProfile = () => {
     const [circleBackgroundColor, setCircleBackgroundColor] = useState(getRandomColor());
 
     return(
-        <View style = {styles.pageContainer}>
-            <BackButton color = 'black'/>
-            <ThreeDots color = 'black'/>
-            <View style = {styles.profilePictureContainer}>
-                <View style = {[styles.profilePictureCircle, {backgroundColor : circleBackgroundColor}]}>
-                    <Image
-                        style = {styles.profileImageStyle}
-                        source = {require('../../../assets/icons/user.png')}/>
-                </View>
-            </View>
-            <View>
-                <Text style = {styles.nameLabel}>
-                    {traineeName}
-                </Text>
-                <Text style = {styles.batchLabel}>
-                    {traineeBatch}
-                </Text>
-            </View>
-            <View style = {styles.statsContainer}>
-                <View style = {styles.statsRow}>
-                    <View style = {styles.statsKey}>
-                        <Text style = {styles.statsKeyLabel}>Current Status</Text>
-                    </View>
-                    <View style = {styles.statsValue}>
-                    <Text style = {styles.statsValueLabel}>Day {currentDay}</Text>
+        <ScrollView>
+            <View style = {styles.pageContainer}>
+                <BackButton color = 'black'/>
+                <ThreeDots color = 'black'/>
+                <View style = {styles.profilePictureContainer}>
+                    <View style = {[styles.profilePictureCircle, {backgroundColor : circleBackgroundColor}]}>
+                        <Image
+                            style = {styles.profileImageStyle}
+                            source = {require('../../../assets/icons/user.png')}/>
                     </View>
                 </View>
-                <View style = {styles.statsRow}>
-                    <View style = {styles.statsKey}>
-                        <Text style = {styles.statsKeyLabel}>Average Assessment Score</Text>
+                <View>
+                    <Text style = {styles.nameLabel}>
+                        {traineeName}
+                    </Text>
+                    <Text style = {styles.batchLabel}>
+                        {traineeBatch}
+                    </Text>
+                </View>
+                <View style = {styles.statsContainer}>
+                    <View style = {styles.statsRow}>
+                        <View style = {styles.statsKey}>
+                            <Text style = {styles.statsKeyLabel}>Current Status</Text>
+                        </View>
+                        <View style = {styles.statsValue}>
+                        <Text style = {styles.statsValueLabel}>Day {currentDay}</Text>
+                        </View>
                     </View>
-                    <View style = {styles.statsValue}>
-                    {/* <View style = {styles.statsValueLabel}>Day 3</Text> */}
-                        <View style = {styles.percentageAndColorContainer}>
-                            <View style = {[styles.colorDot, {backgroundColor : marksIndicatorColor}]}></View>
-                            <Text style ={styles.percentageLabel}>
-                            {averageAssessmentScore}%
+                    <View style = {styles.statsRow}>
+                        <View style = {styles.statsKey}>
+                            <Text style = {styles.statsKeyLabel}>Average Assessment Score</Text>
+                        </View>
+                        <View style = {styles.statsValue}>
+                            <View style = {styles.percentageAndColorContainer}>
+                                <View style = {[styles.colorDot, {backgroundColor : marksIndicatorColor}]}></View>
+                                <Text style ={styles.percentageLabel}>
+                                {averageAssessmentScore}%
+                                </Text>
+                            </View>
+                            <Text style ={styles.remarksLabel}>
+                                {marksFeedback}
                             </Text>
                         </View>
-                        <Text style ={styles.remarksLabel}>
-                            {marksFeedback}
-                        </Text>
                     </View>
                 </View>
+                <BarGraph data={highScore} labels={resultID}></BarGraph>
             </View>
-            <BarGraph></BarGraph>
-        </View>
+        </ScrollView>
     );
 }
 
@@ -209,7 +215,7 @@ const styles = StyleSheet.create({
         width : 80,
     },
     statsContainer : {
-        marginTop : 60,
+        marginTop : 40,
     },
     statsKeyLabel : {
         fontFamily : ilpex.fontMedium,
@@ -232,7 +238,8 @@ const styles = StyleSheet.create({
         fontFamily : ilpex.fontMedium,
         color : 'black',
         fontSize : 17,
-        textAlign : 'center'
+        textAlign : 'center',
+        height : 56
     },
     colorDot : {
         width : 13,
@@ -241,7 +248,6 @@ const styles = StyleSheet.create({
         marginRight : 10,
         borderRadius : 6.5,
         backgroundColor : 'lime',
-        // color : 'black'
     },
     percentageAndColorContainer : {
         flexDirection : 'row'

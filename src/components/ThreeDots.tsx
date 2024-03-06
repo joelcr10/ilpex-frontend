@@ -7,13 +7,14 @@ import { userLogin } from "../context/userSlice";
 import Constants from '../utils/Constants';
 import React from "react";
 import ilpex from "../utils/ilpexUI";
+import { useNavigation } from "@react-navigation/native";
 
 type PropsType = {color : string};
 const ThreeDots = (props : PropsType) => {
 
     const {color} = props;
     
-    // const [isIconColor, setIconColor] = useState(false);
+    const navigation = useNavigation();
     const [isPopupVisible, setPopupVisible] = useState(false);
     const [isLogoutBottomSheet, setLogoutBottomSheet] = useState(false);
     const dispatch = useDispatch();
@@ -38,6 +39,11 @@ const ThreeDots = (props : PropsType) => {
     const handleLogout = () => {
         setStringItem(Constants.IS_LOGIN, 'false');
         dispatch(userLogin(false));
+    }
+
+    const profileNavigator = () => {
+        console.log("ProfileNavigator");
+        navigation.navigate("TraineeProfile",{});
     }
 
     const renderBottomSheet = () => {
@@ -79,7 +85,7 @@ const ThreeDots = (props : PropsType) => {
             {isPopupVisible && (
                 <View style = {styles.popup}>           
                     <View style = {styles.popupContent}> 
-                        <TouchableOpacity  style = {styles.popupcolumn}>
+                        <TouchableOpacity  style = {styles.popupcolumn} onPress={profileNavigator}>
                             <Image 
                                 style = {styles.popupicons}
                                 source = {require('../../assets/icons/profile.png')}></Image>

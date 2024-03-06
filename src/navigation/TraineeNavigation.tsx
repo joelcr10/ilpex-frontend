@@ -22,7 +22,7 @@ const TraineeNavigation = () =>{
                         headerShown: false
                     }}
                 /> */}
-                 <Stack.Screen 
+                <Stack.Screen 
                     name="TraineeProfile"
                     component={TraineeProfile}
                     options={{
