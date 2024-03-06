@@ -24,7 +24,9 @@ const styles = StyleSheet.create({
 
 
     background:{
-      position:'absolute'
+      position:'absolute',
+      display:'flex',
+      flexDirection:'row'
     },
     headingStyle: {
       position:'relative',
