@@ -10,10 +10,12 @@ import { getHook } from "../../network/getHook/getHook";
 import CreateButton from "../../components/CreateButton";
 import { useNavigation } from "@react-navigation/native";
 import BatchCardShimmer from "../../components/loading/BatchCardShimmer";
+import { getItem } from "../../utils/utils";
+import Constants from "../../utils/Constants";
 
 
 const BatchesScreen = ()=>{
-    const navigation = useNavigation();
+    const navigation : any= useNavigation();
     const [allBatchesList,setBatchesList] = useState<any>([]);
     const [isLoading,setLoading] = useState(false);
     const onPressBatchCard=()=>{
@@ -29,12 +31,15 @@ const BatchesScreen = ()=>{
                 console.log(success,statusCode);
                 if(success){
                     if(responseData){
-                        setLoading(true);
                         setBatchesList(responseData);
+                        setLoading(true); 
                         console.log("->>>>>>>>>>");
                         console.log('allBatchesList',allBatchesList);
                 }
                 }
+
+                const tid = await getItem(Constants.TRAINEE_ID);
+                console.log("tid: ",tid);
             }
             catch(err){
                 console.error('Error', err);
@@ -48,6 +53,7 @@ const BatchesScreen = ()=>{
             <Text style = {styles.text}>Batches</Text>
             <View style={styles.box}>
                 <View style = {styles.dataContainer}>
+                
                     {isLoading? (
                         <FlatList
                         contentContainerStyle = {{
