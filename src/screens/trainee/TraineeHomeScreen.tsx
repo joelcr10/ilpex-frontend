@@ -7,6 +7,7 @@ import { getHook } from "../../network/getHook/getHook";
 import DayWiseProgressBarProgress from "../../components/DayWiseProgressBarProgress";
 import React from "react";
 import Daywise from "../../components/DaywiseCard";
+import { useSelector } from "react-redux";
 
 const TraineeHomeScreen = () => {
     return ( 
@@ -17,7 +18,7 @@ const TraineeHomeScreen = () => {
                    
                     <View>
                         <Text style={styles.whiteText}>Welcome back</Text>
-                        <Text style={styles.textSize}>Elena Maria</Text> 
+                        <UserName></UserName>
                     </View>
                 </View>
                 <View style={styles.contentContainer}>
@@ -38,14 +39,43 @@ const TraineeHomeScreen = () => {
         </ScrollView>
      );
 }
+const UserName =()=>{
+
+    const [userName, setUserName] = useState<any[]>([]);
+    const user_id = useSelector((state: any) => state.userDetailsReducer.user_id);
+
+
+    useEffect(() => {
+      const getUserName= async () => {
+        try {
+          const {responseData} = await getHook(
+            `/api/v3/profile/${user_id}`,
+          );
+          console.log(responseData);
+          setUserName(responseData.profileDetails.user.user_name);
+          
+        
+        } catch (error) {
+          console.error('Error:', error);
+        }
+      };
+      getUserName();
+    }, []);
+    return (
+      <Text style={styles.textSize}>{userName}</Text> 
+
+    );
+}
 const DaysDisplay =()=>{
+  const user_id = useSelector((state: any) => state.userDetailsReducer.user_id);
+
     const [dayCardList, setDayCardList] = useState<any[]>([]);
 
     useEffect(() => {
       const getDayCards= async () => {
         try {
           const {responseData} = await getHook(
-            '/api/v3/trainee/1/days',
+            `/api/v3/trainee/${user_id}/days`,
           );
           console.log(responseData);
           setDayCardList(responseData.data);
@@ -75,12 +105,14 @@ const DaysDisplay =()=>{
 
 const AssessmentDisplay =()=>{
     const [assessmentList, setAssessmentList] = useState<any>([]);
+    const user_id = useSelector((state: any) => state.userDetailsReducer.user_id);
+
 
     useEffect(() => {
       const getAssessments= async () => {
         try {
           const {responseData} = await getHook(
-            '/api/v3/9/assessment',
+            `/api/v3/${user_id}/assessment`,
           );
           setAssessmentList(responseData);
         
