@@ -9,13 +9,13 @@ const AdminNavigation = () =>{
         return(
             <Stack.Navigator>
                 
-                <Stack.Screen 
+                {/* <Stack.Screen 
                     name="BatchDetails"
                     component={BatchDetailsPage}
                     options={{
                         headerShown: false
                     }}
-                />
+                /> */}
                 <Stack.Screen 
                     name="AdminBottomTab"
                     component={BottomTabNavigation}
@@ -37,6 +37,13 @@ const AdminNavigation = () =>{
                         headerShown: false
                 }}
                 /> */}
+                 <Stack.Screen 
+                    name="BatchDetails"
+                    component={BatchDetailsPage}
+                    options={{
+                        headerShown: false
+                    }}
+                />
                 
             </Stack.Navigator>
         )

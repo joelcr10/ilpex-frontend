@@ -12,6 +12,7 @@ import Daywise from "../../components/DaywiseCard";
 import { useSelector } from "react-redux";
 
 const TraineeHomeScreen = () => {
+
     return ( 
         <ScrollView>
             <View style={styles.homeContainer}>

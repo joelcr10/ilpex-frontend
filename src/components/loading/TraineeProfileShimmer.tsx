@@ -6,7 +6,7 @@ import ThreeDots from "../ThreeDots";
 import ShimmerPlaceholder from "react-native-shimmer-placeholder";
 import ilpex from "../../utils/ilpexUI";
 import LinearGradient from "react-native-linear-gradient";
-
+import BarChartShimmer from "./BarChartShimmer";
 const TraineeProfileShimmer = () => {
     return (
         <View style={styles.pageContainer}>
@@ -75,6 +75,7 @@ const TraineeProfileShimmer = () => {
                     </View>
                 </View>
             </View>
+            <BarChartShimmer/>
         </View>
       );
 };
