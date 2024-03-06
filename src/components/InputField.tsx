@@ -4,7 +4,6 @@ import ilpex from '../utils/ilpexUI'
 
 type Props = {
   label: string;
-  keyboardType: string;
   isPassword: boolean;
   value: string;
   onChangeText: (text: string) => void;
