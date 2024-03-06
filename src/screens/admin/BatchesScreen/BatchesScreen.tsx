@@ -7,6 +7,11 @@ import BatchCard from "../../../components/BatchCard";
 import ilpex from "../../../utils/ilpexUI";
 import ThreeDots from "../../../components/ThreeDots";
 import { getHook } from "../../../network/getHook/getHook";
+import CreateButton from "../../../components/CreateButton";
+
+const onPress=()=>{
+    console.log("Button Pressed")
+}
 
 const BatchesScreen = ()=>{
     
@@ -37,22 +42,27 @@ const BatchesScreen = ()=>{
             <View style={styles.box}>
                 <View style = {styles.dataContainer}>
                     <FlatList
+                    contentContainerStyle = {{
+                        padding : 20
+                    }}
                         showsHorizontalScrollIndicator={false}
                         horizontal={false}
                         data={allBatchesList.batches}
                         renderItem={({ item }) => <BatchCard batchName={item.batch_name} traineeNo={item.noOfTrainees} date={item.start_date} progress={parseInt(item.progress)}/>}
                         keyExtractor={item => item.id}
                     />
+                    <View style={styles.createButton}>
+                        <CreateButton onPress={onPress}></CreateButton>
+                    </View>
                 </View>
             </View>
         </View>
     )
 };
 
-
 const styles = StyleSheet.create({
     dataContainer : {
-        margin : '10%',
+        margin : '5%',
     },
     container :{
         backgroundColor:ilpex.main,
@@ -71,6 +81,11 @@ const styles = StyleSheet.create({
         marginTop: '5%',
         borderTopEndRadius : 30,
         borderTopStartRadius : 30,
+    },
+    createButton : {
+        margin:30,
+        marginTop:100,
+        marginStart:295
     }
 });
 

@@ -3,7 +3,6 @@ import {StyleSheet, Text, View } from "react-native";
 import { BarChart} from "react-native-gifted-charts";
 import ilpex from "../utils/ilpexUI";
 
-
 type BarGraphProps = {
     data : number[],
     labels : string[]
