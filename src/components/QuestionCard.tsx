@@ -83,12 +83,14 @@ const styles = StyleSheet.create({
         // padding: 20,
         elevation: 5,
         margin: 20,
-        padding: 10
+        padding: 10,
+        paddingBottom: 20,
     },
     
     options:{
         marginLeft: 0,
         paddingRight: 10,
+        marginTop: 20,
         
     },
 

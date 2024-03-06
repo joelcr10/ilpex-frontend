@@ -23,7 +23,7 @@ const LoginScreen = () => {
       try {
         
         setButtonpressed(true)
-        
+        console.log("login screen");
         const { success, statusCode, loginResp, errorMessage } = await loginUser({
           loginEmail,
           loginPassword,
