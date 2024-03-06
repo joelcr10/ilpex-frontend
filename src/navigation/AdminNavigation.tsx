@@ -1,6 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import BatchesScreen from "../screens/admin/BatchesScreen";
 import BottomTabNavigation from "./BottomTabNavigation";
+import TraineeProfile from "../screens/trainee/TraineeProfile";
 
 const Stack = createNativeStackNavigator();
 const AdminNavigation = () =>{
@@ -12,6 +13,13 @@ const AdminNavigation = () =>{
                     options={{
                         headerShown: false
                     }}
+                />
+                 <Stack.Screen 
+                    name="TraineeProfile"
+                    component={TraineeProfile}
+                    options={{
+                        headerShown: false
+                }}
                 />
             </Stack.Navigator>
         )

@@ -18,6 +18,7 @@ const TraineeProfile = () => {
     const [marksFeedback, setMarksFeedBack] = useState('placeholder');
     const [resultID, setResultID] = useState<any[]>([]);
     const [highScore, setHighScore] = useState<any[]>([]);
+    const [isloading, setLoading] = useState(false);
 
     useEffect(() => {
         const getTraineeProfile = async() => {

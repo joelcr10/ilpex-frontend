@@ -14,7 +14,7 @@ const ThreeDots = (props : PropsType) => {
 
     const {color} = props;
     
-    const navigation = useNavigation();
+    const navigation : any = useNavigation();
     const [isPopupVisible, setPopupVisible] = useState(false);
     const [isLogoutBottomSheet, setLogoutBottomSheet] = useState(false);
     const dispatch = useDispatch();
