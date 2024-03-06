@@ -43,15 +43,14 @@ const UserName =()=>{
 
     const [userName, setUserName] = useState<any[]>([]);
     const user_id = useSelector((state: any) => state.userDetailsReducer.user_id);
-
-
+    console.log("UserID--------------- ", user_id);
+    
     useEffect(() => {
       const getUserName= async () => {
         try {
           const {responseData} = await getHook(
             `/api/v3/profile/${user_id}`,
           );
-          console.log(responseData);
           setUserName(responseData.profileDetails.user.user_name);
           
         
@@ -67,7 +66,10 @@ const UserName =()=>{
     );
 }
 const DaysDisplay =()=>{
-  const user_id = useSelector((state: any) => state.userDetailsReducer.user_id);
+  const trainee_id = useSelector((state: any) => state.userDetailsReducer.trainee_id);
+  
+
+
 
     const [dayCardList, setDayCardList] = useState<any[]>([]);
 
@@ -75,9 +77,8 @@ const DaysDisplay =()=>{
       const getDayCards= async () => {
         try {
           const {responseData} = await getHook(
-            `/api/v3/trainee/${user_id}/days`,
+            `/api/v3/trainee/1/days`,
           );
-          console.log(responseData);
           setDayCardList(responseData.data);
           
         
@@ -148,6 +149,7 @@ const styles = StyleSheet.create({
     },
 
     whiteText:{
+      marginTop:10,
         color: ilpex.white,
         fontSize: 20,
         fontFamily:ilpex.fontMedium,
