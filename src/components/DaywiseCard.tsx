@@ -4,10 +4,12 @@ import CircularProgress from "./CircularProgress";
 import Icon from "react-native-vector-icons/FontAwesome";
 import ilpex from "../utils/ilpexUI";
 
-type PropsType = { Day: number; duration: string; progressValue: number; status: boolean };
+type PropsType = { Day: number, duration: string,progressValue: number, status: boolean };
 
 const Daywise = (props: PropsType) => {
   const { Day, duration, progressValue, status } = props;
+
+  console.log(Day,duration, progressValue, status);
 
   return (
     <View style={styles.container}>
@@ -44,7 +46,6 @@ const Daywise = (props: PropsType) => {
 const styles = StyleSheet.create({
 
   container: {
-    position:'absolute',
     maxWidth: "100%",
     padding: 20,
   },

@@ -21,8 +21,8 @@ import Constants from "./utils/Constants";
 const Main = () =>{
 
   // dotenv.config();
-    // const isLoggedIn = useSelector((state: any) => state.userReducer.isLoggedIn);
-    const isLoggedIn = false;
+    const isLoggedIn = useSelector((state: any) => state.userReducer.isLoggedIn);
+    // const isLoggedIn = false;
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
