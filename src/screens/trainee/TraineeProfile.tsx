@@ -8,7 +8,7 @@ import { getHook } from "../../network/getHook/getHook";
 import { getItem } from "../../utils/utils";
 import Constants from "../../utils/Constants";
 import { useSelector } from "react-redux";
-
+import TraineeProfileShimmer from "../../components/loading/TraineeProfileShimmer";
 const TraineeProfile = () => {
 
     const [traineeName, setTraineeName] = useState<any[]>([]);
@@ -19,8 +19,9 @@ const TraineeProfile = () => {
     const [marksFeedback, setMarksFeedBack] = useState('placeholder');
     const [resultID, setResultID] = useState<any[]>([]);
     const [highScore, setHighScore] = useState<any[]>([]);
-    const [isloading, setLoading] = useState(false);
-    // const trainee_id = useSelector((state: any) => state.userDetailsReducer.trainee_id);
+    const [isLoadingProfile, setLoadingProfile] = useState(false);
+    const [isLoadingScores, setLoadingScores] = useState(false);
+    const[isLoadingCurrentDay, setLoadingCurrentDay] = useState(false);
 
 
     useEffect(() => {
@@ -37,6 +38,7 @@ const TraineeProfile = () => {
                 {
                     setTraineeName(responseData.profileDetails.user.user_name);
                     setTraineeBatch(responseData.profileDetails.batch.batch_name);
+                    setLoadingProfile(false);
                 }
             } catch(error) {
                 console.log('Error', error);
@@ -81,7 +83,8 @@ const TraineeProfile = () => {
                     {
                         setMarkIndicatorColor('red');
                         setMarksFeedBack('Danger Zone');
-                    }        
+                    }       
+                    setLoadingScores(false); 
                 }
             } catch(error) {
                 console.log('Error', error);
@@ -99,6 +102,7 @@ const TraineeProfile = () => {
                 if(responseData)
                 {
                     setCurrentDay(responseData.current_day);
+                    setLoadingCurrentDay(false);
                 }
             } catch(error) {
                 console.log('Error', error);
@@ -123,52 +127,58 @@ const TraineeProfile = () => {
 
     return(
         <ScrollView>
-            <View style = {styles.pageContainer}>
-                <BackButton color = 'black'/>
-                <ThreeDots color = 'black'/>
-                <View style = {styles.profilePictureContainer}>
-                    <View style = {[styles.profilePictureCircle, {backgroundColor : circleBackgroundColor}]}>
-                        <Image
-                            style = {styles.profileImageStyle}
-                            source = {require('../../../assets/icons/user.png')}/>
-                    </View>
-                </View>
-                <View>
-                    <Text style = {styles.nameLabel}>
-                        {traineeName}
-                    </Text>
-                    <Text style = {styles.batchLabel}>
-                        {traineeBatch}
-                    </Text>
-                </View>
-                <View style = {styles.statsContainer}>
-                    <View style = {styles.statsRow}>
-                        <View style = {styles.statsKey}>
-                            <Text style = {styles.statsKeyLabel}>Current Status</Text>
-                        </View>
-                        <View style = {styles.statsValue}>
-                        <Text style = {styles.statsValueLabel}>Day {currentDay}</Text>
+        {
+            (!isLoadingCurrentDay && !isLoadingProfile && !isLoadingScores) ? (
+                <TraineeProfileShimmer/>
+            ) : (
+                <View style = {styles.pageContainer}>
+                    <BackButton color = 'black'/>
+                    <ThreeDots color = 'black'/>
+                    <View style = {styles.profilePictureContainer}>
+                        <View style = {[styles.profilePictureCircle, {backgroundColor : circleBackgroundColor}]}>
+                            <Image
+                                style = {styles.profileImageStyle}
+                                source = {require('../../../assets/icons/user.png')}/>
                         </View>
                     </View>
-                    <View style = {styles.statsRow}>
-                        <View style = {styles.statsKey}>
-                            <Text style = {styles.statsKeyLabel}>Average Assessment Score</Text>
+                    <View>
+                        <Text style = {styles.nameLabel}>
+                            {traineeName}
+                        </Text>
+                        <Text style = {styles.batchLabel}>
+                            {traineeBatch}
+                        </Text>
+                    </View>
+                    <View style = {styles.statsContainer}>
+                        <View style = {styles.statsRow}>
+                            <View style = {styles.statsKey}>
+                                <Text style = {styles.statsKeyLabel}>Current Status</Text>
+                            </View>
+                            <View style = {styles.statsValue}>
+                            <Text style = {styles.statsValueLabel}>Day {currentDay}</Text>
+                            </View>
                         </View>
-                        <View style = {styles.statsValue}>
-                            <View style = {styles.percentageAndColorContainer}>
-                                <View style = {[styles.colorDot, {backgroundColor : marksIndicatorColor}]}></View>
-                                <Text style ={styles.percentageLabel}>
-                                {averageAssessmentScore}%
+                        <View style = {styles.statsRow}>
+                            <View style = {styles.statsKey}>
+                                <Text style = {styles.statsKeyLabel}>Average Assessment Score</Text>
+                            </View>
+                            <View style = {styles.statsValue}>
+                                <View style = {styles.percentageAndColorContainer}>
+                                    <View style = {[styles.colorDot, {backgroundColor : marksIndicatorColor}]}></View>
+                                    <Text style ={styles.percentageLabel}>
+                                    {averageAssessmentScore}%
+                                    </Text>
+                                </View>
+                                <Text style ={styles.remarksLabel}>
+                                    {marksFeedback}
                                 </Text>
                             </View>
-                            <Text style ={styles.remarksLabel}>
-                                {marksFeedback}
-                            </Text>
                         </View>
                     </View>
+                    <BarGraph data={highScore} labels={resultID}></BarGraph>
                 </View>
-                <BarGraph data={highScore} labels={resultID}></BarGraph>
-            </View>
+            )
+        }
         </ScrollView>
     );
 }

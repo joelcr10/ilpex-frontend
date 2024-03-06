@@ -23,12 +23,10 @@ const LoginScreen = () => {
       try {
         
         setButtonpressed(true)
-        console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
         const { success, statusCode, loginResp, errorMessage } = await loginUser({
           loginEmail,
           loginPassword,
         });
-        console.log("**************************************")
         console.log(loginResp.user_id);
   
         if (success) {
@@ -53,7 +51,6 @@ const LoginScreen = () => {
           const role_id = await getItem(Constants.ROLE_ID)
           console.log('role id is',role_id);
 
-          console.log("$$$$$$$$$$$$$$$$$$",loginResp.trainee_id);
           setStringItem(Constants.TRAINEE_ID,loginResp.trainee_id);
           const trainee_id = await getItem(Constants.TRAINEE_ID);
           console.log('trainee id is',trainee_id);
