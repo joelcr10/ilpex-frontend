@@ -126,6 +126,7 @@ const AssessmentDisplay =()=>{
     return (
         <View>
           <FlatList
+            scrollEnabled={false}
             showsHorizontalScrollIndicator={false}
             horizontal={false}
             data={assessmentList.assessments}
