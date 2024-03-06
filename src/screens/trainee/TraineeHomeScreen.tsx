@@ -8,8 +8,11 @@ import DayWiseProgressBarProgress from "../../components/DayWiseProgressBarProgr
 import React from "react";
 import Daywise from "../../components/DaywiseCard";
 import { useSelector } from "react-redux";
+import { getItem } from "../../utils/utils";
+import Constants from "../../utils/Constants";
 
 const TraineeHomeScreen = () => {
+
     return ( 
         <ScrollView>
             <View style={styles.homeContainer}>
