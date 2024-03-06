@@ -80,7 +80,6 @@ const styles = StyleSheet.create({
     },
     barChart : {
         backgroundColor:ilpex.card,
-
     }
 })
 

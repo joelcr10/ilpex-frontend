@@ -91,7 +91,7 @@ return(
             <View style ={styles.body1}>
               <View>
 
-                <View style ={styles.detail}>
+                {/* <View style ={styles.detail}>
                     <Text style={{fontWeight:'700',color:'black',fontSize:28,marginBottom:20}}>{batchData.batch_details.batch_name}</Text>
                     <View style={{justifyContent:'flex-start'}}>
                     <View style ={styles.eachDetail}>
@@ -111,7 +111,7 @@ return(
                     <Text style={{marginLeft:30,color:'#8F00FF',fontWeight:'500'}}>{currentDate.current_day}                   </Text>
                     </View>
                     </View>
-                </View>
+                </View> */}
                 {/* <View>
                    <IconButtonComponent  name={'Report'} onPress={()=>{}} buttonPressed={false} icon={'description'}/>
                 </View> */}

@@ -5,9 +5,9 @@ import { StyleSheet } from "react-native";
 import ilpex from "../utils/ilpexUI";
 import CircularProgress from "./CircularProgress";
 
-type BatchComponentProps = {batchName : string, traineeNo : string, date : string,progress : number};
+type BatchComponentProps = {batchName : string, traineeNo : string, date : string,progress : number,onPress:()=>any};
 
-const BatchCard=({batchName,traineeNo,date,progress} : BatchComponentProps)=>{
+const BatchCard=({batchName,traineeNo,date,progress,onPress} : BatchComponentProps)=>{
 
     const getMonthName=(month : number)=> {
         const months = [
@@ -35,7 +35,7 @@ const BatchCard=({batchName,traineeNo,date,progress} : BatchComponentProps)=>{
     const formattedDate = `${monthName} ${day} ${year}`;
 
     return(
-        <TouchableOpacity>
+        <TouchableOpacity onPress={onPress}>
             <View style={styles.container}>
                 <View style={{
                     marginStart:10
