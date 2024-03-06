@@ -3,6 +3,7 @@ import AssessmentCard from "../../components/AssessmentCard";
 import BarProgress from "../../components/BarProgress";
 import QuestionCard from "../../components/QuestionCard";
 import { useEffect, useMemo, useState } from "react";
+import React from "react";
 import { getHook } from "../../network/getHook/getHook";
 import ilpex from "../../utils/ilpexUI";
 
