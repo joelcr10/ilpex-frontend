@@ -4,6 +4,7 @@ import ChartPie from "../../components/PieChartComponent";
 import { useEffect, useState } from "react";
 import { getHook } from "../../network/getHook/getHook";
 import IconButtonComponent from "../../components/IconButton";
+import ThreeDots from "../../components/ThreeDots";
 const BatchDetailsPage =()=>{
     const [feedList, setStoryList] = useState<any>([]);
     const [batchData,setBatchData] = useState<any>([]);
@@ -85,6 +86,7 @@ const BatchDetailsPage =()=>{
 return(
         <ScrollView>
         <View style={styles.container1}>
+          <ThreeDots color = 'white'></ThreeDots>
             <View style ={styles.textData}>
             <Text style={styles.text}>Batch</Text>
             </View>
