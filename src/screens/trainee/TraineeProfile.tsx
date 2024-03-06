@@ -6,6 +6,9 @@ import ThreeDots from "../../components/ThreeDots";
 import BarGraph from "../../components/BarChart";
 import BarChartShimmer from "../../components/loading/BarChartShimmer";
 
+
+
+
 const TraineeProfile = () => {
     return(
         <View style = {styles.pageContainer}>

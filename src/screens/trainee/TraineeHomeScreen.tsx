@@ -6,8 +6,13 @@ import { useEffect, useState } from "react";
 import { getHook } from "../../network/getHook/getHook";
 import DayWiseProgressBarProgress from "../../components/DayWiseProgressBarProgress";
 import React from "react";
+import Daywise from "../../components/DaywiseCard";
+import { useSelector } from "react-redux";
+import { getItem } from "../../utils/utils";
+import Constants from "../../utils/Constants";
 
 const TraineeHomeScreen = () => {
+
     return ( 
         <ScrollView>
             <View style={styles.homeContainer}>
@@ -16,34 +21,69 @@ const TraineeHomeScreen = () => {
                    
                     <View>
                         <Text style={styles.whiteText}>Welcome back</Text>
-                        <Text style={styles.textSize}>Elena Maria</Text> 
+                        <UserName></UserName>
                     </View>
                 </View>
                 <View style={styles.contentContainer}>
                     <View>
                         <Text style={styles.heading}>Assessment</Text>
+                       
                         <AssessmentDisplay></AssessmentDisplay>
                     </View>
 
                     <View>
                         <Text style={styles.heading}>Learning Days</Text>
+                      
                         <DaysDisplay></DaysDisplay>
+                       
                     </View>
                 </View> 
             </View>
         </ScrollView>
      );
 }
+const UserName =()=>{
+
+    const [userName, setUserName] = useState<any[]>([]);
+    const user_id = useSelector((state: any) => state.userDetailsReducer.user_id);
+    console.log("UserID--------------- ", user_id);
+    
+    useEffect(() => {
+      const getUserName= async () => {
+        try {
+          const {responseData} = await getHook(
+            `/api/v3/profile/${user_id}`,
+          );
+          setUserName(responseData.profileDetails.user.user_name);
+          
+        
+        } catch (error) {
+          console.error('Error:', error);
+        }
+      };
+      getUserName();
+    }, []);
+    return (
+      <Text style={styles.textSize}>{userName}</Text> 
+
+    );
+}
 const DaysDisplay =()=>{
+  const trainee_id = useSelector((state: any) => state.userDetailsReducer.trainee_id);
+  
+
+
+
     const [dayCardList, setDayCardList] = useState<any[]>([]);
 
     useEffect(() => {
       const getDayCards= async () => {
         try {
           const {responseData} = await getHook(
-            'api/v3/trainee/7/days',
+            `/api/v3/trainee/1/days`,
           );
-          setDayCardList(responseData);
+          setDayCardList(responseData.data);
+          
         
         } catch (error) {
           console.error('Error:', error);
@@ -55,23 +95,28 @@ const DaysDisplay =()=>{
         <View>
           <FlatList
             showsHorizontalScrollIndicator={false}
+            scrollEnabled={false}
             horizontal={false}
-            data={dayCardList.data}
-            renderItem={({ item }) => <DayWiseProgressBarProgress dayNumber={item.day_number} percentage={item.progress} />}
-            keyExtractor={item => item.id}
+            data={dayCardList}
+            renderItem={({ item }) => 
+            <Daywise Day={item.day_number} progressValue={item.progress} duration={item.duration} status={item.status} />
+          }
+            keyExtractor={item => item.day}
           />
         </View>
       );
 }
 
 const AssessmentDisplay =()=>{
-    const [assessmentList, setAssessmentList] = useState<any[]>([]);
+    const [assessmentList, setAssessmentList] = useState<any>([]);
+    const user_id = useSelector((state: any) => state.userDetailsReducer.user_id);
+
 
     useEffect(() => {
       const getAssessments= async () => {
         try {
           const {responseData} = await getHook(
-            'api/v3/9/assessment',
+            `/api/v3/${user_id}/assessment`,
           );
           setAssessmentList(responseData);
         
@@ -107,6 +152,7 @@ const styles = StyleSheet.create({
     },
 
     whiteText:{
+      marginTop:10,
         color: ilpex.white,
         fontSize: 20,
         fontFamily:ilpex.fontMedium,
@@ -121,12 +167,13 @@ const styles = StyleSheet.create({
     },
 
     contentContainer:{
-        height: '100%',
+        // height: '100%',
         backgroundColor: ilpex.white,
         borderTopEndRadius: 40,
         borderTopLeftRadius: 40,
         marginTop: 10,
-        padding: 20
+        padding: 20,
+        flex:1
     },
 
     heading:{
