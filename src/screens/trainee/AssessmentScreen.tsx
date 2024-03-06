@@ -6,6 +6,9 @@ import { useEffect, useMemo, useState } from "react";
 import React from "react";
 import { getHook } from "../../network/getHook/getHook";
 import ilpex from "../../utils/ilpexUI";
+import { useSelector } from "react-redux";
+import { getItem } from "../../utils/utils";
+import Constants from "../../utils/Constants";
 
 const AssessmentScreen = () => {
     const [selectedId,setSelectedId] = useState<string>('');
@@ -36,8 +39,6 @@ const AssessmentScreen = () => {
     useEffect(() => {
         const percipioReport = async () =>{
             const {responseData} = await getHook("/api/v3/trainee/6/days");
-            
-            // console.log("percipio report ",responseData);
         }
 
         percipioReport();
