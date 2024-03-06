@@ -6,10 +6,10 @@ import { useEffect, useState } from "react";
 import { getHook } from "../../network/getHook/getHook";
 import DayWiseProgressBarProgress from "../../components/DayWiseProgressBarProgress";
 import React from "react";
-import Daywise from "../../components/DaywiseCard";
-import { useSelector } from "react-redux";
 import { getItem } from "../../utils/utils";
 import Constants from "../../utils/Constants";
+import Daywise from "../../components/DaywiseCard";
+import { useSelector } from "react-redux";
 
 const TraineeHomeScreen = () => {
 
@@ -115,6 +115,7 @@ const AssessmentDisplay =()=>{
     useEffect(() => {
       const getAssessments= async () => {
         try {
+          
           const {responseData} = await getHook(
             `/api/v3/${user_id}/assessment`,
           );
