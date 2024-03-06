@@ -26,10 +26,9 @@ const TraineeProfile = () => {
     useEffect(() => {
         const getTraineeProfile = async() => {
             try {
-                const trainee_id = await getItem(Constants.TRAINEE_ID);
+                
                 const role_id = await getItem(Constants.ROLE_ID);
                 const user_id = await getItem(Constants.USER_ID);
-                console.log('Trainee ID ------', trainee_id)
                 console.log('Role ID ------', role_id)
                 console.log('User ID ------', user_id)
                 const {responseData, errorMessage} = await getHook(`/api/v3/profile/${user_id}`);
@@ -46,7 +45,9 @@ const TraineeProfile = () => {
 
         const getTraineeScores = async() => {
             try {
-                const {responseData, errorMessage} = await getHook('/api/v2/trainee/3/scores');
+                const trainee_id = await getItem(Constants.TRAINEE_ID);
+                const {responseData, errorMessage} = await getHook(`/api/v2/trainee/${trainee_id}/scores`);
+                console.log('Trainee ID ------', trainee_id)
                 if(responseData)
                 {
                     console.log("Marks = ", responseData);
