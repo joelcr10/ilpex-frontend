@@ -21,7 +21,8 @@ import Constants from "./utils/Constants";
 const Main = () =>{
 
   // dotenv.config();
-    const isLoggedIn = useSelector((state: any) => state.userReducer.isLoggedIn);
+    // const isLoggedIn = useSelector((state: any) => state.userReducer.isLoggedIn);
+    const isLoggedIn = false;
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -34,6 +35,7 @@ const Main = () =>{
         (async () => {
           const isLogin = await getItem(Constants.IS_LOGIN);
           // const isLogin = 'true';
+          
     
           if (isLogin === 'true') {
             dispatch(userLogin(true));
@@ -41,7 +43,9 @@ const Main = () =>{
             dispatch(userLogin(false));
           }
           setIsLoading(false);
+         
         })();
+      
       }, []);
     
     return isLoading ? (
