@@ -4,11 +4,10 @@ import LinearGradient from "react-native-linear-gradient";
 import ShimmerPlaceholder from "react-native-shimmer-placeholder";
 import ilpex from '../../utils/ilpexUI';
 
-type BarChartShimmerProps = {isLoading : boolean}
-const BarChartShimmer=({isLoading} : BarChartShimmerProps)=>{
+const BarChartShimmer = () =>{
     return (
         <View style={styles.shimmerContainer}>
-                <ShimmerPlaceholder style={styles.shimmerChart} LinearGradient={LinearGradient} visible={isLoading}></ShimmerPlaceholder>
+                <ShimmerPlaceholder style={styles.shimmerChart} LinearGradient={LinearGradient}></ShimmerPlaceholder>
         </View>
     )
 }
@@ -23,7 +22,8 @@ const styles = StyleSheet.create({
         shadowOffset:{ width: 0, height: 0 },
         alignSelf:'center',
         borderRadius:10,
-        marginTop:400
+        marginTop:25,
+        marginBottom : 70
     },
     shimmerChart : {
         margin:20,
