@@ -1,5 +1,4 @@
 import instance from '../../network/api';
-import {useNavigation} from '@react-navigation/native';
  
 interface LogInUserProp {
     loginEmail: string;
