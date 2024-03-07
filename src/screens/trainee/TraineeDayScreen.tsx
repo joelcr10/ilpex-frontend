@@ -54,6 +54,7 @@ const TraineeDayScreen=()=>{
         }, []);
 
     return(
+        <ScrollView>
         <View>
             <View style={{backgroundColor:ilpex.main}}>
                 <BackButton color='white'/>
@@ -64,24 +65,28 @@ const TraineeDayScreen=()=>{
                     <View style={styles.container}>
                         {/* <FileUploadField/> */}
                         <Text style={styles.subTitle}>Learning Courses</Text>
-                        <ScrollView>
                     {isLoading &&
                        <CourseCardShimmer/>
                     }
-                    {!isLoading&&
+                    {!isLoading &&
+                    
+                    <View>
                     <FlatList
-                        horizontal={false}
-                        scrollEnabled={true}
+                        // horizontal={false}
+                        scrollEnabled={false}
                         showsVerticalScrollIndicator={false}
                         data={courselist.message}
                         renderItem={({item})=><CourseCard name={item.course_name} duration={item.course_duration} status={item.status}/>}
+                        keyExtractor={item=>item.course_id}
                     />
+                </View>
+                // </ScrollView>
                     }
-                    </ScrollView>
                 </View>
                 <ThreeDots color='white'/>
             </View>
         </View>
+        </ScrollView>
     )
 }
 
