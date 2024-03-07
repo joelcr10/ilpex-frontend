@@ -1,9 +1,9 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import LoginScreen from "../screens/authentication/LoginScreen";
-import BatchesScreen from "../screens/admin/BatchesScreen/BatchesScreen";
+import BatchesScreen from "../screens/admin/BatchesScreen";
 import TraineeScreen from "../screens/admin/TraineesScreen";
-import TraineeProfile from "../screens/trainee/TraineeProfile";
+import TraineeProfile from "../screens/trainee/TraineeProfileScreen";
 
 const BottomTab = createBottomTabNavigator();
 

@@ -59,6 +59,7 @@ const styles = StyleSheet.create({
       text:{
         textAlign:'center',
         fontSize:18,
+        fontFamily:ilpex.fontLightItalic,
       },
       container:{
         margin:20,

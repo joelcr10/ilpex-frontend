@@ -6,6 +6,7 @@ import { getHook } from "../../network/getHook/getHook";
 import ChartPieShimmer from "../../components/PieChartShimmer";
 import IconButtonComponent from "../../components/IconButton";
 import ChartPieHeaderShimmer from "../../components/pieChartHeaderShimmer";
+import ThreeDots from "../../components/ThreeDots";
 const BatchDetailsPage =()=>{
     const [isLoading,setLoading] =useState(true);
     const [feedList, setStoryList] = useState<any>([]);
@@ -94,6 +95,7 @@ const BatchDetailsPage =()=>{
 return(
         <ScrollView>
         <View style={styles.container1}>
+          <ThreeDots color = 'white'></ThreeDots>
             <View style ={styles.textData}>
             <Text style={styles.text}>Batch</Text>
             </View>

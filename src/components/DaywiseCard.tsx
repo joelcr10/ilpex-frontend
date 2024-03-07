@@ -5,7 +5,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import ilpex from "../utils/ilpexUI";
 import { useNavigation } from "@react-navigation/native";
 
-type PropsType = { Day: number; duration: string; progressValue: number; status: boolean;  };
+type PropsType = { Day: number, duration: string,progressValue: number, status: boolean;  };
 
 const Daywise = (props: PropsType) => {
 
@@ -16,6 +16,8 @@ const Daywise = (props: PropsType) => {
 
 
   const { Day, duration, progressValue, status } = props;
+
+  console.log(Day,duration, progressValue, status);
 
   return (
     <View style={styles.container}>
@@ -68,22 +70,18 @@ const styles = StyleSheet.create({
   },
 
   container: {
-    position:'absolute',
     maxWidth: "100%",
-    padding: 20,  
 
   },
   learningDay: {
-    width: 350,
-    borderRadius: 5,
-    padding: 20,
+    backgroundColor: ilpex.white,
+    borderRadius: 15,
+    elevation: 4,
+    paddingHorizontal: 20,
+    paddingVertical: 15,
     marginTop: 10,
-    elevation: 5, // Android shadow
-    shadowOffset: { width: 0, height: 5 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    fontWeight: "bold",
-    height: 100,
+    margin: 10,
+    zIndex: 10,
   },
   learningLabel: {
     position:'relative',

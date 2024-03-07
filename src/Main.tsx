@@ -24,14 +24,20 @@ const Main =  () =>{
 
   // dotenv.config();
     const isLoggedIn = useSelector((state: any) => state.userReducer.isLoggedIn);
-    //const role_id = useSelector((state: any) => state.userDetailsReducer.role_id);
+    const role_id = useSelector((state: any) => state.userDetailsReducer.role_id);
+    const trainee_id = useSelector((state: any) => state.userDetailsReducer.trainee_id);
+    const user_id = useSelector((state: any) => state.userDetailsReducer.user_id);
     // const isLoggedIn = false;
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState<boolean>(true);
     
      const role_id: string = '103' //change this to '103' to navigate to Trainee screen
     console.log('role id ----------',role_id);
+    console.log('trainee_id ----------',trainee_id);
+    console.log('user_id ----------',user_id);
+    console.log('user details stored globally');
 
+    console.log("hi")
     useEffect(() => {
         setIsLoading(true);
         (async () => {
@@ -43,18 +49,12 @@ const Main =  () =>{
           const user_id = await getItem(Constants.USER_ID);
           const trainee_id = await getItem(Constants.TRAINEE_ID);
 
-          const loginResp: {
-            token: string;
-            role_id: string | number;
-            user_id: string | number;
-            trainee_id: string | number;
-        } = {
-            token: token!,
-            role_id: role_id!,
-            user_id: user_id!,
-            trainee_id: trainee_id!,
-        };
-        
+          const loginResp = {
+            token: token||'',
+            role_id: role_id||'',
+            user_id: user_id||'',
+            trainee_id:trainee_id||'',
+          }
           console.log(loginResp);
 
           // const isLogin = 'true';
@@ -62,7 +62,7 @@ const Main =  () =>{
 
           if (isLogin === 'true') {
             dispatch(userLogin(true));
-            dispatch(userDetails(loginResp))
+            dispatch(userDetails(loginResp));
           } else {
             dispatch(userLogin(false));
           }
@@ -77,7 +77,7 @@ const Main =  () =>{
       ) : (
         <NavigationContainer>
             {isLoggedIn ? (
-                role_id===103? 
+                role_id=='103'? 
                 <TraineeNavigation /> : <AdminNavigation/>
             )  : <AuthNavigation />}
         </NavigationContainer>

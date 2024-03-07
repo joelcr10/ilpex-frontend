@@ -6,8 +6,28 @@ import { useEffect, useState } from "react";
 import { getHook } from "../../network/getHook/getHook";
 import DayWiseProgressBarProgress from "../../components/DayWiseProgressBarProgress";
 import React from "react";
+import { getItem } from "../../utils/utils";
+import Constants from "../../utils/Constants";
+import Daywise from "../../components/DaywiseCard";
+import { useSelector } from "react-redux";
+import { percipioReportAPI } from "./percipioReportAPI";
+import ShimmerDaywise from "../../components/loading/DayWiseCardShimmer";
+import ShimmerAssessmentCard from "../../components/loading/AssessmentCardShimmer";
 
 const TraineeHomeScreen = () => {
+  const user_id = useSelector((state: any) => state.userDetailsReducer.user_id);
+
+    useEffect(() => {
+      const percipioReport = async () =>{
+          const {success, responseData} = await percipioReportAPI(Number(user_id));
+          if(success){
+            console.log("percipio learning activity updated");
+          }
+      }
+
+      percipioReport();
+    }, []);
+
     return ( 
         <ScrollView>
             <View style={styles.homeContainer}>
@@ -16,34 +36,69 @@ const TraineeHomeScreen = () => {
                    
                     <View>
                         <Text style={styles.whiteText}>Welcome back</Text>
-                        <Text style={styles.textSize}>Elena Maria</Text> 
+                        <UserName></UserName>
                     </View>
                 </View>
                 <View style={styles.contentContainer}>
                     <View>
                         <Text style={styles.heading}>Assessment</Text>
+                       
                         <AssessmentDisplay></AssessmentDisplay>
                     </View>
 
                     <View>
                         <Text style={styles.heading}>Learning Days</Text>
+                      
                         <DaysDisplay></DaysDisplay>
+                       
                     </View>
                 </View> 
             </View>
         </ScrollView>
      );
 }
+const UserName =()=>{
+
+    const [userName, setUserName] = useState<any[]>([]);
+    const user_id = useSelector((state: any) => state.userDetailsReducer.user_id);    
+    useEffect(() => {
+      const getUserName= async () => {
+        try {
+          const {responseData} = await getHook(
+            `/api/v3/profile/${user_id}`,
+          );
+          setUserName(responseData.profileDetails.user.user_name);
+          
+        
+        } catch (error) {
+          console.error('Error:', error);
+        }
+      };
+      getUserName();
+    }, []);
+    return (
+      <Text style={styles.textSize}>{userName}</Text> 
+
+    );
+}
 const DaysDisplay =()=>{
-    const [dayCardList, setDayCardList] = useState<any[]>([]);
+  const trainee_id = useSelector((state: any) => state.userDetailsReducer.trainee_id);
+  const [dayCardList, setDayCardList] = useState<any[]>([]);
+  const [isLoading, setLoading] = useState(false);
+
 
     useEffect(() => {
       const getDayCards= async () => {
         try {
           const {responseData} = await getHook(
-            'api/v3/trainee/7/days',
+            `/api/v3/trainee/1/days`,
           );
-          setDayCardList(responseData);
+          if(responseData)
+          {
+            setLoading(true);
+          }
+          setDayCardList(responseData.data);
+          
         
         } catch (error) {
           console.error('Error:', error);
@@ -52,27 +107,51 @@ const DaysDisplay =()=>{
       getDayCards();
     }, []);
     return (
-        <View>
+      <ScrollView>
+        { (!isLoading)?
+        (<View>
+          <ShimmerDaywise></ShimmerDaywise>
+          <ShimmerDaywise></ShimmerDaywise>
+          <ShimmerDaywise></ShimmerDaywise>
+          <ShimmerDaywise></ShimmerDaywise>
+
+        </View>):
+        (<View>
           <FlatList
             showsHorizontalScrollIndicator={false}
+            scrollEnabled={false}
             horizontal={false}
-            data={dayCardList.data}
-            renderItem={({ item }) => <DayWiseProgressBarProgress dayNumber={item.day_number} percentage={item.progress} />}
-            keyExtractor={item => item.id}
+            data={dayCardList}
+            renderItem={({ item }) => 
+            <Daywise Day={item.day_number} progressValue={item.progress} duration={item.duration} status={item.status} />
+          }
+            keyExtractor={item => item.day}
           />
-        </View>
+        </View>)
+}
+        </ScrollView>
+
       );
 }
 
 const AssessmentDisplay =()=>{
-    const [assessmentList, setAssessmentList] = useState<any[]>([]);
+    const [assessmentList, setAssessmentList] = useState<any>([]);
+    const user_id = useSelector((state: any) => state.userDetailsReducer.user_id);
+    const [isLoading, setLoading] = useState(false);
+
+
 
     useEffect(() => {
       const getAssessments= async () => {
         try {
+          
           const {responseData} = await getHook(
-            'api/v3/9/assessment',
+            `/api/v3/${user_id}/assessment`,
           );
+          if(responseData)
+          {
+            setLoading(true);
+          }
           setAssessmentList(responseData);
         
         } catch (error) {
@@ -83,13 +162,24 @@ const AssessmentDisplay =()=>{
     }, []);
     return (
         <View>
+                  { (!isLoading)?
+        (<View>
+          < ShimmerAssessmentCard></ShimmerAssessmentCard>
+          < ShimmerAssessmentCard></ShimmerAssessmentCard>
+  
+      
+
+        </View>):
+        (
           <FlatList
+            scrollEnabled={false}
             showsHorizontalScrollIndicator={false}
             horizontal={false}
             data={assessmentList.assessments}
             renderItem={({ item }) => <AssessmentCard assessment_id={item.assessment_id} batchName={assessmentList.Batch} assessmentName={item.assessment_name} dueDate={item.end_date} status={true}/>}
             keyExtractor={item => item.id}
-          />
+          />)
+        }
         </View>
       );
 }
@@ -107,6 +197,7 @@ const styles = StyleSheet.create({
     },
 
     whiteText:{
+      marginTop:10,
         color: ilpex.white,
         fontSize: 20,
         fontFamily:ilpex.fontMedium,
@@ -121,12 +212,13 @@ const styles = StyleSheet.create({
     },
 
     contentContainer:{
-        height: '100%',
+        // height: '100%',
         backgroundColor: ilpex.white,
         borderTopEndRadius: 40,
         borderTopLeftRadius: 40,
         marginTop: 10,
-        padding: 20
+        padding: 20,
+        flex:1
     },
 
     heading:{

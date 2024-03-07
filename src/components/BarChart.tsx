@@ -3,10 +3,9 @@ import {StyleSheet, Text, View } from "react-native";
 import { BarChart} from "react-native-gifted-charts";
 import ilpex from "../utils/ilpexUI";
 
-
 type BarGraphProps = {
-    data : number[],
-    labels : string[]
+    data : number[],        //Y axis - number thingy
+    labels : string[]       //A Axis  - A1, A2, ...
 } 
 const BarGraph = ({data,labels} : BarGraphProps)=>{
     const chartData = Array.isArray(data) ? data.map(value => ({ value })) : [{ value: data }];
@@ -66,7 +65,7 @@ const styles = StyleSheet.create({
         shadowOffset:{ width: 0, height: 0 },
         alignSelf:'center',
         borderRadius:10,
-        marginTop:400
+        marginBottom : 80,
     },
     head : {
         color : ilpex.black,
@@ -81,7 +80,6 @@ const styles = StyleSheet.create({
     },
     barChart : {
         backgroundColor:ilpex.card,
-
     }
 })
 
