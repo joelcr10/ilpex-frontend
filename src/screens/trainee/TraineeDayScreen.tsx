@@ -56,8 +56,8 @@ const TraineeDayScreen=()=>{
     return(
         <View>
             <View style={{backgroundColor:ilpex.main}}>
+            {/* <BackButton color='white'/> */}
                 <View style={styles.topbar}>
-                    {/* <BackButton/> */}
                    
                     <Text style={styles.headerText}>{`Day ${day_id}`}</Text>
                 </View>
