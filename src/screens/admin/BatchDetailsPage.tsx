@@ -7,6 +7,7 @@ import ChartPieShimmer from "../../components/PieChartShimmer";
 import IconButtonComponent from "../../components/IconButton";
 import ChartPieHeaderShimmer from "../../components/pieChartHeaderShimmer";
 import ThreeDots from "../../components/ThreeDots";
+import BackButton from "../../components/BackButton";
 const BatchDetailsPage =()=>{
     const [isLoading,setLoading] =useState(true);
     const [feedList, setStoryList] = useState<any>([]);
@@ -95,6 +96,7 @@ const BatchDetailsPage =()=>{
 return(
         <ScrollView>
         <View style={styles.container1}>
+          <BackButton color = 'white'/>
           <ThreeDots color = 'white'></ThreeDots>
             <View style ={styles.textData}>
             <Text style={styles.text}>Batch</Text>
