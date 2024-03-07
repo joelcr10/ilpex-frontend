@@ -1,5 +1,4 @@
 import instance from '../../network/api';
-import {useNavigation} from '@react-navigation/native';
  
 interface LogInUserProp {
     loginEmail: string;
@@ -38,7 +37,7 @@ export async function loginUser({
     }
     
     loginResp = logInResponse.data;
-    console.log(loginResp.id);
+    console.log(loginResp.role_id);
  
     // if (statusCode === '200') setStringItem(Constants.IS_LOGIN, 'true');
 
