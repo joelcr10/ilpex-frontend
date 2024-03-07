@@ -11,6 +11,8 @@ import Constants from "../../utils/Constants";
 import Daywise from "../../components/DaywiseCard";
 import { useSelector } from "react-redux";
 import { percipioReportAPI } from "./percipioReportAPI";
+import ShimmerDaywise from "../../components/loading/DayWiseCardShimmer";
+import ShimmerAssessmentCard from "../../components/loading/AssessmentCardShimmer";
 
 const TraineeHomeScreen = () => {
   const user_id = useSelector((state: any) => state.userDetailsReducer.user_id);
@@ -82,6 +84,8 @@ const UserName =()=>{
 const DaysDisplay =()=>{
   const trainee_id = useSelector((state: any) => state.userDetailsReducer.trainee_id);
   const [dayCardList, setDayCardList] = useState<any[]>([]);
+  const [isLoading, setLoading] = useState(false);
+
 
     useEffect(() => {
       const getDayCards= async () => {
@@ -89,6 +93,10 @@ const DaysDisplay =()=>{
           const {responseData} = await getHook(
             `/api/v3/trainee/1/days`,
           );
+          if(responseData)
+          {
+            setLoading(true);
+          }
           setDayCardList(responseData.data);
           
         
@@ -99,7 +107,16 @@ const DaysDisplay =()=>{
       getDayCards();
     }, []);
     return (
-        <View>
+      <ScrollView>
+        { (!isLoading)?
+        (<View>
+          <ShimmerDaywise></ShimmerDaywise>
+          <ShimmerDaywise></ShimmerDaywise>
+          <ShimmerDaywise></ShimmerDaywise>
+          <ShimmerDaywise></ShimmerDaywise>
+
+        </View>):
+        (<View>
           <FlatList
             showsHorizontalScrollIndicator={false}
             scrollEnabled={false}
@@ -110,13 +127,18 @@ const DaysDisplay =()=>{
           }
             keyExtractor={item => item.day}
           />
-        </View>
+        </View>)
+}
+        </ScrollView>
+
       );
 }
 
 const AssessmentDisplay =()=>{
     const [assessmentList, setAssessmentList] = useState<any>([]);
     const user_id = useSelector((state: any) => state.userDetailsReducer.user_id);
+    const [isLoading, setLoading] = useState(false);
+
 
 
     useEffect(() => {
@@ -126,6 +148,10 @@ const AssessmentDisplay =()=>{
           const {responseData} = await getHook(
             `/api/v3/${user_id}/assessment`,
           );
+          if(responseData)
+          {
+            setLoading(true);
+          }
           setAssessmentList(responseData);
         
         } catch (error) {
@@ -136,6 +162,15 @@ const AssessmentDisplay =()=>{
     }, []);
     return (
         <View>
+                  { (!isLoading)?
+        (<View>
+          < ShimmerAssessmentCard></ShimmerAssessmentCard>
+          < ShimmerAssessmentCard></ShimmerAssessmentCard>
+  
+      
+
+        </View>):
+        (
           <FlatList
             scrollEnabled={false}
             showsHorizontalScrollIndicator={false}
@@ -143,7 +178,8 @@ const AssessmentDisplay =()=>{
             data={assessmentList.assessments}
             renderItem={({ item }) => <AssessmentCard assessment_id={item.assessment_id} batchName={assessmentList.Batch} assessmentName={item.assessment_name} dueDate={item.end_date} status={true}/>}
             keyExtractor={item => item.id}
-          />
+          />)
+        }
         </View>
       );
 }
