@@ -67,6 +67,7 @@ const UserName =()=>{
           const {responseData} = await getHook(
             `/api/v3/profile/${user_id}`,
           );
+
           setUserName(responseData.profileDetails.user.user_name);
           
         
@@ -85,6 +86,7 @@ const DaysDisplay =()=>{
   const trainee_id = useSelector((state: any) => state.userDetailsReducer.trainee_id);
   const [dayCardList, setDayCardList] = useState<any[]>([]);
   const [isLoading, setLoading] = useState(false);
+  console.log("eqwertyuioasdfghjk   ",trainee_id);
 
 
     useEffect(() => {
