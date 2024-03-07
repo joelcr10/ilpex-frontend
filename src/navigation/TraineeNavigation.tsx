@@ -2,7 +2,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import TraineeHomeScreen from "../screens/trainee/TraineeHomeScreen";
 import AssessmentScreen from "../screens/trainee/Assessment/AssessmentScreen";
 import TraineeDayScreen from "../screens/trainee/TraineeDayScreen";
-import TraineeProfile from "../screens/trainee/TraineeProfile";
+import TraineeProfile from "../screens/trainee/TraineeProfileScreen";
 
 
 const Stack = createNativeStackNavigator();
