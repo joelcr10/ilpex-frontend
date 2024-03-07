@@ -1,5 +1,5 @@
 import React from "react"
-import { Image, StyleSheet, TouchableOpacity } from "react-native"
+import { Image, StyleSheet, TouchableOpacity, View } from "react-native"
 import { useNavigation } from "@react-navigation/native"
 
 type PropsType = {color : string};
@@ -9,21 +9,25 @@ const BackButton = (props : PropsType) => {
     const {color} = props;
     if(color === 'white')
         return(
-            <TouchableOpacity onPress = {navigation.goBack}>
-                <Image 
-                style = {styles.backButton}
-                source = {require('../../assets/icons/backWhite.png')}
-                />
-        </TouchableOpacity>
+            <View style = {styles.backButtonContainer}>
+                <TouchableOpacity onPress = {navigation.goBack}>
+                    <Image 
+                    style = {styles.backButton}
+                    source = {require('../../assets/icons/backWhite.png')}
+                    />
+                </TouchableOpacity>
+            </View>
         )
     else
         return(
-            <TouchableOpacity onPress = {navigation.goBack}>
-                <Image 
-                style = {styles.backButton}
-                source = {require('../../assets/icons/backBlack.png')}
-                />
-        </TouchableOpacity>
+            <View style = {styles.backButtonContainer}>
+                <TouchableOpacity onPress = {navigation.goBack}>
+                    <Image 
+                    style = {styles.backButton}
+                    source = {require('../../assets/icons/backBlack.png')}
+                    />
+                </TouchableOpacity>
+            </View>
     );
 }
 
@@ -31,10 +35,15 @@ const styles = StyleSheet.create({
     backButton : {
         width : 25,
         height : 25,
+    },
+    backButtonContainer : {
+        zIndex : 5,
         position : 'absolute',
         top : 30,
         left : 25,
-    },
+        width : 25,
+        height : 25,
+    }
 })
 
 export default BackButton;
