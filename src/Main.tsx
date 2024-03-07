@@ -31,7 +31,7 @@ const Main =  () =>{
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState<boolean>(true);
     
-     const role_id: string = '103' //change this to '103' to navigate to Trainee screen
+    //  const role_id: string = '103' //change this to '103' to navigate to Trainee screen
     console.log('role id ----------',role_id);
     console.log('trainee_id ----------',trainee_id);
     console.log('user_id ----------',user_id);
