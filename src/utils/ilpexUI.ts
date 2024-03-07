@@ -24,6 +24,8 @@ const ilpex = {
     fontMedium: 'Poppins-Medium',
     fontRegular: 'Poppins-Regular',
     fontThin: 'Poppins-Thin',
+    fontExtraLightItalic:'Poppins-ExtraLightItalic',
+    fontLightItalic:'Poppins-LightItalic'
 }
 
 export default ilpex;
