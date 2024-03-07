@@ -6,12 +6,25 @@ import { useEffect, useState } from "react";
 import { getHook } from "../../network/getHook/getHook";
 import DayWiseProgressBarProgress from "../../components/DayWiseProgressBarProgress";
 import React from "react";
-import Daywise from "../../components/DaywiseCard";
-import { useSelector } from "react-redux";
 import { getItem } from "../../utils/utils";
 import Constants from "../../utils/Constants";
+import Daywise from "../../components/DaywiseCard";
+import { useSelector } from "react-redux";
+import { percipioReportAPI } from "./percipioReportAPI";
 
 const TraineeHomeScreen = () => {
+  const user_id = useSelector((state: any) => state.userDetailsReducer.user_id);
+
+    useEffect(() => {
+      const percipioReport = async () =>{
+          const {success, responseData} = await percipioReportAPI(Number(user_id));
+          if(success){
+            console.log("percipio learning activity updated");
+          }
+      }
+
+      percipioReport();
+    }, []);
 
     return ( 
         <ScrollView>
@@ -109,6 +122,7 @@ const AssessmentDisplay =()=>{
     useEffect(() => {
       const getAssessments= async () => {
         try {
+          
           const {responseData} = await getHook(
             `/api/v3/${user_id}/assessment`,
           );
@@ -123,6 +137,7 @@ const AssessmentDisplay =()=>{
     return (
         <View>
           <FlatList
+            scrollEnabled={false}
             showsHorizontalScrollIndicator={false}
             horizontal={false}
             data={assessmentList.assessments}

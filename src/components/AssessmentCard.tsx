@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
 
     subText:{
         fontSize: 18,
-        marginTop: 5,
+        marginTop: 0,
         fontFamily: ilpex.fontMedium
     },
 
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginTop: 10
+        marginTop: 5
     },
 
     date:{

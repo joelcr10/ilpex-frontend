@@ -38,7 +38,7 @@ export async function loginUser({
     }
     
     loginResp = logInResponse.data;
-    console.log(loginResp.id);
+    console.log("login resp",loginResp.id);
  
     // if (statusCode === '200') setStringItem(Constants.IS_LOGIN, 'true');
 
