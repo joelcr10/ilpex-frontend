@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigation } from '@react-navigation/native';
 import { loginUser } from './AuthenticationHook';
 import { getItem, setStringItem } from '../../utils/utils';
 import Constants from '../../utils/Constants';
