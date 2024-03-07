@@ -24,12 +24,12 @@ const Main =  () =>{
 
   // dotenv.config();
     const isLoggedIn = useSelector((state: any) => state.userReducer.isLoggedIn);
-    const role_id = useSelector((state: any) => state.userDetailsReducer.role_id);
+    //const role_id = useSelector((state: any) => state.userDetailsReducer.role_id);
     // const isLoggedIn = false;
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState<boolean>(true);
     
-    // const role_id: string = '103' //change this to '103' to navigate to Trainee screen
+     const role_id: string = '103' //change this to '103' to navigate to Trainee screen
     console.log('role id ----------',role_id);
 
     useEffect(() => {

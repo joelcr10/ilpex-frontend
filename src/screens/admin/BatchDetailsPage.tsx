@@ -3,8 +3,11 @@ import { batchDetails } from "../../network/ApiHook";
 import ChartPie from "../../components/PieChartComponent";
 import { useEffect, useState } from "react";
 import { getHook } from "../../network/getHook/getHook";
+import ChartPieShimmer from "../../components/PieChartShimmer";
 import IconButtonComponent from "../../components/IconButton";
+import ChartPieHeaderShimmer from "../../components/pieChartHeaderShimmer";
 const BatchDetailsPage =()=>{
+    const [isLoading,setLoading] =useState(true);
     const [feedList, setStoryList] = useState<any>([]);
     const [batchData,setBatchData] = useState<any>([]);
     const [currentDate,setCurrentDate] = useState<any>([]);
@@ -74,8 +77,14 @@ const BatchDetailsPage =()=>{
       const getStory = async () => {
         try {
           const {responseData, errorMessage} = await getHook('/api/v2/batch/1')
-          console.log(responseData);
-          setBatchData(responseData);
+          console.log('this is data',responseData);
+          if(responseData){
+            console.log("got the response");
+            setBatchData(responseData);
+            setLoading(false);
+          }
+          // setBatchData(responseData);
+          
         } catch (error) {
           console.error('Error:', error);
         }
@@ -91,7 +100,8 @@ return(
             <View style ={styles.body1}>
               <View>
 
-                {/* <View style ={styles.detail}>
+              {isLoading && <ChartPieHeaderShimmer/>} 
+               {!isLoading && <><View style ={styles.detail}>
                     <Text style={{fontWeight:'700',color:'black',fontSize:28,marginBottom:20}}>{batchData.batch_details.batch_name}</Text>
                     <View style={{justifyContent:'flex-start'}}>
                     <View style ={styles.eachDetail}>
@@ -111,15 +121,16 @@ return(
                     <Text style={{marginLeft:30,color:'#8F00FF',fontWeight:'500'}}>{currentDate.current_day}                   </Text>
                     </View>
                     </View>
-                </View> */}
-                {/* <View>
+                </View></>}
+              
+                 {/* <View>
                    <IconButtonComponent  name={'Report'} onPress={()=>{}} buttonPressed={false} icon={'description'}/>
                 </View> */}
-              <ChartPie  chartName={'Assesment Score'} excellent={feedList.excellent} good={feedList.good} poor={feedList.poor} option1="Excellent" option2="Good" option3="Poor"/>
-              <ChartPie  chartName={'Course Completion'} excellent={courseCompletion.onTrack} good={'0'} poor={courseCompletion.laggingBehind} option1="Completed" option2="Partial" option3="Incomplete"/>
-                
               </View>
-                
+              {isLoading&&<><ChartPieShimmer/>
+              <ChartPieShimmer/></>}
+              {!isLoading&&<><ChartPie chartName={'Assesment Score'} excellent={feedList.excellent} good={feedList.good} poor={feedList.poor} option1="Excellent" option2="Good" option3="Poor" />
+              <ChartPie chartName={'Course Completion'} excellent={courseCompletion.onTrack} good={'0'} poor={courseCompletion.laggingBehind} option1="Completed" option2="Partial" option3="Incomplete" /></>}
             </View>
         
         </View>
