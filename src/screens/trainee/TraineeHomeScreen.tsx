@@ -124,7 +124,6 @@ const AssessmentDisplay =()=>{
     const [assessmentList, setAssessmentList] = useState<any>([]);
     const user_id = useSelector((state: any) => state.userDetailsReducer.user_id);
 
-
     useEffect(() => {
       const getAssessments= async () => {
         try {
