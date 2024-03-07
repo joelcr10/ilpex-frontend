@@ -11,7 +11,9 @@ const Daywise = (props: PropsType) => {
 
   const navigation: any = useNavigation();
   const goToDay = (Day: number) =>{
-    navigation.navigate("Day",{Day});
+    if(status){
+      navigation.navigate("Day",{Day});
+    }
 }
 
 
