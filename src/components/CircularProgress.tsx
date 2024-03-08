@@ -4,18 +4,19 @@ import ProgressCircle from 'react-native-progress-circle'
  
  
 type ProgressProps = {
-    completeStatus:number
+    completeStatus:number;
+    color:string;
   };
  
  
 const CircularProgress= (Props :ProgressProps) => {
-  const {completeStatus} = Props;
+  const {completeStatus, color} = Props;
   return (
     <ProgressCircle
     percent={completeStatus}
     radius={30}
     borderWidth={8}
-    color="#D155FD"
+    color={color}
     shadowColor="#FAFAFA"
     bgColor="#FAFAFA"
 >

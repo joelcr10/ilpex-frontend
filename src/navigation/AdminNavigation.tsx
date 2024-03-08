@@ -3,6 +3,8 @@ import BatchesScreen from "../screens/admin/BatchesScreen";
 import BottomTabNavigation from "./BottomTabNavigation";
 import TraineeProfileScreen from "../screens/trainee/TraineeProfileScreen";
 import BatchDetailsPage from "../screens/admin/BatchDetailsPage";
+import CreateUserScreen from "../screens/admin/CreateUserScreen";
+import TraineeProileAnalysisScreen from "../screens/admin/TraineeProfileAnalysisScreen";
 
 const Stack = createNativeStackNavigator();
 const AdminNavigation = () =>{
@@ -44,7 +46,20 @@ const AdminNavigation = () =>{
                         headerShown: false
                     }}
                 />
-                
+                <Stack.Screen 
+                    name="Create User"
+                    component={CreateUserScreen}
+                    options={{
+                        headerShown: false
+                    }}
+                />
+                <Stack.Screen
+                    name = "TraineeProileAnalysisScreen"
+                    component = {TraineeProileAnalysisScreen}
+                    options = {{
+                        headerShown : false
+                    }}
+                />
             </Stack.Navigator>
         )
 }
