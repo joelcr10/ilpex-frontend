@@ -48,7 +48,7 @@ export async function createUser({
     }
     
     createUserResp = createUserResponse.data;
-    console.log("createUserResp resp",createUserResp.id);
+    console.log("createUserResp resp",createUserResp);
  
 
 
