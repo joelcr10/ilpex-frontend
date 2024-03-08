@@ -8,6 +8,7 @@ import Constants from '../utils/Constants';
 import React from "react";
 import ilpex from "../utils/ilpexUI";
 import { useNavigation } from "@react-navigation/native";
+import { userDetails } from "../context/userDetailsSlice";
 
 type PropsType = {color : string};
 const ThreeDots = (props : PropsType) => {
@@ -38,6 +39,16 @@ const ThreeDots = (props : PropsType) => {
     
     const handleLogout = () => {
         setStringItem(Constants.IS_LOGIN, 'false');
+        setStringItem(Constants.ROLE_ID, '' );
+        setStringItem(Constants.TOKEN, '');
+        setStringItem(Constants.TRAINEE_ID, '');
+        setStringItem(Constants.USER_ID,'');
+        dispatch(userDetails({
+            token : '',
+            user_id: '',
+            role_id: '',
+            trainee_id:'',
+        }));
         dispatch(userLogin(false));
     }
 
