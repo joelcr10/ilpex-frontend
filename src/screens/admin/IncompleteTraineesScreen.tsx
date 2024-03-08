@@ -1,72 +1,81 @@
-import React, { useState } from "react";
-import { FlatList, ScrollView, StyleSheet, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
 import TraineeCard from "../../components/TraineeCard";
 import TraineeCardShimmer from "../../components/loading/TraineeCardShimmer";
+import ilpex from "../../utils/ilpexUI";
+import { useSelector } from "react-redux";
+import { getHook } from "../../network/getHook/getHook";
+import IconButtonComponent from "../../components/IconButton";
 
 const IncompleteTraineesScreen = () => {
 
     const [isLoading, setLoading] = useState(true);     //To the Page designer, set it to false for proper working
     
     // Replace the below data part with API call
-    const data = [
-        {
-            id : '1',
-            traineeName : 'Joel C Raju',
-            batchName : 'ILP 2023-24 B2'
-        },
-        {
-            id : '2',
-            traineeName : 'Nigin N Manayil',
-            batchName : 'ILP 2023-24 B2'
-        },
-        {
-            id : '3',
-            traineeName : 'Thimna Raphel',
-            batchName : 'ILP 2023-24 B2'
-        },
-        {
-            id : '4',
-            traineeName : 'Elena Maria Varghese',
-            batchName : 'ILP 2023-24 B2'
-        },
-        {
-            id : '5',
-            traineeName : 'Sreejaya V S',
-            batchName : 'ILP 2023-24 B2'
-        },
-        {
-            id : '6',
-            traineeName : 'Ashik George',
-            batchName : 'ILP 2023-24 B2'
-        },
-        {
-            id : '5',
-            traineeName : 'Nebil V',
-            batchName : 'ILP 2023-24 B2'
-        },
-    ]
+    const TraineesDisplay = () => {
+        const trainee_id = useSelector((state: any) => state.userDetailsReducer.trainee_id);
+        const [traineeList, setTraineeList] = useState<any[]>([]);
+        const [isLoading, setLoading] = useState(false);
+      
+      
+          useEffect(() => {
+            const getDayCards= async () => {
+              try {
+                const {responseData} = await getHook(
+                  `/api/v2/batch/1/pending/day/1`,
+                );
+                if(responseData)
+                {
+                  setLoading(true);
+                }
+                setTraineeList(responseData);
+                
+              
+              } catch (error) {
+                console.error('Error:', error);
+              }
+            };
+            getDayCards();
+          }, []);
+          return (
+            <ScrollView>
+            
+                         <FlatList
+                         scrollEnabled={false}
+                        showsVerticalScrollIndicator={false}
+                        data={traineeList.IncompleteTraineeList}
+                        renderItem={({ item }) => (
+                            <TraineeCard
+                            traineeName={item.user_name}
+                            batchName={item.Batch}
+                            />
+                        )}
+                        keyExtractor={item => item.id}
+                        />
+           
+            
+          </ScrollView>
+      
+        );
+      }
 
     return (
         <ScrollView>
             <View style = {styles.pageContainer}>
                     {/* Below container is the main container for all the cards. Try not to modify. Adjust Margin Top to change the distance between the white part and the purple part. Remove this comment when designing the page.*/}
                     <View style = {styles.innerContainer}>
+                    <Text style={styles.incompleteText}>Incomplete</Text>
+                    <IconButtonComponent name={"Send"} onPress={function (): void {} } buttonPressed={false} icon={"send"}></IconButtonComponent>          
+                    <Text style={styles.traineeText}>Trainees</Text>
                     {!isLoading ? (
                         <TraineeCardShimmer/>
-                        ) : (
-                        <FlatList
-                        showsVerticalScrollIndicator={false}
-                        data={data}
-                        renderItem={({ item }) => (
-                            <TraineeCard
-                            traineeName={item.traineeName}
-                            batchName={item.batchName}
-                            />
-                        )}
-                        keyExtractor={item => item.id}
-                        />
-                    )}            
+                        ) : (<TraineesDisplay></TraineesDisplay>
+
+                    )}
+                    <IconButtonComponent name={"Send"} onPress={function (): void {} } buttonPressed={false} icon={"send"}></IconButtonComponent>          
+  
                     </View>
+                    
             </View>
         </ScrollView>
     );
@@ -81,7 +90,7 @@ const styles = StyleSheet.create({
     innerContainer : {
         backgroundColor : 'white',
         height : '100%',
-        marginTop : '15%',
+        marginTop : '25%',
         borderTopStartRadius : 50,
         borderTopEndRadius : 50,
         paddingTop : '10%',
@@ -94,6 +103,21 @@ const styles = StyleSheet.create({
         fontSize : 50,
         marginTop : 80,
         fontFamily : 'Poppins-SemiBold',
+    },
+    traineeText:{
+        fontFamily:ilpex.fontRegular,
+        color:ilpex.black,
+        fontSize:17,
+
+    },
+    incompleteText:{
+        fontFamily:ilpex.fontSemiBold,
+        color:ilpex.black,
+        fontSize:27,
+        textAlign:'center',
+        marginBottom:5,
+     
+
     },
     shimmer:{
         height : 90,
