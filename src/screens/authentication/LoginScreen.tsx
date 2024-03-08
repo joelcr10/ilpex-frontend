@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigation } from '@react-navigation/native';
 import { loginUser } from './AuthenticationHook';
 import { getItem, setStringItem } from '../../utils/utils';
 import Constants from '../../utils/Constants';
@@ -23,12 +22,10 @@ const LoginScreen = () => {
       try {
         
         setButtonpressed(true)
-        
         const { success, statusCode, loginResp, errorMessage } = await loginUser({
           loginEmail,
           loginPassword,
         });
-  
         console.log(loginResp.user_id);
   
         if (success) {
@@ -52,7 +49,6 @@ const LoginScreen = () => {
           setStringItem(Constants.ROLE_ID,loginResp.role_id);
           const role_id = await getItem(Constants.ROLE_ID)
           console.log('role id is',role_id);
-
 
           setStringItem(Constants.TRAINEE_ID,loginResp.trainee_id);
           const trainee_id = await getItem(Constants.TRAINEE_ID);

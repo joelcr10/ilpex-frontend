@@ -6,12 +6,27 @@ import { useEffect, useState } from "react";
 import { getHook } from "../../network/getHook/getHook";
 import DayWiseProgressBarProgress from "../../components/DayWiseProgressBarProgress";
 import React from "react";
-import Daywise from "../../components/DaywiseCard";
-import { useSelector } from "react-redux";
 import { getItem } from "../../utils/utils";
 import Constants from "../../utils/Constants";
+import Daywise from "../../components/DaywiseCard";
+import { useSelector } from "react-redux";
+import { percipioReportAPI } from "./percipioReportAPI";
+import ShimmerDaywise from "../../components/loading/DayWiseCardShimmer";
+import ShimmerAssessmentCard from "../../components/loading/AssessmentCardShimmer";
 
 const TraineeHomeScreen = () => {
+  const user_id = useSelector((state: any) => state.userDetailsReducer.user_id);
+
+    useEffect(() => {
+      const percipioReport = async () =>{
+          const {success, responseData} = await percipioReportAPI(Number(user_id));
+          if(success){
+            console.log("percipio learning activity updated");
+          }
+      }
+
+      percipioReport();
+    }, []);
 
     return ( 
         <ScrollView>
@@ -45,9 +60,7 @@ const TraineeHomeScreen = () => {
 const UserName =()=>{
 
     const [userName, setUserName] = useState<any[]>([]);
-    const user_id = useSelector((state: any) => state.userDetailsReducer.user_id);
-    console.log("UserID--------------- ", user_id);
-    
+    const user_id = useSelector((state: any) => state.userDetailsReducer.user_id);    
     useEffect(() => {
       const getUserName= async () => {
         try {
@@ -70,18 +83,20 @@ const UserName =()=>{
 }
 const DaysDisplay =()=>{
   const trainee_id = useSelector((state: any) => state.userDetailsReducer.trainee_id);
-  
+  const [dayCardList, setDayCardList] = useState<any[]>([]);
+  const [isLoading, setLoading] = useState(false);
 
-
-
-    const [dayCardList, setDayCardList] = useState<any[]>([]);
 
     useEffect(() => {
       const getDayCards= async () => {
         try {
           const {responseData} = await getHook(
-            `/api/v3/trainee/1/days`,
+            `/api/v3/trainee/${trainee_id}/days`,
           );
+          if(responseData)
+          {
+            setLoading(true);
+          }
           setDayCardList(responseData.data);
           
         
@@ -92,7 +107,16 @@ const DaysDisplay =()=>{
       getDayCards();
     }, []);
     return (
-        <View>
+      <ScrollView>
+        { (!isLoading)?
+        (<View>
+          <ShimmerDaywise></ShimmerDaywise>
+          <ShimmerDaywise></ShimmerDaywise>
+          <ShimmerDaywise></ShimmerDaywise>
+          <ShimmerDaywise></ShimmerDaywise>
+
+        </View>):
+        (<View>
           <FlatList
             showsHorizontalScrollIndicator={false}
             scrollEnabled={false}
@@ -103,21 +127,30 @@ const DaysDisplay =()=>{
           }
             keyExtractor={item => item.day}
           />
-        </View>
+        </View>)
+}
+        </ScrollView>
+
       );
 }
 
 const AssessmentDisplay =()=>{
     const [assessmentList, setAssessmentList] = useState<any>([]);
     const user_id = useSelector((state: any) => state.userDetailsReducer.user_id);
+    const [isLoading, setLoading] = useState(false);
 
 
     useEffect(() => {
       const getAssessments= async () => {
         try {
+          
           const {responseData} = await getHook(
             `/api/v3/${user_id}/assessment`,
           );
+          if(responseData)
+          {
+            setLoading(true);
+          }
           setAssessmentList(responseData);
         
         } catch (error) {
@@ -128,13 +161,24 @@ const AssessmentDisplay =()=>{
     }, []);
     return (
         <View>
+                  { (!isLoading)?
+        (<View>
+          < ShimmerAssessmentCard></ShimmerAssessmentCard>
+          < ShimmerAssessmentCard></ShimmerAssessmentCard>
+  
+      
+
+        </View>):
+        (
           <FlatList
+            scrollEnabled={false}
             showsHorizontalScrollIndicator={false}
             horizontal={false}
             data={assessmentList.assessments}
             renderItem={({ item }) => <AssessmentCard assessment_id={item.assessment_id} batchName={assessmentList.Batch} assessmentName={item.assessment_name} dueDate={item.end_date} status={true}/>}
             keyExtractor={item => item.id}
-          />
+          />)
+        }
         </View>
       );
 }

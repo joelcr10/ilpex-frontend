@@ -12,6 +12,7 @@ import { useNavigation } from "@react-navigation/native";
 import BatchCardShimmer from "../../components/loading/BatchCardShimmer";
 import { getItem } from "../../utils/utils";
 import Constants from "../../utils/Constants";
+import { batch } from "react-redux";
 
 
 const BatchesScreen = ()=>{
@@ -105,7 +106,7 @@ const styles = StyleSheet.create({
     },
     createButton : {
         marginBottom:30,
-        marginTop:530,
+        marginTop:500,
         marginStart:300,
         position:'absolute'
     },

@@ -1,6 +1,5 @@
 import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useEffect, useState } from "react";
-import { getCourseHook } from "./traineeDay/getCourseHook";
 import CourseCard from "../../components/CourseCard";
 import { useRoute } from "@react-navigation/native";
 import ilpex from "../../utils/ilpexUI";
@@ -10,25 +9,38 @@ import IconButton from "../../components/IconButton";
 import FileUploadField from "../../components/FileUploadField";
 import React from "react";
 import { getHook } from "../../network/getHook/getHook";
+import ShimmerPlaceholder from "react-native-shimmer-placeholder";
+import LinearGradient from "react-native-linear-gradient";
+import BackButton from "../../components/BackButton";
+import ThreeDots from "../../components/ThreeDots";
+import CourseCardShimmer from "../../components/loading/CourseCardShimmer";
+import Constants from "../../utils/Constants";
+import { getItem } from "../../utils/utils";
 
 
 
 const TraineeDayScreen=()=>{
 
 
-    // const route:any = useRoute();
-    // const day=route.params.number;
-
-    const day_id=1;
-    const trainee_id=8;
+    const route:any = useRoute();
+    const day_id=route.params.Day;
 
 
-    const [isLoading, setLoading] = useState(false);
+    // const day_id=1;
+    // const trainee_id=6;
+
+
+
+
+    const [isLoading, setLoading] = useState(true);
 
     const [courselist, setCourse] = useState<any[]>([]);
 
+
     useEffect(() => {
         const getAssessment = async () => {
+            const trainee_id=await getItem(Constants.TRAINEE_ID);
+            console.log(trainee_id);
           try {
             const {responseData, errorMessage} = await getHook(`/api/v3/trainee/${trainee_id}/course/day/${day_id}`);
             setLoading(false);
@@ -42,27 +54,39 @@ const TraineeDayScreen=()=>{
         }, []);
 
     return(
+        <ScrollView>
         <View>
             <View style={{backgroundColor:ilpex.main}}>
+                <BackButton color='white'/>
                 <View style={styles.topbar}>
+                   
                     <Text style={styles.headerText}>{`Day ${day_id}`}</Text>
                 </View>
                     <View style={styles.container}>
-                        <FileUploadField/>
+                        {/* <FileUploadField/> */}
                         <Text style={styles.subTitle}>Learning Courses</Text>
-                    {!isLoading&&
+                    {isLoading &&
+                       <CourseCardShimmer/>
+                    }
+                    {!isLoading &&
+                    
+                    <View>
                     <FlatList
-                        horizontal={false}
-                        scrollEnabled={true}
+                        // horizontal={false}
+                        scrollEnabled={false}
                         showsVerticalScrollIndicator={false}
                         data={courselist.message}
                         renderItem={({item})=><CourseCard name={item.course_name} duration={item.course_duration} status={item.status}/>}
+                        keyExtractor={item=>item.course_id}
                     />
+                </View>
+                // </ScrollView>
                     }
-                    </View>
-
+                </View>
+                <ThreeDots color='white'/>
             </View>
         </View>
+        </ScrollView>
     )
 }
 
