@@ -15,13 +15,13 @@ const TraineeProfileScreen = () => {
     const [traineeName, setTraineeName] = useState<any[]>([]);
     const [traineeBatch, setTraineeBatch] = useState<any[]>([]);
     const [currentDay, setCurrentDay] = useState(2);
-    const [averageAssessmentScore, setAverageAssessmentScore] = useState<any[] | number>([]);
+    const [averageAssessmentScore, setAverageAssessmentScore] = useState<number>(0);
     const [marksIndicatorColor, setMarkIndicatorColor] = useState('black');
     const [marksFeedback, setMarksFeedBack] = useState('placeholder');
     const [resultID, setResultID] = useState<any[]>([]);
     const [highScore, setHighScore] = useState<any[]>([]);
-    const [isLoadingProfile, setLoadingProfile] = useState(false);
-    const [batchId, setBatchId] = useState(999);
+    const [isLoadingCurrentDay, setLoadingCurrentDay] = useState(false);
+    let batchId : number = 0; 
 
     useEffect(() => {
         const getTraineeProfile = async() => {
@@ -36,8 +36,9 @@ const TraineeProfileScreen = () => {
                 {
                     setTraineeName(responseData.profileDetails.user.user_name);
                     setTraineeBatch(responseData.profileDetails.batch.batch_name);
-                    setBatchId(responseData.profileDetails.batch_id);
-                    setLoadingProfile(true);
+                    batchId = responseData.profileDetails.batch_id;
+
+                    console.log("batch id set",responseData.profileDetails.batch_id);
                 }
             } catch(error) {
                 console.log('Error', error);
@@ -55,7 +56,7 @@ const TraineeProfileScreen = () => {
                     if(responseData.scoreDetails.ScoreAverage === null)
                         setAverageAssessmentScore(0)
                     else
-                        setAverageAssessmentScore(responseData.scoreDetails.ScoreAverage)
+                        setAverageAssessmentScore(responseData.scoreDetails.ScoreAverage);
                     
                     const resultIds: string[] = [];
                     const highScores: string[] = [];
@@ -63,6 +64,8 @@ const TraineeProfileScreen = () => {
                     responseData.scoreDetails.scores.forEach((score : any, index : number) => {
                         resultIds.push(`A${index + 1}`);
                         highScores.push(score.high_score);
+                        console.log(`RESULT ID : A${index + 1}, HIGH SCORE : ${score.highScore}`);
+
                     });
                     
                     setResultID(resultIds);
@@ -101,20 +104,28 @@ const TraineeProfileScreen = () => {
                 const isoString = currentDate.toISOString();
                 const dateString = isoString.substring(0, isoString.indexOf('T'));
                 console.log("CurrentDate = ", dateString);
-
+                console.log("Batch ID = ", batchId);
                 const {responseData, errorMessage} = await getHook(`/api/v3/batch/${batchId}/day/${dateString}`);
                 if(responseData)
                 {
                     setCurrentDay(responseData.current_day);
+                    console.log("Current Day Is ----------",responseData.current_day )
+                    setLoadingCurrentDay(true);
                 }
             } catch(error) {
                 console.log('Error', error);
             }
         };
 
-        getTraineeProfile();
-        getTraineeScores();
-        getCurrentDay();
+        const traineeProfileLoader = async () =>{
+           await getTraineeProfile();
+           await getTraineeScores();
+           await getCurrentDay();
+        }
+
+        traineeProfileLoader();
+
+        
     }, []);
 
     const getRandomColor = () => {
@@ -131,7 +142,7 @@ const TraineeProfileScreen = () => {
     return(
         <ScrollView>
         {
-            (!isLoadingProfile) ? (
+            (!isLoadingCurrentDay) ? (
                 <TraineeProfileShimmer/>
             ) : (
                 <View style = {styles.pageContainer}>
