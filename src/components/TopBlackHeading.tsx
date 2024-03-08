@@ -6,7 +6,7 @@ import ilpex from "../utils/ilpexUI";
 type PropsType = {heading:string}
 
 
-const BlackHeading = (props:PropsType) => {
+const TopBlackHeading = (props:PropsType) => {
 
 
  const {heading} = props;
@@ -23,19 +23,19 @@ return(
 const styles = StyleSheet.create({
 
 
-  background:{
-    alignContent:'center',
-    justifyContent:'center',
-    alignItems:'center'
-  },
-  headingStyle: {
-      fontFamily:ilpex.fontRegular,
-      fontWeight:'700',
-      fontSize:40,
-      color:ilpex.black,
-      top:200
+    background:{
+      alignContent:'center',
+      justifyContent:'center',
+      alignItems:'center'
+    },
+    headingStyle: {
+        fontFamily:ilpex.fontMedium,
+        fontWeight:'600',
+        fontSize:40,
+        color:ilpex.black,
+        marginTop:100
     },
   });
 
 
-  export default BlackHeading;
+  export default TopBlackHeading;

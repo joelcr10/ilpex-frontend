@@ -15,7 +15,7 @@ const TraineeProfileScreen = () => {
     const [traineeName, setTraineeName] = useState<any[]>([]);
     const [traineeBatch, setTraineeBatch] = useState<any[]>([]);
     const [currentDay, setCurrentDay] = useState(2);
-    const [averageAssessmentScore, setAverageAssessmentScore] = useState<number>(0);
+    const [averageAssessmentScore, setAverageAssessmentScore] = useState<any[]>([]);
     const [marksIndicatorColor, setMarkIndicatorColor] = useState('black');
     const [marksFeedback, setMarksFeedBack] = useState('placeholder');
     const [resultID, setResultID] = useState<any[]>([]);
@@ -53,19 +53,15 @@ const TraineeProfileScreen = () => {
                 if(responseData)
                 {
                     console.log("Marks = ", responseData);
-                    if(responseData.scoreDetails.ScoreAverage === null)
-                        setAverageAssessmentScore(0)
-                    else
-                        setAverageAssessmentScore(responseData.scoreDetails.ScoreAverage);
-                    
+                    const averageScore = responseData.scoreDetails.scoreAverage;
+                    setAverageAssessmentScore(averageScore);
                     const resultIds: string[] = [];
                     const highScores: string[] = [];
-
-                    responseData.scoreDetails.scores.forEach((score : any, index : number) => {
+                    const scores = responseData.scoreDetails.scores;
+                    scores.forEach((score: any, index: number) => {
                         resultIds.push(`A${index + 1}`);
                         highScores.push(score.high_score);
-                        console.log(`RESULT ID : A${index + 1}, HIGH SCORE : ${score.highScore}`);
-
+                        console.log(`RESULT ID : A${index + 1}, HIGH SCORE : ${score.high_score}`);
                     });
                     
                     setResultID(resultIds);
@@ -118,8 +114,8 @@ const TraineeProfileScreen = () => {
         };
 
         const traineeProfileLoader = async () =>{
+            await getTraineeScores();
            await getTraineeProfile();
-           await getTraineeScores();
            await getCurrentDay();
         }
 
