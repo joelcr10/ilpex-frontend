@@ -91,7 +91,7 @@ const DaysDisplay =()=>{
       const getDayCards= async () => {
         try {
           const {responseData} = await getHook(
-            `/api/v3/trainee/1/days`,
+            `/api/v3/trainee/${trainee_id}/days`,
           );
           if(responseData)
           {

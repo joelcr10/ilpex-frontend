@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     },
     createButton : {
         marginBottom:30,
-        marginTop:530,
+        marginTop:500,
         marginStart:300,
         position:'absolute'
     },

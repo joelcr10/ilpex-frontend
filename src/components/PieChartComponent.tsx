@@ -90,18 +90,19 @@ const ChartPie = (props:chart) => {
 
 const styles = StyleSheet.create({
   scrollContainer: {
-    flex: 1,
+     flex: 1,
   },
   container: {
-    flex: 1,
+    // flex: 1,
     // borderColor:'black',
     // borderWidth:3,
-    marginTop:30,
+    marginTop:10,
     marginHorizontal:30,
     borderRadius:30,
     elevation:8,
     backgroundColor:"white",
-    marginBottom : 20
+    marginBottom:10,
+  
   },
   title: {
     fontSize: 24,
