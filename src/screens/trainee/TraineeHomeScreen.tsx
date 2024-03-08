@@ -85,27 +85,28 @@ const DaysDisplay = () => {
   const [isLoading, setLoading] = useState(false);
 
 
-  useEffect(() => {
-    const getDayCards = async () => {
-      try {
-        const { responseData } = await getHook(
-          `/api/v3/trainee/${trainee_id}/days`,
-        );
-        if (responseData) {
-          setLoading(true);
+    useEffect(() => {
+      const getDayCards= async () => {
+        try {
+          const {responseData} = await getHook(
+            `/api/v3/trainee/${trainee_id}/days`,
+          );
+          if(responseData)
+          {
+            setLoading(true);
+          }
+          setDayCardList(responseData.data);
+          
+        
+        } catch (error) {
+          console.error('Error:', error);
         }
-        setDayCardList(responseData.data);
-
-
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    };
-    getDayCards();
-  }, []);
-  return (
-    <ScrollView>
-      {(!isLoading) ?
+      };
+      getDayCards();
+    }, []);
+    return (
+      <ScrollView>
+        { (!isLoading)?
         (<View>
           <ShimmerDaywise></ShimmerDaywise>
           <ShimmerDaywise></ShimmerDaywise>
@@ -135,7 +136,6 @@ const AssessmentDisplay = () => {
   const [assessmentList, setAssessmentList] = useState<any>([]);
   const user_id = useSelector((state: any) => state.userDetailsReducer.user_id);
   const [isLoading, setLoading] = useState(false);
-
 
 
   useEffect(() => {
