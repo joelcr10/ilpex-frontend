@@ -67,6 +67,8 @@ const TraineeScreen = () => {
                             <TraineeCard
                             traineeName={item.user.user_name}
                             batchName={item.batch.batch_name}
+                            traineeId = {item.trainee_id}
+                            userId = {item.user_id}
                             />
                         )}
                         keyExtractor={item => item.id}
@@ -82,7 +84,8 @@ const TraineeScreen = () => {
 const styles = StyleSheet.create({
     pageContainer : {
         backgroundColor : '#8518FF',
-        height : 850,
+        minHeight : 850,
+        marginBottom : 40,
     },
     innerContainer : {
         backgroundColor : 'white',
