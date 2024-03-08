@@ -27,13 +27,13 @@ const styles = StyleSheet.create({
     alignContent:'center',
     justifyContent:'center',
     alignItems:'center'
+    
   },
   headingStyle: {
       fontFamily:ilpex.fontRegular,
       fontWeight:'700',
       fontSize:40,
       color:ilpex.black,
-      // top:200
     },
   });
 
