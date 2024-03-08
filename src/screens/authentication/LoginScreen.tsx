@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from './AuthenticationHook';
@@ -10,6 +10,7 @@ import BlackHeading from '../../components/BlackHeading';
 import InputField from '../../components/InputField';
 import Button from '../../components/Button';
 import { userDetails } from '../../context/userDetailsSlice';
+import { Link } from '@react-navigation/native';
 
 const LoginScreen = () => {
 
@@ -72,8 +73,8 @@ const LoginScreen = () => {
     };
     return ( 
         <View >
-            <BlackHeading heading='Login'/>
             <View style={styles.inputfieldview}>
+              <BlackHeading heading='Login'/>
                 <InputField 
                   label='User' 
                   isPassword={false} 
@@ -86,6 +87,10 @@ const LoginScreen = () => {
                     value={loginPassword}
                     onChangeText={setloginPassword}
                   />
+                  <View style={{alignItems:'center'}}>
+                    <Link to={{screen:'Forgot Password'}}>Forgot Password?</Link>
+                  </View>
+
                   <View style={styles.buttonview}>
                     <Button 
                       name='Login'

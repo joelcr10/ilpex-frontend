@@ -4,6 +4,8 @@ import BlackHeading from "../../components/BlackHeading";
 import ilpex from "../../utils/ilpexUI";
 import InputField from "../../components/InputField";
 import Button from "../../components/Button";
+import { useNavigation } from '@react-navigation/native';
+
 
 
 
@@ -12,9 +14,13 @@ const ForgotPasswordScreen = ()=>{
 
     const [email,setEmail] = useState('');
     const [buttonPressed, setButtonpressed] = useState(false);
+    const navigation:any = useNavigation();
+
 
     const handleForgotPassword=()=>{
         setButtonpressed(true)
+        navigation.navigate('Reset Password', { email:email });
+
     }
 
    return(
