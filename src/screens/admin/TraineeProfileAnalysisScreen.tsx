@@ -5,12 +5,14 @@ import BackButton from "../../components/BackButton";
 import ThreeDots from "../../components/ThreeDots";
 import BarGraph from "../../components/BarChart";
 import { getHook } from "../../network/getHook/getHook";
-import { getItem } from "../../utils/utils";
-import Constants from "../../utils/Constants";
-import { useSelector } from "react-redux";
 import TraineeProfileShimmer from "../../components/loading/TraineeProfileShimmer";
+import { useRoute } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 
-const TraineeProfileScreen = () => {
+const TraineeProileAnalysisScreen = () => {
+
+    const route:any = useRoute();
+    const navigation = useNavigation();
 
     const [traineeName, setTraineeName] = useState<any[]>([]);
     const [traineeBatch, setTraineeBatch] = useState<any[]>([]);
@@ -27,10 +29,7 @@ const TraineeProfileScreen = () => {
         const getTraineeProfile = async() => {
             try {
                 
-                const role_id = await getItem(Constants.ROLE_ID);
-                const user_id = await getItem(Constants.USER_ID);
-                console.log('Role ID ------', role_id)
-                console.log('User ID ------', user_id)
+                const user_id = route.params.user_id;
                 const {responseData, errorMessage} = await getHook(`/api/v3/profile/${user_id}`);
                 if(responseData)
                 {
@@ -47,7 +46,7 @@ const TraineeProfileScreen = () => {
 
         const getTraineeScores = async() => {
             try {
-                const trainee_id = await getItem(Constants.TRAINEE_ID);
+                const trainee_id = route.params.trainee_id;
                 const {responseData, errorMessage} = await getHook(`/api/v2/trainee/${trainee_id}/scores`);
                 console.log('Trainee ID ------', trainee_id)
                 if(responseData)
@@ -281,4 +280,4 @@ const styles = StyleSheet.create({
         alignContent : 'center'
     }
 })
-export default TraineeProfileScreen;
+export default TraineeProileAnalysisScreen;
