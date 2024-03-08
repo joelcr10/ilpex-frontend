@@ -4,7 +4,7 @@ import LoginScreen from "../screens/authentication/LoginScreen";
 import BatchesScreen from "../screens/admin/BatchesScreen";
 import TraineeScreen from "../screens/admin/TraineesScreen";
 import TraineeProfile from "../screens/trainee/TraineeProfileScreen";
-
+import AssesmentListScreen from "../screens/admin/AssesmentListForBatch";
 const BottomTab = createBottomTabNavigator();
 
 const BottomTabNavigation = () =>{
@@ -44,6 +44,19 @@ const BottomTabNavigation = () =>{
             <BottomTab.Screen
                 name = "Profile"
                 component = {TraineeProfile}
+                options={{
+                    headerShown: false,
+                    tabBarIcon: ({color}) =>{
+                        return(
+                            <Icon name="users" size={30} color={color}/>
+                        )
+                    }
+                }}
+            />
+
+            <BottomTab.Screen
+                name = "Assesments"
+                component = {AssesmentListScreen}
                 options={{
                     headerShown: false,
                     tabBarIcon: ({color}) =>{

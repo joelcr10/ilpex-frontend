@@ -13,19 +13,21 @@ export async function getHook(api_url: string): Promise<Response>{
     let errorMessage: string = '';
     let statusCode: string = '';
     let responseData: any;
-
+    
     try{
         const response = await api.get(
             api_url,
         );
         
-
+        
         statusCode = response.status.toString();
         {
             statusCode === '200' ? (success = true) : (success = false);
         }
 
         responseData = response.data;
+
+        console.log("assessment testing",responseData);
 
 
     }catch(error: any){
