@@ -1,33 +1,41 @@
 import React, { useState } from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import ilpex from "../utils/ilpexUI";
+import { useNavigation } from "@react-navigation/native";
 
-type PropsType = {traineeName : string,  batchName: string};
+type PropsType = {traineeName : string,  batchName: string, traineeId : number, userId : number};
+
 
 const TraineeCard = (props : PropsType) => {
     
-    const{traineeName, batchName} = props;
+    const navigation = useNavigation();
+    const{traineeName, batchName, traineeId, userId} = props;
     const [circleBackgroundColor, setCircleBackgroundColor] = useState(getRandomColor());
     
+    const handleProfileViewer = () => {
+        navigation.navigate('TraineeProileAnalysisScreen', {trainee_id : traineeId, user_id : userId});
+    }
     return(
-        <View style = {styles.cardContainer}>
-            <View style = {styles.profilePicture}>
-                <View style = {[styles.circleContainer, {backgroundColor: circleBackgroundColor}]}>
-                    <Image 
-                    style = {styles.imageLogo}
-                    source = {require('../../assets/icons/user.png')}
-                    />
+        <TouchableOpacity onPress ={ () => {handleProfileViewer()}}>
+            <View style = {styles.cardContainer}>
+                <View style = {styles.profilePicture}>
+                    <View style = {[styles.circleContainer, {backgroundColor: circleBackgroundColor}]}>
+                        <Image 
+                        style = {styles.imageLogo}
+                        source = {require('../../assets/icons/user.png')}
+                        />
+                    </View>
+                </View>
+                <View style = {styles.dataPart}>
+                    <Text style = {styles.traineeName} numberOfLines={1}>
+                        {traineeName}
+                    </Text>
+                    <Text style =  {styles.batchName}>
+                        {batchName}
+                    </Text>
                 </View>
             </View>
-            <View style = {styles.dataPart}>
-                <Text style = {styles.traineeName} numberOfLines={1}>
-                    {traineeName}
-                </Text>
-                <Text style =  {styles.batchName}>
-                    {batchName}
-                </Text>
-            </View>
-        </View>
+        </TouchableOpacity>
     );
 }
 
