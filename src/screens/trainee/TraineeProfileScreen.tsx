@@ -22,7 +22,6 @@ const TraineeProfileScreen = () => {
     const [highScore, setHighScore] = useState<any[]>([]);
     const [isLoadingCurrentDay, setLoadingCurrentDay] = useState(false);
     const [roleId, setRoleId] = useState('roleid');
-    
     let batchId : number = 0; 
 
     useEffect(() => {
@@ -32,21 +31,21 @@ const TraineeProfileScreen = () => {
                 const role_id = await getItem(Constants.ROLE_ID);
                 if(role_id)
                     setRoleId(role_id);
+                console.log("Profile Role ID : ", role_id);
                 const user_id = await getItem(Constants.USER_ID);
-                console.log('Role ID ------', role_id)
-                console.log('User ID ------', user_id)
                 const {responseData, errorMessage} = await getHook(`/api/v3/profile/${user_id}`);
                 if(responseData)
                 {
-                    console.log("-----------Inside Trainee Profile Method--------")
-                    console.log(responseData.data.trainee.trainee_id);
-                    setTraineeName(responseData.data.user_name);
-                    setTraineeBatch(responseData.data.trainee.batch.batch_name);
-                    batchId = responseData.data.trainee.batch.batch_id;
-                    console.log("-----------Inside Trainee Profile Method--------")
-
-                    console.log("batch id set",responseData.data.trainee.batch.batch_id);
-                    console.log("Trainee Profile Yallaaaaaa-----------");
+                    if(role_id === '103')
+                    {
+                        setTraineeName(responseData.data.user_name);
+                        setTraineeBatch(responseData.data.trainee.batch.batch_name);
+                        batchId = responseData.data.trainee.batch_id;
+                    }
+                    else
+                    {
+                        setTraineeName(responseData.data.user_name);
+                    }
                 }
             } catch(error) {
                 console.log('Error', error);
@@ -55,47 +54,53 @@ const TraineeProfileScreen = () => {
 
         const getTraineeScores = async() => {
             try {
-                const trainee_id = await getItem(Constants.TRAINEE_ID);
-                const {responseData, errorMessage} = await getHook(`/api/v2/trainee/${trainee_id}/scores`);
-                console.log('Trainee ID ------', trainee_id)
-                if(responseData)
+                const role_id = await getItem(Constants.ROLE_ID);
+                if(role_id)
+                    setRoleId(role_id);
+                console.log("Score Role ID : ", role_id);
+                if(role_id === '103')
                 {
-                    console.log("Marks = ", responseData);
-                    const averageScore = responseData.scoreDetails.scoreAverage;
-                    setAverageAssessmentScore(averageScore);
-                    const resultIds: string[] = [];
-                    const highScores: string[] = [];
-                    const scores = responseData.scoreDetails.scores;
-                    scores.forEach((score: any, index: number) => {
-                        resultIds.push(`A${index + 1}`);
-                        highScores.push(score.high_score);
-                        console.log(`RESULT ID : A${index + 1}, HIGH SCORE : ${score.high_score}`);
-                    });
-                    
-                    setResultID(resultIds);
-                    setHighScore(highScores);
+                    const trainee_id = await getItem(Constants.TRAINEE_ID);
+                    const {responseData, errorMessage} = await getHook(`/api/v2/trainee/${trainee_id}/scores`);
+                    console.log('Trainee ID ------', trainee_id)
+                    if(responseData)
+                    {
+                        console.log("Marks = ", responseData);
+                        const averageScore = responseData.scoreDetails.scoreAverage;
+                        setAverageAssessmentScore(averageScore);
+                        const resultIds: string[] = [];
+                        const highScores: string[] = [];
+                        const scores = responseData.scoreDetails.scores;
+                        scores.forEach((score: any, index: number) => {
+                            resultIds.push(`A${index + 1}`);
+                            highScores.push(score.high_score);
+                            console.log(`RESULT ID : A${index + 1}, HIGH SCORE : ${score.high_score}`);
+                        });
+                        
+                        setResultID(resultIds);
+                        setHighScore(highScores);
 
-                    if(responseData.scoreDetails.ScoreAverage >= 90)
-                    {
-                        setMarkIndicatorColor('green')
-                        setMarksFeedBack('Excellent');
+                        if(responseData.scoreDetails.ScoreAverage >= 90)
+                        {
+                            setMarkIndicatorColor('green')
+                            setMarksFeedBack('Excellent');
+                        }
+                        else if (responseData.scoreDetails.ScoreAverage >= 70)
+                        {
+                            setMarkIndicatorColor('orange');
+                            setMarksFeedBack('Above Average');
+                        }
+                        else if(responseData.scoreDetails.ScoreAverage >= 50)
+                        {
+                            setMarkIndicatorColor('yellow');
+                            setMarksFeedBack('Below Average');
+                        }
+                        else
+                        {
+                            setMarkIndicatorColor('red');
+                            setMarksFeedBack('Danger Zone');
+                        }       
                     }
-                    else if (responseData.scoreDetails.ScoreAverage >= 70)
-                    {
-                        setMarkIndicatorColor('orange');
-                        setMarksFeedBack('Above Average');
-                    }
-                    else if(responseData.scoreDetails.ScoreAverage >= 50)
-                    {
-                        setMarkIndicatorColor('yellow');
-                        setMarksFeedBack('Below Average');
-                    }
-                    else
-                    {
-                        setMarkIndicatorColor('red');
-                        setMarksFeedBack('Danger Zone');
-                    }       
-                    console.log("Trainee Scores Yallaaaaaa-----------");
                 }
             } catch(error) {
                 console.log('Error', error);
@@ -104,18 +109,25 @@ const TraineeProfileScreen = () => {
 
         const getCurrentDay = async() => {
             try {
-                const currentDate = new Date();
-                currentDate.setDate(currentDate.getDate() + 1);
-                const isoString = currentDate.toISOString();
-                const dateString = isoString.substring(0, isoString.indexOf('T'));
-                console.log("CurrentDate = ", dateString);
-                console.log("Batch ID = ", batchId);
-                const {responseData, errorMessage} = await getHook(`/api/v3/batch/${batchId}/day/${dateString}`);
-                if(responseData)
+                const role_id = await getItem(Constants.ROLE_ID);
+                if(role_id)
+                    setRoleId(role_id);
+                console.log("Day Role ID : ", role_id);
+                if(role_id === '103')
                 {
-                    setCurrentDay(responseData.current_day);
-                    console.log("Current Day Is ----------",responseData.current_day )
-                    console.log("Yallaaaaaa-----------");
+                    const currentDate = new Date();
+                    currentDate.setDate(currentDate.getDate() + 1);
+                    const isoString = currentDate.toISOString();
+                    const dateString = isoString.substring(0, isoString.indexOf('T'));
+                    const {responseData, errorMessage} = await getHook(`/api/v3/batch/${batchId}/day/${dateString}`);
+                    if(responseData)
+                    {
+                        setCurrentDay(responseData.current_day);
+                        setLoadingCurrentDay(true);
+                    }
+                }
+                else 
+                {
                     setLoadingCurrentDay(true);
                 }
             } catch(error) {
@@ -212,7 +224,7 @@ const TraineeProfileScreen = () => {
                 (!isLoadingCurrentDay) ? (
                     <TraineeProfileShimmer/>
                 ) : (
-                    <View style = {styles.pageContainer}>
+                    <View style = {styles.adminContainer}>
                         <BackButton color = 'black'/>
                         <ThreeDots color = 'black'/>
                         <View style = {styles.profilePictureContainer}>
@@ -233,7 +245,7 @@ const TraineeProfileScreen = () => {
                                     <Text style = {styles.statsKeyLabel}>Role ID</Text>
                                 </View>
                                 <View style = {styles.statsValue}>
-                                <Text style = {styles.statsValueLabel}>Day {roleId}</Text>
+                                <Text style = {styles.statsValueLabel}>{roleId}</Text>
                                 </View>
                             </View>
                             <View style = {styles.statsRow}>
@@ -257,6 +269,10 @@ const styles = StyleSheet.create({
     pageContainer : {
         backgroundColor : ilpex.white,
         height : '100%',
+    },
+    adminContainer : {
+        backgroundColor : ilpex.white,
+        height : 1000,
     },
     profilePictureContainer : {
         height : 150,
