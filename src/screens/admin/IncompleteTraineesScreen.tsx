@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
+import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import TraineeCard from "../../components/TraineeCard";
 import TraineeCardShimmer from "../../components/loading/TraineeCardShimmer";
 import ilpex from "../../utils/ilpexUI";
 import { useSelector } from "react-redux";
 import { getHook } from "../../network/getHook/getHook";
 import IconButtonComponent from "../../components/IconButton";
+import  Icon  from "react-native-vector-icons/FontAwesome";
+
 
 const IncompleteTraineesScreen = () => {
 
@@ -22,7 +24,7 @@ const IncompleteTraineesScreen = () => {
             const getDayCards= async () => {
               try {
                 const {responseData} = await getHook(
-                  `/api/v2/batch/1/pending/day/1`,
+                  `/api/v2/batch/1/pending/day/5`,
                 );
                 if(responseData)
                 {
@@ -47,8 +49,7 @@ const IncompleteTraineesScreen = () => {
                         renderItem={({ item }) => (
                             <TraineeCard
                             traineeName={item.user_name}
-                            batchName={item.Batch}
-                            />
+                            batchName={item.Batch} traineeId={0} userId={0}                            />
                         )}
                         keyExtractor={item => item.id}
                         />
@@ -59,25 +60,39 @@ const IncompleteTraineesScreen = () => {
         );
       }
 
+  function onPress(event: GestureResponderEvent): void {
+    throw new Error("Function not implemented.");
+  }
+
     return (
+      <View>
         <ScrollView>
             <View style = {styles.pageContainer}>
                     {/* Below container is the main container for all the cards. Try not to modify. Adjust Margin Top to change the distance between the white part and the purple part. Remove this comment when designing the page.*/}
                     <View style = {styles.innerContainer}>
                     <Text style={styles.incompleteText}>Incomplete</Text>
-                    <IconButtonComponent name={"Send"} onPress={function (): void {} } buttonPressed={false} icon={"send"}></IconButtonComponent>          
                     <Text style={styles.traineeText}>Trainees</Text>
+
                     {!isLoading ? (
                         <TraineeCardShimmer/>
-                        ) : (<TraineesDisplay></TraineesDisplay>
+                        ) : (<View><TraineesDisplay></TraineesDisplay>
+
+                        </View>
 
                     )}
-                    <IconButtonComponent name={"Send"} onPress={function (): void {} } buttonPressed={false} icon={"send"}></IconButtonComponent>          
+
+
   
                     </View>
+
                     
             </View>
         </ScrollView>
+        <TouchableOpacity onPress={onPress} style={styles.fixedButton}>
+        <View style={styles.box}>
+          <Icon name="send" color={ilpex.white} size={30}></Icon>
+        </View>
+      </TouchableOpacity></View>
     );
 
 }
@@ -87,6 +102,33 @@ const styles = StyleSheet.create({
         backgroundColor : '#8518FF',
         height : '100%',
     },
+    box:{
+      height: 54,
+      width: 54,
+      backgroundColor: ilpex.main,
+      borderRadius: 5,
+      elevation: 5,
+      alignItems: 'center',
+      justifyContent: 'center',
+      // height:54,
+      // width:54,
+      // backgroundColor:ilpex.main,
+      // borderRadius:5,
+      // zIndex:10,
+      // elevation:5,
+      // alignItems:'center',
+      // justifyContent:'center',
+      // marginLeft:280,
+      // marginBottom:5,
+      // position:'absolute',
+      // bottom:100,
+  },
+  fixedButton: {
+    position: 'absolute',
+    bottom: 40, // Adjust the bottom spacing as needed
+    right: 20, // Adjust the right spacing as needed
+    zIndex: 10, // Ensure the button appears above other elements
+  },
     innerContainer : {
         backgroundColor : 'white',
         height : '100%',
@@ -96,6 +138,7 @@ const styles = StyleSheet.create({
         paddingTop : '10%',
         paddingLeft : '10%',
         paddingRight : '10%',
+        flex:1,
     },
     containerHeading : {
         color : 'white',
