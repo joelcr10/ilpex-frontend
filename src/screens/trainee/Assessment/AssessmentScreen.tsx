@@ -146,7 +146,7 @@ const AssessmentScreen = () => {
                                     animated={true}
                                 /> */}
 
-                                <CircularProgress completeStatus={(score/questionList.length)*100}/>
+                                <CircularProgress completeStatus={(score/questionList.length)*100} color={ilpex.success}/>
                                
                                 {/* <CircularProgress progress={Number((score/questionList.length)*100)} /> */}
                                 
