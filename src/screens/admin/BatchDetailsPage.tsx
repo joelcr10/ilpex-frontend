@@ -9,6 +9,7 @@ import ChartPieHeaderShimmer from "../../components/pieChartHeaderShimmer";
 import ThreeDots from "../../components/ThreeDots";
 import BackButton from "../../components/BackButton";
 import DayWiseProgressBar from "../../components/DayWiseProgressBar";
+import DayWiseProgressBarShimmer from "../../components/loading/DayWiseProgressBarShimmer";
 
 const data = [
 	{
@@ -226,16 +227,21 @@ return(
               <ChartPieShimmer/></>}
               {!isLoading&&<><ChartPie chartName={'Assesment Score'} excellent={feedList.excellent} good={feedList.good} poor={feedList.poor} option1="Excellent" option2="Good" option3="Poor" />
               <ChartPie chartName={'Course Completion'} excellent={courseCompletion.onTrack} good={'0'} poor={courseCompletion.laggingBehind} option1="Completed" option2="Partial" option3="Incomplete" /></>}
-              <View style = {styles.graphContainer}>
-                  <FlatList 
-                    contentContainerStyle = {{paddingBottom : 5}}
-                    data = {data}
-                    renderItem = {({item}) => 
-                      <DayWiseProgressBar dayNumber = {item.day_number} percentage = {item.percentage} />
-                    }
-                    keyExtractor = {item => item.id}
-                  />
+              {isLoading ? (
+              <DayWiseProgressBarShimmer/>
+              ) : (
+                <View style = {styles.graphContainer}>
+                    <FlatList 
+                      contentContainerStyle = {{paddingBottom : 5}}
+                      data = {data}
+                      renderItem = {({item}) => 
+                        <DayWiseProgressBar dayNumber = {item.day_number} percentage = {item.percentage} />
+                      }
+                      keyExtractor = {item => item.id}
+                    />
                 </View>
+              )
+              }
             </View>
         
         </View>
