@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import api from "../../../network/api";
 import Constants from "../../../utils/Constants";
 import { getItem } from "../../../utils/utils";
@@ -19,7 +20,10 @@ export async function updateScoreAPI(assessment_id: number, user_id: number, sco
     let statusCode: string = '';
     let responseData: any;
 
-    const token = await getItem(Constants.TOKEN);
+    const token = useSelector((state: any) => state.userDetailsReducer.token);
+
+
+    console.log("--------------:"+token+":-------------------------");
 
     const authorization =  {
         headers: {
