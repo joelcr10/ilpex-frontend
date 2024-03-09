@@ -1,10 +1,6 @@
 import api from "../../network/api";
-
-
-interface reportRequestType{
-    user_id: number
-}
-
+import Constants from "../../utils/Constants";
+import { getItem } from "../../utils/utils";
 
 
 type responseType = {message: string}
@@ -23,16 +19,25 @@ export async function percipioReportAPI(user_id: number): Promise<Response>{
     let statusCode: string = '';
     let responseData: any;
 
-    
-    console.log('user id------->'+user_id);
 
     const payload = {
         user_id: user_id
     }
+
+
+    const token = await getItem(Constants.TOKEN);
+
+    const authorization =  {
+        headers: {
+          'Authorization': 'Bearer' + token
+        }
+    }
+
     try{
         const response = await api.post(
             `/api/v3/percipio`,
-            payload
+            payload,
+            authorization
         );
         
 
@@ -45,7 +50,7 @@ export async function percipioReportAPI(user_id: number): Promise<Response>{
 
 
     }catch(error: any){
-        console.log('Error while logging in:', error);
+        console.log('Error while fetching percipio report in:', error);
 
         errorMessage = error.message;
     }
