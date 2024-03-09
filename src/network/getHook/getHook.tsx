@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import Constants from "../../utils/Constants";
 import { getItem } from "../../utils/utils";
 import api from "../api";
@@ -16,11 +17,17 @@ export async function getHook(api_url: string): Promise<Response>{
     let statusCode: string = '';
     let responseData: any;
 
+    // const token = await getItem(Constants.TOKEN);
+
+    console.log("[[[[[[[[[[[[[[[[[[[[[[[]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]");    
+    // const token = useSelector((state: any) => state.userDetailsReducer.token);
     const token = await getItem(Constants.TOKEN);
+
+    console.log("--------------:"+token+":-------------------------");
 
     const authorization =  {
         headers: {
-          'Authorization': 'Bearer' + token
+          'Authorization': 'Bearer ' + token
         }
     }
 
