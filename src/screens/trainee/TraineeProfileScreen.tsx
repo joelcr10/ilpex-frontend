@@ -21,6 +21,8 @@ const TraineeProfileScreen = () => {
     const [resultID, setResultID] = useState<any[]>([]);
     const [highScore, setHighScore] = useState<any[]>([]);
     const [isLoadingCurrentDay, setLoadingCurrentDay] = useState(false);
+    const [roleId, setRoleId] = useState('roleid');
+    
     let batchId : number = 0; 
 
     useEffect(() => {
@@ -28,17 +30,23 @@ const TraineeProfileScreen = () => {
             try {
                 
                 const role_id = await getItem(Constants.ROLE_ID);
+                if(role_id)
+                    setRoleId(role_id);
                 const user_id = await getItem(Constants.USER_ID);
                 console.log('Role ID ------', role_id)
                 console.log('User ID ------', user_id)
                 const {responseData, errorMessage} = await getHook(`/api/v3/profile/${user_id}`);
                 if(responseData)
                 {
-                    setTraineeName(responseData.profileDetails.user.user_name);
-                    setTraineeBatch(responseData.profileDetails.batch.batch_name);
-                    batchId = responseData.profileDetails.batch_id;
+                    console.log("-----------Inside Trainee Profile Method--------")
+                    console.log(responseData.data.trainee.trainee_id);
+                    setTraineeName(responseData.data.user_name);
+                    setTraineeBatch(responseData.data.trainee.batch.batch_name);
+                    batchId = responseData.data.trainee.batch.batch_id;
+                    console.log("-----------Inside Trainee Profile Method--------")
 
-                    console.log("batch id set",responseData.profileDetails.batch_id);
+                    console.log("batch id set",responseData.data.trainee.batch.batch_id);
+                    console.log("Trainee Profile Yallaaaaaa-----------");
                 }
             } catch(error) {
                 console.log('Error', error);
@@ -87,6 +95,7 @@ const TraineeProfileScreen = () => {
                         setMarkIndicatorColor('red');
                         setMarksFeedBack('Danger Zone');
                     }       
+                    console.log("Trainee Scores Yallaaaaaa-----------");
                 }
             } catch(error) {
                 console.log('Error', error);
@@ -106,6 +115,7 @@ const TraineeProfileScreen = () => {
                 {
                     setCurrentDay(responseData.current_day);
                     console.log("Current Day Is ----------",responseData.current_day )
+                    console.log("Yallaaaaaa-----------");
                     setLoadingCurrentDay(true);
                 }
             } catch(error) {
@@ -135,62 +145,112 @@ const TraineeProfileScreen = () => {
 
     const [circleBackgroundColor, setCircleBackgroundColor] = useState(getRandomColor());
 
-    return(
-        <ScrollView>
-        {
-            (!isLoadingCurrentDay) ? (
-                <TraineeProfileShimmer/>
-            ) : (
-                <View style = {styles.pageContainer}>
-                    <BackButton color = 'black'/>
-                    <ThreeDots color = 'black'/>
-                    <View style = {styles.profilePictureContainer}>
-                        <View style = {[styles.profilePictureCircle, {backgroundColor : circleBackgroundColor}]}>
-                            <Image
-                                style = {styles.profileImageStyle}
-                                source = {require('../../../assets/icons/user.png')}/>
-                        </View>
-                    </View>
-                    <View>
-                        <Text style = {styles.nameLabel}>
-                            {traineeName}
-                        </Text>
-                        <Text style = {styles.batchLabel}>
-                            {traineeBatch}
-                        </Text>
-                    </View>
-                    <View style = {styles.statsContainer}>
-                        <View style = {styles.statsRow}>
-                            <View style = {styles.statsKey}>
-                                <Text style = {styles.statsKeyLabel}>Current Status</Text>
-                            </View>
-                            <View style = {styles.statsValue}>
-                            <Text style = {styles.statsValueLabel}>Day {currentDay}</Text>
+    if (roleId === '103')
+    {
+        return(
+            <ScrollView>
+            {
+                (!isLoadingCurrentDay) ? (
+                    <TraineeProfileShimmer/>
+                ) : (
+                    <View style = {styles.pageContainer}>
+                        <BackButton color = 'black'/>
+                        <ThreeDots color = 'black'/>
+                        <View style = {styles.profilePictureContainer}>
+                            <View style = {[styles.profilePictureCircle, {backgroundColor : circleBackgroundColor}]}>
+                                <Image
+                                    style = {styles.profileImageStyle}
+                                    source = {require('../../../assets/icons/user.png')}/>
                             </View>
                         </View>
-                        <View style = {styles.statsRow}>
-                            <View style = {styles.statsKey}>
-                                <Text style = {styles.statsKeyLabel}>Average Assessment Score</Text>
+                        <View>
+                            <Text style = {styles.nameLabel}>
+                                {traineeName}
+                            </Text>
+                            <Text style = {styles.batchLabel}>
+                                {traineeBatch}
+                            </Text>
+                        </View>
+                        <View style = {styles.statsContainer}>
+                            <View style = {styles.statsRow}>
+                                <View style = {styles.statsKey}>
+                                    <Text style = {styles.statsKeyLabel}>Current Status</Text>
+                                </View>
+                                <View style = {styles.statsValue}>
+                                <Text style = {styles.statsValueLabel}>Day {currentDay}</Text>
+                                </View>
                             </View>
-                            <View style = {styles.statsValue}>
-                                <View style = {styles.percentageAndColorContainer}>
-                                    <View style = {[styles.colorDot, {backgroundColor : marksIndicatorColor}]}></View>
-                                    <Text style ={styles.percentageLabel}>
-                                    {averageAssessmentScore}%
+                            <View style = {styles.statsRow}>
+                                <View style = {styles.statsKey}>
+                                    <Text style = {styles.statsKeyLabel}>Average Assessment Score</Text>
+                                </View>
+                                <View style = {styles.statsValue}>
+                                    <View style = {styles.percentageAndColorContainer}>
+                                        <View style = {[styles.colorDot, {backgroundColor : marksIndicatorColor}]}></View>
+                                        <Text style ={styles.percentageLabel}>
+                                        {averageAssessmentScore}%
+                                        </Text>
+                                    </View>
+                                    <Text style ={styles.remarksLabel}>
+                                        {marksFeedback}
                                     </Text>
                                 </View>
-                                <Text style ={styles.remarksLabel}>
-                                    {marksFeedback}
-                                </Text>
+                            </View>
+                        </View>
+                        <BarGraph data={highScore} labels={resultID}></BarGraph>
+                    </View>
+                )
+            }
+            </ScrollView>
+        );
+    }
+    else 
+    {
+        return(
+            <ScrollView>
+            {
+                (!isLoadingCurrentDay) ? (
+                    <TraineeProfileShimmer/>
+                ) : (
+                    <View style = {styles.pageContainer}>
+                        <BackButton color = 'black'/>
+                        <ThreeDots color = 'black'/>
+                        <View style = {styles.profilePictureContainer}>
+                            <View style = {[styles.profilePictureCircle, {backgroundColor : circleBackgroundColor}]}>
+                                <Image
+                                    style = {styles.profileImageStyle}
+                                    source = {require('../../../assets/icons/user.png')}/>
+                            </View>
+                        </View>
+                        <View>
+                            <Text style = {styles.nameLabel}>
+                                {traineeName}
+                            </Text>
+                        </View>
+                        <View style = {styles.statsContainer}>
+                            <View style = {styles.statsRow}>
+                                <View style = {styles.statsKey}>
+                                    <Text style = {styles.statsKeyLabel}>Role ID</Text>
+                                </View>
+                                <View style = {styles.statsValue}>
+                                <Text style = {styles.statsValueLabel}>Day {roleId}</Text>
+                                </View>
+                            </View>
+                            <View style = {styles.statsRow}>
+                                <View style = {styles.statsKey}>
+                                    <Text style = {styles.statsKeyLabel}>Employee Status</Text>
+                                </View>
+                                <View style = {styles.statsValue}>
+                                <Text style = {styles.statsValueLabel}>Trainer</Text>
+                                </View>
                             </View>
                         </View>
                     </View>
-                    <BarGraph data={highScore} labels={resultID}></BarGraph>
-                </View>
-            )
-        }
-        </ScrollView>
-    );
+                )
+            }
+            </ScrollView>
+        );
+    }
 }
 
 const styles = StyleSheet.create({
