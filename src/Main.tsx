@@ -27,6 +27,7 @@ const Main =  () =>{
     const role_id = useSelector((state: any) => state.userDetailsReducer.role_id);
     const trainee_id = useSelector((state: any) => state.userDetailsReducer.trainee_id);
     const user_id = useSelector((state: any) => state.userDetailsReducer.user_id);
+    const token = useSelector((state: any) => state.userDetailsReducer.token);
     // const isLoggedIn = false;
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -35,6 +36,7 @@ const Main =  () =>{
     console.log('role id ----------',role_id);
     console.log('trainee_id ----------',trainee_id);
     console.log('user_id ----------',user_id);
+    console.log('token is ---------',token);
     console.log('user details stored globally');
 
     console.log("hi")
