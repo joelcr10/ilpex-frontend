@@ -1,12 +1,6 @@
 import api from "../../../network/api";
-
-
-interface scoreProp{
-    assessment_id: number;
-    user_id: number;
-    score: number;
-}
-
+import Constants from "../../../utils/Constants";
+import { getItem } from "../../../utils/utils";
 
 
 type responseType = {message: string}
@@ -25,6 +19,14 @@ export async function updateScoreAPI(assessment_id: number, user_id: number, sco
     let statusCode: string = '';
     let responseData: any;
 
+    const token = await getItem(Constants.TOKEN);
+
+    const authorization =  {
+        headers: {
+          'Authorization': 'Bearer' + token
+        }
+    }
+
 
     const payload = {
         assessment_id: assessment_id,
@@ -35,7 +37,8 @@ export async function updateScoreAPI(assessment_id: number, user_id: number, sco
     try{
         const response = await api.post(
             `/api/v3/assessment/`,
-            payload
+            payload,
+            authorization
         );
         
 
