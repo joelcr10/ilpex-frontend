@@ -1,3 +1,6 @@
+import { useSelector } from "react-redux";
+import Constants from "../../utils/Constants";
+import { getItem } from "../../utils/utils";
 import api from "../api";
 
 interface Response{
@@ -13,12 +16,25 @@ export async function getHook(api_url: string): Promise<Response>{
     let errorMessage: string = '';
     let statusCode: string = '';
     let responseData: any;
-    
+
+    // const token = await getItem(Constants.TOKEN);
+
+    console.log("[[[[[[[[[[[[[[[[[[[[[[[]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]");    
+    // const token = useSelector((state: any) => state.userDetailsReducer.token);
+    const token = await getItem(Constants.TOKEN);
+
+    console.log("--------------:"+token+":-------------------------");
+
+    const authorization =  {
+        headers: {
+          'Authorization': 'Bearer ' + token
+        }
+    }
+
     try{
         const response = await api.get(
-            api_url,
+            api_url, authorization
         );
-        
         
         statusCode = response.status.toString();
         {
@@ -31,7 +47,7 @@ export async function getHook(api_url: string): Promise<Response>{
 
 
     }catch(error: any){
-        console.log('Error while logging in:', error);
+        console.log('Error in getHook:', error);
 
         errorMessage = error.message;
     }
