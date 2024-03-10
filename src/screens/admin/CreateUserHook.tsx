@@ -1,4 +1,4 @@
-import instance from './api';
+import instance from '../../network/api';
  
 interface CreateUserProp {
     createEmail:string;

@@ -11,6 +11,7 @@ import InputField from '../../components/InputField';
 import Button from '../../components/Button';
 import { userDetails } from '../../context/userDetailsSlice';
 import { Link } from '@react-navigation/native';
+import ilpex from '../../utils/ilpexUI';
 
 const LoginScreen = () => {
 
@@ -18,16 +19,24 @@ const LoginScreen = () => {
     const [loginPassword, setloginPassword] = useState('');
     const dispatch = useDispatch();
     const [buttonpressed, setButtonpressed] = useState(false);
+    const [missingFieldError, setMissingFieldError] = useState("");
+
   
     const handleLogin = async () => {
       try {
+
+        if(loginEmail==''||loginPassword==''){
+          setMissingFieldError("You need to enter your email and password");
+          return;
+        
+      }
         
         setButtonpressed(true)
         const { success, statusCode, loginResp, errorMessage } = await loginUser({
           loginEmail,
           loginPassword,
         });
-        console.log(loginResp.user_id);
+        console.log(success,loginResp);
   
         if (success) {
           setStringItem(Constants.IS_LOGIN,'true')
@@ -64,8 +73,11 @@ const LoginScreen = () => {
           } else {
             console.error('User details not found.');
           }
-        } else {
-          console.error('Login failed:', errorMessage);
+        } if(!success) {
+          setMissingFieldError(`Invalid Credentials`);
+          setButtonpressed(false);
+          setLoginEmail('');
+          setloginPassword('');
         }
       } catch (error) {
         console.error('Error during login:', error);
@@ -90,7 +102,7 @@ const LoginScreen = () => {
                   <View style={{alignItems:'center'}}>
                     <Link to={{screen:'Forgot Password'}}>Forgot Password?</Link>
                   </View>
-
+                  {missingFieldError!=='' ? <Text style={styles.errorText}>{missingFieldError}</Text> : null}
                   <View style={styles.buttonview}>
                     <Button 
                       name='Login'
@@ -111,7 +123,13 @@ const styles = StyleSheet.create({
   },
   buttonview:{
       top:50,
-  }
+  },
+  errorText: {
+    color: ilpex.failure,
+    fontSize: 14,
+    marginTop: 5,
+    textAlign:'center'
+  },
   
 })
  
