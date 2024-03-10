@@ -30,7 +30,7 @@ const DateSelector = (props : PropsType) => {
         setIsVisible(true);
         onPress();
     }
-    
+
     return(
         <View style = {styles.dateFieldContainer}>
                 <Text style = {styles.dateSelectFieldNameLabel}>Start and End Date</Text>
@@ -93,7 +93,8 @@ const styles = StyleSheet.create({
     dateDataContainer : {
         flexDirection : 'column',
         marginLeft : '5%',
-        justifyContent : 'center'
+        justifyContent : 'center',
+        width : 260,
     },
     beforeDateSelectedContainer : {
         borderWidth : 1,
@@ -106,7 +107,7 @@ const styles = StyleSheet.create({
         borderRadius : 10,
     },
     beforeDateCaptionContainer : {
-        flex : 0.9
+        flex : 0.9,
     },
     selectDateLabel : {
         fontFamily : ilpex.fontRegular,
@@ -119,7 +120,7 @@ const styles = StyleSheet.create({
     afterDateIconContainer : {
         flexDirection : 'row',
         alignContent : 'flex-end',
-        marginLeft : 70,
+        marginLeft : 15,
         marginTop : 15,
     },
     calendarStyle : {
