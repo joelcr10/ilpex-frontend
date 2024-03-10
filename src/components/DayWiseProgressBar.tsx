@@ -1,11 +1,10 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import * as Progress from 'react-native-progress';
-import ilpex from "../utils/ilpexUI";
 
 type PropsType = {dayNumber : number, percentage : number}
 
-const DayWiseProgressBarProgress = (props : PropsType) => {
+const  DayWiseProgressBar = (props : PropsType) => {
     const {dayNumber, percentage} = props;
     let valueToBeLoaded = percentage / 100;
     return (
@@ -26,7 +25,7 @@ const styles = StyleSheet.create({
     dayCount : { 
 		color : 'black',
 		width : 70,
-		fontFamily : ilpex.fontRegular,
+		fontFamily : 'Poppins-Regular',
 		fontSize : 20,
 	},
     progressBar : {
@@ -34,8 +33,8 @@ const styles = StyleSheet.create({
 		marginLeft : 15,
 		height : 16,
 		borderRadius : 12,
-		color : ilpex.pink
+		color : '#8518FF'
 	}
 });
 
-export default DayWiseProgressBarProgress;
+export default DayWiseProgressBar;

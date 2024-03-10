@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native"
+import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native"
 import { batchDetails } from "../../network/ApiHook";
 import ChartPie from "../../components/PieChartComponent";
 import { useEffect, useState } from "react";
@@ -8,6 +8,97 @@ import IconButtonComponent from "../../components/IconButton";
 import ChartPieHeaderShimmer from "../../components/pieChartHeaderShimmer";
 import ThreeDots from "../../components/ThreeDots";
 import BackButton from "../../components/BackButton";
+import DayWiseProgressBar from "../../components/DayWiseProgressBar";
+import DayWiseProgressBarShimmer from "../../components/loading/DayWiseProgressBarShimmer";
+
+const data = [
+	{
+		id : '1',
+		day_number : 1,
+		percentage : 50,
+	},
+	{
+		id : '2',
+		day_number : 2,
+		percentage : 30,
+	},
+	{
+		id : '3',
+		day_number : 3,
+		percentage : 50,
+	},
+	{
+		id : '4',
+		day_number : 4,
+		percentage : 100,
+	},
+	{
+		id : '5',
+		day_number : 5,
+		percentage : 10,
+	},
+	{
+		id : '6',
+		day_number : 6,
+		percentage : 70,
+	},
+	{
+		id : '7',
+		day_number : 1,
+		percentage : 50,
+	},
+	{
+		id : '8',
+		day_number : 2,
+		percentage : 30,
+	},
+	{
+		id : '9',
+		day_number : 3,
+		percentage : 50,
+	},
+	{
+		id : '10',
+		day_number : 4,
+		percentage : 100,
+	},
+	{
+		id : '11',
+		day_number : 5,
+		percentage : 10,
+	},
+	{
+		id : '12',
+		day_number : 6,
+		percentage : 70,
+	},
+	{
+		id : '13',
+		day_number : 1,
+		percentage : 50,
+	},
+	{
+		id : '14',
+		day_number : 2,
+		percentage : 30,
+	},
+	{
+		id : '15',
+		day_number : 3,
+		percentage : 50,
+	},
+	{
+		id : '16',
+		day_number : 4,
+		percentage : 100,
+	},
+	{
+		id : '17',
+		day_number : 5,
+		percentage : 10,
+	},
+]
+
 const BatchDetailsPage =()=>{
     const [isLoading,setLoading] =useState(true);
     const [feedList, setStoryList] = useState<any>([]);
@@ -125,7 +216,8 @@ return(
                     <Text style={{marginLeft:30,color:'#8F00FF',fontWeight:'500'}}>{currentDate.current_day}                   </Text>
                     </View>
                     </View>
-                </View></>}
+                </View>
+                </>}
               
                  {/* <View>
                    <IconButtonComponent  name={'Report'} onPress={()=>{}} buttonPressed={false} icon={'description'}/>
@@ -135,6 +227,21 @@ return(
               <ChartPieShimmer/></>}
               {!isLoading&&<><ChartPie chartName={'Assesment Score'} excellent={feedList.excellent} good={feedList.good} poor={feedList.poor} option1="Excellent" option2="Good" option3="Poor" />
               <ChartPie chartName={'Course Completion'} excellent={courseCompletion.onTrack} good={'0'} poor={courseCompletion.laggingBehind} option1="Completed" option2="Partial" option3="Incomplete" /></>}
+              {isLoading ? (
+              <DayWiseProgressBarShimmer/>
+              ) : (
+                <View style = {styles.graphContainer}>
+                    <FlatList 
+                      contentContainerStyle = {{paddingBottom : 5}}
+                      data = {data}
+                      renderItem = {({item}) => 
+                        <DayWiseProgressBar dayNumber = {item.day_number} percentage = {item.percentage} />
+                      }
+                      keyExtractor = {item => item.id}
+                    />
+                </View>
+              )
+              }
             </View>
         
         </View>
@@ -184,6 +291,13 @@ const styles = StyleSheet.create({
       margin:3,
       
   },
+  graphContainer : {
+		marginTop : 40,
+		marginLeft : 30,
+		marginRight : 30,
+		alignItems : 'center',
+		backgroundColor : 'white',
+	},
 })
 export default BatchDetailsPage;
 

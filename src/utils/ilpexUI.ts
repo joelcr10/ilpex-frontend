@@ -17,6 +17,7 @@ const ilpex = {
     chart3: '#C50F5B',
     pink: '#8518FF',
     black: '#000000',
+    failure:'red',
     traineeList:'#A786C1',
     searchBg:'#E4D8FE',
 

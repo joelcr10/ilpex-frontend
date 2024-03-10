@@ -10,33 +10,24 @@ import ilpex from "../utils/ilpexUI";
 import { useNavigation } from "@react-navigation/native";
 import { userDetails } from "../context/userDetailsSlice";
 
-type PropsType = {color : string};
-const ThreeDots = (props : PropsType) => {
-
-    const {color} = props;
     
+
+const Logout = () => {
+
     const navigation : any = useNavigation();
-    const [isPopupVisible, setPopupVisible] = useState(false);
+    // const [isPopupVisible, setPopupVisible] = useState(false);
     const [isLogoutBottomSheet, setLogoutBottomSheet] = useState(false);
     const dispatch = useDispatch();
 
-    const setColor = () =>{
-        if(color === 'black')
-            return true;
-        else
-            return false;
-    }
-
-    const togglePopup = () => {
-        setPopupVisible(!isPopupVisible);
-    };
+    // const togglePopup = () => {
+    //     // setPopupVisible(!isPopupVisible);
+    //     setLogoutBottomSheet(true);
+    // };
 
     const toggleLogoutBottomsheet = () => {
-        if(isPopupVisible)
-            togglePopup();
         setLogoutBottomSheet(!isLogoutBottomSheet);
     }
-    
+
     const handleLogout = () => {
         setStringItem(Constants.IS_LOGIN, 'false');
         setStringItem(Constants.ROLE_ID, '' );
@@ -52,69 +43,32 @@ const ThreeDots = (props : PropsType) => {
         dispatch(userLogin(false));
     }
 
-    const profileNavigator = () => {
-        console.log("ProfileNavigator");
-        navigation.navigate("TraineeProfile",{});
-    }
-
     const renderBottomSheet = () => {
         return (
-            <Modal isVisible={isLogoutBottomSheet} style = {styles.modalStyle}>
-                <View style={styles.logoutModal}>
-                <Text style={styles.modalText}>Are you sure you want to sign out?</Text>
-                    <View style = {styles.modalButtonContainer}>
-                    <TouchableOpacity style={styles.cancelButton} onPress={toggleLogoutBottomsheet}>
-                        <Text style={styles.cancelButtonStyling}>Cancel</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.signoutButton} onPress={handleLogout}>
-                        <Text style={styles.signoutButtonStyling}>Sign Out</Text>
-                    </TouchableOpacity>
+            <View>
+                <Modal isVisible={isLogoutBottomSheet} style = {styles.modalStyle}>
+                    <View style={styles.logoutModal}>
+                    <Text style={styles.modalText}>Are you sure you want to sign out?</Text>
+                        <View style = {styles.modalButtonContainer}>
+                        <TouchableOpacity style={styles.cancelButton} onPress={toggleLogoutBottomsheet}>
+                            <Text style={styles.cancelButtonStyling}>Cancel</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.signoutButton} onPress={handleLogout}>
+                            <Text style={styles.signoutButtonStyling}>Sign Out</Text>
+                        </TouchableOpacity>
+                        </View>
                     </View>
-                </View>
-            </Modal>
+                </Modal>
+            </View>
         )
     }
 
     return (
-        <View style = {styles.threeDotsContainer}>
-            {setColor() ? (
-                <TouchableOpacity onPress={togglePopup}>
-                <Image 
-                    style = {styles.threeDots}
-                    source = {require('../../assets/icons/threedotsblack.png')}>
-                </Image>
-            </TouchableOpacity>
-            ) : (
-                <TouchableOpacity onPress={togglePopup}>
-                <Image 
-                    style = {styles.threeDots}
-                    source = {require('../../assets/icons/threedots.png')}>
-                </Image>
-                </TouchableOpacity>
-            )}
-            
-            {isPopupVisible && (
-                <View style = {styles.popup}>           
-                    <View style = {styles.popupContent}> 
-                        <TouchableOpacity  style = {styles.popupcolumn} onPress={profileNavigator}>
-                            <Image 
-                                style = {styles.popupicons}
-                                source = {require('../../assets/icons/profile.png')}></Image>
-                            <Text style = {styles.columnLabel}>PROFILE</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity  style = {styles.popupcolumn} onPress = {toggleLogoutBottomsheet}>
-                            <Image 
-                                style = {styles.popupicons}
-                                source = {require('../../assets/icons/logout.png')}></Image>
-                            <Text style = {styles.columnLabel}>LOG OUT</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-                )
-            }
-            {isLogoutBottomSheet && (renderBottomSheet())}
-        </View>
-    )
+        <>
+            {setLogoutBottomSheet(true)}
+            {isLogoutBottomSheet && renderBottomSheet}
+        </>
+    );
 }
 
 const styles = StyleSheet.create({
@@ -237,4 +191,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default ThreeDots;
+export default Logout;
