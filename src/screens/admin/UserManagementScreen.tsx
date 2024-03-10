@@ -1,43 +1,90 @@
-import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
+import { FlatList, SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useEffect, useState } from "react";
-import CourseCard from "../../components/CourseCard";
-import { useRoute } from "@react-navigation/native";
 import ilpex from "../../utils/ilpexUI";
-import Button from "../../components/Button";
-import SmallButton from "../../components/SmallButton";
-import IconButton from "../../components/IconButton";
-import FileUploadField from "../../components/FileUploadField";
 import React from "react";
 import { getHook } from "../../network/getHook/getHook";
-import ShimmerPlaceholder from "react-native-shimmer-placeholder";
-import LinearGradient from "react-native-linear-gradient";
-import BackButton from "../../components/BackButton";
 import ThreeDots from "../../components/ThreeDots";
-import CourseCardShimmer from "../../components/loading/CourseCardShimmer";
 import Constants from "../../utils/Constants";
 import { getItem } from "../../utils/utils";
+import TraineeNameCard from "../../components/TraineeNameCard";
+import SearchField from "../../components/SearchField";
+import TraineeNameShimmer from "../../components/loading/TraineeNameListShimmer";
 
 
 
 const UserManagementScreen=()=>{
 
+    const [isLoading, setLoading] = useState(true);
+
+    const [traineeList, setTrainees] = useState<any[]>([]);
+
+    //search query
+    const [searchQuery, setSearchQuery] = useState('');
+    const [filteredData, setFilteredData] = useState<any>([]);
+
+    const handleSearch = (text:string) => {
+        // Filter the data based on the search query
+        const filtered = traineeList.filter(item =>
+          item.user.user_name.toLowerCase().includes(text.toLowerCase())
+        );
+        setFilteredData(filtered);
+        setSearchQuery(text);
+      };
+
+
+    useEffect(() => {
+        const getTrainees = async () => {
+            const trainee_id=await getItem(Constants.TRAINEE_ID);
+            console.log(trainee_id);
+          try {
+            const {responseData, errorMessage} = await getHook(`/api/v2/trainee`);
+            setLoading(false);
+            setTrainees(responseData);
+            setFilteredData(responseData);
+            console.log(responseData)
+          } catch (error) {
+            console.error('Error:', error);
+          }
+        };
+        getTrainees();
+        }, []);
+
+
 
     return(
-        <ScrollView>
+        // <ScrollView>
         <View>
             <View style={{backgroundColor:ilpex.main}}>
-                <BackButton color='white'/>
+                {/* <BackButton color='white'/> */}
                 <View style={styles.topbar}>
                    
                     <Text style={styles.headerText}>{`User Management`}</Text>
                 </View>
-                    <View style={styles.container}>
                 
-                </View>
+                    <View style={styles.container}>
+                        <SearchField onChangeText={handleSearch as any} value={searchQuery}/>
+                        <Text style={styles.subTitle}>Trainees</Text>
+                    {isLoading  &&
+                    <TraineeNameShimmer/>
+                    }
+                    {!isLoading &&
+                    
+                    <View>
+                    <FlatList
+                        data={filteredData}
+                        renderItem={({item})=><TraineeNameCard traineeName={item.user.user_name} trainee_id={item.trainee_id}/>}
+                        keyExtractor={item=>item.trainee_id}
+                        showsVerticalScrollIndicator={false}
+                    />
+                    </View>
+                    
+                    }
+                    </View>
+                   
                 <ThreeDots color='white'/>
             </View>
         </View>
-        </ScrollView>
+        //  </ScrollView>
     )
 }
 
