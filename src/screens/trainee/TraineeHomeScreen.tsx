@@ -4,7 +4,7 @@ import AssessmentCard from "../../components/AssessmentCard";
 import ThreeDots from "../../components/ThreeDots";
 import { useEffect, useState } from "react";
 import { getHook } from "../../network/getHook/getHook";
-import DayWiseProgressBarProgress from "../../components/DayWiseProgressBarProgress";
+// import DayWiseProgressBarProgress from "../../components/DayWiseProgressBarProgress";
 import React from "react";
 import { getItem } from "../../utils/utils";
 import Constants from "../../utils/Constants";
