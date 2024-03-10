@@ -52,7 +52,7 @@ const BatchCard=({batchName,traineeNo,date,progress,onPress} : BatchComponentPro
                     <Text style={styles.date}>{formattedDate}</Text>
                 </View>
                 <View style={styles.circularProgress}>
-                    <CircularProgress completeStatus={progress}></CircularProgress>
+                    <CircularProgress completeStatus={progress} color={ilpex.main}></CircularProgress>
                 </View>
             </View>
         </TouchableOpacity>

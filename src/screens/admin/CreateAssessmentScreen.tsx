@@ -20,7 +20,7 @@ import DateTimePicker from 'react-datetime-picker';
 import DatePicker from 'react-native-modern-datepicker';
 import {getToday,getFormatedDate} from 'react-native-modern-datepicker';
 import Button from "../../components/Button";
-import DayPickerModal from "../../components/DayPickerModal";
+import CalenderModal from "../../components/CalenderModal";
 
 const data = [
     { label: 'Item 1', value: '1' },
@@ -39,22 +39,26 @@ const today : Date = new Date();
 
 const CreateAssessment = ()=>{
     const [assessmentName,setAssessementName] = useState('');
-    const [startDate,setStartDate] = useState('');
+    const [startDate,setStartDate] = useState(new Date());
+    const [endDate,setEndDate] = useState(new Date());
     const [isVisible,setIsVisible] = useState(false);
-    // const newStartDate=(date : Date)=> {
-    // if(date!=null)
-    //     setStartDate(date.toString());
-    // }
     const handleOpen=()=>{
         setIsVisible(true);
     }
-    // const handleClose=()=>{
-    //     setIsVisible(false);
-    // }
-    // const handleDate =(date : Date)=>{
-    //     setStartDate(date);
-    // }
-    // const realStartDate = getFormatedDate(today.setStartDate(today.getDate() + 1),'YYYY/MM/DD')
+    const handleClose=()=>{
+        setIsVisible(false);
+    }
+    const today = new Date();
+    const nextYear = new Date(today.getFullYear() + 1, today.getMonth(), today.getDate());
+    const datePicker =()=>{
+        return (
+            <View style={{
+                zIndex:1
+            }}>
+            
+            </View>
+        )
+    }
  return (
     <View style={styles.container}>
             <Text style={styles.text}>Create Assessment</Text>
@@ -62,50 +66,11 @@ const CreateAssessment = ()=>{
                 <View style={styles.dataContainer}>
                     <InputField label={"Assessment name"} isPassword={false} value={assessmentName} onChangeText={setAssessementName} ></InputField>
                      <DropdownComponent data={data}></DropdownComponent>
-                     {/* <Pressable onPress={() => datePicker()}>
-                     <TextInput placeholder="Date Of Birth"
-                                />
-                                </Pressable> */}
-                                {/* <CalendarPicker
-                                width={300}
-                                previousComponent
-                                allowRangeSelection
-              startFromMonday={true}
-              minDate={minDate}
-              maxDate={maxDate}
-              todayBackgroundColor="#f2e6ff"
-              selectedDayColor={ilpex.main}
-              selectedDayTextColor="#FFFFFF"
-              onDateChange={newStartDate}
-            /> */}
             <Button name={"Start Date"} onPress={handleOpen} buttonPressed={false}>
             </Button>
-            <DayPickerModal isVisible setIsVisible={setIsVisible}></DayPickerModal>
-            {/* <Modal 
-            animationType="slide"
-            transparent={true}
-            visible={isVisible}
-            >
-                <View style={styles.modalContainer}>
-                    <View style = {styles.modalView}>
-                    <CalendarPicker
-                    allowRangeSelection
-                                width={300}
-              startFromMonday={true}
-            //   minDate={minDate}
-            //   maxDate={maxDate}
-              todayBackgroundColor="#f2e6ff"
-              selectedDayColor={ilpex.main}
-              selectedDayTextColor={ilpex.white}
-              onDateChange={newStartDate}
-            />
-            <TouchableOpacity onPress={handleClose}>
-                <Text>Close</Text>
-            </TouchableOpacity>
-                    </View>
-                </View>
-            </Modal> */}
-         <Text>{startDate ? `Selected Dates: ${startDate.toString()}` : 'Select Start Date'}</Text>
+            <CalenderModal minDate={today} maxDate={nextYear} isVisible={isVisible}  setStartDate={setStartDate} setEndDate={setEndDate} closeModal={handleClose}></CalenderModal>
+         <Text>{startDate ? `Selected start Dates: ${startDate.toString()}` : 'Select Start Date'}</Text>
+         <Text>{endDate ? `Selected end Dates: ${endDate.toString()}` : 'Select Start Date'}</Text>
                 </View>
             </View>
     </View>
@@ -136,28 +101,28 @@ const styles = StyleSheet.create ({
     dataContainer : {
         margin : '5%',
     },
-    // modalContainer : {
-    //     flex : 1,
-    //     justifyContent:'center',
-    //     alignItems:'center',
-    //     marginTop:22
-    // },
-    // modalView : {
-    //     margin : 20,
-    //     backgroundColor:ilpex.white,
-    //     borderRadius : 20,
-    //     width : '90%',
-    //     padding : 25,
-    //     alignItems : 'center',
-    //     shadowColor : ilpex.black,
-    //     shadowOffset:{
-    //         width : 0,
-    //         height:2
-    //     },
-    //     shadowOpacity:0.25,
-    //     shadowRadius : 4,
-    //     elevation : 5
-    // },
+    modalContainer : {
+        flex : 1,
+        justifyContent:'center',
+        alignItems:'center',
+        marginTop:22
+    },
+    modalView : {
+        margin : 20,
+        backgroundColor:ilpex.white,
+        borderRadius : 20,
+        width : '90%',
+        padding : 25,
+        alignItems : 'center',
+        shadowColor : ilpex.black,
+        shadowOffset:{
+            width : 0,
+            height:2
+        },
+        shadowOpacity:0.25,
+        shadowRadius : 4,
+        elevation : 5
+    },
     startDate : {
         width : 200,
         height:100
