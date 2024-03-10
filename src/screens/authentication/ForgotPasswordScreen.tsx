@@ -15,9 +15,16 @@ const ForgotPasswordScreen = ()=>{
     const [email,setEmail] = useState('');
     const [buttonPressed, setButtonpressed] = useState(false);
     const navigation:any = useNavigation();
+    const [missingFieldError, setMissingFieldError] = useState("");
+
 
 
     const handleForgotPassword=()=>{
+        if(email==''){
+            setMissingFieldError("You need to enter your email for this");
+            return;
+
+        }
         setButtonpressed(true)
         navigation.navigate('Reset Password', { email:email });
 
@@ -35,6 +42,7 @@ const ForgotPasswordScreen = ()=>{
             value={email} 
             onChangeText={setEmail}
         />
+        {missingFieldError ? <Text style={styles.errorText}>{missingFieldError}</Text> : null}
         <Text>{"\n"}{"\n"}</Text>
         <Button 
             name={"Submit"} 
@@ -61,7 +69,13 @@ const styles = StyleSheet.create({
         marginLeft:30,
         maxWidth:350,
         marginBottom:20, 
-    }
+    },
+    errorText: {
+        color: ilpex.failure,
+        fontSize: 14,
+        marginTop: 5,
+        textAlign:'center'
+      },
 
 })
 
