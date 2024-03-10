@@ -20,6 +20,7 @@ const ilpex = {
     failure:'red',
     traineeList:'#A786C1',
     searchBg:'#E4D8FE',
+    graphStroke:'#2784D7',
 
 
     mainFont: 'Poppins-Bold',

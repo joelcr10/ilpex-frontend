@@ -9,6 +9,7 @@ import { getItem } from "../../utils/utils";
 import TraineeNameCard from "../../components/TraineeNameCard";
 import SearchField from "../../components/SearchField";
 import TraineeNameShimmer from "../../components/loading/TraineeNameListShimmer";
+import LineGraph from "../../components/LineGraph";
 
 
 
@@ -35,13 +36,13 @@ const UserManagementScreen=()=>{
     useEffect(() => {
         const getTrainees = async () => {
             const trainee_id=await getItem(Constants.TRAINEE_ID);
-            console.log(trainee_id);
+            // console.log(trainee_id);
           try {
             const {responseData, errorMessage} = await getHook(`/api/v2/trainee`);
             setLoading(false);
             setTrainees(responseData);
             setFilteredData(responseData);
-            console.log(responseData)
+            // console.log(responseData)
           } catch (error) {
             console.error('Error:', error);
           }
@@ -49,7 +50,8 @@ const UserManagementScreen=()=>{
         getTrainees();
         }, []);
 
-
+        const chartLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+        const chartData = [20, 45, 28, 80, 99, 43,20, 45, 28, 80, 99, 43];
 
     return(
         // <ScrollView>
@@ -62,6 +64,10 @@ const UserManagementScreen=()=>{
                 </View>
                 
                     <View style={styles.container}>
+                      <View>
+                      <LineGraph labels={chartLabels} data={chartData} chartName="Course Completeion" progressTitle="Overall" progress={30}/>
+                      </View>
+                    
                         <SearchField onChangeText={handleSearch as any} value={searchQuery}/>
                         <Text style={styles.subTitle}>Trainees</Text>
                     {isLoading  &&
