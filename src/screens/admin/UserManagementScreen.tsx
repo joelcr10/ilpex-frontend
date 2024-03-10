@@ -65,7 +65,7 @@ const UserManagementScreen=()=>{
                 
                     <View style={styles.container}>
                       <View>
-                      <LineGraph labels={chartLabels} data={chartData} chartName="Course Completeion" progressTitle="Overall" progress={30}/>
+                      {/* <LineGraph labels={chartLabels} data={chartData} chartName="Course Completeion" progressTitle="Overall" progress={30}/> */}
                       </View>
                     
                         <SearchField onChangeText={handleSearch as any} value={searchQuery}/>
