@@ -42,6 +42,9 @@ const CreateAssessment = ()=>{
     const [startDate,setStartDate] = useState(new Date());
     const [endDate,setEndDate] = useState(new Date());
     const [isVisible,setIsVisible] = useState(false);
+    const [allBatchesName,setBatchesName] = useState<any>([]);
+    const [allBatches,setAllBatches] = useState<any>([]);
+    const [batch,setBatch] = useState('');
     const handleOpen=()=>{
         setIsVisible(true);
     }
@@ -50,27 +53,44 @@ const CreateAssessment = ()=>{
     }
     const today = new Date();
     const nextYear = new Date(today.getFullYear() + 1, today.getMonth(), today.getDate());
-    const datePicker =()=>{
-        return (
-            <View style={{
-                zIndex:1
-            }}>
-            
-            </View>
-        )
-    }
+    useEffect(()=>{
+        const getBatches = async()=>{
+            try{
+                const { success,statusCode,responseData,errorMessage} = await getHook('/api/v2/batch');
+                console.log(success,statusCode);
+                if(success){
+                    if(responseData){
+                        setBatchesName(responseData.batches.map((batch: { batch_id: string; batch_name: string; }) => ({
+                            label: batch.batch_name,
+                            value: batch.batch_name 
+                          })));
+                        // setLoading(true); 
+                        console.log("->>>>>>>>>>");
+                        console.log('allBatches',allBatchesName);
+                }
+                }
+                const tid = await getItem(Constants.TRAINEE_ID);
+                console.log("tid: ",tid);
+            }
+            catch(err){
+                console.error('Error', err);
+            }
+        }
+        getBatches();
+    },[]);
  return (
     <View style={styles.container}>
             <Text style={styles.text}>Create Assessment</Text>
             <View style={styles.box}>
                 <View style={styles.dataContainer}>
                     <InputField label={"Assessment name"} isPassword={false} value={assessmentName} onChangeText={setAssessementName} ></InputField>
-                     <DropdownComponent data={data}></DropdownComponent>
+                     <DropdownComponent data={allBatchesName} setBatch={setBatch}></DropdownComponent>
+                     <Text>{batch}</Text>
             <Button name={"Start Date"} onPress={handleOpen} buttonPressed={false}>
             </Button>
             <CalenderModal minDate={today} maxDate={nextYear} isVisible={isVisible}  setStartDate={setStartDate} setEndDate={setEndDate} closeModal={handleClose}></CalenderModal>
-         <Text>{startDate ? `Selected start Dates: ${startDate.toString()}` : 'Select Start Date'}</Text>
-         <Text>{endDate ? `Selected end Dates: ${endDate.toString()}` : 'Select Start Date'}</Text>
+         <Text>{startDate ? `Selected start Dates: ${startDate.toDateString()}` : 'Select Start Date'}</Text>
+         <Text>{endDate ? `Selected end Dates: ${endDate.toDateString()}` : 'Select Start Date'}</Text>
                 </View>
             </View>
     </View>

@@ -5,10 +5,10 @@ import ilpex from '../utils/ilpexUI';
 
 
   type DropdownProps = {
-    data: { label: string; value: string }[];
+    data: { label: string; value: string }[],setBatch : (batch_name : string) =>void,
   };
 
-  const DropdownComponent = ({ data } : DropdownProps) => {
+  const DropdownComponent = ({ data,setBatch } : DropdownProps) => {
     const [value, setValue] = useState<any>([]);
     const [isFocus, setIsFocus] = useState(false);
     return (
@@ -30,7 +30,7 @@ import ilpex from '../utils/ilpexUI';
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={item => {
-            setValue(item.value);
+            setBatch(item.value);
             setIsFocus(false);
           }}
         />
