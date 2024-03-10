@@ -1,11 +1,12 @@
+import React from 'react';
 import 'react-native-gesture-handler';
 import { DrawerContentScrollView, DrawerItemList, createDrawerNavigator } from '@react-navigation/drawer';
+import { StyleSheet, Text, View } from 'react-native';
+import { Image, ImageProps } from 'react-native';
+import ilpex from '../utils/ilpexUI';
 import TraineeProfileScreen from '../screens/trainee/TraineeProfileScreen';
 import BottomTabNavigation from "./BottomTabNavigation";
-import { StyleSheet, Text, View } from 'react-native';
-import ilpex from '../utils/ilpexUI';
-import { Image, ImageProps } from 'react-native';
-import React from 'react';
+import CreateBatchScreen from '../screens/admin/CreateBatchScreen';
 const Drawer = createDrawerNavigator();
 
 const CustomDrawerContent : any = (props : any) => {
@@ -95,7 +96,7 @@ const DrawerNavigation = () => {
             
             <Drawer.Screen 
                 name="Create A Batch" 
-                component={BottomTabNavigation} 
+                component={CreateBatchScreen} 
                 options={{
                     title: 'Create A Batch',
                     drawerIcon: ({focused, size}) => (
