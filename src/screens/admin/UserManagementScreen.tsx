@@ -23,9 +23,10 @@ const UserManagementScreen=()=>{
 
     //search query
     const [searchQuery, setSearchQuery] = useState('');
-    const [filteredData, setFilteredData] = useState<any>([]);
+    const [filteredData, setFilteredData] = useState<any[]>([]);
     const [offset, setOffset] = useState(0);
     const [hasMoreData, setHasMoreData] = useState(true);
+
     console.log("................>>>>>",offset);
 
     const handleSearch = (text:string) => {
@@ -47,10 +48,11 @@ const UserManagementScreen=()=>{
             const {responseData, errorMessage} = await getHook(`/api/v2/trainee?offset=${offset}`);
             setLoading(false);
             if (responseData.length === 0) {
-              setHasMoreData(false);
-              return;
-            }
-            setTrainees(responseData);
+                // No more data available
+                setHasMoreData(false);
+                return;
+                    }
+            setTrainees((prevData: any) => [...prevData, ...responseData]);
             setFilteredData((prevData: any) => [...prevData, ...responseData]);
             // console.log(responseData)
           } catch (error) {
