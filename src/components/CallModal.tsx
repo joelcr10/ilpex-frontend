@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, TouchableOpacity, Text } from 'react-native';
-import ModalComponent from './ModalComponent';
+import ModalComponent from './ResultModalComponent';
 import Button from './Button';
 
 const CallModal = () => {

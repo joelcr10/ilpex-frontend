@@ -3,39 +3,42 @@ import React from 'react';
 import { Modal, View, Text } from 'react-native';
 import ilpex from '../utils/ilpexUI';
 import Button from './Button';
+import CircularProgress from './CircularProgress';
 
 interface ModalProps {
-
   isVisible: boolean;
   closeModal: () => void;
-  successText:string;
-  failureText:string;
+  score: number;
   setMessageVisible: (visible: boolean) => void; // New prop
 }
 
 const ModalComponent: React.FC<ModalProps> = ({
   isVisible,
   closeModal,
-  successText,
-  failureText,
+  score,
   setMessageVisible,
 }) => {
   const renderMessage = () => {
-    if (successText) {
+    if (score > 60) {
       return (
         <>
           <Text style={{ color: ilpex.darkGrey,fontFamily:ilpex.fontMedium,fontSize:20, textAlign: 'center' }}>
-            {successText}
+            Congratulations!!!!
           </Text>
-          
+          <View style={{ marginLeft: 90, marginTop: 20 }}>
+            <CircularProgress color={`${ilpex.success}`} completeStatus={score} />
+          </View>
         </>
       );
     } else {
       return (
         <View>
           <Text style={{ color: ilpex.darkGrey,fontFamily:ilpex.fontMedium,fontSize:20,  textAlign: 'center' }}>
-            {failureText}
+            Retake the test.{"\n"}
           </Text>
+          <View style={{ justifyContent:'center',alignContent:'center',alignItems:'center' }}>
+            <CircularProgress color={`${ilpex.failure}`} completeStatus={score} />
+          </View>
         </View>
         
       );
@@ -52,7 +55,7 @@ const ModalComponent: React.FC<ModalProps> = ({
         setMessageVisible(false); // Hide the message when closing the modal
       }}
     >
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' , }}>
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <View
           style={{
             backgroundColor: ilpex.white,
