@@ -7,6 +7,7 @@ import TraineeProfile from "../screens/trainee/TraineeProfileScreen";
 import CreateAssessment from "../screens/admin/CreateAssessment/CreateAssessmentScreen";
 import UserManagementScreen from '../screens/admin/UserManagementScreen';
 import IncompleteTraineesScreen from "../screens/admin/IncompleteTraineesScreen";
+import UpdateAssessmentScreen from "../screens/admin/UpdateAssessment/UpdateAssessmentScreen";
 
 const BottomTab = createBottomTabNavigator();
 
@@ -47,6 +48,18 @@ const BottomTabNavigation = () =>{
             <BottomTab.Screen
                 name = "Profile"
                 component = {TraineeProfile}
+                options={{
+                    headerShown: false,
+                    tabBarIcon: ({color}) =>{
+                        return(
+                            <Icon name="users" size={30} color={color}/>
+                        )
+                    }
+                }}
+            />
+                       <BottomTab.Screen
+                name = "Update"
+                component = {UpdateAssessmentScreen}
                 options={{
                     headerShown: false,
                     tabBarIcon: ({color}) =>{

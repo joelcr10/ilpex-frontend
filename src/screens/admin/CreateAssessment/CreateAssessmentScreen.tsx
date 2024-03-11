@@ -25,7 +25,8 @@ const CreateAssessmentScreen = ()=>{
     const [allBatchesName,setBatchesName] = useState<any>([]);
     const [allBatches,setAllBatches] = useState<any>([]);
     const [selectedBatch,setBatch] = useState('');
-    const [missingFieldError,setMissingFieldError] = useState('');
+    const [missingAssessmentName,setMissingAssessmentName] = useState('');
+    const [missingBatchName,setMissingBatchName] = useState('');
     const [selectedFile, setSelectedFile] = useState<any | null>(null);
     const handleOpen=()=>{
         setIsVisible(true);
@@ -34,12 +35,17 @@ const CreateAssessmentScreen = ()=>{
         setIsVisible(false);
     }
     const handleInputs=()=>{
+        handleAssessmentName();
+        handleBatchName();
+    }
+    const handleAssessmentName=()=>{
         if(assessmentName==''){
-            setMissingFieldError("You need to enter the Assessment Name");
-          return;
+            setMissingAssessmentName("You need to enter the Assessment Name");
         }
+    }
+    const handleBatchName=()=>{
         if(selectedBatch==''){
-            setMissingFieldError("You need to specify the batch");
+            setMissingBatchName("You need to select the batch name");
         }
     }
     const pickDocument = async () => {
@@ -135,14 +141,14 @@ const CreateAssessmentScreen = ()=>{
             formData.append('start_date', startDate.toISOString());
             formData.append('end_date', endDate.toISOString());
             formData.append('file', selectedFile);
-        // handleInputs();
-        // if(missingFieldError==null){
+        handleInputs();
+        if(missingAssessmentName==null){
         console.log("Form Data is-------> ", formData);
         const {success, responseData} = await createAssessmentAPI(formData);
         if(success){
             console.log(responseData);
         }
-        // }
+        }
         }
         catch(err){
             console.log("Error",err);
@@ -158,9 +164,9 @@ const CreateAssessmentScreen = ()=>{
                         margin:'3%'
                     }}>
                     <InputField label={"Assessment name"} isPassword={false} value={assessmentName} onChangeText={setAssessementName} ></InputField>
-                    {missingFieldError!=='' ? <Text style={styles.errorText}>{missingFieldError}</Text> : null}
+                    {missingAssessmentName!=='' ? <Text style={styles.errorText}>{missingAssessmentName}</Text> : null}
                      <DropdownComponent placeholder="Select Batch" data={allBatchesName} setBatch={setBatch}></DropdownComponent>
-                     {/* {missingFieldError!=='' ? <Text style={styles.errorText}>{missingFieldError}</Text> : null} */}
+                     {missingBatchName!=='' ? <Text style={styles.errorText}>{missingBatchName}</Text> : null}
                      </View>
                      <View style= {styles.dateSelector}>
                         <DateSelector startDate={startDate} endDate={endDate} onPress={handleOpen}></DateSelector>
