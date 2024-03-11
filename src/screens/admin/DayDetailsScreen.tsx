@@ -8,7 +8,13 @@ import IconButtonComponent from "../../components/IconButton";
 import ChartPieHeaderShimmer from "../../components/pieChartHeaderShimmer";
 import ThreeDots from "../../components/ThreeDots";
 import BackButton from "../../components/BackButton";
+import { useRoute } from "@react-navigation/native";
 const DayWiseDetailsPage =()=>{
+    const route:any = useRoute();
+    const day = route.params.day;
+    const batch = route.params.batch_id;
+    // console.log('this is day',day)
+    // console.log('this is batch',batch)
     const [isLoading,setLoading] =useState(true);
     const [currentDateCompletion, setCurrentDateCompletion] = useState<any>([]);
     const [dayWiseCourseList,setDayWiseCourseList] = useState<any>([]);
@@ -17,7 +23,7 @@ const DayWiseDetailsPage =()=>{
       console.log('effect activated');
       const getStory = async () => {
         try {
-          const {responseData, errorMessage} = await getHook('/api/v2/analysis/1/1')
+          const {responseData, errorMessage} = await getHook(`/api/v2/analysis/${batch}/${day}`)
           console.log('current date completion',responseData);
           setCurrentDateCompletion(responseData);
         } catch (error) {
@@ -31,7 +37,7 @@ const DayWiseDetailsPage =()=>{
       console.log('effect activated');
       const getStory = async () => {
         try {
-          const {responseData, errorMessage} = await getHook('/api/v3/course/day/2')
+          const {responseData, errorMessage} = await getHook(`/api/v3/course/day/${day}`)
           console.log('this is data',responseData);
           if(responseData){
             console.log('course List',responseData.message);
@@ -46,6 +52,8 @@ const DayWiseDetailsPage =()=>{
       };
       getStory();
   }, []);
+
+ 
 return(
         <ScrollView>
         <View style={styles.container1}>
@@ -59,7 +67,7 @@ return(
               
               {isLoading && <ChartPieHeaderShimmer/>} 
                {!isLoading && <><View style ={styles.detail}>
-                    <Text style={{fontWeight:'700',color:'black',fontSize:28,marginBottom:20}}>Day 1</Text>
+                    <Text style={{fontWeight:'700',color:'black',fontSize:28,marginBottom:20}}>Day {day}</Text>
                     <Text style={{marginRight:185}}>Courses</Text>
                     <FlatList
                         data={dayWiseCourseList}
@@ -77,7 +85,7 @@ return(
               </View>
               {isLoading&&<><ChartPieShimmer/>
               <ChartPieShimmer/></>}
-              {!isLoading&&<><ChartPie chartName={'Course Completion'} excellent={currentDateCompletion.onTrack} good={'0'} poor={currentDateCompletion.laggingBehind} option1="Completed" option2="Partial" option3="Incomplete" /></>}
+              {!isLoading&&<><ChartPie chartName={'Course Completion'} excellent={currentDateCompletion.onTrack} good={0} poor={currentDateCompletion.laggingBehind} option1="Completed" option2="Partial" option3="Incomplete" /></>}
             </View>
         
          </View>

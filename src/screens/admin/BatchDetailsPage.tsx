@@ -9,118 +9,39 @@ import ChartPieHeaderShimmer from "../../components/pieChartHeaderShimmer";
 import ThreeDots from "../../components/ThreeDots";
 import BackButton from "../../components/BackButton";
 import DayWiseProgressBar from "../../components/DayWiseProgressBar";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import DayWiseDetailsPage from "./DayDetailsScreen";
+import moment from 'moment'
 
-const data = [
-	{
-		id : '1',
-		day_number : 1,
-		percentage : 50,
-	},
-	{
-		id : '2',
-		day_number : 2,
-		percentage : 30,
-	},
-	{
-		id : '3',
-		day_number : 3,
-		percentage : 50,
-	},
-	{
-		id : '4',
-		day_number : 4,
-		percentage : 100,
-	},
-	{
-		id : '5',
-		day_number : 5,
-		percentage : 10,
-	},
-	{
-		id : '6',
-		day_number : 6,
-		percentage : 70,
-	},
-	{
-		id : '7',
-		day_number : 1,
-		percentage : 50,
-	},
-	{
-		id : '8',
-		day_number : 2,
-		percentage : 30,
-	},
-	{
-		id : '9',
-		day_number : 3,
-		percentage : 50,
-	},
-	{
-		id : '10',
-		day_number : 4,
-		percentage : 100,
-	},
-	{
-		id : '11',
-		day_number : 5,
-		percentage : 10,
-	},
-	{
-		id : '12',
-		day_number : 6,
-		percentage : 70,
-	},
-	{
-		id : '13',
-		day_number : 1,
-		percentage : 50,
-	},
-	{
-		id : '14',
-		day_number : 2,
-		percentage : 30,
-	},
-	{
-		id : '15',
-		day_number : 3,
-		percentage : 50,
-	},
-	{
-		id : '16',
-		day_number : 4,
-		percentage : 100,
-	},
-	{
-		id : '17',
-		day_number : 5,
-		percentage : 10,
-	},
-]
 
 const BatchDetailsPage =()=>{
+   const todayDate = moment().format('YYYY-MM-DD');
+    const route:any = useRoute();
+    const navigation : any = useNavigation();
+    const batch_id = route.params.batch_id;
+    
     const [isLoading,setLoading] =useState(true);
     const [feedList, setStoryList] = useState<any>([]);
     const [batchData,setBatchData] = useState<any>([]);
     const [currentDate,setCurrentDate] = useState<any>([]);
     const [courseCompletion,setCourseCompletion] = useState<any>([]);
-    console.log(courseCompletion)
+    const [dayWiseProgress,setdayWiseProgress] = useState<any>([]);
+    const onPress=(batch_id:number,day_id:number)=>{
+      console.log('this is day',day_id)
+      console.log('this is batch',batch_id)
+       navigation.navigate("batchDayWiswDetails",{ batch_id:batch_id, day:day_id});
+    }
     useEffect(() => {
       const getStory = async () => {
         try {
-          console.log('effect activated');
-          const {responseData, errorMessage} = await getHook('api/v2/analysis/1')
-          console.log("hi")
+          const {responseData, errorMessage} = await getHook(`api/v2/analysis/${batch_id}`)
           if(responseData)
           {
-            console.log("return feedlist",feedList)
-            console.log("current date",currentDate)
             setCourseCompletion(responseData);
           }
           if(errorMessage)
             console.log(errorMessage)
-          
-        } catch (error) {
+          } catch (error) {
           console.error('Error:', error);
         }
       };
@@ -131,19 +52,14 @@ const BatchDetailsPage =()=>{
     useEffect(() => {
         const getStory = async () => {
           try {
-            console.log('effect activated');
-            const {responseData, errorMessage} = await getHook('api/v2/batchAvg/1')
-            console.log("hi")
+            const {responseData, errorMessage} = await getHook(`api/v2/batchAvg/${batch_id}`)
             if(responseData)
             {
-              console.log("return feedlist",feedList)
-              console.log("current date",currentDate)
               setStoryList(responseData);
             }
             if(errorMessage)
               console.log(errorMessage)
-            
-          } catch (error) {
+            } catch (error) {
             console.error('Error:', error);
           }
         };
@@ -151,11 +67,9 @@ const BatchDetailsPage =()=>{
     }, []);
 
     useEffect(() => {
-      console.log('effect activated');
       const getStory = async () => {
         try {
-          const {responseData, errorMessage} = await getHook('api/v3/batch/1/day/2024-03-06')
-          console.log(responseData);
+          const {responseData, errorMessage} = await getHook(`api/v3/batch/${batch_id}/day/${todayDate}`)
           setCurrentDate(responseData);
         } catch (error) {
           console.error('Error:', error);
@@ -165,24 +79,46 @@ const BatchDetailsPage =()=>{
   }, []);
 
     useEffect(() => {
-      console.log('effect activated');
-      const getStory = async () => {
+       const getStory = async () => {
         try {
-          const {responseData, errorMessage} = await getHook('/api/v2/batch/1')
-          console.log('this is data',responseData);
-          if(responseData){
-            console.log("got the response");
-            setBatchData(responseData);
+          const {responseData, errorMessage} = await getHook(`/api/v2/batch/${batch_id}`)
+           if(responseData){
+             setBatchData(responseData);
             setLoading(false);
           }
-          // setBatchData(responseData);
-          
-        } catch (error) {
+          } catch (error) {
           console.error('Error:', error);
         }
       };
       getStory();
   }, []);
+
+  useEffect(() => {
+    console.log('effect activated');
+    const getStory = async () => {
+      try {
+        const {responseData, errorMessage} = await getHook(`/api/v2/batch/${batch_id}/progress`)
+        if(responseData){
+          console.log('course List',responseData.data.progressData);
+          setdayWiseProgress(responseData.data.progressData);
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+    getStory();
+}, []);
+const arrayOfObjects =[];
+    for (const key in dayWiseProgress) {
+      if (dayWiseProgress.hasOwnProperty(key)) {
+        const value = dayWiseProgress[key];
+        arrayOfObjects.push({ key, value });
+        console.log(value)
+        // console.log(`${key}: ${value}`);
+      }
+    }
+
 return(
         <ScrollView>
         <View style={styles.container1}>
@@ -213,6 +149,7 @@ return(
                     <View style ={styles.eachDetail}>
                     <Text style={{fontWeight:'500',color:'black',fontSize:15}}>Current Status </Text> 
                     <Text style={{marginLeft:30,color:'#8F00FF',fontWeight:'500'}}>{currentDate.current_day}                   </Text>
+                    
                     </View>
                     </View>
                 </View>
@@ -224,16 +161,22 @@ return(
               </View>
               {isLoading&&<><ChartPieShimmer/>
               <ChartPieShimmer/></>}
-              {!isLoading&&<><ChartPie chartName={'Assesment Score'} excellent={feedList.excellent} good={feedList.good} poor={feedList.poor} option1="Excellent" option2="Good" option3="Poor" />
-              <ChartPie chartName={'Course Completion'} excellent={courseCompletion.onTrack} good={'0'} poor={courseCompletion.laggingBehind} option1="Completed" option2="Partial" option3="Incomplete" /></>}
+              {!isLoading&&<>
+              <ChartPie chartName={'Assesment Score'} excellent={feedList.excellent} good={feedList.good} poor={feedList.poor} option1="Excellent" option2="Good" option3="Poor" />
+              
+              <ChartPie chartName={'Course Completion'} excellent={courseCompletion.onTrack} good={0} poor={courseCompletion.laggingBehind} option1="Completed" option2="Partial" option3="Incomplete" />
+              </>
+              }
+              
               <View style = {styles.graphContainer}>
                   <FlatList 
                     contentContainerStyle = {{paddingBottom : 5}}
-                    data = {data}
+                    data = {arrayOfObjects}
                     renderItem = {({item}) => 
-                      <DayWiseProgressBar dayNumber = {item.day_number} percentage = {item.percentage} />
+                      
+                      <DayWiseProgressBar dayNumber = {parseInt(item.key)} percentage = {item.value} onPress={()=>onPress(batch_id,parseInt(item.key))}/>
                     }
-                    keyExtractor = {item => item.id}
+                  
                   />
                 </View>
             </View>

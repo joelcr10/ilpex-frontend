@@ -19,8 +19,8 @@ const BatchesScreen = ()=>{
     const navigation : any= useNavigation();
     const [allBatchesList,setBatchesList] = useState<any>([]);
     const [isLoading,setLoading] = useState(false);
-    const onPressBatchCard=()=>{
-        navigation.navigate("BatchDetails");
+    const onPressBatchCard=(batch_id:number)=>{
+        navigation.navigate("BatchDetails",{batch_id:batch_id});
     }
     const onPressButton=()=>{
         console.log("Button pressed");
@@ -63,7 +63,7 @@ const BatchesScreen = ()=>{
                             showsHorizontalScrollIndicator={false}
                             horizontal={false}
                             data={allBatchesList.batches}
-                            renderItem={({ item }) => <BatchCard batchName={item.batch_name} traineeNo={item.noOfTrainees} date={item.start_date} progress={parseInt(item.progress)} onPress={onPressBatchCard}/>}
+                            renderItem={({ item }) => <BatchCard batchName={item.batch_name} traineeNo={item.noOfTrainees} date={item.start_date} progress={parseInt(item.progress)} onPress={()=>onPressBatchCard(item.batch_id)}/>}
                             keyExtractor={item => item.id}
                         />
                     ):(

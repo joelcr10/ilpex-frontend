@@ -11,13 +11,7 @@ const AdminNavigation = () =>{
         return(
             <Stack.Navigator>
                 
-                <Stack.Screen 
-                    name="batchDayWiswDetails"
-                    component={DayWiseDetailsPage}
-                    options={{
-                        headerShown: false
-                    }}
-                />
+                
                 <Stack.Screen 
                     name="AdminBottomTab"
                     component={BottomTabNavigation}
@@ -58,6 +52,13 @@ const AdminNavigation = () =>{
                     component = {TraineeProileAnalysisScreen}
                     options = {{
                         headerShown : false
+                    }}
+                />
+                <Stack.Screen 
+                    name="batchDayWiswDetails"
+                    component={DayWiseDetailsPage}
+                    options={{
+                        headerShown: false
                     }}
                 />
             </Stack.Navigator>
