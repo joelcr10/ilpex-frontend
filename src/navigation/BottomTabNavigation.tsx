@@ -44,7 +44,7 @@ const BottomTabNavigation = () =>{
                     }
                 }}
             /> 
-            <BottomTab.Screen
+            {/* <BottomTab.Screen
                 name = "Profile"
                 component = {TraineeProfile}
                 options={{
@@ -55,7 +55,7 @@ const BottomTabNavigation = () =>{
                         )
                     }
                 }}
-            />
+            /> */}
                        <BottomTab.Screen
                 name = "Assessment"
                 component = {CreateAssessment}
@@ -68,7 +68,7 @@ const BottomTabNavigation = () =>{
                     }
                 }}
             />
-            <BottomTab.Screen
+            {/* <BottomTab.Screen
                 name = "Incomplete"
                 component = {IncompleteTraineesScreen}
                 options={{
@@ -79,7 +79,7 @@ const BottomTabNavigation = () =>{
                         )
                     }
                 }}
-            />
+            /> */}
                <BottomTab.Screen 
                 name="ManageUser"
                 component={UserManagementScreen}   
