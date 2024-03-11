@@ -60,7 +60,7 @@ const BatchesScreen = ()=>{
                             showsHorizontalScrollIndicator={false}
                             horizontal={false}
                             data={allBatchesList.batches}
-                            renderItem={({ item }) => <BatchCard batch_name={item.batch_name} traineeNo={item.noOfTrainees} date={item.start_date} progress={parseInt(item.progress)} batch_id={item.batch_id}/>}
+                            renderItem={({ item }) => <BatchCard batch_name={item.batch_name} traineeNo={item.noOfTrainees} date={item.start_date} progress={parseInt(item.progress)}/>}
                             keyExtractor={item => item.id}
                         />
                     ):(

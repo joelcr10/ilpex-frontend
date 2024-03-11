@@ -6,17 +6,17 @@ import ilpex from "../utils/ilpexUI";
 import CircularProgress from "./CircularProgress";
 import { useNavigation } from "@react-navigation/native";
 
-type BatchComponentProps = {batch_id : number,batch_name : string, traineeNo : string, date : string,progress : number};
+type BatchComponentProps = {batch_name : string, traineeNo : string, date : string,progress : number};
 
-const BatchCard=({batch_id,batch_name,traineeNo,date,progress} : BatchComponentProps)=>{
+const BatchCard=({batch_name,traineeNo,date,progress} : BatchComponentProps)=>{
 
     const buttonPress = ()=>{
         const navigation : any= useNavigation();
         console.log("HIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII")
-        console.log("Passing here ", batch_id);
-        navigation.navigate("BatchDetails", {
-            batch_id: batch_id,
-          });
+        // console.log("Passing here ", batch_id);
+        // navigation.navigate("BatchDetails", {
+        //     batch_id: batch_id,
+        //   });
         }
 
     const getMonthName=(month : number)=> {
