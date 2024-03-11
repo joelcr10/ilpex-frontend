@@ -14,6 +14,7 @@ import Constants from "../../../utils/Constants";
 import { useSelector } from "react-redux";
 import { Circle } from "react-native-progress";
 import CircularProgress from "../../../components/CircularProgress";
+import DisabledButton from "../../../components/DisabledButton";
 
 type questionType = {
     question_id: number,
@@ -58,6 +59,16 @@ const AssessmentScreen = () => {
         assessmentQuestion();
       }, []);
 
+      useEffect(() => {
+
+        if(selectedId==''){
+            setinvalid(true);
+        }else{
+            setinvalid(false);
+        }
+        
+      }, [selectedId]);
+
     
 
     const checkAnswer =() =>{
@@ -92,6 +103,7 @@ const AssessmentScreen = () => {
         console.log("marks: ",score,questionList.length);
         const scorePercentage = (score/questionList.length)*100;
         console.log("marks: ",scorePercentage,score,questionList.length);
+        console.log("userId",user_id, "assessment_id", assessment_id, "score",score);
         const {success, responseData} = await updateScoreAPI(assessment_id,user_id,score);
         if(success){
             
@@ -113,12 +125,13 @@ const AssessmentScreen = () => {
                     <Text style={styles.assessmentName}>{assessment_name}</Text>
                 </View>
                 <View style={styles.questionContainer}>
-                    {invalid && <Text style={styles.invalidText}>Select an option</Text>}
+                    {/* {invalid && <Text style={styles.invalidText}>Select an option</Text>} */}
                     {isLoading && <QuestionCardShimmer />}
                     {!isLoading && <View>
                             <QuestionCard questionNumber={index+1} currentQuestion={questionList[index]} selectedId={selectedId} setSelectedId={setSelectedId} />
                             <BarProgress progress={index+1} total={questionList.length}/>
-                            {!submitResult && <SmallButton name="Submit Answer" onPress={checkAnswer}/>}
+                            {invalid && !submitResult && <DisabledButton name="Submit Answer"/>}
+                            {!submitResult && !invalid && <SmallButton name="Submit Answer" onPress={checkAnswer}/>}
                             {submitResult && <SmallButton name="Finish" onPress={updateScore}/>}
                         </View>}     
                 </View>
