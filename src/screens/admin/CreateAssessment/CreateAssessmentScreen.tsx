@@ -114,7 +114,7 @@ const CreateAssessmentScreen = ()=>{
             if (batch.batch_name === selectedBatch) {
                 const batch_startDate = new Date(batch.start_date);
                 if(batch_startDate!=null){
-                    if(batch_startDate<today){
+                    if(batch_startDate<=today){
                         return today;
                   }
                   else{
