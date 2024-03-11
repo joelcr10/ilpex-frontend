@@ -7,6 +7,7 @@ import ilpex from '../utils/ilpexUI';
 import TraineeProfileScreen from '../screens/trainee/TraineeProfileScreen';
 import BottomTabNavigation from "./BottomTabNavigation";
 import CreateBatchScreen from '../screens/admin/CreateBatchScreen';
+import CreateAssessmentScreen from '../screens/admin/CreateAssessment/CreateAssessmentScreen';
 const Drawer = createDrawerNavigator();
 
 const CustomDrawerContent : any = (props : any) => {
@@ -124,7 +125,7 @@ const DrawerNavigation = () => {
 
             <Drawer.Screen 
                 name="Create Assessment" 
-                component={BottomTabNavigation} 
+                component={CreateAssessmentScreen} 
                 options={{
                     title: 'Create Assessment',
                     drawerIcon: ({focused, size}) => (
