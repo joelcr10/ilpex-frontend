@@ -31,7 +31,7 @@ export async function sendMail({
   let sendMailResp: any;
  
   const sendMailPayload = {
-    incompleteTraineeList:incompleteTraineeList,
+    IncompleteTraineeList:incompleteTraineeList,
     day_number:day_number
   };
 

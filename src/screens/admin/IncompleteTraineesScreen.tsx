@@ -18,18 +18,20 @@ interface Trainee {
 
 
 
+
+
 const IncompleteTraineesScreen = () => {
   const [isLoading, setLoading] = useState(true);
 
 
   const TraineesDisplay = () => {
     const trainee_id = useSelector((state: any) => state.userDetailsReducer.trainee_id);
-    const [traineeList, setTraineeList] = useState<Trainee[]>([]);
+    const [traineeList, setTraineeList] = useState<any>([]);
 
     const sendMailToTrainees = async () => {
       try {
         const { success } = await sendMail({
-          incompleteTraineeList: traineeList,
+          incompleteTraineeList: traineeList.IncompleteTraineeList,
           day_number: 1,
         });
         if (success) {

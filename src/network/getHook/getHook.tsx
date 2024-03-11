@@ -19,7 +19,6 @@ export async function getHook(api_url: string): Promise<Response>{
 
     // const token = await getItem(Constants.TOKEN);
 
-    // const token = useSelector((state: any) => state.userDetailsReducer.token);
     const token = await getItem(Constants.TOKEN);
 
     console.log("--------------:"+token+":-------------------------");
