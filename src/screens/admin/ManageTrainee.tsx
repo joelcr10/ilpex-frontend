@@ -9,9 +9,13 @@ import Constants from "../../utils/Constants";
 import { getHook } from "../../network/getHook/getHook";
 import { useRoute } from "@react-navigation/native";
 import { UpdateTraineeStatus } from "./ManageTraineeHook";
+import BackButton from "../../components/BackButton";
 
 const ManageTraineeScreen = () => {
-  const route = useRoute();
+
+  const route:any = useRoute();
+  const user_id =route.params?.user_id;
+
   const [traineeName, setTraineeName] = useState("");
   const [traineeBatch, setTraineeBatch] = useState("");
   const [traineeEmail, setTraineeEmail] = useState("");
@@ -21,9 +25,8 @@ const ManageTraineeScreen = () => {
   useEffect(() => {
     const getTraineeDetails = async () => {
       try {
-      //   const user_id = route.params["user_id"];
       //   const { responseData, errorMessage } = await getHook(`/api/v3/profile/${user_id}`);
-        const { responseData, errorMessage } = await getHook(`/api/v3/profile/6`);
+        const { responseData, errorMessage } = await getHook(`/api/v3/profile/${user_id}`);
 
         if (responseData) {
           setTraineeName(responseData.data.user_name);
@@ -127,6 +130,7 @@ const ManageTraineeScreen = () => {
         successText={"This Account has been activated"}
         failureText={"This account cannot be deactivated"}
       />
+      <BackButton color={"black"}/>
     </View>
   );
 };
