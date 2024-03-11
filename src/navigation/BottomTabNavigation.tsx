@@ -4,9 +4,10 @@ import LoginScreen from "../screens/authentication/LoginScreen";
 import BatchesScreen from "../screens/admin/BatchesScreen";
 import TraineeScreen from "../screens/admin/TraineesScreen";
 import TraineeProfile from "../screens/trainee/TraineeProfileScreen";
-import CreateAssessment from "../screens/admin/CreateAssessmentScreen";
+import CreateAssessment from "../screens/admin/CreateAssessment/CreateAssessmentScreen";
 import UserManagementScreen from '../screens/admin/UserManagementScreen';
 import IncompleteTraineesScreen from "../screens/admin/IncompleteTraineesScreen";
+import UpdateAssessmentScreen from "../screens/admin/UpdateAssessment/UpdateAssessmentScreen";
 
 const BottomTab = createBottomTabNavigator();
 
@@ -57,8 +58,8 @@ const BottomTabNavigation = () =>{
                 }}
             /> */}
                        <BottomTab.Screen
-                name = "Assessment"
-                component = {CreateAssessment}
+                name = "Update"
+                component = {UpdateAssessmentScreen}
                 options={{
                     headerShown: false,
                     tabBarIcon: ({color}) =>{

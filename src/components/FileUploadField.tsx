@@ -17,7 +17,7 @@ const FileUploadField = ({onSelect,selectedFile}:FileUploadProps) => {
         <View style={{flexDirection:'row'}}>
         <Icon name='upload-file' color={ilpex.darkGrey} size={28}></Icon>
             <Text style={styles.buttonText} ellipsizeMode="tail">
-                {selectedFile ?`${selectedFile[0].name.slice(0,10)+'...'}` : 'Choose File'}
+                {selectedFile ?`${selectedFile.name.slice(0,10)+'...'}` : 'Choose File'}
             </Text> 
         </View>
              

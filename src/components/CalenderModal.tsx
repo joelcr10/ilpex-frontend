@@ -40,13 +40,22 @@ const CalenderModal = (
                             startFromMonday={true}
                             minDate={minDate}
                             maxDate={maxDate}
-                            todayBackgroundColor="#f2e6ff"
+                            textStyle={{
+                                fontFamily:'Poppins-Regular',
+                                fontSize:15,
+                                color:'black'
+                            }}
+                            todayBackgroundColor={ilpex.inactive}
                             selectedDayColor={ilpex.main}
-                            selectedDayTextColor="#FFFFFF"
+                            selectedDayTextColor={ilpex.white}
                             onDateChange={onDateChange}
                 />
             <TouchableOpacity onPress={closeModal}>
-                <Text>Select</Text>
+                <Text style={{
+                    fontFamily:"Poppins-Regular",
+                    color:'black',
+                    marginTop:10
+                }}>Select</Text>
             </TouchableOpacity>
             <View>
         </View>

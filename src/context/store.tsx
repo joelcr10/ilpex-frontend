@@ -2,12 +2,14 @@ import {configureStore} from '@reduxjs/toolkit';
 import userReducer from './userSlice';
 import tokenReducer from './tokenSlice';
 import userDetailsReducer from './userDetailsSlice'
+import userNameReducer from './userNameSlice'
 
 export const store = configureStore({
   reducer: {
     userReducer,
     tokenReducer,
     userDetailsReducer,
+    userNameReducer,
   },
 });
  

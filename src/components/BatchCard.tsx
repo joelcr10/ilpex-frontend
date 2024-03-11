@@ -4,10 +4,20 @@ import { Text } from "react-native";
 import { StyleSheet } from "react-native";
 import ilpex from "../utils/ilpexUI";
 import CircularProgress from "./CircularProgress";
+import { useNavigation } from "@react-navigation/native";
 
-type BatchComponentProps = {batchName : string, traineeNo : string, date : string,progress : number,onPress:()=>any};
+type BatchComponentProps = {batch_name : string, traineeNo : string, date : string,progress : number};
 
-const BatchCard=({batchName,traineeNo,date,progress,onPress} : BatchComponentProps)=>{
+const BatchCard=({batch_name,traineeNo,date,progress} : BatchComponentProps)=>{
+
+    const buttonPress = ()=>{
+        const navigation : any= useNavigation();
+        console.log("HIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII")
+        // console.log("Passing here ", batch_id);
+        // navigation.navigate("BatchDetails", {
+        //     batch_id: batch_id,
+        //   });
+        }
 
     const getMonthName=(month : number)=> {
         const months = [
@@ -35,12 +45,10 @@ const BatchCard=({batchName,traineeNo,date,progress,onPress} : BatchComponentPro
     const formattedDate = `${monthName} ${day} ${year}`;
 
     return(
-        <TouchableOpacity onPress={onPress}>
+        <TouchableOpacity onPress={buttonPress}>
             <View style={styles.container}>
-                <View style={{
-                    marginStart:10
-                }}>
-                    <Text style={styles.batchName}>{batchName}</Text>
+                <View style={styles.dataContainer}>
+                    <Text style={styles.batch_name}>{batch_name}</Text>
                     <View style = {{
                         flexDirection : 'row'
                     }}>
@@ -71,7 +79,11 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         alignSelf:'center'
     },
-    batchName:{
+    dataContainer : {
+        marginStart:10,
+        width : 230
+    },
+    batch_name:{
         marginTop:10,
         marginStart:20,
         color : 'black',
@@ -106,7 +118,6 @@ const styles = StyleSheet.create({
         alignSelf :'center'
     },
     circularProgress : {
-        marginStart:40,
         marginTop:20
     }
 })
