@@ -5,9 +5,7 @@ import ilpex from "../../utils/ilpexUI";
 import InputField from "../../components/InputField";
 import Button from "../../components/Button";
 import { useNavigation } from '@react-navigation/native';
-
-
-
+import { forgotPassword } from "./ForgotPasswordHook";
 
 
 const ForgotPasswordScreen = ()=>{
@@ -17,18 +15,21 @@ const ForgotPasswordScreen = ()=>{
     const navigation:any = useNavigation();
     const [missingFieldError, setMissingFieldError] = useState("");
 
-
-
-    const handleForgotPassword=()=>{
+    const handleForgotPassword=async()=>{
         if(email==''){
             setMissingFieldError("You need to enter your email for this");
             return;
-
         }
         setButtonpressed(true)
-        navigation.navigate('Reset Password', { email:email });
 
-    }
+        const {success, statusCode, forgotPasswordResp, errorMessage} = await forgotPassword({
+            email:email,
+          });
+          console.log(success,forgotPasswordResp);
+          if(success){
+            navigation.navigate('Verification', { email:email });
+          }
+    };
 
    return(
     <View style={styles.mainView}>
@@ -49,10 +50,10 @@ const ForgotPasswordScreen = ()=>{
             onPress={handleForgotPassword} 
             buttonPressed={buttonPressed}/>
     </View>
-   )
+   );
 
 
-}
+};
 
 const styles = StyleSheet.create({
     mainView:{
@@ -77,6 +78,6 @@ const styles = StyleSheet.create({
         textAlign:'center'
       },
 
-})
+});
 
-export {ForgotPasswordScreen}
+export {ForgotPasswordScreen};
