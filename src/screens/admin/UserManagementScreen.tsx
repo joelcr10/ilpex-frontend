@@ -10,6 +10,8 @@ import TraineeNameCard from "../../components/TraineeNameCard";
 import SearchField from "../../components/SearchField";
 import TraineeNameShimmer from "../../components/loading/TraineeNameListShimmer";
 import LineGraph from "../../components/LineGraph";
+import DocumentPicker from 'react-native-document-picker';
+import FileUploadField from "../../components/FileUploadField";
 
 
 
@@ -53,6 +55,7 @@ const UserManagementScreen=()=>{
         const chartLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
         const chartData = [20, 45, 28, 80, 99, 43,20, 45, 28, 80, 99, 43];
 
+
     return(
         // <ScrollView>
         <View>
@@ -65,6 +68,7 @@ const UserManagementScreen=()=>{
                 
                     <View style={styles.container}>
                       <View>
+                      {/* <FileUploadField onSelect={pickDocument} selectedFile={selectedFile}/> */}
                       {/* <LineGraph labels={chartLabels} data={chartData} chartName="Course Completeion" progressTitle="Overall" progress={30}/> */}
                       </View>
                     
@@ -78,7 +82,7 @@ const UserManagementScreen=()=>{
                     <View>
                     <FlatList
                         data={filteredData}
-                        renderItem={({item})=><TraineeNameCard traineeName={item.user.user_name} trainee_id={item.trainee_id}/>}
+                        renderItem={({item})=><TraineeNameCard traineeName={item.user.user_name} trainee_id={item.trainee_id} />}
                         keyExtractor={item=>item.trainee_id}
                         showsVerticalScrollIndicator={false}
                     />
