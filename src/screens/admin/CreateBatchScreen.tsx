@@ -26,6 +26,7 @@ const CreateBatchScreen = () => {
     const januaryFirst = new Date(today.getFullYear(), 0, 1);
     const nextYear = new Date(today.getFullYear() + 100, today.getMonth(), today.getDate());
 
+    console.log("hi");
     const handleClose=()=>{
         setModalIsVisible(false);
     }
