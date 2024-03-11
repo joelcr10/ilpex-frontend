@@ -69,7 +69,7 @@ const CreateAssessment = ()=>{
             <Button name={"Start Date"} onPress={handleOpen} buttonPressed={false}>
             </Button>
             <CalenderModal minDate={today} maxDate={nextYear} isVisible={isVisible}  setStartDate={setStartDate} setEndDate={setEndDate} closeModal={handleClose}></CalenderModal>
-         <Text>{startDate ? `Selected start Dates: ${startDate.toString()}` : 'Select Start Date'}</Text>
+         <Text>{startDate ? `Selected start Dates: ${startDate.toDateString()}` : 'Select Start Date'}</Text>
          <Text>{endDate ? `Selected end Dates: ${endDate.toString()}` : 'Select Start Date'}</Text>
                 </View>
             </View>
