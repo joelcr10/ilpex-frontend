@@ -7,6 +7,8 @@ import ilpex from '../utils/ilpexUI';
 import TraineeProfileScreen from '../screens/trainee/TraineeProfileScreen';
 import BottomTabNavigation from "./BottomTabNavigation";
 import CreateBatchScreen from '../screens/admin/CreateBatchScreen';
+import CreateCourseScreen from '../screens/admin/CreateCourseScreen';
+
 const Drawer = createDrawerNavigator();
 
 const CustomDrawerContent : any = (props : any) => {
@@ -84,7 +86,7 @@ const DrawerNavigation = () => {
                 name="Create User" 
                 component={BottomTabNavigation} 
                 options={{
-                    title: 'Create A User',
+                    title: 'Create User',
                     drawerIcon: ({focused, size}) => (
                         <View style = {styles.iconContainer}>
                             <Image
@@ -96,13 +98,14 @@ const DrawerNavigation = () => {
 
             <Drawer.Screen 
                 name="Create Course" 
-                component={BottomTabNavigation} 
+                component={CreateCourseScreen} 
                 options={{
-                    title: 'Create A User',
+                    title: 'Create Course',
                     drawerIcon: ({focused, size}) => (
                         <View style = {styles.iconContainer}>
                             <Image
-                            source={require('../../assets/icons/create_user.png')}/>
+                            style = {styles.iconStyling}
+                            source={require('../../assets/icons/course.png')}/>
                         </View>
                     ),
                  }}
@@ -112,7 +115,7 @@ const DrawerNavigation = () => {
                 name="Create Batch" 
                 component={CreateBatchScreen} 
                 options={{
-                    title: 'Create A Batch',
+                    title: 'Create Batch',
                     drawerIcon: ({focused, size}) => (
                         <View style = {styles.iconContainer}>
                             <Image

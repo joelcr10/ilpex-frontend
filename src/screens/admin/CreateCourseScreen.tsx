@@ -1,11 +1,8 @@
 import React, { useState } from "react";
-import { ActivityIndicator, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import TopBlackHeading from "../../components/TopBlackHeading";
 import Modal from "react-native-modal";
-import InputField from "../../components/InputField";
-import CalenderModal from "../../components/CalenderModal";
 import ilpex from "../../utils/ilpexUI";
-import DateSelector from "../../components/DateSelector";
 import DocumentPicker from 'react-native-document-picker';
 import { getItem } from "../../utils/utils";
 import Constants from "../../utils/Constants";
@@ -15,11 +12,9 @@ import Button from "../../components/Button";
 import DisabledBigButton from "../../components/DisabledBigButton";
 import BackButton from "../../components/BackButton";
 import { useNavigation } from "@react-navigation/native";
-const CreateBatchScreen = () => {
 
-    const [batchName, setBatchName] = useState('');
-    const [startDate, setStartDate] = useState<Date | null>(null);
-    const [endDate, setEndDate] = useState<Date | null>(null);
+const CreateCourseScreen = () => {
+
     const [selectedFile, setSelectedFile] = useState<any | null>(null);
     const [modalIsVisible, setModalIsVisible] = useState(false);
     const [success, setSuccess] = useState(false);
@@ -62,10 +57,7 @@ const CreateBatchScreen = () => {
             const user_id = await getItem(Constants.USER_ID);
             console.log('user_id', user_id)
             const formData = new FormData();
-            formData.append('user_id', user_id?.toString());
-            formData.append('batch_name', batchName);
-            formData.append('start_date', startDate?.toISOString());
-            formData.append('end_date', endDate?.toISOString());
+            formData.append('createdBy', user_id?.toString());
             formData.append('file', selectedFile);
 
             const {success, statusCode, errorMessage} = await createBatch(formData);
@@ -106,20 +98,12 @@ const CreateBatchScreen = () => {
         <View style = {styles.pageContainer}>
             <BackButton color = "black"/>
             <TopBlackHeading 
-                heading={"Create Batch"} 
+                heading={"Create Course"} 
             />
-            <InputField 
-                label={"Batch Name"} 
-                isPassword={false} 
-                value={batchName} 
-                onChangeText={setBatchName} 
-            />
-            <DateSelector startDate = {startDate} endDate = {endDate} onPress = {handleDateSelector}></DateSelector>
-            <CalenderModal minDate={januaryFirst} maxDate={nextYear} isVisible={modalIsVisible} setStartDate={setStartDate} setEndDate={setEndDate} closeModal={handleClose}></CalenderModal>
             <View style = {styles.fileUploadContainer}>
                 <FileUploadField onSelect={pickDocument} selectedFile={selectedFile}/>
             </View>
-            {(batchName === '' || startDate === null || endDate === null)? (
+            {(selectedFile === null)? (
                 <DisabledBigButton name="Create Batch"/>
             ) : (
                 <Button name="Create Batch" onPress={handleFileUpload} buttonPressed={buttonLoaded} />
@@ -167,6 +151,7 @@ const styles = StyleSheet.create({
         fontSize:20,
         textAlign:'center',
         color:'black',
+        // padding:20,
         paddingTop : 25,
         paddingLeft : 10,
         paddingBottom : 10,
@@ -185,4 +170,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default CreateBatchScreen;
+export default CreateCourseScreen;
