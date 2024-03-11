@@ -33,11 +33,9 @@ const TraineeProileAnalysisScreen = () => {
                 const {responseData, errorMessage} = await getHook(`/api/v3/profile/${user_id}`);
                 if(responseData)
                 {
-                    setTraineeName(responseData.profileDetails.user.user_name);
-                    setTraineeBatch(responseData.profileDetails.batch.batch_name);
-                    batchId = responseData.profileDetails.batch_id;
-
-                    console.log("batch id set",responseData.profileDetails.batch_id);
+                    setTraineeName(responseData.data.user_name);
+                    setTraineeBatch(responseData.data.trainee.batch.batch_name);
+                    batchId = responseData.data.trainee.batch_id;
                 }
             } catch(error) {
                 console.log('Error', error);
@@ -66,17 +64,17 @@ const TraineeProileAnalysisScreen = () => {
                     setResultID(resultIds);
                     setHighScore(highScores);
 
-                    if(responseData.scoreDetails.ScoreAverage >= 90)
+                    if(averageScore >= 90)
                     {
                         setMarkIndicatorColor('green')
                         setMarksFeedBack('Excellent');
                     }
-                    else if (responseData.scoreDetails.ScoreAverage >= 70)
+                    else if (averageScore >= 70)
                     {
                         setMarkIndicatorColor('orange');
                         setMarksFeedBack('Above Average');
                     }
-                    else if(responseData.scoreDetails.ScoreAverage >= 50)
+                    else if(averageScore >= 50)
                     {
                         setMarkIndicatorColor('yellow');
                         setMarksFeedBack('Below Average');
