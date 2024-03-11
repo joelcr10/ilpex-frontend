@@ -49,7 +49,7 @@ const Daywise = (props: PropsType) => {
                 
                 {status && progressValue !== 100 && (
                     <View>
-                      <CircularProgress completeStatus={progressValue} />
+                      <CircularProgress completeStatus={Math.ceil(progressValue)} color={ilpex.main} />
                     </View>
                   )}
               </View>
