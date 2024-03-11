@@ -4,7 +4,7 @@ import LoginScreen from "../screens/authentication/LoginScreen";
 import BatchesScreen from "../screens/admin/BatchesScreen";
 import TraineeScreen from "../screens/admin/TraineesScreen";
 import TraineeProfile from "../screens/trainee/TraineeProfileScreen";
-import CreateAssessment from "../screens/admin/CreateAssessmentScreen";
+import CreateAssessment from "../screens/admin/CreateAssessment/CreateAssessmentScreen";
 
 const BottomTab = createBottomTabNavigator();
 
