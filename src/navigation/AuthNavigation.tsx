@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginScreen from "../screens/authentication/LoginScreen";
 import { ForgotPasswordScreen } from "../screens/authentication/ForgotPasswordScreen";
 import ResetPasswordScreen from "../screens/authentication/ResetPasswordScreen";
+import VerificationScreen from "../screens/authentication/VerificationScreen";
 
 
 
@@ -28,6 +29,13 @@ const AuthNavigation = () =>{
                 <Stack.Screen
                     name="Reset Password"
                     component={ResetPasswordScreen}
+                    options={{
+                        headerShown: false
+                    }}
+                />
+                <Stack.Screen
+                    name="Verification"
+                    component={VerificationScreen}
                     options={{
                         headerShown: false
                     }}

@@ -9,6 +9,7 @@ import ChartPieHeaderShimmer from "../../components/pieChartHeaderShimmer";
 import ThreeDots from "../../components/ThreeDots";
 import BackButton from "../../components/BackButton";
 import DayWiseProgressBar from "../../components/DayWiseProgressBar";
+import DayWiseProgressBarShimmer from "../../components/loading/DayWiseProgressBarShimmer";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import DayWiseDetailsPage from "./DayDetailsScreen";
 import moment from 'moment'
@@ -179,6 +180,8 @@ return(
                   
                   />
                 </View>
+              )
+              }
             </View>
         
         </View>

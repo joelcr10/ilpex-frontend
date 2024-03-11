@@ -3,9 +3,10 @@ import { View, Text, StyleSheet } from "react-native";
 import TopBlackHeading from "../../components/TopBlackHeading";
 import InputField from "../../components/InputField";
 import Button from "../../components/Button";
-import { createUser } from "../../network/CreateUserHook";
+import { createUser } from "./CreateUserHook";
 import { getItem } from "../../utils/utils";
 import Constants from "../../utils/Constants";
+import ilpex from "../../utils/ilpexUI";
 
 const CreateUserScreen = () => {
   const [createUserName, setcreateUserName] = useState("");
@@ -82,7 +83,7 @@ const CreateUserScreen = () => {
 
 const styles = StyleSheet.create({
   errorText: {
-    color: "red",
+    color: ilpex.failure,
     fontSize: 14,
     marginTop: 5,
     textAlign:'center'
