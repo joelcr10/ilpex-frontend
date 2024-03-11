@@ -9,6 +9,7 @@ import BottomTabNavigation from "./BottomTabNavigation";
 import CreateBatchScreen from '../screens/admin/CreateBatchScreen';
 import CreateCourseScreen from '../screens/admin/CreateCourseScreen';
 
+import CreateAssessmentScreen from '../screens/admin/CreateAssessment/CreateAssessmentScreen';
 const Drawer = createDrawerNavigator();
 
 const CustomDrawerContent : any = (props : any) => {
@@ -127,7 +128,7 @@ const DrawerNavigation = () => {
 
             <Drawer.Screen 
                 name="Create Assessment" 
-                component={BottomTabNavigation} 
+                component={CreateAssessmentScreen} 
                 options={{
                     title: 'Create Assessment',
                     drawerIcon: ({focused, size}) => (

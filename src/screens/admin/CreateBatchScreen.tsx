@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ActivityIndicator, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import TopBlackHeading from "../../components/TopBlackHeading";
 import Modal from "react-native-modal";
 import InputField from "../../components/InputField";
@@ -15,6 +15,8 @@ import Button from "../../components/Button";
 import DisabledBigButton from "../../components/DisabledBigButton";
 import BackButton from "../../components/BackButton";
 import { useNavigation } from "@react-navigation/native";
+import ToastDemo from "../../components/ToastComponent";
+
 const CreateBatchScreen = () => {
 
     const [batchName, setBatchName] = useState('');
@@ -24,7 +26,8 @@ const CreateBatchScreen = () => {
     const [modalIsVisible, setModalIsVisible] = useState(false);
     const [success, setSuccess] = useState(false);
     const [buttonLoaded, setButtonLoaded] = useState(false);
-
+    const [failure, setFailure] = useState(false);
+    
     const today = new Date();
     const januaryFirst = new Date(today.getFullYear(), 0, 1);
     const nextYear = new Date(today.getFullYear() + 100, today.getMonth(), today.getDate());
@@ -73,10 +76,16 @@ const CreateBatchScreen = () => {
             {
                 setButtonLoaded(false);
                 setSuccess(true);
+                console.log("statusCode - ", statusCode);
+                console.log("Success - ", success);
             }
-            console.log("Success - ", success);
-            console.log("statusCode - ", statusCode);
-            console.log("Error Message - ", errorMessage);
+            else
+            {
+                setButtonLoaded(false);
+                setFailure(true);
+                console.log("statusCode - ", statusCode);
+                console.log("Error Message - ", errorMessage);
+            }
         } catch(error) 
         {
             console.log("Error : ", error);
@@ -126,6 +135,7 @@ const CreateBatchScreen = () => {
             )
             }
             {success && renderBottomSheet()}
+            {failure && <ToastDemo BgColor="red" message="Failed To create Batch" textColor="white"/>}
         </View>
     );
 }

@@ -6,12 +6,13 @@ import ilpex from "../../utils/ilpexUI";
 import DocumentPicker from 'react-native-document-picker';
 import { getItem } from "../../utils/utils";
 import Constants from "../../utils/Constants";
-import { createBatch } from "./CreateBatchHook";
+import { createCourse } from "./CreateCourseHook";
 import FileUploadField from "../../components/FileUploadField";
 import Button from "../../components/Button";
 import DisabledBigButton from "../../components/DisabledBigButton";
 import BackButton from "../../components/BackButton";
 import { useNavigation } from "@react-navigation/native";
+import ToastDemo from "../../components/ToastComponent";
 
 const CreateCourseScreen = () => {
 
@@ -19,6 +20,7 @@ const CreateCourseScreen = () => {
     const [modalIsVisible, setModalIsVisible] = useState(false);
     const [success, setSuccess] = useState(false);
     const [buttonLoaded, setButtonLoaded] = useState(false);
+    const [failure, setFailure] = useState(false);
 
     const today = new Date();
     const januaryFirst = new Date(today.getFullYear(), 0, 1);
@@ -26,7 +28,6 @@ const CreateCourseScreen = () => {
 
     const navigation = useNavigation();
 
-    console.log("hi");
     const handleClose=()=>{
         setModalIsVisible(false);
     }
@@ -60,15 +61,21 @@ const CreateCourseScreen = () => {
             formData.append('createdBy', user_id?.toString());
             formData.append('file', selectedFile);
 
-            const {success, statusCode, errorMessage} = await createBatch(formData);
+            const {success, statusCode, errorMessage} = await createCourse(formData);
             if(success)
             {
                 setButtonLoaded(false);
                 setSuccess(true);
+                console.log("statusCode - ", statusCode);
+                console.log("Success - ", success);
             }
-            console.log("Success - ", success);
-            console.log("statusCode - ", statusCode);
-            console.log("Error Message - ", errorMessage);
+            else
+            {
+                setButtonLoaded(false);
+                setFailure(true);
+                console.log("statusCode - ", statusCode);
+                console.log("Error Message - ", errorMessage);
+            }
         } catch(error) 
         {
             console.log("Error : ", error);
@@ -79,7 +86,7 @@ const CreateCourseScreen = () => {
         return (
             <Modal isVisible={success} style = {styles.modalStyle}>
                 <View style={styles.confirmationModal}>
-                <Text style={styles.modalText}>Batch Has Been Created Successfully!</Text>
+                <Text style={styles.modalText}>New Course Has Been Created Successfully!</Text>
                     <View style = {styles.modalButtonContainer}>
                     <TouchableOpacity style={styles.okayButton} onPress={toggleLogoutBottomsheet}>
                         <Text style={styles.okayButtonStyling}>Okay</Text>
@@ -104,12 +111,13 @@ const CreateCourseScreen = () => {
                 <FileUploadField onSelect={pickDocument} selectedFile={selectedFile}/>
             </View>
             {(selectedFile === null)? (
-                <DisabledBigButton name="Create Batch"/>
+                <DisabledBigButton name="Create Course"/>
             ) : (
-                <Button name="Create Batch" onPress={handleFileUpload} buttonPressed={buttonLoaded} />
+                <Button name="Create Course" onPress={handleFileUpload} buttonPressed={buttonLoaded} />
             )
             }
             {success && renderBottomSheet()}
+            {failure && <ToastDemo BgColor="red" message="Failed To create Course" textColor="white"/>}
         </View>
     );
 }
