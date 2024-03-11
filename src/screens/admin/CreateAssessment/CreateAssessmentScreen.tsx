@@ -13,6 +13,8 @@ import CalenderModal from "../../../components/CalenderModal";
 import DateSelector from "../../../components/DateSelector";
 import { createAssessmentAPI } from "./createAssessmentHook";
 import BackButton from "../../../components/BackButton";
+import DocumentPicker from 'react-native-document-picker';
+import FileUploadField from "../../../components/FileUploadField";
 
 async function retrieveUserID() {
     const uid = await getItem(Constants.USER_ID);
@@ -37,6 +39,7 @@ const CreateAssessmentScreen = ()=>{
     const [allBatches,setAllBatches] = useState<any>([]);
     const [selectedBatch,setBatch] = useState('');
     const [missingFieldError,setMissingFieldError] = useState('');
+    const [selectedFile, setSelectedFile] = useState<any | null>(null);
     const handleOpen=()=>{
         setIsVisible(true);
     }
@@ -52,6 +55,22 @@ const CreateAssessmentScreen = ()=>{
             setMissingFieldError("You need to specify the batch");
         }
     }
+    const pickDocument = async () => {
+        try {
+            const result = await DocumentPicker.pickSingle({
+                type: [DocumentPicker.types.xls, DocumentPicker.types.xlsx],
+            });
+            setSelectedFile(result);
+            console.log("selectedFile is ", selectedFile);
+            } catch (err) {
+            if (DocumentPicker.isCancel(err)) {
+            } else {
+                console.error('Error picking document', err);
+            }
+        }
+    };
+
+
     const today = new Date();
     const nextYear = new Date(today.getFullYear() + 1, today.getMonth(), today.getDate());
     useEffect(()=>{
@@ -123,13 +142,27 @@ const CreateAssessmentScreen = ()=>{
     const start_date = getBatchStartDate(selectedBatch);
     const end_date = getBatchEndDate(selectedBatch);
     const createAssessment=async ()=>{
-        handleInputs();
-        if(missingFieldError==null){
-        console.log(batch_id,assessmentName,userId,startDate,endDate);
-        const {success, responseData} = await createAssessmentAPI(batch_id,assessmentName,userId,startDate,endDate);
+        try{
+            const user_id = await getItem(Constants.USER_ID);
+            console.log('user_id', user_id)
+            const formData = new FormData();
+            formData.append('user_id', user_id?.toString());
+            formData.append('batch_id', batch_id.toString());
+            formData.append('assessment_name', assessmentName);
+            formData.append('start_date', startDate.toISOString());
+            formData.append('end_date', endDate.toISOString());
+            formData.append('file', selectedFile);
+        // handleInputs();
+        // if(missingFieldError==null){
+        console.log("Form Data is-------> ", formData);
+        const {success, responseData} = await createAssessmentAPI(formData);
         if(success){
             console.log(responseData);
         }
+        // }
+        }
+        catch(err){
+            console.log("Error",err);
         }
     }
  return (
@@ -150,8 +183,9 @@ const CreateAssessmentScreen = ()=>{
                         <DateSelector startDate={startDate} endDate={endDate} onPress={handleOpen}></DateSelector>
                     </View>
                     <CalenderModal minDate={start_date} maxDate={end_date} isVisible={isVisible}  setStartDate={setStartDate} setEndDate={setEndDate} closeModal={handleClose}></CalenderModal>
-                    <View style={styles.button}>
-                        <Button name={'Send'} onPress={createAssessment} buttonPressed={false}></Button>
+                    <View style = {styles.fileUploadContainer}>
+                    <FileUploadField onSelect={pickDocument} selectedFile={selectedFile}/>
+                        <Button name={'Create Assessment'} onPress={createAssessment} buttonPressed={false}></Button>
                     </View>
                     <Text></Text>
                 </View>
@@ -212,15 +246,15 @@ const styles = StyleSheet.create ({
     dateSelector : {
         marginTop : '-5%'
     },
-    button : {
-        marginTop : '30%'
-    },
     errorText: {
         color: ilpex.failure,
         fontSize: 14,
         marginTop: 5,
         textAlign:'center'
-      },    
+      },   
+      fileUploadContainer : {
+        paddingTop : 40
+    } 
 })
 
 export default CreateAssessmentScreen;

@@ -4,60 +4,60 @@ import Constants from "../../../utils/Constants";
 import { getItem } from "../../../utils/utils";
 
 
-type responseType = {message: string}
+// type responseType = {message: string}
 
 interface Response{
     success: boolean;
     errorMessage: string;
     statusCode: string;
-    responseData: responseType;
+    responseData: any;
 }
 
 
-export const createAssessmentAPI=async(batch_id: number,assessment_name : string, user_id: number, start_date: Date,end_date : Date): Promise<Response>=>{
+export async function createAssessmentAPI(formData: FormData): Promise<Response> {
     let success: boolean = false;
     let errorMessage: string = '';
     let statusCode: string = '';
     let responseData: any;
 
-    const token = useSelector((state: any) => state.userDetailsReducer.token);
+    console.log("Form Data Inside Hook : ", formData);
+try{
 
+    const token = getItem(Constants.TOKEN);
 
     console.log("--------------:"+token+":-------------------------");
 
     const authorization =  {
         headers: {
-          'Authorization': 'Bearer' + token
+          'Authorization': 'Bearer' + token,
+          'Content-Type': 'multipart/form-data',
         }
     }
+    const url = '/api/v2/assessment';
+    console.log("Form Data Is : ", formData);
+
+    // const payload = {
+    //     batch: batch_id,
+    //     assessment_name: assessment_name,
+    //     user_id: user_id,
+    //     start_date : start_date,
+    //     end_date : end_date
+    // }
 
 
-    const payload = {
-        batch: batch_id,
-        assessment_name: assessment_name,
-        user_id: user_id,
-        start_date : start_date,
-        end_date : end_date
-    }
-
-    try{
-        const response = await api.post(
-            `/api/v3/assessment/`,
-            payload,
-            authorization
-        );
+        const createAssessmentResponse = await api.post(url,formData,authorization);
         
-
-        statusCode = response.status.toString();
+            console.log(createAssessmentResponse);
+        statusCode = createAssessmentResponse.status.toString();
         {
             statusCode === '200' ? (success = true) : (success = false);
         }
 
-        responseData = response.data;
+        responseData = createAssessmentResponse.data;
 
 
     }catch(error: any){
-        console.log('Error while updating assessment score:', error);
+        console.log('Error while creating assessment', error);
 
         errorMessage = error.message;
     }
