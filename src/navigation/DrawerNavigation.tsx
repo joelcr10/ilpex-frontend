@@ -81,7 +81,21 @@ const DrawerNavigation = () => {
             />
 
             <Drawer.Screen 
-                name="Create A User" 
+                name="Create User" 
+                component={BottomTabNavigation} 
+                options={{
+                    title: 'Create A User',
+                    drawerIcon: ({focused, size}) => (
+                        <View style = {styles.iconContainer}>
+                            <Image
+                            source={require('../../assets/icons/create_user.png')}/>
+                        </View>
+                    ),
+                 }}
+            />
+
+            <Drawer.Screen 
+                name="Create Course" 
                 component={BottomTabNavigation} 
                 options={{
                     title: 'Create A User',
@@ -95,7 +109,7 @@ const DrawerNavigation = () => {
             />
             
             <Drawer.Screen 
-                name="Create A Batch" 
+                name="Create Batch" 
                 component={CreateBatchScreen} 
                 options={{
                     title: 'Create A Batch',
