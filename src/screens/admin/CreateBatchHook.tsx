@@ -4,14 +4,6 @@ import Constants from '../../utils/Constants';
 import { getItem } from '../../utils/utils';
 import axios from 'axios';
  
-// interface formData {
-//     user_id: string;
-//     batchName: string;
-//     startDate: Date;
-//     endDate : Date;
-//     file: DocumentPickerResponse; 
-// }
- 
 interface CreateBatchResponse {
   success: boolean;
   errorMessage: string;
@@ -37,15 +29,6 @@ export async function createBatch(formData: FormData): Promise<CreateBatchRespon
     }
     const url = '/api/v2/batch';
     console.log("Form Data Is : ", formData);
-    // const createBatchResponse = await fetch(url, {
-    //     method: 'POST',
-    //     headers: {
-    //     'Content-Type': 'multipart/form-data',
-    //     'Authorization': 'Bearer ' + token
-    // },
-    // body: formData,
-    // });
-
     const createBatchResponse = await instance.post(url, formData, authorization);
 
     console.log(createBatchResponse);
