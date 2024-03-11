@@ -4,13 +4,13 @@ import AssessmentCard from "../../components/AssessmentCard";
 import ThreeDots from "../../components/ThreeDots";
 import { useEffect, useState } from "react";
 import { getHook } from "../../network/getHook/getHook";
-// import DayWiseProgressBarProgress from "../../components/DayWiseProgressBarProgress";
-import React from "react";
+import React from "react"; 
 import Daywise from "../../components/DaywiseCard";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { percipioReportAPI } from "./percipioReportAPI";
 import ShimmerDaywise from "../../components/loading/DayWiseCardShimmer";
 import ShimmerAssessmentCard from "../../components/loading/AssessmentCardShimmer";
+import { userNames } from "../../context/userNameSlice";
 
 const TraineeHomeScreen = () => {
   const user_id = useSelector((state: any) => state.userDetailsReducer.user_id);
@@ -56,6 +56,7 @@ const TraineeHomeScreen = () => {
   );
 }
 const UserName = () => {
+  const dispatch = useDispatch();
 
   const [userName, setUserName] = useState<any[]>([]);
   const user_id = useSelector((state: any) => state.userDetailsReducer.user_id);
@@ -66,7 +67,8 @@ const UserName = () => {
           `/api/v3/profile/${user_id}`,
         );
 
-        setUserName(responseData.profileDetails.user.user_name);
+        setUserName(responseData.data.user_name);
+        dispatch(userNames(responseData.data.user_name));
 
 
       } catch (error) {
