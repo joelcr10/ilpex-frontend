@@ -119,7 +119,9 @@ const LoginScreen = () => {
 
 const styles = StyleSheet.create({
   inputfieldview:{
-    top:250,
+    justifyContent:'center',
+    alignContent:'center',
+    height:'100%'
   },
   buttonview:{
       top:50,
