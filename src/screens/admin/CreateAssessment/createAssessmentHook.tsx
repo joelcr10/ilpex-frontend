@@ -23,13 +23,13 @@ export async function createAssessmentAPI(formData: FormData): Promise<Response>
     console.log("Form Data Inside Hook : ", formData);
 try{
 
-    const token = getItem(Constants.TOKEN);
+    const token = await getItem(Constants.TOKEN);
 
     console.log("--------------:"+token+":-------------------------");
 
     const authorization =  {
         headers: {
-          'Authorization': 'Bearer' + token,
+          'Authorization': 'Bearer ' + token,
           'Content-Type': 'multipart/form-data',
         }
     }

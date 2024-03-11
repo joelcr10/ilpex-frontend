@@ -16,19 +16,6 @@ import BackButton from "../../../components/BackButton";
 import DocumentPicker from 'react-native-document-picker';
 import FileUploadField from "../../../components/FileUploadField";
 
-async function retrieveUserID() {
-    const uid = await getItem(Constants.USER_ID);
-    console.log("uid:", uid);
-    if(uid!=null){
-        return parseInt(uid);
-    }
-    else{
-        return 0;
-    }
-}
-const userId=7;
-// const userId = retrieveUserID();
-const today : Date = new Date();
 
 const CreateAssessmentScreen = ()=>{
     const [assessmentName,setAssessementName] = useState('');
@@ -72,7 +59,6 @@ const CreateAssessmentScreen = ()=>{
 
 
     const today = new Date();
-    const nextYear = new Date(today.getFullYear() + 1, today.getMonth(), today.getDate());
     useEffect(()=>{
         const getBatches = async()=>{
             try{
@@ -114,15 +100,12 @@ const CreateAssessmentScreen = ()=>{
             if (batch.batch_name === selectedBatch) {
                 const batch_startDate = new Date(batch.start_date);
                 if(batch_startDate!=null){
-                    if(batch_startDate<=today){
-                        return today;
+                    if(batch_startDate>today){
+                        return batch_startDate;
                   }
                   else{
-                    return batch_startDate;
-                  }
-                }
-                else{
                     return today;
+                  }
                 }
             }
             else{

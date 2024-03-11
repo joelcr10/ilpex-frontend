@@ -56,18 +56,6 @@ const BottomTabNavigation = () =>{
                     }
                 }}
             />
-                       <BottomTab.Screen
-                name = "Assessment"
-                component = {CreateAssessment}
-                options={{
-                    headerShown: false,
-                    tabBarIcon: ({color}) =>{
-                        return(
-                            <Icon name="users" size={30} color={color}/>
-                        )
-                    }
-                }}
-            />
             <BottomTab.Screen
                 name = "Incomplete"
                 component = {IncompleteTraineesScreen}
