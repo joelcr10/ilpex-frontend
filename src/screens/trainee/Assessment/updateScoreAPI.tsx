@@ -20,14 +20,14 @@ export async function updateScoreAPI(assessment_id: number, user_id: number, sco
     let statusCode: string = '';
     let responseData: any;
 
-    const token = useSelector((state: any) => state.userDetailsReducer.token);
+  
 
-
+    const token = await getItem(Constants.TOKEN);
     console.log("--------------:"+token+":-------------------------");
 
     const authorization =  {
         headers: {
-          'Authorization': 'Bearer' + token
+          'Authorization': 'Bearer ' + token
         }
     }
 
@@ -40,10 +40,12 @@ export async function updateScoreAPI(assessment_id: number, user_id: number, sco
 
     try{
         const response = await api.post(
-            `/api/v3/assessment/`,
+            `/api/v3/assessment`,
             payload,
             authorization
         );
+
+        console.log(response);
         
 
         statusCode = response.status.toString();
@@ -52,6 +54,8 @@ export async function updateScoreAPI(assessment_id: number, user_id: number, sco
         }
 
         responseData = response.data;
+
+        console.log(responseData);
 
 
     }catch(error: any){
