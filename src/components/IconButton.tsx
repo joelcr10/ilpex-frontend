@@ -39,13 +39,14 @@ const styles = StyleSheet.create({
       shadowRadius: 2,
       elevation: 5, 
       marginHorizontal:80,
+      zIndex:5,
     },
     buttonText: {
       color:ilpex.white,
       textAlign: 'center',
       fontFamily:ilpex.fontRegular,
       fontSize: 24,
-      marginHorizontal:20,
+      marginHorizontal:1,
       textAlignVertical:'center',
     },
     label:{
