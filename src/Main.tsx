@@ -78,6 +78,7 @@ const Main =  () =>{
         <SplashScreen />
       ) : (
         <NavigationContainer>
+          
             {isLoggedIn ? (
                 role_id=='103'? 
                 <TraineeNavigation /> : <AdminNavigation/>
