@@ -167,14 +167,29 @@ const AssessmentDisplay = () => {
           < ShimmerAssessmentCard></ShimmerAssessmentCard>
         </View>) :
         (
-          <FlatList
-            scrollEnabled={false}
-            showsHorizontalScrollIndicator={false}
-            horizontal={false}
-            data={assessmentList.assessments}
-            renderItem={({ item }) => <AssessmentCard assessment_id={item.assessment_id} batchName={assessmentList.Batch} assessmentName={item.assessment_name} dueDate={item.end_date} status={true} />}
-            keyExtractor={item => item.id}
-          />)
+          <View>
+          {assessmentList.assessments.length===0?(
+            <Text style={styles.noAssessmentsText}>You have no assessments</Text>
+          ): (
+            <FlatList
+              scrollEnabled={false}
+              showsHorizontalScrollIndicator={false}
+              horizontal={false}
+              data={assessmentList.assessments}
+              renderItem={({ item }) => (
+                <AssessmentCard
+                  assessment_id={item.assessment_id}
+                  batchName={assessmentList.Batch}
+                  assessmentName={item.assessment_name}
+                  dueDate={item.end_date}
+                  status={true}
+                />
+              )}
+              keyExtractor={(item) => item.id}
+            />
+          ) }
+        </View>
+        )
       }
     </View>
   );
@@ -190,6 +205,10 @@ const styles = StyleSheet.create({
     margin: 30,
     display: 'flex',
     flexDirection: 'row'
+  },
+  noAssessmentsText:{
+    color:'black',
+    textAlign:'center',
   },
 
   whiteText: {
