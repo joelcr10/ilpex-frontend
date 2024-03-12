@@ -1,17 +1,19 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import * as Progress from 'react-native-progress';
 
-type PropsType = {dayNumber : number, percentage : number}
-
+type PropsType = {dayNumber : number, percentage : number,onPress:()=>void}
 const  DayWiseProgressBar = (props : PropsType) => {
-    const {dayNumber, percentage} = props;
+    const {dayNumber, percentage,onPress} = props;
     let valueToBeLoaded = percentage / 100;
     return (
-        <View style = {styles.graphsSection}>
+		<TouchableOpacity onPress={onPress}>
+			<View style = {styles.graphsSection}>
 				<Text style = {styles.dayCount}>Day {dayNumber}</Text>
 				<Progress.Bar color = {'#D155FD'} progress={valueToBeLoaded} width={230} height={(60)} style = {styles.progressBar} unfilledColor='#E4E3E3' borderColor='white'/>
         </View>
+		</TouchableOpacity>
+        
     )
 }
 
