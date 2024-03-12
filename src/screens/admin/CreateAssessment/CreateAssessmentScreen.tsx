@@ -17,6 +17,7 @@ import DocumentPicker from 'react-native-document-picker';
 import FileUploadField from "../../../components/FileUploadField";
 import DisabledBigButton from "../../../components/DisabledBigButton";
 import ToastDemo from "../../../components/ToastComponent";
+import ConfirmationModal from "../../../components/ConfirmationModal";
 
 const CreateAssessmentScreen = ()=>{
     const [assessmentName,setAssessementName] = useState('');
@@ -157,7 +158,6 @@ const CreateAssessmentScreen = ()=>{
         console.log("Form Data is-------> ", formData);
         const {success, responseData, statusCode,errorMessage} = await createAssessmentAPI(formData);
         if(success){
-            
             console.log(responseData);
             setBatch('');
             setAssessementName('');
@@ -171,6 +171,12 @@ const CreateAssessmentScreen = ()=>{
             setFailure(true);
             console.log("hiiiii",errorMessage);
             setError("Assessment creation failed");
+            setIsLoading(false);
+            setBatch('');
+            setAssessementName('');
+            setStartDate(today);
+            setEndDate(today);
+            setSelectedFile(null);
             setIsLoading(false);
         }
         }
@@ -207,10 +213,9 @@ const CreateAssessmentScreen = ()=>{
                 </View>
                 )
                 }
-
                     </View>
-                {success && <Text>Here</Text>}
-                {failure && <ToastDemo BgColor={ilpex.black} message={error} textColor={ilpex.failure}></ToastDemo>}
+                {success && <ConfirmationModal success={true} message={"Assessment created successfully"}></ConfirmationModal>}
+                {failure && <ToastDemo BgColor={ilpex.white} message={"Assessment creation failed"} textColor={ilpex.failure}></ToastDemo>}
                     {/* <Text></Text> */}
                 </View>
             </View>
