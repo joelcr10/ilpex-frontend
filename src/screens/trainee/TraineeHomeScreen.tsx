@@ -14,6 +14,7 @@ import { userNames } from "../../context/userNameSlice";
 
 const TraineeHomeScreen = () => {
   const user_id = useSelector((state: any) => state.userDetailsReducer.user_id);
+  
 
   useEffect(() => {
     const percipioReport = async () => {

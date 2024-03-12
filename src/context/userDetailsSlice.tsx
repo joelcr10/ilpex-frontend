@@ -5,12 +5,15 @@ interface UserDetailsState {
   user_id: string,
   role_id: string,
   trainee_id:string,
+  user_name:string,
 }
 const initialState: UserDetailsState = {
   token: '',
   user_id: '',
   role_id: '',
   trainee_id:'',
+  user_name:'',
+
 };
 export const userDetailsSlice = createSlice({
   name: 'userDetails',
@@ -22,6 +25,7 @@ export const userDetailsSlice = createSlice({
       state.user_id = action.payload.user_id;
       state.role_id = action.payload.role_id;
       state.trainee_id=action.payload.trainee_id;
+      state.user_name=action.payload.user_name;
     },
   },
 });
