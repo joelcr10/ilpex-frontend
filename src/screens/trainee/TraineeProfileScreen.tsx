@@ -80,17 +80,17 @@ const TraineeProfileScreen = () => {
                         setResultID(resultIds);
                         setHighScore(highScores);
 
-                        if(responseData.scoreDetails.ScoreAverage >= 90)
+                        if(averageScore >= 90)
                         {
                             setMarkIndicatorColor('green')
                             setMarksFeedBack('Excellent');
                         }
-                        else if (responseData.scoreDetails.ScoreAverage >= 70)
+                        else if (averageScore >= 70)
                         {
                             setMarkIndicatorColor('orange');
                             setMarksFeedBack('Above Average');
                         }
-                        else if(responseData.scoreDetails.ScoreAverage >= 50)
+                        else if(averageScore >= 50)
                         {
                             setMarkIndicatorColor('yellow');
                             setMarksFeedBack('Below Average');

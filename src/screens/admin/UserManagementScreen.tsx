@@ -23,7 +23,11 @@ const UserManagementScreen=()=>{
 
     //search query
     const [searchQuery, setSearchQuery] = useState('');
-    const [filteredData, setFilteredData] = useState<any>([]);
+    const [filteredData, setFilteredData] = useState<any[]>([]);
+    const [offset, setOffset] = useState(0);
+    const [hasMoreData, setHasMoreData] = useState(true);
+
+    console.log("................>>>>>",offset);
 
     const handleSearch = (text:string) => {
         // Filter the data based on the search query
@@ -37,25 +41,34 @@ const UserManagementScreen=()=>{
 
     useEffect(() => {
         const getTrainees = async () => {
-            const trainee_id=await getItem(Constants.TRAINEE_ID);
-            // console.log(trainee_id);
+          if (!hasMoreData) {
+            return;
+          }
           try {
-            const {responseData, errorMessage} = await getHook(`/api/v2/trainee`);
+            const {responseData, errorMessage} = await getHook(`/api/v2/trainee?offset=${offset}`);
             setLoading(false);
-            setTrainees(responseData);
-            setFilteredData(responseData);
+            if (responseData.length === 0) {
+                // No more data available
+                setHasMoreData(false);
+                return;
+                    }
+            setTrainees((prevData: any) => [...prevData, ...responseData]);
+            setFilteredData((prevData: any) => [...prevData, ...responseData]);
             // console.log(responseData)
           } catch (error) {
             console.error('Error:', error);
           }
         };
         getTrainees();
-        }, []);
-
-        const chartLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
-        const chartData = [20, 45, 28, 80, 99, 43,20, 45, 28, 80, 99, 43];
+        }, [offset]);
 
 
+        //pagination function
+        const handleLoadMore = () => {
+          if (hasMoreData) {
+            setOffset((prevOffset) => prevOffset + 20);
+          }
+        };
     return(
         // <ScrollView>
         <View>
@@ -68,8 +81,6 @@ const UserManagementScreen=()=>{
                 
                     <View style={styles.container}>
                       <View>
-                      {/* <FileUploadField onSelect={pickDocument} selectedFile={selectedFile}/> */}
-                      {/* <LineGraph labels={chartLabels} data={chartData} chartName="Course Completeion" progressTitle="Overall" progress={30}/> */}
                       </View>
                     
                         <SearchField onChangeText={handleSearch as any} value={searchQuery}/>
@@ -79,12 +90,14 @@ const UserManagementScreen=()=>{
                     }
                     {!isLoading &&
                     
-                    <View>
+                    <View style={{height:450,paddingBottom:40}}>
                     <FlatList
                         data={filteredData}
-                        renderItem={({item})=><TraineeNameCard traineeName={item.user.user_name} trainee_id={item.trainee_id} />}
+                        renderItem={({item})=><TraineeNameCard traineeName={item.user.user_name} user_id={item.user_id} />}
                         keyExtractor={item=>item.trainee_id}
                         showsVerticalScrollIndicator={false}
+                        onEndReached={handleLoadMore}
+                        onEndReachedThreshold={0.5}
                     />
                     </View>
                     

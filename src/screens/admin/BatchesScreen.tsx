@@ -16,7 +16,7 @@ import { batch } from "react-redux";
 
 
 const BatchesScreen = ()=>{
-    const navigation : any= useNavigation();
+    
     const [allBatchesList,setBatchesList] = useState<any>([]);
     const [isLoading,setLoading] = useState(false);
     const onPressBatchCard=(batch_id:number)=>{

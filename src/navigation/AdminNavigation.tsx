@@ -7,6 +7,7 @@ import BatchDetailsPage from "../screens/admin/BatchDetailsPage";
 import CreateUserScreen from "../screens/admin/CreateUserScreen";
 import TraineeProileAnalysisScreen from "../screens/admin/TraineeProfileAnalysisScreen";
 import DrawerNavigation from "./DrawerNavigation";
+import ManageTraineeScreen from '../screens/admin/ManageTrainee';
 import DayWiseDetailsPage from "../screens/admin/DayDetailsScreen";
 import IncompleteTraineesScreen from '../screens/admin/IncompleteTraineesScreen';
 const Stack = createNativeStackNavigator();
@@ -60,6 +61,13 @@ const AdminNavigation = () =>{
                 <Stack.Screen
                     name = "TraineeProileAnalysisScreen"
                     component = {TraineeProileAnalysisScreen}
+                    options = {{
+                        headerShown : false
+                    }}
+                />
+                <Stack.Screen
+                    name = "ManageTrainee"
+                    component = {ManageTraineeScreen}
                     options = {{
                         headerShown : false
                     }}
