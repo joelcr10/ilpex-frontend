@@ -6,13 +6,13 @@ import ilpex from "../utils/ilpexUI";
 import CircularProgress from "./CircularProgress";
 import { assets } from "../../react-native.config";
 
-type BatchComponentProps = {assesmentName : string};
+type BatchComponentProps = {assessment_name : string,onPressButton:()=>void};
 
-const AssesmentListCard=(props: any)=>{
-    const {assessment_name} = props;
+const AssesmentListCard=(props: BatchComponentProps)=>{
+    const {assessment_name,onPressButton} = props;
     console.log("asseement list card: ",assessment_name);
     return(
-        <TouchableOpacity >
+        <TouchableOpacity onPress={onPressButton}>
             <View style={styles.container}>
                 <View style={{
                     marginStart:10

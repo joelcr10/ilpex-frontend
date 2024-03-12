@@ -10,6 +10,7 @@ import DrawerNavigation from "./DrawerNavigation";
 import ManageTraineeScreen from '../screens/admin/ManageTrainee';
 import DayWiseDetailsPage from "../screens/admin/DayDetailsScreen";
 import IncompleteTraineesScreen from '../screens/admin/IncompleteTraineesScreen';
+import UpdateAssessmentScreen from '../screens/admin/UpdateAssessment/UpdateAssessmentScreen';
 const Stack = createNativeStackNavigator();
 const AdminNavigation = () =>{
         return(
@@ -82,6 +83,13 @@ const AdminNavigation = () =>{
                 <Stack.Screen 
                     name="incompleteTraineScreen"
                     component={IncompleteTraineesScreen}
+                    options={{
+                        headerShown: false
+                    }}
+                />
+                <Stack.Screen 
+                    name="updateAssesments"
+                    component={UpdateAssessmentScreen}
                     options={{
                         headerShown: false
                     }}
