@@ -5,38 +5,26 @@ import TraineeCardShimmer from "../../components/loading/TraineeCardShimmer";
 import ilpex from "../../utils/ilpexUI";
 import { useSelector } from "react-redux";
 import { getHook } from "../../network/getHook/getHook";
-import IconButtonComponent from "../../components/IconButton";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { sendMail } from "../../network/EmailApiHook";
 import { useRoute } from "@react-navigation/native";
-
-interface Trainee {
-  trainee_id: number;
-  Batch: string;
-  user_name: string;
-  email: string;
-};
-
-
-
+import BackButton from "../../components/BackButton";
 
 
 const IncompleteTraineesScreen = () => {
-  const [isLoading, setLoading] = useState(true);
-  const route:any = useRoute();
-  const day =route.params.day;
+  const [isLoading, setLoading] = useState(false);
+  const route: any = useRoute();
+  const day = route.params.day;
   const batch = route.params.batch;
-  // console.log('this is day',day)
-  // console.log('this is batch',batch)
+
   const TraineesDisplay = () => {
-    const trainee_id = useSelector((state: any) => state.userDetailsReducer.trainee_id);
     const [traineeList, setTraineeList] = useState<any>([]);
 
     const sendMailToTrainees = async () => {
       try {
         const { success } = await sendMail({
           incompleteTraineeList: traineeList.IncompleteTraineeList,
-          day_number: 1,
+          day_number: day,
         });
         if (success) {
           console.log("Mail Sent successfully......................................");
@@ -51,10 +39,7 @@ const IncompleteTraineesScreen = () => {
       sendMailToTrainees();
     };
 
-
-
-
-    useEffect(() => {
+ useEffect(() => {
       const getDayCards = async () => {
         try {
           const { responseData } = await getHook(
@@ -71,14 +56,16 @@ const IncompleteTraineesScreen = () => {
           console.error('Error:', error);
         }
       };
-      
+
       getDayCards();
-    
+
 
     }, []);
+
     return (
       <ScrollView>
-
+        { (!isLoading)?(<View><TraineeCardShimmer></TraineeCardShimmer></View>):
+        (<View>
         <FlatList
           scrollEnabled={false}
           showsVerticalScrollIndicator={false}
@@ -86,7 +73,7 @@ const IncompleteTraineesScreen = () => {
           renderItem={({ item }) => (
             <TraineeCard
               traineeName={item.user_name}
-              batchName={item.Batch} traineeId={0} userId={0} />
+              batchName={item.Batch} traineeId={item.trainee_id} userId={item.user_id} />
           )}
           keyExtractor={item => item.id}
         />
@@ -96,38 +83,24 @@ const IncompleteTraineesScreen = () => {
             <Icon name="send" color={ilpex.white} size={30}></Icon>
           </View>
         </TouchableOpacity>
-
+        </View>)}
 
       </ScrollView>
 
     );
   }
 
-
-
-
-
-  return (
+return (
     <View>
       <ScrollView>
         <View style={styles.pageContainer}>
+          <BackButton color={"white"}></BackButton>
+          <Text style={{ color:'white',fontSize:20,textAlign:'center',position : 'absolute',top : 30, left : 25,}}>Day {day}</Text>
           <View style={styles.innerContainer}>
-            <Text style={styles.incompleteText}>Incomplete</Text>
-            <Text style={styles.traineeText}>Trainees</Text>
-
-            {!isLoading ? (
-              <TraineeCardShimmer />
-            ) : (<View><TraineesDisplay></TraineesDisplay>
-
-            </View>
-
-            )}
-
-
-
+             <Text style={styles.incompleteText}>Incomplete</Text>
+             <Text style={styles.traineeText}>Trainees</Text>
+             <View><TraineesDisplay></TraineesDisplay></View>
           </View>
-
-
         </View>
       </ScrollView>
     </View>
@@ -148,24 +121,12 @@ const styles = StyleSheet.create({
     elevation: 5,
     alignItems: 'center',
     justifyContent: 'center',
-    // height:54,
-    // width:54,
-    // backgroundColor:ilpex.main,
-    // borderRadius:5,
-    // zIndex:10,
-    // elevation:5,
-    // alignItems:'center',
-    // justifyContent:'center',
-    // marginLeft:280,
-    // marginBottom:5,
-    // position:'absolute',
-    // bottom:100,
   },
   fixedButton: {
     position: 'absolute',
-    bottom: 40, // Adjust the bottom spacing as needed
-    right: 20, // Adjust the right spacing as needed
-    zIndex: 10, // Ensure the button appears above other elements
+    bottom: 40,
+    right: 20,
+    zIndex: 10,
   },
   innerContainer: {
     backgroundColor: 'white',
