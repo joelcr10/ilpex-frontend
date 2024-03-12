@@ -12,19 +12,20 @@ import { useNavigation } from "@react-navigation/native";
 import BatchCardShimmer from "../../components/loading/BatchCardShimmer";
 import { getItem } from "../../utils/utils";
 import Constants from "../../utils/Constants";
-import { batch } from "react-redux";
-
 const BatchesScreen = ()=>{
     
     const navigation = useNavigation();
     const [allBatchesList,setBatchesList] = useState<any>([]);
     const [isLoading,setLoading] = useState(false);
+
     const onPressBatchCard=(batch_id:any)=>{
         navigation.navigate("BatchDetails",{batch_id:batch_id});
     }
+
     const onPressButton=()=>{
         console.log("Button pressed");
     }
+
     useEffect(()=>{
         const getBatches = async()=>{
             try{
@@ -50,7 +51,6 @@ const BatchesScreen = ()=>{
     },[]);
     return(
         <View style={styles.container}>
-            <ThreeDots color='white'></ThreeDots>
             <Text style = {styles.text}>Batches</Text>
             <View style={styles.box}>
                 <View style = {styles.dataContainer}>
@@ -61,6 +61,7 @@ const BatchesScreen = ()=>{
                             padding : 20
                         }}
                             showsHorizontalScrollIndicator={false}
+                            showsVerticalScrollIndicator={false}
                             horizontal={false}
                             data={allBatchesList.batches}
                             renderItem={({ item }) => <BatchCard batch_name={item.batch_name} 
@@ -72,6 +73,8 @@ const BatchesScreen = ()=>{
                         />
                     ):(
                     <View>
+                       <BatchCardShimmer isLoading></BatchCardShimmer>
+                       <BatchCardShimmer isLoading></BatchCardShimmer>
                        <BatchCardShimmer isLoading></BatchCardShimmer>
                        <BatchCardShimmer isLoading></BatchCardShimmer>
                        <BatchCardShimmer isLoading></BatchCardShimmer>
@@ -94,6 +97,11 @@ const styles = StyleSheet.create({
     dataContainer : {
         margin : '5%',
     },
+    textSize: {
+        fontSize: 24,
+        fontFamily : ilpex.fontSemiBold,
+        color : 'black',
+      },
     text:{
         textAlign:'center',
         fontSize:50,

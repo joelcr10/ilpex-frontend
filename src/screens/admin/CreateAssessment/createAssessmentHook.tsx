@@ -50,7 +50,7 @@ try{
             console.log(createAssessmentResponse);
         statusCode = createAssessmentResponse.status.toString();
         {
-            statusCode === '200' ? (success = true) : (success = false);
+            statusCode === '200'|| '201' ? (success = true) : (success = false);
         }
 
         responseData = createAssessmentResponse.data;
