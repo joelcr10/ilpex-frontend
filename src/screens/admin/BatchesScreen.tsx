@@ -12,7 +12,7 @@ import { useNavigation } from "@react-navigation/native";
 import BatchCardShimmer from "../../components/loading/BatchCardShimmer";
 import { getItem } from "../../utils/utils";
 import Constants from "../../utils/Constants";
-import { batch } from "react-redux";
+
 
 
 const BatchesScreen = ()=>{
@@ -60,7 +60,7 @@ const BatchesScreen = ()=>{
                         contentContainerStyle = {{
                             padding : 20
                         }}
-                            showsHorizontalScrollIndicator={false}
+                            showsVerticalScrollIndicator={false}
                             horizontal={false}
                             data={allBatchesList.batches}
                             renderItem={({ item }) => <BatchCard batchName={item.batch_name} traineeNo={item.noOfTrainees} date={item.start_date} progress={parseInt(item.progress)} onPress={onPressBatchCard}/>}

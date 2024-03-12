@@ -23,7 +23,6 @@ export async function updateScoreAPI(assessment_id: number, user_id: number, sco
   
 
     const token = await getItem(Constants.TOKEN);
-    console.log("--------------:"+token+":-------------------------");
 
     const authorization =  {
         headers: {
@@ -34,7 +33,7 @@ export async function updateScoreAPI(assessment_id: number, user_id: number, sco
 
     const payload = {
         assessment_id: assessment_id,
-        user_id: user_id,
+        user_id: Number(user_id),
         score: score
     }
 
@@ -44,19 +43,13 @@ export async function updateScoreAPI(assessment_id: number, user_id: number, sco
             payload,
             authorization
         );
-
-        console.log(response);
         
-
         statusCode = response.status.toString();
         {
             statusCode === '200' ? (success = true) : (success = false);
         }
 
         responseData = response.data;
-
-        console.log(responseData);
-
 
     }catch(error: any){
         console.log('Error while updating assessment score:', error);

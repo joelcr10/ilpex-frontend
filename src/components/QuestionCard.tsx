@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
    
     questionContainer:{
         backgroundColor: ilpex.lightGrey,
-        padding: 10,
+        padding: 15,
         borderRadius: 5,
     },
     questionText:{
@@ -81,9 +81,9 @@ const styles = StyleSheet.create({
         backgroundColor: ilpex.white,
         borderRadius: 10,
         // padding: 20,
-        elevation: 5,
-        margin: 20,
-        padding: 10,
+        // elevation: 5,
+        margin: 15,
+        // padding: 10,
         paddingBottom: 20,
     },
     
