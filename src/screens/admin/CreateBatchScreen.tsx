@@ -64,11 +64,14 @@ const CreateBatchScreen = () => {
             setButtonLoaded(true);
             const user_id = await getItem(Constants.USER_ID);
             console.log('user_id', user_id)
+            const convertedStartDate = startDate?.toISOString().substring(0, 10);
+            const convertedEndDate = endDate?.toISOString().substring(0,10);
+
             const formData = new FormData();
             formData.append('user_id', user_id?.toString());
             formData.append('batch_name', batchName);
-            formData.append('start_date', startDate?.toISOString());
-            formData.append('end_date', endDate?.toISOString());
+            formData.append('start_date', convertedStartDate);
+            formData.append('end_date', convertedEndDate);
             formData.append('file', selectedFile);
 
             const {success, statusCode, errorMessage} = await createBatch(formData);
@@ -128,7 +131,7 @@ const CreateBatchScreen = () => {
             <View style = {styles.fileUploadContainer}>
                 <FileUploadField onSelect={pickDocument} selectedFile={selectedFile}/>
             </View>
-            {(batchName === '' || startDate === null || endDate === null)? (
+            {(batchName === '' || startDate === null || endDate === null || selectedFile === null)? (
                 <DisabledBigButton name="Create Batch"/>
             ) : (
                 <Button name="Create Batch" onPress={handleFileUpload} buttonPressed={buttonLoaded} />
