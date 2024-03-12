@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import TopBlackHeading from "../../components/TopBlackHeading";
-import Modal from "react-native-modal";
 import InputField from "../../components/InputField";
 import CalenderModal from "../../components/CalenderModal";
 import ilpex from "../../utils/ilpexUI";
@@ -16,6 +15,7 @@ import DisabledBigButton from "../../components/DisabledBigButton";
 import BackButton from "../../components/BackButton";
 import { useNavigation } from "@react-navigation/native";
 import ToastDemo from "../../components/ToastComponent";
+import ConfirmationModal from "../../components/ConfirmationModal";
 
 const CreateBatchScreen = () => {
 
@@ -32,9 +32,6 @@ const CreateBatchScreen = () => {
     const januaryFirst = new Date(today.getFullYear(), 0, 1);
     const nextYear = new Date(today.getFullYear() + 100, today.getMonth(), today.getDate());
 
-    const navigation = useNavigation();
-
-    console.log("hi");
     const handleClose=()=>{
         setModalIsVisible(false);
     }
@@ -95,24 +92,7 @@ const CreateBatchScreen = () => {
         }
     }
 
-    const renderBottomSheet = () => {
-        return (
-            <Modal isVisible={success} style = {styles.modalStyle}>
-                <View style={styles.confirmationModal}>
-                <Text style={styles.modalText}>Batch Has Been Created Successfully!</Text>
-                    <View style = {styles.modalButtonContainer}>
-                    <TouchableOpacity style={styles.okayButton} onPress={toggleLogoutBottomsheet}>
-                        <Text style={styles.okayButtonStyling}>Okay</Text>
-                    </TouchableOpacity>
-                    </View>
-                </View>
-            </Modal>
-        )
-    }
-
-    const toggleLogoutBottomsheet = () => {
-        navigation.goBack();
-    }
+    
 
     return(
         <View style = {styles.pageContainer}>
@@ -137,7 +117,7 @@ const CreateBatchScreen = () => {
                 <Button name="Create Batch" onPress={handleFileUpload} buttonPressed={buttonLoaded} />
             )
             }
-            {success && renderBottomSheet()}
+            {success && <ConfirmationModal success = {success} message = "Batch has been created Successfully!" />}
             {failure && <ToastDemo BgColor="red" message="Failed To create Batch" textColor="white"/>}
         </View>
     );
@@ -150,51 +130,6 @@ const styles = StyleSheet.create({
     },
     fileUploadContainer : {
         paddingTop : 40
-    },
-    confirmationModal:{
-        height:150,
-        borderColor:'black',
-        backgroundColor:'white',
-    },
-    modalButtonContainer : {
-        flexDirection : 'row',
-        justifyContent : 'center'
-    },
-    cancelButtonStyling : {
-        fontSize:20,
-        color:'black',
-        textAlign:'center'
-    },
-    okayButtonStyling : {
-        fontSize:20,
-        color:'white',
-        textAlign:'center'
-    },
-    modalStyle : {
-        width : '100%',
-        flex : 1, 
-        justifyContent : 'flex-end',
-        margin:0
-    },
-    modalText:{
-        fontSize:20,
-        textAlign:'center',
-        color:'black',
-        paddingTop : 25,
-        paddingLeft : 10,
-        paddingBottom : 10,
-        paddingRight : 10,
-        fontFamily : ilpex.fontRegular
-    },
-    okayButton:{
-        width : 150,
-        height : 50,
-        padding : 10,
-        backgroundColor:'#8518FF',
-        marginLeft : 20,
-        marginRight : 20,
-        marginBottom : 20,
-        borderRadius:5,
     },
 })
 
