@@ -4,6 +4,7 @@ import instance from '../../network/api';
 interface ManageTraineeProp {
     user_id:number|null;
     status: number|null;
+    JWT_token:string;
 }
  
 interface ManageTraineeResponse {
@@ -16,6 +17,7 @@ interface ManageTraineeResponse {
 export async function UpdateTraineeStatus({
     user_id,
     status,
+    JWT_token
 }: ManageTraineeProp): Promise<ManageTraineeResponse> {
   let success: boolean = false;
   let errorMessage: string = '';
@@ -30,7 +32,11 @@ export async function UpdateTraineeStatus({
   try {
     const manageTraineeResponse = await instance.patch(
       '/api/v2/trainee',
-      ManageTraineePayload,
+      ManageTraineePayload,{
+        headers: {
+          Authorization: `Bearer ${JWT_token}`, // Include the token in the Authorization header
+        },
+      }
     );
     statusCode = manageTraineeResponse.status.toString();
     {
@@ -38,9 +44,10 @@ export async function UpdateTraineeStatus({
     }
     
     manageTraineeResp = manageTraineeResponse.data;
-    console.log("manageTraineeResp resp",manageTraineeResp);
- 
 
+    console.log("manageTraineeResp", manageTraineeResp);
+    console.log("statusCode", statusCode);
+    
 
   } catch (error: any) {
     console.log('Error while user creation in:', error);
