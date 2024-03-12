@@ -14,12 +14,12 @@ import { getItem } from "../../utils/utils";
 import Constants from "../../utils/Constants";
 import { batch } from "react-redux";
 
-
 const BatchesScreen = ()=>{
     
+    const navigation = useNavigation();
     const [allBatchesList,setBatchesList] = useState<any>([]);
     const [isLoading,setLoading] = useState(false);
-    const onPressBatchCard=(batch_id:number)=>{
+    const onPressBatchCard=(batch_id:any)=>{
         navigation.navigate("BatchDetails",{batch_id:batch_id});
     }
     const onPressButton=()=>{
@@ -63,7 +63,11 @@ const BatchesScreen = ()=>{
                             showsHorizontalScrollIndicator={false}
                             horizontal={false}
                             data={allBatchesList.batches}
-                            renderItem={({ item }) => <BatchCard batchName={item.batch_name} traineeNo={item.noOfTrainees} date={item.start_date} progress={parseInt(item.progress)} onPress={()=>onPressBatchCard(item.batch_id)}/>}
+                            renderItem={({ item }) => <BatchCard batch_name={item.batch_name} 
+                                                                 traineeNo={item.noOfTrainees}
+                                                                 date={item.start_date} 
+                                                                 progress={parseInt(item.progress)} 
+                                                                 onPressFunc={()=>onPressBatchCard(item.batch_id)}/>}
                             keyExtractor={item => item.id}
                         />
                     ):(
