@@ -11,7 +11,7 @@ import BatchCardShimmer from "../../components/loading/BatchCardShimmer";
 import { getItem } from "../../utils/utils";
 import Constants from "../../utils/Constants";
 import { ScrollView } from "react-native-gesture-handler";
-
+import DrawerNavigationHamburger from "../../components/DrawerNavigationHamburger";
 const BatchesScreen = ()=>{
 
     const navigation = useNavigation();
@@ -79,6 +79,7 @@ const BatchesScreen = ()=>{
         <ScrollView
         showsVerticalScrollIndicator={false}>
                 <View style={styles.container}>
+                <DrawerNavigationHamburger/>
                 <Text style = {styles.text}>Batches</Text>
                 <View style={styles.box}>
                     <View style = {styles.dataContainer}>

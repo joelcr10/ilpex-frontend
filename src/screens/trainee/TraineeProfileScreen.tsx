@@ -116,7 +116,9 @@ const TraineeProfileScreen = () => {
                 if(role_id === '103')
                 {
                     const currentDate = new Date();
-                    currentDate.setDate(currentDate.getDate() + 1);
+                    currentDate.setHours(currentDate.getHours() + 5);
+                    currentDate.setMinutes(currentDate.getMinutes() + 30);
+                    console.log("Current DATE --------------", currentDate);
                     const isoString = currentDate.toISOString();
                     const dateString = isoString.substring(0, isoString.indexOf('T'));
                     const {responseData, errorMessage} = await getHook(`/api/v3/batch/${batchId}/day/${dateString}`);
