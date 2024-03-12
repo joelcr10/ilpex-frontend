@@ -23,29 +23,24 @@ const AssesmentListScreen = ()=>{
     const onPressBatchCard=()=>{
         navigation.navigate("BatchDetails");
     }
-    const onPressButton=()=>{
-        console.log("Button pressed");
-    }
     useEffect(()=>{
         const getBatches = async()=>{
             try{
-                
                 const { success,statusCode,responseData,errorMessage} = await getHook('/api/v2/assessment?offset:3&sortOrder:-1&sortBy:"assessment_name"');
-                console.log(success,statusCode,responseData.assessments[0].assessment_name);
+                console.log('this is response',responseData)
                 if(success){
                     if(responseData){
                         setAssesmentList(responseData.assessments);
                         assessList = responseData.assessments;
                         console.log("assess list: ",assessList);
                         setLoading(true); 
-                        console.log("->>>>>>>>>>");
                         console.log(assesmentList);
                         console.log(assesmentList.assessment_name)
                 }
                 }
 
-                const tid = await getItem(Constants.TRAINEE_ID);
-                console.log("tid: ",tid);
+                // const tid = await getItem(Constants.TRAINEE_ID);
+                // console.log("tid: ",tid);
             }
             catch(err){
                 console.error('Error', err);
@@ -56,7 +51,7 @@ const AssesmentListScreen = ()=>{
     return(
         <View style={styles.container}>
             <ThreeDots color='white'></ThreeDots>
-            <Text style = {styles.text}>Assesment </Text>
+            <Text style = {styles.text}>Assesments </Text>
             <View style={styles.box}>
                 <View style = {styles.dataContainer}>
                 
@@ -77,7 +72,7 @@ const AssesmentListScreen = ()=>{
                     </View>
                     )}
                     <View style={styles.createButton}>
-                        <CreateButton onPress={onPressButton}></CreateButton>
+                        {/* <CreateButton onPress={onPressButton}></CreateButton> */}
                     </View>
                 </View>
             </View>
