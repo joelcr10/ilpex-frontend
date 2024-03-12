@@ -1,91 +1,109 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {StyleSheet, ScrollView, StatusBar, Text, View, Animated, Easing} from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import PieChart from 'react-native-pie-chart';
 // import { VictoryPie } from 'victory-native';
-type chart ={excellent:string,good:string,poor:string,chartName:string,option1:string,option2:string,option3:string}
+type chart ={excellent:number,good:number,poor:number,chartName:string,option1:string,option2:string,option3:string,incomplete:()=>void}
 
 const ChartPie = (props:chart) => {
-  const{chartName,excellent,good,poor,option1,option2,option3} =props;
-  console.log(excellent,good,poor)
-  const widthAndHeight = 200;
+
+  const{chartName,excellent,good,poor,option1,option2,option3,incomplete} =props;
+  const widthAndHeight = 200
   const series = [excellent,good,poor];
   const sliceColor = [ '#A93AFF', '#4C0088','#1B0030'];
-  return (
-    <ScrollView style={styles.scrollContainer}>
-      <View style={styles.container}>
-
-        <View style={styles.heading}>
-        <Text style={{fontWeight:'700',color:'black',fontSize:23}}>{chartName}</Text>
+  if(excellent==0 && good==0 && poor==0){
+    return(
+      <ScrollView style={styles.scrollContainer}>
+        <View style={styles.container}>
+          <Text style={{fontSize:30,marginLeft:40}}>NO ONE IS STARTED</Text>
         </View>
-        <View style={styles.head}>
+      </ScrollView>
+    )
 
-          <View style={styles.headPercentage}>
-          <View style={styles.percentage1}>
+  }
+  else{
+    return (
+      <ScrollView style={styles.scrollContainer}>
+        <View style={styles.container}>
+  
+          <View style={styles.heading}>
+          <Text style={{fontWeight:'700',color:'black',fontSize:23}}>{chartName}</Text>
           </View>
-          <Text style={{marginLeft:5}}> &gt; 95%</Text>
+          <View style={styles.head}>
+  
+            <View style={styles.headPercentage}>
+            <View style={styles.percentage1}>
+            </View>
+            <Text style={{marginLeft:5}}> &gt; 95%</Text>
+            </View>
+  
+            {good !== 0 &&<View style={styles.headPercentage}>
+            <View style={styles.percentage2}>
+            </View>
+            <Text style={{marginLeft:5}}> &gt; 25%</Text>
+            </View>}
+  
+            <View style={styles.headPercentage}>
+            <View style={styles.percentage3}>
+            </View>
+            <Text style={{marginLeft:5}}> &lt; 25%</Text>
+            </View>
           </View>
-
-          {good !== '0' &&<View style={styles.headPercentage}>
-          <View style={styles.percentage2}>
+          <View style={styles.chart}>
+  
+          <PieChart
+            widthAndHeight={widthAndHeight}
+            series={series}
+            sliceColor={sliceColor}
+            doughnut={true}
+            coverRadius={0.45}
+            coverFill={'#FFF'}
+          >
+                
+          </PieChart>
+          
+  
           </View>
-          <Text style={{marginLeft:5}}> &gt; 25%</Text>
+  
+          <View style={styles.bottom}>
+  
+          <View>
+            <View style={styles.footer}>
+              <View style={styles.percentage1} ></View>
+              <Text style={styles.footPercentage}>{excellent}</Text>
+            </View>
+            <Text style={{fontWeight:'700',color:'black',fontSize:17}}>{option1}</Text>
+          </View>
+          {good !== 0 &&<View>
+            <View style={styles.footer}>
+              <View style={styles.percentage2}></View>
+              <Text style={styles.footPercentage}>{good}</Text>
+            </View>
+            <Text style={{fontWeight:'700',color:'black',fontSize:17}}>{option2}</Text>
           </View>}
-
-          <View style={styles.headPercentage}>
-          <View style={styles.percentage3}>
+          
+  
+          <View>
+            <View style={styles.footer}>
+              <View style={styles.percentage3}></View>
+              <Text style={styles.footPercentage}>{poor}</Text>
+            </View>
+            <TouchableOpacity onPress={incomplete}>
+            <Text style={{fontWeight:'700',color:'black',fontSize:17}}>{option3}</Text>
+            </TouchableOpacity>
+            
           </View>
-          <Text style={{marginLeft:5}}> &lt; 25%</Text>
+  
           </View>
+          
+  
+  
         </View>
-        <View style={styles.chart}>
+      </ScrollView>
+    );
 
-        <PieChart
-          widthAndHeight={widthAndHeight}
-          series={series}
-          sliceColor={sliceColor}
-          doughnut={true}
-          coverRadius={0.45}
-          coverFill={'#FFF'}
-        >
-              
-        </PieChart>
-        
-
-        </View>
-
-        <View style={styles.bottom}>
-
-        <View>
-          <View style={styles.footer}>
-            <View style={styles.percentage1} ></View>
-            <Text style={styles.footPercentage}>{excellent}</Text>
-          </View>
-          <Text style={{fontWeight:'700',color:'black',fontSize:17}}>{option1}</Text>
-        </View>
-        {good !== '0' &&<View>
-          <View style={styles.footer}>
-            <View style={styles.percentage2}></View>
-            <Text style={styles.footPercentage}>{good}</Text>
-          </View>
-          <Text style={{fontWeight:'700',color:'black',fontSize:17}}>{option2}</Text>
-        </View>}
-        
-
-        <View>
-          <View style={styles.footer}>
-            <View style={styles.percentage3}></View>
-            <Text style={styles.footPercentage}>{poor}</Text>
-          </View>
-          <Text style={{fontWeight:'700',color:'black',fontSize:17}}>{option3}</Text>
-        </View>
-
-        </View>
-        
-
-
-      </View>
-    </ScrollView>
-  );
+  }
+ 
 };
 
 const styles = StyleSheet.create({

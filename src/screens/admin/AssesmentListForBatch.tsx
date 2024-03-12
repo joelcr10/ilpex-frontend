@@ -13,14 +13,15 @@ import BatchCardShimmer from "../../components/loading/BatchCardShimmer";
 import { getItem } from "../../utils/utils";
 import Constants from "../../utils/Constants";
 import { batch } from "react-redux";
+import AssesmentListCard from "../../components/AssesmentListCard";
 
-const BatchesScreen = ()=>{
-    
-    const navigation = useNavigation();
-    const [allBatchesList,setBatchesList] = useState<any>([]);
+const AssesmentListScreen = ()=>{
+    const navigation : any= useNavigation();
+    const [assesmentList,setAssesmentList] = useState<any>([]);
+    let assessList : any = [];
     const [isLoading,setLoading] = useState(false);
-    const onPressBatchCard=(batch_id:any)=>{
-        navigation.navigate("BatchDetails",{batch_id:batch_id});
+    const onPressBatchCard=()=>{
+        navigation.navigate("BatchDetails");
     }
     const onPressButton=()=>{
         console.log("Button pressed");
@@ -28,14 +29,18 @@ const BatchesScreen = ()=>{
     useEffect(()=>{
         const getBatches = async()=>{
             try{
-                const { success,statusCode,responseData,errorMessage} = await getHook('/api/v2/batch');
-                console.log(success,statusCode);
+                
+                const { success,statusCode,responseData,errorMessage} = await getHook('/api/v2/assessment?offset:3&sortOrder:-1&sortBy:"assessment_name"');
+                console.log(success,statusCode,responseData.assessments[0].assessment_name);
                 if(success){
                     if(responseData){
-                        setBatchesList(responseData);
+                        setAssesmentList(responseData.assessments);
+                        assessList = responseData.assessments;
+                        console.log("assess list: ",assessList);
                         setLoading(true); 
                         console.log("->>>>>>>>>>");
-                        console.log('allBatchesList',allBatchesList);
+                        console.log(assesmentList);
+                        console.log(assesmentList.assessment_name)
                 }
                 }
 
@@ -51,25 +56,19 @@ const BatchesScreen = ()=>{
     return(
         <View style={styles.container}>
             <ThreeDots color='white'></ThreeDots>
-            <Text style = {styles.text}>Batches</Text>
+            <Text style = {styles.text}>Assesment </Text>
             <View style={styles.box}>
                 <View style = {styles.dataContainer}>
                 
                     {isLoading? (
+                       
+
                         <FlatList
-                        contentContainerStyle = {{
-                            padding : 20
-                        }}
-                            showsHorizontalScrollIndicator={false}
-                            horizontal={false}
-                            data={allBatchesList.batches}
-                            renderItem={({ item }) => <BatchCard batch_name={item.batch_name} 
-                                                                 traineeNo={item.noOfTrainees}
-                                                                 date={item.start_date} 
-                                                                 progress={parseInt(item.progress)} 
-                                                                 onPressFunc={()=>onPressBatchCard(item.batch_id)}/>}
-                            keyExtractor={item => item.id}
+                            data={assesmentList}
+                            renderItem = {({item}) => <AssesmentListCard assessment_name={item.assessment_name} />}
                         />
+                        
+                        
                     ):(
                     <View>
                        <BatchCardShimmer isLoading></BatchCardShimmer>
@@ -142,4 +141,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default BatchesScreen;
+export default AssesmentListScreen;
