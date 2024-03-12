@@ -3,7 +3,6 @@ import { TouchableOpacity, View } from "react-native";
 import { Text } from "react-native";
 import { StyleSheet } from "react-native";
 import ilpex from "../utils/ilpexUI";
-import CircularProgress from "./CircularProgress";
 import { useNavigation } from "@react-navigation/native";
 
 type BatchComponentProps = {batch_name : string, traineeNo : string, date : string,totalDays : string,progressDays : any,onPressFunc:()=>void};
