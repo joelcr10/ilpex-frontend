@@ -16,12 +16,12 @@ const UpdateAssessmentScreen=()=>{
     const navigation = useNavigation();
     const route:any = useRoute();
     // const assessment_id = route.params.assessment_id;
-    // const assessment_name = route.params.assessment_name;
+    const assessment_name = route.params.assessment_name;
     // const batch_name = route.params.batch_name;
     // const assessment_start_date = route.params.start_date;
     // const assessment_end_date = route.params.end_date;
 
-    const assessment_name="qwerty"
+
     const [assessmentName,setAssessementName] = useState('');
     const [startDate,setStartDate] = useState(new Date());
     const [endDate,setEndDate] = useState(new Date());
@@ -124,7 +124,7 @@ const UpdateAssessmentScreen=()=>{
                         <View style={{
                             margin:'3%'
                         }}>
-                         <Text style={styles.assessmentName}>Assessment Name</Text>
+                         <Text style={styles.assessmentName}>{assessment_name}</Text>
                          <DropdownComponent placeholder={'batch_name'} data={allBatchesName} setBatch={setBatch}></DropdownComponent>
                          </View>
                          <View style= {styles.dateSelector}>
