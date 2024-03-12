@@ -27,7 +27,8 @@ const BatchesScreen = ()=>{
         console.log("Button pressed");
     }
     const today = new Date();
-    const todayString = today.toISOString().substring(0, 10);
+    const newDateTime = new Date(today.getTime() + (5.5 * 60 * 60 * 1000));
+    const todayString = newDateTime.toISOString().substring(0, 10);
     useEffect(()=>{
         const getBatches = async()=>{
             try{
