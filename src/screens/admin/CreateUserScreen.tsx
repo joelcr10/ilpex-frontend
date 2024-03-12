@@ -7,6 +7,7 @@ import { createUser } from "./CreateUserHook";
 import { getItem } from "../../utils/utils";
 import Constants from "../../utils/Constants";
 import ilpex from "../../utils/ilpexUI";
+import BackButton from "../../components/BackButton";
 
 const CreateUserScreen = () => {
   const [createUserName, setcreateUserName] = useState("");
@@ -44,6 +45,7 @@ const CreateUserScreen = () => {
 
   return (
     <View style={styles.mainView}>
+      <BackButton color = 'black'/>
       <TopBlackHeading 
         heading={"Create User"} 
         />

@@ -43,7 +43,6 @@ const TraineeScreen = () => {
 
     return (
         <ScrollView>
-            <ThreeDots color={"white"}/>
             <View style = {styles.pageContainer}>
                 <Text style={styles.containerHeading}>Trainees</Text>
                 <View style = {styles.innerContainer}>

@@ -11,17 +11,20 @@ import { getHook } from "../../../network/getHook/getHook"
 import { getItem } from "../../../utils/utils"
 import Constants from "../../../utils/Constants"
 import UpdateAssessmentAPIHook from "./UpdateAssessmentAPIHook"
+import ConfirmationModal from "../../../components/ConfirmationModal"
+import ToastDemo from "../../../components/ToastComponent"
+import DisabledBigButton from "../../../components/DisabledBigButton"
 
 const UpdateAssessmentScreen=()=>{
     const navigation = useNavigation();
     const route:any = useRoute();
-    // const assessment_id = route.params.assessment_id;
-    // const assessment_name = route.params.assessment_name;
+    const assessment_id = route.params.assessment_id;
+    const assessment_name = route.params.assessment_name;
     // const batch_name = route.params.batch_name;
     // const assessment_start_date = route.params.start_date;
     // const assessment_end_date = route.params.end_date;
 
-    const assessment_name="qwerty"
+
     const [assessmentName,setAssessementName] = useState('');
     const [startDate,setStartDate] = useState(new Date());
     const [endDate,setEndDate] = useState(new Date());
@@ -29,6 +32,10 @@ const UpdateAssessmentScreen=()=>{
     const [allBatches,setAllBatches] = useState<any>([]);
     const [allBatchesName,setAllBatchesName] = useState<any>([]);
     const [selectedBatch,setBatch] = useState('');
+    const [error, setError] = useState('');
+    const [success, setSuccess] = useState(false);
+    const [failure,setFailure] = useState(false);
+    const [isloading, setIsLoading] = useState(false);
     const today = new Date();
     const handleOpen=()=>{
         setIsVisible(true);
@@ -39,6 +46,7 @@ const UpdateAssessmentScreen=()=>{
     useEffect(()=>{
         const getBatches = async()=>{
             try{
+                setIsLoading(true);
                 const { success,statusCode,responseData,errorMessage} = await getHook('/api/v2/batch');
                 console.log(success,statusCode);
                 if(success){
@@ -105,10 +113,18 @@ const UpdateAssessmentScreen=()=>{
     const updateAssessment=async()=>{
         try{
             const user_id = await getItem(Constants.USER_ID);
-            console.log(batch_id,assessment_name,start_date,end_date,user_id);
-            const {success,errorMessage,statusCode,responseData} =await UpdateAssessmentAPIHook(batch_id,assessment_name,user_id,start_date,end_date);
+            console.log(batch_id,assessment_id,startDate,endDate,user_id);
+            const {success,errorMessage,statusCode,responseData} =await UpdateAssessmentAPIHook(batch_id,assessment_id,user_id,startDate,endDate);
             if(success){
                 console.log(responseData);
+                setSuccess(true);
+                setIsLoading(false);
+            }
+            else{
+                console.log(errorMessage);
+                setError("Assessment creation failed");
+                setFailure(true);
+                setIsLoading(false);
             }
         }
     catch(err){
@@ -124,16 +140,23 @@ const UpdateAssessmentScreen=()=>{
                         <View style={{
                             margin:'3%'
                         }}>
-                         <Text style={styles.assessmentName}>Assessment Name</Text>
+                         <Text style={styles.assessmentName}>{assessment_name}</Text>
                          <DropdownComponent placeholder={'batch_name'} data={allBatchesName} setBatch={setBatch}></DropdownComponent>
                          </View>
                          <View style= {styles.dateSelector}>
                             <DateSelector startDate={startDate} endDate={endDate} onPress={handleOpen}></DateSelector>
                         </View>
                         <CalenderModal minDate={start_date} maxDate={end_date} isVisible={isVisible}  setStartDate={setStartDate} setEndDate={setEndDate} closeModal={handleClose}></CalenderModal>
-                        <View style={styles.button}>
-                            <Button name={'Save Changes'} onPress={updateAssessment} buttonPressed={false}></Button>
-                        </View>
+                        {(startDate === null || endDate === null)? (
+                        <DisabledBigButton name="Save Changes"/>
+                            ) : (
+                                <View style={styles.button}>
+                                <Button name={'Save Changes'} onPress={updateAssessment} buttonPressed={false}></Button>
+                            </View>
+                        )
+                        }
+                        {success && <ConfirmationModal success={true} message={"Assessment updated successfully"}></ConfirmationModal>}
+                {failure && <ToastDemo BgColor={ilpex.white} message={"Assessment updation failed"} textColor={ilpex.failure}></ToastDemo>}
                         <Text></Text>
                     </View>
                 </View>

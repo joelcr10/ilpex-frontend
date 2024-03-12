@@ -15,7 +15,9 @@ import { createAssessmentAPI } from "./createAssessmentHook";
 import BackButton from "../../../components/BackButton";
 import DocumentPicker from 'react-native-document-picker';
 import FileUploadField from "../../../components/FileUploadField";
-
+import DisabledBigButton from "../../../components/DisabledBigButton";
+import ToastDemo from "../../../components/ToastComponent";
+import ConfirmationModal from "../../../components/ConfirmationModal";
 
 const CreateAssessmentScreen = ()=>{
     const [assessmentName,setAssessementName] = useState('');
@@ -28,6 +30,11 @@ const CreateAssessmentScreen = ()=>{
     const [missingAssessmentName,setMissingAssessmentName] = useState('');
     const [missingBatchName,setMissingBatchName] = useState('');
     const [selectedFile, setSelectedFile] = useState<any | null>(null);
+    const [success, setSuccess] = useState(false);
+    const [failure,setFailure] = useState(false);
+    const [error, setError] = useState('');
+    const [isloading, setIsLoading] = useState(false);
+
     const handleOpen=()=>{
         setIsVisible(true);
     }
@@ -81,7 +88,11 @@ const CreateAssessmentScreen = ()=>{
                         // setLoading(true); 
                         console.log("->>>>>>>>>>");
                         console.log('allBatches',allBatchesName);
-                }
+                    }
+                    else
+                    {
+                        setFailure(true);
+                    }
                 }
                 const tid = await getItem(Constants.TRAINEE_ID);
                 console.log("tid: ",tid);
@@ -132,6 +143,7 @@ const CreateAssessmentScreen = ()=>{
     const end_date = getBatchEndDate(selectedBatch);
     const createAssessment=async ()=>{
         try{
+            setIsLoading(true);
             const user_id = await getItem(Constants.USER_ID);
             console.log('user_id', user_id)
             const formData = new FormData();
@@ -142,11 +154,29 @@ const CreateAssessmentScreen = ()=>{
             formData.append('end_date', endDate.toISOString());
             formData.append('file', selectedFile);
         handleInputs();
-        if(missingAssessmentName==null){
+        if(missingAssessmentName==''){
         console.log("Form Data is-------> ", formData);
-        const {success, responseData} = await createAssessmentAPI(formData);
+        const {success, responseData, statusCode,errorMessage} = await createAssessmentAPI(formData);
         if(success){
             console.log(responseData);
+            setBatch('');
+            setAssessementName('');
+            setStartDate(today);
+            setEndDate(today);
+            setSelectedFile(null);
+            setIsLoading(false);
+            setSuccess(true);
+        }
+        else{
+            setFailure(true);
+            console.log("hiiiii",errorMessage);
+            setError("Assessment creation failed");
+            setIsLoading(false);
+            setBatch('');
+            setAssessementName('');
+            setStartDate(today);
+            setEndDate(today);
+            setSelectedFile(null);
         }
         }
         }
@@ -174,9 +204,18 @@ const CreateAssessmentScreen = ()=>{
                     <CalenderModal minDate={start_date} maxDate={end_date} isVisible={isVisible}  setStartDate={setStartDate} setEndDate={setEndDate} closeModal={handleClose}></CalenderModal>
                     <View style = {styles.fileUploadContainer}>
                     <FileUploadField onSelect={pickDocument} selectedFile={selectedFile}/>
-                        <Button name={'Create Assessment'} onPress={createAssessment} buttonPressed={false}></Button>
+                    {(assessmentName === '' || startDate === null || endDate === null || selectedFile === null)? (
+                <DisabledBigButton name="Create Assessment"/>
+                    ) : (
+                <View>
+                <Button name="Create Assessment" onPress={createAssessment} buttonPressed={isloading} /> 
+                </View>
+                )
+                }
                     </View>
-                    <Text></Text>
+                {success && <ConfirmationModal success={true} message={"Assessment created successfully"}></ConfirmationModal>}
+                {failure && <ToastDemo BgColor={ilpex.white} message={"Assessment creation failed"} textColor={ilpex.failure}></ToastDemo>}
+                    {/* <Text></Text> */}
                 </View>
             </View>
     </View>

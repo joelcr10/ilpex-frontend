@@ -199,6 +199,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontFamily: ilpex.fontMedium,
 
+  },  textSize: {
+    color: ilpex.white,
+    fontFamily: ilpex.fontSemiBold,
+    fontSize: 30,
+    marginTop: -8
   },
 
   textSize: {
