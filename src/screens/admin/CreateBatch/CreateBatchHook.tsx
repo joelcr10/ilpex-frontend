@@ -1,17 +1,17 @@
 import { DocumentPickerResponse } from 'react-native-document-picker';
-import instance from '../../network/api';
-import Constants from '../../utils/Constants';
-import { getItem } from '../../utils/utils';
+import instance from '../../../network/api';
+import Constants from '../../../utils/Constants';
+import { getItem } from '../../../utils/utils';
 import axios from 'axios';
  
-interface CreateCourseResponse {
+interface CreateBatchResponse {
   success: boolean;
   errorMessage: string;
   statusCode: string;
   loginResp: any;
 }
  
-export async function createCourse(formData: FormData): Promise<CreateCourseResponse> {
+export async function createBatch(formData: FormData): Promise<CreateBatchResponse> {
   let success: boolean = false;
   let errorMessage: string = '';
   let statusCode: string = '';
@@ -27,19 +27,19 @@ export async function createCourse(formData: FormData): Promise<CreateCourseResp
           'Content-Type': 'multipart/form-data',
         }
     }
-    const url = '/api/v2/course';
+    const url = '/api/v2/batch';
     console.log("Form Data Is : ", formData);
-    const createCourseResponse = await instance.post(url, formData, authorization);
+    const createBatchResponse = await instance.post(url, formData, authorization);
 
-    console.log(createCourseResponse);
-    statusCode = createCourseResponse.status.toString();
+    console.log(createBatchResponse);
+    statusCode = createBatchResponse.status.toString();
     {
       statusCode === '200' ? (success = true) : (success = false);
     }
 
   } catch (error: any) {
     console.log('Errorr:', error);
-    errorMessage = error.message;
+    errorMessage = error.response.data.error;
   }
  
   return {success, statusCode, loginResp, errorMessage};

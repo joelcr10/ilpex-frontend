@@ -140,7 +140,6 @@ const TraineeProileAnalysisScreen = () => {
             ) : (
                 <View style = {styles.pageContainer}>
                     <BackButton color = 'black'/>
-                    <ThreeDots color = 'black'/>
                     <View style = {styles.profilePictureContainer}>
                         <View style = {[styles.profilePictureCircle, {backgroundColor : circleBackgroundColor}]}>
                             <Image
