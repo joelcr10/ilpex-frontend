@@ -5,12 +5,11 @@ import ilpex from '../utils/ilpexUI';
 import Button from './Button';
 
 interface ModalProps {
-
   isVisible: boolean;
   closeModal: () => void;
-  successText:string;
-  failureText:string;
-  setMessageVisible: (visible: boolean) => void; // New prop
+  successText: string;
+  failureText: string;
+  setMessageVisible: (visible: boolean) => void;
 }
 
 const ModalComponent: React.FC<ModalProps> = ({

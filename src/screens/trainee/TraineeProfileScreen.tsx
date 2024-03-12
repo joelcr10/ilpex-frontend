@@ -226,7 +226,6 @@ const TraineeProfileScreen = () => {
                 ) : (
                     <View style = {styles.adminContainer}>
                         <BackButton color = 'black'/>
-                        <ThreeDots color = 'black'/>
                         <View style = {styles.profilePictureContainer}>
                             <View style = {[styles.profilePictureCircle, {backgroundColor : circleBackgroundColor}]}>
                                 <Image

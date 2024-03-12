@@ -6,17 +6,14 @@ import ilpex from "../utils/ilpexUI";
 import CircularProgress from "./CircularProgress";
 import { useNavigation } from "@react-navigation/native";
 
-type BatchComponentProps = {batch_name : string, traineeNo : string, date : string,progress : number};
+type BatchComponentProps = {batch_name : string, traineeNo : string, date : string,totalDays : string,progressDays : string,onPressFunc:()=>void};
 
-const BatchCard=({batch_name,traineeNo,date,progress} : BatchComponentProps)=>{
-
-    const buttonPress = ()=>{
-        const navigation : any= useNavigation();
-        console.log("HIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII")
-        // console.log("Passing here ", batch_id);
-        // navigation.navigate("BatchDetails", {
-        //     batch_id: batch_id,
-        //   });
+const BatchCard=({batch_name,traineeNo,date,totalDays,progressDays,onPressFunc} : BatchComponentProps)=>{
+    const navigation : any= useNavigation();
+    const buttonPress = (batch_id:number)=>{
+        navigation.navigate("BatchDetails", {
+            batch_id: batch_id,
+          });
         }
 
     const getMonthName=(month : number)=> {
@@ -45,7 +42,7 @@ const BatchCard=({batch_name,traineeNo,date,progress} : BatchComponentProps)=>{
     const formattedDate = `${monthName} ${day} ${year}`;
 
     return(
-        <TouchableOpacity onPress={buttonPress}>
+        <TouchableOpacity onPress={onPressFunc}>
             <View style={styles.container}>
                 <View style={styles.dataContainer}>
                     <Text style={styles.batch_name}>{batch_name}</Text>
@@ -60,7 +57,9 @@ const BatchCard=({batch_name,traineeNo,date,progress} : BatchComponentProps)=>{
                     <Text style={styles.date}>{formattedDate}</Text>
                 </View>
                 <View style={styles.circularProgress}>
-                    <CircularProgress completeStatus={progress} color={ilpex.main}></CircularProgress>
+                    <Text>Day</Text>
+                    <Text>{progressDays}/{totalDays}</Text>
+                    {/* <CircularProgress completeStatus={progress} color={ilpex.main}></CircularProgress> */}
                 </View>
             </View>
         </TouchableOpacity>

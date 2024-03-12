@@ -1,14 +1,8 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Icon from 'react-native-vector-icons/FontAwesome';
-import LoginScreen from "../screens/authentication/LoginScreen";
 import BatchesScreen from "../screens/admin/BatchesScreen";
 import TraineeScreen from "../screens/admin/TraineesScreen";
-import TraineeProfile from "../screens/trainee/TraineeProfileScreen";
-import CreateAssessment from "../screens/admin/CreateAssessment/CreateAssessmentScreen";
-import UserManagementScreen from '../screens/admin/UserManagementScreen';
-import IncompleteTraineesScreen from "../screens/admin/IncompleteTraineesScreen";
-import UpdateAssessmentScreen from "../screens/admin/UpdateAssessment/UpdateAssessmentScreen";
-
+import AssesmentListScreen from "../screens/admin/AssesmentListForBatch";
 const BottomTab = createBottomTabNavigator();
 
 const BottomTabNavigation = () =>{
@@ -28,7 +22,7 @@ const BottomTabNavigation = () =>{
                     headerShown: false,
                     tabBarIcon: ({color}) =>{
                         return(
-                            <Icon name="users" size={30} color={color}/>
+                            <Icon name="user" size={30} color={color}/>
                         )
                     }
                 }}
@@ -45,54 +39,19 @@ const BottomTabNavigation = () =>{
                     }
                 }}
             /> 
-            {/* <BottomTab.Screen
-                name = "Profile"
-                component = {TraineeProfile}
+
+            <BottomTab.Screen
+                name = "Assesments"
+                component = {AssesmentListScreen}
                 options={{
                     headerShown: false,
                     tabBarIcon: ({color}) =>{
                         return(
-                            <Icon name="users" size={30} color={color}/>
-                        )
-                    }
-                }}
-            /> */}
-                       <BottomTab.Screen
-                name = "Update"
-                component = {UpdateAssessmentScreen}
-                options={{
-                    headerShown: false,
-                    tabBarIcon: ({color}) =>{
-                        return(
-                            <Icon name="users" size={30} color={color}/>
+                            <Icon name="edit" size={30} color={color}/>
                         )
                     }
                 }}
             />
-            {/* <BottomTab.Screen
-                name = "Incomplete"
-                component = {IncompleteTraineesScreen}
-                options={{
-                    headerShown: false,
-                    tabBarIcon: ({color}) =>{
-                        return(
-                            <Icon name="users" size={30} color={color}/>
-                        )
-                    }
-                }}
-            /> */}
-               <BottomTab.Screen 
-                name="ManageUser"
-                component={UserManagementScreen}   
-                options={{
-                    headerShown: false,
-                    tabBarIcon: ({color}) =>{
-                        return(
-                            <Icon name="users" size={30} color={color}/>
-                        )
-                    }
-                }}
-            /> 
         </BottomTab.Navigator>
     )
 }

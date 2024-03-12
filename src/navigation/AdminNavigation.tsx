@@ -8,19 +8,15 @@ import CreateUserScreen from "../screens/admin/CreateUserScreen";
 import TraineeProileAnalysisScreen from "../screens/admin/TraineeProfileAnalysisScreen";
 import DrawerNavigation from "./DrawerNavigation";
 import ManageTraineeScreen from '../screens/admin/ManageTrainee';
-
+import DayWiseDetailsPage from "../screens/admin/DayDetailsScreen";
+import IncompleteTraineesScreen from '../screens/admin/IncompleteTraineesScreen';
+import UpdateAssessmentScreen from '../screens/admin/UpdateAssessment/UpdateAssessmentScreen';
 const Stack = createNativeStackNavigator();
 const AdminNavigation = () =>{
         return(
             <Stack.Navigator>
                 
-                {/* <Stack.Screen 
-                    name="BatchDetails"
-                    component={BatchDetailsPage}
-                    options={{
-                        headerShown: false
-                    }}
-                /> */}
+                
                 {/* <Stack.Screen 
                     name="AdminBottomTab"
                     component={BottomTabNavigation}
@@ -75,6 +71,27 @@ const AdminNavigation = () =>{
                     component = {ManageTraineeScreen}
                     options = {{
                         headerShown : false
+                    }}
+                />
+                <Stack.Screen 
+                    name="batchDayWiswDetails"
+                    component={DayWiseDetailsPage}
+                    options={{
+                        headerShown: false
+                    }}
+                />
+                <Stack.Screen 
+                    name="incompleteTraineScreen"
+                    component={IncompleteTraineesScreen}
+                    options={{
+                        headerShown: false
+                    }}
+                />
+                <Stack.Screen 
+                    name="updateAssesments"
+                    component={UpdateAssessmentScreen}
+                    options={{
+                        headerShown: false
                     }}
                 />
             </Stack.Navigator>

@@ -4,7 +4,7 @@ import Constants from "../../../utils/Constants";
 import { getItem } from "../../../utils/utils";
 
 
-// type responseType = {message: string}
+type responseType = {message: string}
 
 interface Response{
     success: boolean;
@@ -36,21 +36,12 @@ try{
     const url = '/api/v2/assessment';
     console.log("Form Data Is : ", formData);
 
-    // const payload = {
-    //     batch: batch_id,
-    //     assessment_name: assessment_name,
-    //     user_id: user_id,
-    //     start_date : start_date,
-    //     end_date : end_date
-    // }
-
-
         const createAssessmentResponse = await api.post(url,formData,authorization);
         
             console.log(createAssessmentResponse);
         statusCode = createAssessmentResponse.status.toString();
         {
-            statusCode === '200' ? (success = true) : (success = false);
+            statusCode === '200'|| '201' ? (success = true) : (success = false);
         }
 
         responseData = createAssessmentResponse.data;
@@ -59,7 +50,7 @@ try{
     }catch(error: any){
         console.log('Error while creating assessment', error);
 
-        errorMessage = error.message;
+        errorMessage = error.response.data.error;
     }
 
     return {success, statusCode, responseData, errorMessage};
