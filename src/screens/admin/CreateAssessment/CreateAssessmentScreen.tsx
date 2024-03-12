@@ -213,7 +213,7 @@ const CreateAssessmentScreen = ()=>{
                     }
                 </View>
                 {success && <ConfirmationModal success={true} message={"Assessment created successfully"}></ConfirmationModal>}
-                {failure && <ToastDemo BgColor={ilpex.white} message={errorText} textColor={ilpex.failure}></ToastDemo>}
+                {failure && <ToastDemo BgColor={ilpex.failure} message={errorText} textColor={ilpex.white}></ToastDemo>}
             </View>
         </View>
     </View>

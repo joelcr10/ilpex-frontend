@@ -156,7 +156,7 @@ const UpdateAssessmentScreen=()=>{
                         )
                     }
                     {success && <ConfirmationModal success={true} message={"Assessment updated successfully"}></ConfirmationModal>}
-                    {failure && <ToastDemo BgColor={ilpex.white} message={error} textColor={ilpex.failure}></ToastDemo>}
+                    {failure && <ToastDemo BgColor={ilpex.failure} message={error} textColor={ilpex.white}></ToastDemo>}
                 </View>
             </View>
         </View>
