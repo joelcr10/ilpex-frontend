@@ -1,12 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {StyleSheet, ScrollView, StatusBar, Text, View, Animated, Easing} from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import PieChart from 'react-native-pie-chart';
 // import { VictoryPie } from 'victory-native';
-type chart ={excellent:number,good:number,poor:number,chartName:string,option1:string,option2:string,option3:string}
+type chart ={excellent:number,good:number,poor:number,chartName:string,option1:string,option2:string,option3:string,incomplete:()=>void}
 
 const ChartPie = (props:chart) => {
 
-  const{chartName,excellent,good,poor,option1,option2,option3} =props;
+  const{chartName,excellent,good,poor,option1,option2,option3,incomplete} =props;
   const widthAndHeight = 200
   const series = [excellent,good,poor];
   const sliceColor = [ '#A93AFF', '#4C0088','#1B0030'];
@@ -87,7 +88,10 @@ const ChartPie = (props:chart) => {
               <View style={styles.percentage3}></View>
               <Text style={styles.footPercentage}>{poor}</Text>
             </View>
+            <TouchableOpacity onPress={incomplete}>
             <Text style={{fontWeight:'700',color:'black',fontSize:17}}>{option3}</Text>
+            </TouchableOpacity>
+            
           </View>
   
           </View>

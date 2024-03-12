@@ -8,9 +8,11 @@ import IconButtonComponent from "../../components/IconButton";
 import ChartPieHeaderShimmer from "../../components/pieChartHeaderShimmer";
 import ThreeDots from "../../components/ThreeDots";
 import BackButton from "../../components/BackButton";
-import { useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 const DayWiseDetailsPage =()=>{
     const route:any = useRoute();
+    const navigation : any = useNavigation();
     const day = route.params.day;
     const batch = route.params.batch_id;
     // console.log('this is day',day)
@@ -52,9 +54,16 @@ const DayWiseDetailsPage =()=>{
       };
       getStory();
   }, []);
+  const onPress =(day:number,batch:number)=>{
 
+    console.log('enetered the function')
+    console.log('this is day',day)
+  console.log('this is batch',batch)
+      navigation.navigate('incompleteTraineScreen',{day:day,batch:batch})  
+    }
  
 return(
+    <GestureHandlerRootView>
         <ScrollView>
         <View style={styles.container1}>
           <BackButton color = 'white'/>
@@ -85,11 +94,12 @@ return(
               </View>
               {isLoading&&<><ChartPieShimmer/>
               <ChartPieShimmer/></>}
-              {!isLoading&&<><ChartPie chartName={'Course Completion'} excellent={currentDateCompletion.onTrack} good={0} poor={currentDateCompletion.laggingBehind} option1="Completed" option2="Partial" option3="Incomplete" /></>}
+              {!isLoading&&<><ChartPie chartName={'Course Completion'} excellent={currentDateCompletion.onTrack} good={0} poor={currentDateCompletion.laggingBehind} option1="Completed" option2="Partial" option3="Incomplete" incomplete={()=>onPress(day,batch)}/></>}
             </View>
         
          </View>
      </ScrollView>
+     </GestureHandlerRootView>
      )
     }
 const styles = StyleSheet.create({

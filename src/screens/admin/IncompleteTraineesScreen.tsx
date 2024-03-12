@@ -8,6 +8,7 @@ import { getHook } from "../../network/getHook/getHook";
 import IconButtonComponent from "../../components/IconButton";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { sendMail } from "../../network/EmailApiHook";
+import { useRoute } from "@react-navigation/native";
 
 interface Trainee {
   trainee_id: number;
@@ -22,8 +23,11 @@ interface Trainee {
 
 const IncompleteTraineesScreen = () => {
   const [isLoading, setLoading] = useState(true);
-
-
+  const route:any = useRoute();
+  const day =route.params.day;
+  const batch = route.params.batch;
+  // console.log('this is day',day)
+  // console.log('this is batch',batch)
   const TraineesDisplay = () => {
     const trainee_id = useSelector((state: any) => state.userDetailsReducer.trainee_id);
     const [traineeList, setTraineeList] = useState<any>([]);
@@ -54,7 +58,7 @@ const IncompleteTraineesScreen = () => {
       const getDayCards = async () => {
         try {
           const { responseData } = await getHook(
-            `/api/v2/batch/1/pending/day/1`,
+            `/api/v2/batch/${batch}/pending/day/${day}`,
           );
           if (responseData) {
             setLoading(true);

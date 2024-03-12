@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import * as Progress from 'react-native-progress';
 
-type PropsType = {dayNumber : number, percentage : number,onPress:()=>any}
+type PropsType = {dayNumber : number, percentage : number,onPress:()=>void}
 const  DayWiseProgressBar = (props : PropsType) => {
     const {dayNumber, percentage,onPress} = props;
     let valueToBeLoaded = percentage / 100;

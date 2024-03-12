@@ -13,7 +13,7 @@ import DayWiseProgressBarShimmer from "../../components/loading/DayWiseProgressB
 import { useNavigation, useRoute } from "@react-navigation/native";
 import DayWiseDetailsPage from "./DayDetailsScreen";
 import moment from 'moment'
-
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const BatchDetailsPage =()=>{
    const todayDate = moment().format('YYYY-MM-DD');
@@ -28,8 +28,7 @@ const BatchDetailsPage =()=>{
     const [courseCompletion,setCourseCompletion] = useState<any>([]);
     const [dayWiseProgress,setdayWiseProgress] = useState<any>([]);
     const onPress=(batch_id:number,day_id:number)=>{
-      console.log('this is day',day_id)
-      console.log('this is batch',batch_id)
+      
        navigation.navigate("batchDayWiswDetails",{ batch_id:batch_id, day:day_id});
     }
     useEffect(() => {
@@ -119,8 +118,11 @@ const arrayOfObjects =[];
         // console.log(`${key}: ${value}`);
       }
     }
-
+const hai =()=>{
+  
+}
 return(
+  <GestureHandlerRootView>
         <ScrollView>
         <View style={styles.container1}>
           <BackButton color = 'white'/>
@@ -163,13 +165,14 @@ return(
               {isLoading&&<><ChartPieShimmer/>
               <ChartPieShimmer/></>}
               {!isLoading&&<>
-              <ChartPie chartName={'Assesment Score'} excellent={feedList.excellent} good={feedList.good} poor={feedList.poor} option1="Excellent" option2="Good" option3="Poor" />
+              <ChartPie chartName={'Assesment Score'} excellent={feedList.excellent} good={feedList.good} poor={feedList.poor} option1="Excellent" option2="Good" option3="Poor" incomplete={hai} />
               
-              <ChartPie chartName={'Course Completion'} excellent={courseCompletion.onTrack} good={0} poor={courseCompletion.laggingBehind} option1="Completed" option2="Partial" option3="Incomplete" />
+              <ChartPie chartName={'Course Completion'} excellent={courseCompletion.onTrack} good={0} poor={courseCompletion.laggingBehind} option1="Completed" option2="Partial" option3="Incomplete" incomplete={()=>{}}/>
               </>
               }
               
               <View style = {styles.graphContainer}>
+                  <Text style={{marginRight:255,marginBottom:20,fontSize:25}}>Days</Text>
                   <FlatList 
                     contentContainerStyle = {{paddingBottom : 5}}
                     data = {arrayOfObjects}
@@ -180,12 +183,13 @@ return(
                   
                   />
                 </View>
-              )
-              }
+              
+              
             </View>
         
         </View>
         </ScrollView>
+        </GestureHandlerRootView>
     )
     }
 const styles = StyleSheet.create({
@@ -232,7 +236,7 @@ const styles = StyleSheet.create({
       
   },
   graphContainer : {
-		marginTop : 40,
+		marginTop : 10,
 		marginLeft : 30,
 		marginRight : 30,
 		alignItems : 'center',

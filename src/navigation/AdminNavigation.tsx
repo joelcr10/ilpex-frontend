@@ -8,6 +8,7 @@ import CreateUserScreen from "../screens/admin/CreateUserScreen";
 import TraineeProileAnalysisScreen from "../screens/admin/TraineeProfileAnalysisScreen";
 import DrawerNavigation from "./DrawerNavigation";
 import DayWiseDetailsPage from "../screens/admin/DayDetailsScreen";
+import IncompleteTraineesScreen from '../screens/admin/IncompleteTraineesScreen';
 const Stack = createNativeStackNavigator();
 const AdminNavigation = () =>{
         return(
@@ -66,6 +67,13 @@ const AdminNavigation = () =>{
                 <Stack.Screen 
                     name="batchDayWiswDetails"
                     component={DayWiseDetailsPage}
+                    options={{
+                        headerShown: false
+                    }}
+                />
+                <Stack.Screen 
+                    name="incompleteTraineScreen"
+                    component={IncompleteTraineesScreen}
                     options={{
                         headerShown: false
                     }}
