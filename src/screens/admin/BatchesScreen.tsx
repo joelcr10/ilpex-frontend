@@ -61,6 +61,7 @@ const BatchesScreen = ()=>{
                             padding : 20
                         }}
                             showsHorizontalScrollIndicator={false}
+                            showsVerticalScrollIndicator={false}
                             horizontal={false}
                             data={allBatchesList.batches}
                             renderItem={({ item }) => <BatchCard batch_name={item.batch_name} 
@@ -72,6 +73,8 @@ const BatchesScreen = ()=>{
                         />
                     ):(
                     <View>
+                       <BatchCardShimmer isLoading></BatchCardShimmer>
+                       <BatchCardShimmer isLoading></BatchCardShimmer>
                        <BatchCardShimmer isLoading></BatchCardShimmer>
                        <BatchCardShimmer isLoading></BatchCardShimmer>
                        <BatchCardShimmer isLoading></BatchCardShimmer>
