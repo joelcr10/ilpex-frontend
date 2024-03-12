@@ -33,7 +33,7 @@ const AssesmentListScreen = ()=>{
                 const { success,statusCode,responseData,errorMessage} = await getHook('/api/v2/assessment');
                 if(success){
                     if(responseData){
-                        setAssesmentList(responseData);
+                        setAssesmentList(responseData.assessments);
                         console.log('this is data',responseData)
                         // assessList = responseData.assessments;
                         setLoading(true); 
