@@ -8,6 +8,7 @@ import { getItem } from "../../utils/utils";
 import Constants from "../../utils/Constants";
 import ilpex from "../../utils/ilpexUI";
 import BackButton from "../../components/BackButton";
+import ModalComponent from "../../components/ModalComponent";
 
 const CreateUserScreen = () => {
   const [createUserName, setcreateUserName] = useState("");
@@ -16,10 +17,32 @@ const CreateUserScreen = () => {
   const [createPassword, setcreatePassword] = useState("");
   const [buttonpressed, setButtonpressed] = useState(false);
   const [passwordMatchError, setPasswordMatchError] = useState("");
+  const [isCreated, setIsCreated] = useState(true);
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [successText, setSuccessText] = useState("");
+  const [failureText, setFailureText] = useState("");
+
+  const showModal = () => {
+    setModalVisible(true);
+  };
+
+  const hideModal = () => {
+    setModalVisible(false);
+    setSuccessText("");
+    setFailureText("");
+  };
+
+  const createAdmin = () => {
+      setButtonpressed(true);
+      handlecreateUser();
+  };
+
+
 
   const handlecreateUser = async () => {
     setButtonpressed(true);
-    const JWT_token = (await getItem(Constants.TOKEN)) || ''; 
+  
+    const JWT_token = (await getItem(Constants.TOKEN)) || '';
   
     try {
       if (password !== createPassword) {
@@ -35,12 +58,21 @@ const CreateUserScreen = () => {
       });
   
       if (success) {
-        console.log("New L&D user created with user id:", createUserResp.user_id);
+        setSuccessText("New L&D user created");
+        setIsCreated(false);
+      } else {
+        setFailureText("This user already exists");
+        setIsCreated(true);
       }
+  
+      showModal();
     } catch (error) {
       console.error("Error during user creation:", error);
+    } finally {
+      setButtonpressed(false);
     }
   };
+  
   
 
   return (
@@ -76,9 +108,16 @@ const CreateUserScreen = () => {
       {passwordMatchError ? <Text style={styles.errorText}>{passwordMatchError}</Text> : null}
       <Button 
         name="Create" 
-        onPress={handlecreateUser} 
+        onPress={createAdmin} 
         buttonPressed={buttonpressed} 
         />
+      <ModalComponent
+        isVisible={isModalVisible}
+        closeModal={hideModal}
+        setMessageVisible={setModalVisible}
+        successText={successText}
+        failureText={failureText}
+      />
     </View>
   );
 };
