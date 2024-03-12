@@ -142,7 +142,7 @@ const CreateAssessmentScreen = ()=>{
             formData.append('end_date', endDate.toISOString());
             formData.append('file', selectedFile);
         handleInputs();
-        if(missingAssessmentName==null){
+        if(missingAssessmentName==''){
         console.log("Form Data is-------> ", formData);
         const {success, responseData} = await createAssessmentAPI(formData);
         if(success){
