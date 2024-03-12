@@ -6,14 +6,14 @@ const ToastDemo = ({ BgColor,message,textColor }: { BgColor: string ,message:str
     const showToast = () => {
       Toast.show(message, {
         duration: Toast.durations.LONG,
-        position: Toast.positions.TOP,
+        position: Toast.positions.BOTTOM,
         backgroundColor: BgColor,
         textColor:textColor,
         hideOnPress: true,
         shadow: true,
         animation: true,
         delay: 0,
-        opacity:0.5,
+        opacity:1,
         shadowColor:'black'
       });
     };
