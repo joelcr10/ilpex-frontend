@@ -78,6 +78,10 @@ const CreateBatchScreen = () => {
                 setSuccess(true);
                 console.log("statusCode - ", statusCode);
                 console.log("Success - ", success);
+                setBatchName('');
+                setStartDate(null);
+                setEndDate(null);
+                setSelectedFile(null);
             }
             else
             {

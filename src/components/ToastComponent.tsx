@@ -5,7 +5,7 @@ const ToastDemo = ({ BgColor,message,textColor }: { BgColor: string ,message:str
   useEffect(() => {
     const showToast = () => {
       Toast.show(message, {
-        duration: Toast.durations.SHORT,
+        duration: Toast.durations.LONG,
         position: Toast.positions.TOP,
         backgroundColor: BgColor,
         textColor:textColor,
