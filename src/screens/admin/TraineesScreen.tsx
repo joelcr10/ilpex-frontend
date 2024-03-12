@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { FlatList, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import TraineeCard from "../../components/TraineeCard";
 import TraineeCardShimmer from "../../components/loading/TraineeCardShimmer";
-import ThreeDots from "../../components/ThreeDots";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { getHook } from "../../network/getHook/getHook";
 
@@ -42,7 +41,9 @@ const TraineeScreen = () => {
     }, []);
 
     return (
-        <ScrollView>
+        <ScrollView 
+        showsVerticalScrollIndicator={false} 
+        >
             <View style = {styles.pageContainer}>
                 <Text style={styles.containerHeading}>Trainees</Text>
                 <View style = {styles.innerContainer}>
