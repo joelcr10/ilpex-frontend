@@ -10,21 +10,58 @@ import { getHook } from "../../network/getHook/getHook";
 import CreateButton from "../../components/CreateButton";
 import { useNavigation } from "@react-navigation/native";
 import BatchCardShimmer from "../../components/loading/BatchCardShimmer";
-import { getItem } from "../../utils/utils";
+import { getItem, setStringItem } from "../../utils/utils";
 import Constants from "../../utils/Constants";
-import { batch } from "react-redux";
+import { batch, useDispatch, useSelector } from "react-redux";
+import { userNames } from "../../context/userNameSlice";
 
 const BatchesScreen = ()=>{
     
     const navigation = useNavigation();
     const [allBatchesList,setBatchesList] = useState<any>([]);
     const [isLoading,setLoading] = useState(false);
+
     const onPressBatchCard=(batch_id:any)=>{
         navigation.navigate("BatchDetails",{batch_id:batch_id});
     }
+
+    const UserName = () => {
+        const dispatch = useDispatch();
+      
+        // const [userName, setUserName] = useState<any[]>([]);
+        const user_id = useSelector((state: any) => state.userDetailsReducer.user_id);
+        useEffect(() => {
+          const getUserName = async () => {
+            try {
+              const { responseData } = await getHook(
+                `/api/v3/profile/${user_id}`,
+              );
+      
+              const userName = responseData.data.user_name;
+            //   setUserName(userName);
+            setStringItem(Constants.USER_NAME, userName);
+          const user_name = await getItem(Constants.USER_NAME);
+          console.log(`user id is`,user_name);
+              dispatch(userNames(user_name));
+      
+      
+            } catch (error) {
+              console.error('Error:', error);
+            }
+          };
+          getUserName();
+        }, []);
+        // return (
+        //   <Text style={styles.caption}>{userName}</Text>
+      
+        // );
+      }
+      UserName();
+
     const onPressButton=()=>{
         console.log("Button pressed");
     }
+
     useEffect(()=>{
         const getBatches = async()=>{
             try{
@@ -50,7 +87,6 @@ const BatchesScreen = ()=>{
     },[]);
     return(
         <View style={styles.container}>
-            <ThreeDots color='white'></ThreeDots>
             <Text style = {styles.text}>Batches</Text>
             <View style={styles.box}>
                 <View style = {styles.dataContainer}>
@@ -94,6 +130,11 @@ const styles = StyleSheet.create({
     dataContainer : {
         margin : '5%',
     },
+    textSize: {
+        fontSize: 24,
+        fontFamily : ilpex.fontSemiBold,
+        color : 'black',
+      },
     text:{
         textAlign:'center',
         fontSize:50,

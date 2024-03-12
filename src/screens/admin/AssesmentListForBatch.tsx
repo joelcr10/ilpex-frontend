@@ -55,7 +55,6 @@ const AssesmentListScreen = ()=>{
     },[]);
     return(
         <View style={styles.container}>
-            <ThreeDots color='white'></ThreeDots>
             <Text style = {styles.text}>Assesment </Text>
             <View style={styles.box}>
                 <View style = {styles.dataContainer}>

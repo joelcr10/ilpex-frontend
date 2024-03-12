@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import 'react-native-gesture-handler';
-import { DrawerContentScrollView, DrawerItemList, createDrawerNavigator } from '@react-navigation/drawer';
+import { DrawerContentScrollView, DrawerItem, DrawerItemList, createDrawerNavigator } from '@react-navigation/drawer';
 import { StyleSheet, Text, View } from 'react-native';
 import { Image, ImageProps } from 'react-native';
 import ilpex from '../utils/ilpexUI';
@@ -8,23 +8,60 @@ import TraineeProfileScreen from '../screens/trainee/TraineeProfileScreen';
 import BottomTabNavigation from "./BottomTabNavigation";
 import CreateBatchScreen from '../screens/admin/CreateBatchScreen';
 import CreateCourseScreen from '../screens/admin/CreateCourseScreen';
-
 import CreateAssessmentScreen from '../screens/admin/CreateAssessment/CreateAssessmentScreen';
 import CreateUserScreen from '../screens/admin/CreateUserScreen';
-const Drawer = createDrawerNavigator();
+import { setStringItem } from '../utils/utils';
+import Constants from "../utils/Constants";
+import { userDetails } from "../context/userDetailsSlice";
+import { userLogin } from "../context/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import UserManagementScreen from '../screens/admin/UserManagementScreen';
+import BatchesScreen from '../screens/admin/BatchesScreen';
+import { getHook } from '../network/getHook/getHook';
+import { userNames } from '../context/userNameSlice';
 
 const CustomDrawerContent : any = (props : any) => {
+    
     return (
       <DrawerContentScrollView {...props}>
         <View style={styles.drawerHeader}>
-          <Text style={styles.caption}>Jordan S Ben</Text>
+            {/* <UserName></UserName> */}
+          {/* <Text style={styles.caption}>Jordan S Ben</Text> */}
         </View>
         <DrawerItemList {...props} />
       </DrawerContentScrollView>
     );
   };
 
+
+
 const DrawerNavigation = () => {
+
+    // const user_name = useSelector((state: any) => state.userNameReducer.user_name);
+    // console.log("USERNAME : ", user_name);
+    const Drawer = createDrawerNavigator();
+    const dispatch = useDispatch();
+    
+    const getName = async () => {
+        // const user_name = await useSelector((state: any) => state.userNameReducer.user_name);
+        console.log("USERNAMEEEEEEEEEE------->", user_name)
+    }
+
+    getName();
+    const handleLogout = () => {
+        setStringItem(Constants.IS_LOGIN, 'false');
+        setStringItem(Constants.ROLE_ID, '' );
+        setStringItem(Constants.TRAINEE_ID, '');
+        setStringItem(Constants.USER_ID,'');
+        dispatch(userDetails({
+            token : '',
+            user_id: '',
+            role_id: '',
+            trainee_id:'',
+        }));
+        dispatch(userLogin(false));
+    }
+
     return (
         <Drawer.Navigator
         drawerContent={(props) => <CustomDrawerContent {...props} />}
@@ -70,7 +107,7 @@ const DrawerNavigation = () => {
                  }}
             />
 
-            <Drawer.Screen 
+            {/* <Drawer.Screen 
                 name="Settings" 
                 component={BottomTabNavigation} 
                 options={{
@@ -82,7 +119,7 @@ const DrawerNavigation = () => {
                         </View>
                     ),
                  }}
-            />
+            /> */}
 
             <Drawer.Screen 
                 name="Create User" 
@@ -99,15 +136,15 @@ const DrawerNavigation = () => {
             />
 
             <Drawer.Screen 
-                name="Create Course" 
-                component={CreateCourseScreen} 
+                name="Manage User" 
+                component={UserManagementScreen} 
                 options={{
-                    title: 'Create Course',
+                    title: 'Manage User',
                     drawerIcon: ({focused, size}) => (
                         <View style = {styles.iconContainer}>
                             <Image
                             style = {styles.iconStyling}
-                            source={require('../../assets/icons/course.png')}/>
+                            source={require('../../assets/icons/manage_user.png')}/>
                         </View>
                     ),
                  }}
@@ -122,6 +159,21 @@ const DrawerNavigation = () => {
                         <View style = {styles.iconContainer}>
                             <Image
                             source={require('../../assets/icons/create_batch.png')}/>
+                        </View>
+                    ),
+                 }}
+            />
+
+            <Drawer.Screen 
+                name="Create Course" 
+                component={CreateCourseScreen} 
+                options={{
+                    title: 'Create Course',
+                    drawerIcon: ({focused, size}) => (
+                        <View style = {styles.iconContainer}>
+                            <Image
+                            style = {styles.iconStyling}
+                            source={require('../../assets/icons/course.png')}/>
                         </View>
                     ),
                  }}
@@ -143,18 +195,21 @@ const DrawerNavigation = () => {
             
             <Drawer.Screen 
                 name="Log out" 
-                component={TraineeProfileScreen} 
+                component={() => {
+                    useEffect(() => {
+                        handleLogout();
+                    }, []);
+                    return null;
+                 }}
                 options={{
                     title: 'Log out',
-                    drawerIcon: ({focused, size}) => (
-                        <View style = {styles.iconContainer}>
-                            <Image
-                            source={require('../../assets/icons/sign_out.png')}/>
+                    drawerIcon: ({ focused, size }) => (
+                        <View style={styles.iconContainer}>
+                            <Image source={require('../../assets/icons/sign_out.png')} />
                         </View>
                     ),
-                 }}
+                }}
             />
-            
         </Drawer.Navigator>
     );
 }
