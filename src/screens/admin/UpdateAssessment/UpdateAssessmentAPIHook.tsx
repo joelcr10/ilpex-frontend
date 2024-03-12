@@ -52,7 +52,7 @@ const UpdateAssessmentAPIHook=async(batch_id : number,assessment_id : number,use
         }catch(error: any){
             console.log('Error while updating assessment', error);
     
-            errorMessage = error.message;
+            errorMessage = error.response.data.error;
         }
     
         return {success, statusCode, responseData, errorMessage};

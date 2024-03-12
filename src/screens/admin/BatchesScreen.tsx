@@ -35,7 +35,6 @@ const BatchesScreen = ()=>{
                     if(responseData){
                         setBatchesList(responseData);
                         setLoading(true); 
-                        console.log("->>>>>>>>>>");
                         console.log('allBatchesList',allBatchesList);
                 }
                 }
@@ -64,11 +63,13 @@ const BatchesScreen = ()=>{
                             showsVerticalScrollIndicator={false}
                             horizontal={false}
                             data={allBatchesList.batches}
-                            renderItem={({ item }) => <BatchCard batch_name={item.batch_name} 
-                                                                 traineeNo={item.noOfTrainees}
-                                                                 date={item.start_date} 
-                                                                 progress={parseInt(item.progress)} 
-                                                                 onPressFunc={()=>onPressBatchCard(item.batch_id)}/>}
+                            renderItem={({ item }) => <BatchCard 
+                                batch_name={item.batch_name} 
+                                traineeNo={item.noOfTrainees}
+                                date={item.start_date} 
+                                totalDays={'22'}
+                                progressDays={(item.progress).toString} 
+                                onPressFunc={()=>onPressBatchCard(item.batch_id)}/>}
                             keyExtractor={item => item.id}
                         />
                     ):(
@@ -80,9 +81,9 @@ const BatchesScreen = ()=>{
                        <BatchCardShimmer isLoading></BatchCardShimmer>
                     </View>
                     )}
-                    <View style={styles.createButton}>
+                    {/* <View style={styles.createButton}>
                         <CreateButton onPress={onPressButton}></CreateButton>
-                    </View>
+                    </View> */}
                 </View>
             </View>
         </View>

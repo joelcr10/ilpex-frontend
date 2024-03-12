@@ -141,11 +141,9 @@ const AssessmentDisplay = () => {
   const user_id = useSelector((state: any) => state.userDetailsReducer.user_id);
   const [isLoading, setLoading] = useState(false);
 
-
   useEffect(() => {
     const getAssessments = async () => {
       try {
-
         const { responseData } = await getHook(
           `/api/v3/${user_id}/assessment`,
         );
@@ -153,33 +151,47 @@ const AssessmentDisplay = () => {
           setLoading(true);
         }
         setAssessmentList(responseData);
-
       } catch (error) {
         console.error('Error:', error);
       }
     };
     getAssessments();
   }, []);
+
   return (
     <View>
-      {(!isLoading) ?
-        (<View>
-          < ShimmerAssessmentCard></ShimmerAssessmentCard>
-          < ShimmerAssessmentCard></ShimmerAssessmentCard>
-        </View>) :
-        (
-          <FlatList
-            scrollEnabled={false}
-            showsHorizontalScrollIndicator={false}
-            horizontal={false}
-            data={assessmentList.assessments}
-            renderItem={({ item }) => <AssessmentCard assessment_id={item.assessment_id} batchName={assessmentList.Batch} assessmentName={item.assessment_name} dueDate={item.end_date} status={true} />}
-            keyExtractor={item => item.id}
-          />)
-      }
+      {!isLoading ? (
+        <View>
+          <ShimmerAssessmentCard />
+          <ShimmerAssessmentCard />
+        </View>
+      ) : (
+        <View>
+          {!assessmentList || !assessmentList.assessments || assessmentList.assessments.length === 0 ? (
+            <Text style={styles.noAssessmentsText}>You have no assessments</Text>
+          ) : (
+            <FlatList
+              scrollEnabled={false}
+              showsHorizontalScrollIndicator={false}
+              horizontal={false}
+              data={assessmentList.assessments}
+              renderItem={({ item }) => (
+                <AssessmentCard
+                  assessment_id={item.assessment_id}
+                  batchName={assessmentList.Batch}
+                  assessmentName={item.assessment_name}
+                  dueDate={item.end_date}
+                  status={true}
+                />
+              )}
+              keyExtractor={(item) => item.id}
+            />
+          )}
+        </View>
+      )}
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   homeContainer: {
@@ -191,6 +203,10 @@ const styles = StyleSheet.create({
     margin: 30,
     display: 'flex',
     flexDirection: 'row'
+  },
+  noAssessmentsText:{
+    color:'black',
+    textAlign:'center',
   },
 
   whiteText: {
