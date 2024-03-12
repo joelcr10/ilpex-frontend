@@ -4,6 +4,7 @@ import TraineeCard from "../../components/TraineeCard";
 import TraineeCardShimmer from "../../components/loading/TraineeCardShimmer";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { getHook } from "../../network/getHook/getHook";
+import DrawerNavigationHamburger from "../../components/DrawerNavigationHamburger";
 
 const TraineeScreen = () => {
 
@@ -45,6 +46,7 @@ const TraineeScreen = () => {
         showsVerticalScrollIndicator={false} 
         >
             <View style = {styles.pageContainer}>
+                <DrawerNavigationHamburger/>
                 <Text style={styles.containerHeading}>Trainees</Text>
                 <View style = {styles.innerContainer}>
                     <View style={styles.searchBarContainer}>
