@@ -10,7 +10,7 @@ interface Response{
     statusCode: string;
     responseData: responseType;
 }
-const UpdateAssessmentAPIHook=async(batch_id : number,assessment_name : string,user_id : string | null,start_date : Date | undefined,end_date : Date) : Promise<Response>=>{
+const UpdateAssessmentAPIHook=async(batch_id : number,assessment_id : number,user_id : string | null,start_date : Date | undefined,end_date : Date) : Promise<Response>=>{
     let success: boolean = false;
     let errorMessage: string = '';
     let statusCode: string = '';
@@ -25,14 +25,13 @@ const UpdateAssessmentAPIHook=async(batch_id : number,assessment_name : string,u
         const authorization =  {
             headers: {
               'Authorization': 'Bearer ' + token,
-              'Content-Type': 'multipart/form-data',
             }
         }
         const url = '/api/v2/assessment';
     
         const payload = {
             batch_id: batch_id,
-            assessment_name: assessment_name,
+            assessment_id: assessment_id,
             user_id: user_id,
             start_date : start_date,
             end_date : end_date
@@ -44,7 +43,7 @@ const UpdateAssessmentAPIHook=async(batch_id : number,assessment_name : string,u
                 console.log(updateAssessmentResponse);
             statusCode = updateAssessmentResponse.status.toString();
             {
-                statusCode === '200' ? (success = true) : (success = false);
+                statusCode === '200' || '202' ? (success = true) : (success = false);
             }
     
             responseData = updateAssessmentResponse.data;

@@ -177,7 +177,6 @@ const CreateAssessmentScreen = ()=>{
             setStartDate(today);
             setEndDate(today);
             setSelectedFile(null);
-            setIsLoading(false);
         }
         }
         }

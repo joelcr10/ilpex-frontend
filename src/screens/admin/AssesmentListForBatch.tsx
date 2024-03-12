@@ -18,29 +18,27 @@ import AssesmentListCard from "../../components/AssesmentListCard";
 const AssesmentListScreen = ()=>{
     const navigation : any= useNavigation();
     const [assesmentList,setAssesmentList] = useState<any>([]);
-    let assessList : any = [];
+
     const [isLoading,setLoading] = useState(false);
-    const onPressBatchCard=()=>{
-        navigation.navigate("BatchDetails");
+   
+    const onPressButton=(assessment_id:any,assessment_name:any)=>{
+        console.log('hello')
+        navigation.navigate("updateAssesments",{assessment_id:assessment_id,assessment_name:assessment_name});
     }
+
     useEffect(()=>{
         const getBatches = async()=>{
             try{
-                const { success,statusCode,responseData,errorMessage} = await getHook('/api/v2/assessment?offset:3&sortOrder:-1&sortBy:"assessment_name"');
-                console.log('this is response',responseData)
+                
+                const { success,statusCode,responseData,errorMessage} = await getHook('/api/v2/assessment');
                 if(success){
                     if(responseData){
-                        setAssesmentList(responseData.assessments);
-                        assessList = responseData.assessments;
-                        console.log("assess list: ",assessList);
+                        setAssesmentList(responseData);
+                        console.log('this is data',responseData)
+                        // assessList = responseData.assessments;
                         setLoading(true); 
-                        console.log(assesmentList);
-                        console.log(assesmentList.assessment_name)
+                     }
                 }
-                }
-
-                // const tid = await getItem(Constants.TRAINEE_ID);
-                // console.log("tid: ",tid);
             }
             catch(err){
                 console.error('Error', err);
@@ -51,19 +49,16 @@ const AssesmentListScreen = ()=>{
     return(
         <View style={styles.container}>
             <ThreeDots color='white'></ThreeDots>
-            <Text style = {styles.text}>Assesments </Text>
+            <Text style = {styles.text}>Assesments</Text>
             <View style={styles.box}>
                 <View style = {styles.dataContainer}>
                 
                     {isLoading? (
-                       
-
-                        <FlatList
+                       <FlatList
+                            showsVerticalScrollIndicator={false}
                             data={assesmentList}
-                            renderItem = {({item}) => <AssesmentListCard assessment_name={item.assessment_name} />}
+                            renderItem = {({item}) => <AssesmentListCard assessment_name={item.assessment_name} onPressButton={()=>onPressButton(item.assessment_id,item.assessment_name)}/>}
                         />
-                        
-                        
                     ):(
                     <View>
                        <BatchCardShimmer isLoading></BatchCardShimmer>
@@ -71,6 +66,7 @@ const AssesmentListScreen = ()=>{
                        <BatchCardShimmer isLoading></BatchCardShimmer>
                     </View>
                     )}
+
                     <View style={styles.createButton}>
                         {/* <CreateButton onPress={onPressButton}></CreateButton> */}
                     </View>
