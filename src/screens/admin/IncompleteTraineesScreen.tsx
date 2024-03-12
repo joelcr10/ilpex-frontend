@@ -18,7 +18,6 @@ const IncompleteTraineesScreen = () => {
   const batch = route.params.batch;
 
   const TraineesDisplay = () => {
-    const trainee_id = useSelector((state: any) => state.userDetailsReducer.trainee_id);
     const [traineeList, setTraineeList] = useState<any>([]);
 
     const sendMailToTrainees = async () => {
@@ -40,10 +39,7 @@ const IncompleteTraineesScreen = () => {
       sendMailToTrainees();
     };
 
-
-
-
-    useEffect(() => {
+ useEffect(() => {
       const getDayCards = async () => {
         try {
           const { responseData } = await getHook(
@@ -65,6 +61,7 @@ const IncompleteTraineesScreen = () => {
 
 
     }, []);
+
     return (
       <ScrollView>
         { (!isLoading)?(<View><TraineeCardShimmer></TraineeCardShimmer></View>):
@@ -93,11 +90,7 @@ const IncompleteTraineesScreen = () => {
     );
   }
 
-
-
-
-
-  return (
+return (
     <View>
       <ScrollView>
         <View style={styles.pageContainer}>
