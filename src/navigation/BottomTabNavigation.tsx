@@ -47,7 +47,7 @@ const BottomTabNavigation = () =>{
                     headerShown: false,
                     tabBarIcon: ({color}) =>{
                         return(
-                            <Icon name="report" size={30} color={color}/>
+                            <Icon name="edit" size={30} color={color}/>
                         )
                     }
                 }}

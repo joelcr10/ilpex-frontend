@@ -34,7 +34,7 @@ const AssesmentListScreen = ()=>{
                 console.log(success,statusCode,responseData.assessments[0].assessment_name);
                 if(success){
                     if(responseData){
-                        setAssesmentList(responseData.assessments);
+                        setAssesmentList(responseData);
                         assessList = responseData.assessments;
                         console.log("assess list: ",assessList);
                         setLoading(true); 

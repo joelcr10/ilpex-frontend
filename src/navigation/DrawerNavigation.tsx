@@ -16,7 +16,6 @@ import { userDetails } from "../context/userDetailsSlice";
 import { userLogin } from "../context/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import UserManagementScreen from '../screens/admin/UserManagementScreen';
-import BatchesScreen from '../screens/admin/BatchesScreen';
 import { getHook } from '../network/getHook/getHook';
 import { userNames } from '../context/userNameSlice';
 
@@ -25,8 +24,7 @@ const CustomDrawerContent : any = (props : any) => {
     return (
       <DrawerContentScrollView {...props}>
         <View style={styles.drawerHeader}>
-            {/* <UserName></UserName> */}
-          {/* <Text style={styles.caption}>Jordan S Ben</Text> */}
+          <Text style={styles.caption}>Jordan S Ben</Text>
         </View>
         <DrawerItemList {...props} />
       </DrawerContentScrollView>
@@ -37,17 +35,9 @@ const CustomDrawerContent : any = (props : any) => {
 
 const DrawerNavigation = () => {
 
-    // const user_name = useSelector((state: any) => state.userNameReducer.user_name);
-    // console.log("USERNAME : ", user_name);
     const Drawer = createDrawerNavigator();
     const dispatch = useDispatch();
-    
-    const getName = async () => {
-        // const user_name = await useSelector((state: any) => state.userNameReducer.user_name);
-        console.log("USERNAMEEEEEEEEEE------->", user_name)
-    }
 
-    getName();
     const handleLogout = () => {
         setStringItem(Constants.IS_LOGIN, 'false');
         setStringItem(Constants.ROLE_ID, '' );
