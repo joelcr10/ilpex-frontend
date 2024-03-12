@@ -10,7 +10,7 @@ const ChartPie = (props:chart) => {
   const{chartName,excellent,good,poor,option1,option2,option3,incomplete} =props;
   const widthAndHeight = 200
   const series = [excellent,good,poor];
-  const sliceColor = [ '#A93AFF', '#4C0088','#1B0030'];
+  const sliceColor = [ '#29A662', '#FFA600','#D3583D'];
   if(excellent==0 && good==0 && poor==0){
     return(
       <ScrollView style={styles.scrollContainer}>
@@ -139,19 +139,19 @@ const styles = StyleSheet.create({
       margin:20
   },
   percentage1:{
-    backgroundColor:'#A93AFF',
+    backgroundColor:'#29A662',
     height:20,
     width:20,
     borderRadius:50
   },
   percentage2:{
-    backgroundColor:'#4C0088',
+    backgroundColor:'#FFA600',
     height:20,
     width:20,
     borderRadius:50
   },
   percentage3:{
-    backgroundColor:'#1B0030',
+    backgroundColor:'#D3583D',
     height:20,
     width:20,
     borderRadius:50
