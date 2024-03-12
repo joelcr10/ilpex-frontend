@@ -1,4 +1,4 @@
-import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Dimensions, FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useEffect, useState } from "react";
 import CourseCard from "../../components/CourseCard";
 import { useRoute } from "@react-navigation/native";
@@ -53,8 +53,9 @@ const TraineeDayScreen=()=>{
         getAssessment();
         }, []);
 
+
+
     return(
-        <ScrollView>
         <View>
             <View style={{backgroundColor:ilpex.main}}>
                 <BackButton color='white'/>
@@ -70,23 +71,20 @@ const TraineeDayScreen=()=>{
                     }
                     {!isLoading &&
                     
-                    <View>
+                    <View style={{height:Dimensions.get('window').height}}>
                     <FlatList
-                        // horizontal={false}
-                        scrollEnabled={false}
                         showsVerticalScrollIndicator={false}
                         data={courselist.message}
                         renderItem={({item})=><CourseCard name={item.course_name} duration={item.course_duration} status={item.status}/>}
                         keyExtractor={item=>item.course_id}
                     />
                 </View>
-                // </ScrollView>
                     }
                 </View>
                 <ThreeDots color='white'/>
             </View>
         </View>
-        </ScrollView>
+        // </ScrollView>
     )
 }
 

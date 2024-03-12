@@ -6,9 +6,9 @@ import ilpex from "../utils/ilpexUI";
 import CircularProgress from "./CircularProgress";
 import { useNavigation } from "@react-navigation/native";
 
-type BatchComponentProps = {batch_name : string, traineeNo : string, date : string,progress : number,onPressFunc:()=>void};
+type BatchComponentProps = {batch_name : string, traineeNo : string, date : string,totalDays : string,progressDays : string,onPressFunc:()=>void};
 
-const BatchCard=({batch_name,traineeNo,date,progress,onPressFunc} : BatchComponentProps)=>{
+const BatchCard=({batch_name,traineeNo,date,totalDays,progressDays,onPressFunc} : BatchComponentProps)=>{
     const navigation : any= useNavigation();
     const buttonPress = (batch_id:number)=>{
         navigation.navigate("BatchDetails", {
@@ -57,7 +57,9 @@ const BatchCard=({batch_name,traineeNo,date,progress,onPressFunc} : BatchCompone
                     <Text style={styles.date}>{formattedDate}</Text>
                 </View>
                 <View style={styles.circularProgress}>
-                    <CircularProgress completeStatus={progress} color={ilpex.main}></CircularProgress>
+                    <Text>Day</Text>
+                    <Text>{progressDays}/{totalDays}</Text>
+                    {/* <CircularProgress completeStatus={progress} color={ilpex.main}></CircularProgress> */}
                 </View>
             </View>
         </TouchableOpacity>

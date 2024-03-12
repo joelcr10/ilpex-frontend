@@ -15,7 +15,9 @@ import { createAssessmentAPI } from "./createAssessmentHook";
 import BackButton from "../../../components/BackButton";
 import DocumentPicker from 'react-native-document-picker';
 import FileUploadField from "../../../components/FileUploadField";
-
+import DisabledBigButton from "../../../components/DisabledBigButton";
+import ToastDemo from "../../../components/ToastComponent";
+import ConfirmationModal from "../../../components/ConfirmationModal";
 
 const CreateAssessmentScreen = ()=>{
     const [assessmentName,setAssessementName] = useState('');
@@ -28,6 +30,11 @@ const CreateAssessmentScreen = ()=>{
     const [missingAssessmentName,setMissingAssessmentName] = useState('');
     const [missingBatchName,setMissingBatchName] = useState('');
     const [selectedFile, setSelectedFile] = useState<any | null>(null);
+    const [success, setSuccess] = useState(false);
+    const [failure,setFailure] = useState(false);
+    const [errorText, setError] = useState('');
+    const [isloading, setIsLoading] = useState(false);
+
     const handleOpen=()=>{
         setIsVisible(true);
     }
@@ -77,11 +84,13 @@ const CreateAssessmentScreen = ()=>{
                         setBatchesName(responseData.batches.map((batch: { batch_id: number; batch_name: string; }) => ({
                             label: batch.batch_name,
                             value: batch.batch_name 
-                          })));
-                        // setLoading(true); 
-                        console.log("->>>>>>>>>>");
+                          }))); 
                         console.log('allBatches',allBatchesName);
-                }
+                    }
+                    else
+                    {
+                        setFailure(true);
+                    }
                 }
                 const tid = await getItem(Constants.TRAINEE_ID);
                 console.log("tid: ",tid);
@@ -132,6 +141,7 @@ const CreateAssessmentScreen = ()=>{
     const end_date = getBatchEndDate(selectedBatch);
     const createAssessment=async ()=>{
         try{
+            setIsLoading(true);
             const user_id = await getItem(Constants.USER_ID);
             console.log('user_id', user_id)
             const formData = new FormData();
@@ -142,11 +152,30 @@ const CreateAssessmentScreen = ()=>{
             formData.append('end_date', endDate.toISOString());
             formData.append('file', selectedFile);
         handleInputs();
-        if(missingAssessmentName==null){
+        if(missingAssessmentName==''){
         console.log("Form Data is-------> ", formData);
-        const {success, responseData} = await createAssessmentAPI(formData);
+        const {success, responseData, statusCode,errorMessage} = await createAssessmentAPI(formData);
         if(success){
             console.log(responseData);
+            setBatch('');
+            setAssessementName('');
+            setStartDate(today);
+            setEndDate(today);
+            setSelectedFile(null);
+            setIsLoading(false);
+            setSuccess(true);
+        }
+        else{
+            console.log(errorMessage);
+            setError(errorMessage);
+            console.log(errorText);
+            setFailure(true);
+            setIsLoading(false);
+            setBatch('');
+            setAssessementName('');
+            setStartDate(today);
+            setEndDate(today);
+            setSelectedFile(null);
         }
         }
         }
@@ -157,28 +186,36 @@ const CreateAssessmentScreen = ()=>{
  return (
     <View style={styles.container}>
         <BackButton color={"white"}></BackButton>
-            <Text style={styles.text}>Create Assessment</Text>
-            <View style={styles.box}>
-                <View style={styles.dataContainer}>
-                    <View style={{
+        <Text style={styles.text}>Create Assessment</Text>
+        <View style={styles.box}>
+            <View style={styles.dataContainer}>
+                <View style={{
                         margin:'3%'
                     }}>
                     <InputField label={"Assessment name"} isPassword={false} value={assessmentName} onChangeText={setAssessementName} ></InputField>
                     {missingAssessmentName!=='' ? <Text style={styles.errorText}>{missingAssessmentName}</Text> : null}
-                     <DropdownComponent placeholder="Select Batch" data={allBatchesName} setBatch={setBatch}></DropdownComponent>
-                     {missingBatchName!=='' ? <Text style={styles.errorText}>{missingBatchName}</Text> : null}
-                     </View>
-                     <View style= {styles.dateSelector}>
-                        <DateSelector startDate={startDate} endDate={endDate} onPress={handleOpen}></DateSelector>
-                    </View>
-                    <CalenderModal minDate={start_date} maxDate={end_date} isVisible={isVisible}  setStartDate={setStartDate} setEndDate={setEndDate} closeModal={handleClose}></CalenderModal>
-                    <View style = {styles.fileUploadContainer}>
-                    <FileUploadField onSelect={pickDocument} selectedFile={selectedFile}/>
-                        <Button name={'Create Assessment'} onPress={createAssessment} buttonPressed={false}></Button>
-                    </View>
-                    <Text></Text>
+                    <DropdownComponent placeholder="Select Batch" data={allBatchesName} setBatch={setBatch}></DropdownComponent>
+                    {missingBatchName!=='' ? <Text style={styles.errorText}>{missingBatchName}</Text> : null}
                 </View>
+                <View style= {styles.dateSelector}>
+                    <DateSelector startDate={startDate} endDate={endDate} onPress={handleOpen}></DateSelector>
+                </View>
+                <CalenderModal minDate={start_date} maxDate={end_date} isVisible={isVisible}  setStartDate={setStartDate} setEndDate={setEndDate} closeModal={handleClose}></CalenderModal>
+                <View style = {styles.fileUploadContainer}>
+                    <FileUploadField onSelect={pickDocument} selectedFile={selectedFile}/>
+                    {(assessmentName === '' || startDate === null || endDate === null || selectedFile === null)? (
+                    <DisabledBigButton name="Create Assessment"/>
+                    ) : (
+                    <View>
+                    <Button name="Create Assessment" onPress={createAssessment} buttonPressed={isloading} /> 
+                    </View>
+                    )
+                    }
+                </View>
+                {success && <ConfirmationModal success={true} message={"Assessment created successfully"}></ConfirmationModal>}
+                {failure && <ToastDemo BgColor={ilpex.failure} message={errorText} textColor={ilpex.white}></ToastDemo>}
             </View>
+        </View>
     </View>
  )
 }

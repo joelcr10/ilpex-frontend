@@ -34,6 +34,7 @@ const AssesmentListScreen = ()=>{
                 if(success){
                     if(responseData){
                         setAssesmentList(responseData.assessments);
+                        console.log('this is data',responseData)
                         // assessList = responseData.assessments;
                         setLoading(true); 
                      }
@@ -48,12 +49,13 @@ const AssesmentListScreen = ()=>{
     return(
         <View style={styles.container}>
             <ThreeDots color='white'></ThreeDots>
-            <Text style = {styles.text}>Assesment </Text>
+            <Text style = {styles.text}>Assesments</Text>
             <View style={styles.box}>
                 <View style = {styles.dataContainer}>
                 
                     {isLoading? (
                        <FlatList
+                            showsVerticalScrollIndicator={false}
                             data={assesmentList}
                             renderItem = {({item}) => <AssesmentListCard assessment_name={item.assessment_name} onPressButton={()=>onPressButton(item.assessment_id,item.assessment_name)}/>}
                         />
@@ -66,7 +68,7 @@ const AssesmentListScreen = ()=>{
                     )}
 
                     <View style={styles.createButton}>
-                        <CreateButton onPress={onPressButton}></CreateButton>
+                        {/* <CreateButton onPress={onPressButton}></CreateButton> */}
                     </View>
                 </View>
             </View>
