@@ -5,20 +5,20 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import { useNavigation } from "@react-navigation/native";
 
 
-type PropsType = {traineeName : string,trainee_id:number};
+type PropsType = {traineeName : string,user_id:number};
 
-const TraineeNameCard = ({traineeName,trainee_id}:PropsType )=> {
+const TraineeNameCard = ({traineeName,user_id}:PropsType )=> {
 
     const navigation: any = useNavigation();
     const goToTrainee = (id: number) =>{
-        navigation.navigate("TraineeProfile",{id});
+        navigation.navigate("ManageTrainee",{user_id});
   }
 
 
     return(
         <View style={styles.container}>
           <Text style={styles.nameText}>{traineeName}</Text>
-            <TouchableOpacity onPress={()=>goToTrainee(trainee_id)}>
+            <TouchableOpacity onPress={()=>goToTrainee(user_id)}>
                 <Icon name='settings' color={ilpex.white} size={28}/>
             </TouchableOpacity>
           

@@ -8,7 +8,7 @@ import CreateAssessment from "../screens/admin/CreateAssessment/CreateAssessment
 import UserManagementScreen from '../screens/admin/UserManagementScreen';
 import IncompleteTraineesScreen from "../screens/admin/IncompleteTraineesScreen";
 import UpdateAssessmentScreen from "../screens/admin/UpdateAssessment/UpdateAssessmentScreen";
-
+import AssesmentListScreen from "../screens/admin/AssesmentListForBatch";
 const BottomTab = createBottomTabNavigator();
 
 const BottomTabNavigation = () =>{
@@ -45,9 +45,22 @@ const BottomTabNavigation = () =>{
                     }
                 }}
             /> 
-            <BottomTab.Screen
+            {/* <BottomTab.Screen
                 name = "Profile"
                 component = {TraineeProfile}
+                options={{
+                    headerShown: false,
+                    tabBarIcon: ({color}) =>{
+                        return(
+                            <Icon name="users" size={30} color={color}/>
+                        )
+                    }
+                }}
+            /> */}
+
+            <BottomTab.Screen
+                name = "Assesments"
+                component = {AssesmentListScreen}
                 options={{
                     headerShown: false,
                     tabBarIcon: ({color}) =>{
@@ -69,7 +82,7 @@ const BottomTabNavigation = () =>{
                     }
                 }}
             />
-            <BottomTab.Screen
+            {/* <BottomTab.Screen
                 name = "Incomplete"
                 component = {IncompleteTraineesScreen}
                 options={{
@@ -80,7 +93,7 @@ const BottomTabNavigation = () =>{
                         )
                     }
                 }}
-            />
+            /> */}
                <BottomTab.Screen 
                 name="ManageUser"
                 component={UserManagementScreen}   
