@@ -6,7 +6,7 @@ import ilpex from "../utils/ilpexUI";
 import CircularProgress from "./CircularProgress";
 import { useNavigation } from "@react-navigation/native";
 
-type BatchComponentProps = {batch_name : string, traineeNo : string, date : string,totalDays : string,progressDays : string,onPressFunc:()=>void};
+type BatchComponentProps = {batch_name : string, traineeNo : string, date : string,totalDays : string,progressDays : any,onPressFunc:()=>void};
 
 const BatchCard=({batch_name,traineeNo,date,totalDays,progressDays,onPressFunc} : BatchComponentProps)=>{
     const navigation : any= useNavigation();
@@ -56,10 +56,12 @@ const BatchCard=({batch_name,traineeNo,date,totalDays,progressDays,onPressFunc} 
                     </View>
                     <Text style={styles.date}>{formattedDate}</Text>
                 </View>
-                <View style={styles.circularProgress}>
-                    <Text>Day</Text>
-                    <Text>{progressDays}/{totalDays}</Text>
+                <View style={styles.dayContainer}>
+                    <View style={styles.dayTextContainer}>
+                    <Text style={styles.dayText}>Day</Text>
+                    <Text style={styles.dayText}>{progressDays}/{totalDays}</Text>
                     {/* <CircularProgress completeStatus={progress} color={ilpex.main}></CircularProgress> */}
+                    </View>
                 </View>
             </View>
         </TouchableOpacity>
@@ -80,7 +82,7 @@ const styles = StyleSheet.create({
     },
     dataContainer : {
         marginStart:10,
-        width : 230
+        width : 220
     },
     batch_name:{
         marginTop:10,
@@ -116,8 +118,24 @@ const styles = StyleSheet.create({
         borderRadius:5,
         alignSelf :'center'
     },
-    circularProgress : {
-        marginTop:20
+    dayContainer:{
+        marginTop:13,
+        marginEnd : 30,
+        backgroundColor:ilpex.active,
+        borderRadius:90,
+        height:80,
+        width : 80,
+        alignContent:'center',
+        alignItems:'center'
+    },
+    dayTextContainer : {
+        marginTop:10
+    },
+    dayText : {
+        color : ilpex.white,
+        fontFamily:ilpex.fontSemiBold,
+        textAlign:'center',
+        fontSize:17
     }
 })
 

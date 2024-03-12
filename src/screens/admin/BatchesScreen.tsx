@@ -5,18 +5,19 @@ import { Text } from "react-native";
 import { FlatList } from "react-native";
 import BatchCard from "../../components/BatchCard";
 import ilpex from "../../utils/ilpexUI";
-import ThreeDots from "../../components/ThreeDots";
 import { getHook } from "../../network/getHook/getHook";
 import CreateButton from "../../components/CreateButton";
 import { useNavigation } from "@react-navigation/native";
 import BatchCardShimmer from "../../components/loading/BatchCardShimmer";
 import { getItem } from "../../utils/utils";
 import Constants from "../../utils/Constants";
+
 const BatchesScreen = ()=>{
     
     const navigation = useNavigation();
     const [allBatchesList,setBatchesList] = useState<any>([]);
     const [isLoading,setLoading] = useState(false);
+    const [currentDay,setCurrentDay] = useState<any>([]);
 
     const onPressBatchCard=(batch_id:any)=>{
         navigation.navigate("BatchDetails",{batch_id:batch_id});
@@ -25,7 +26,8 @@ const BatchesScreen = ()=>{
     const onPressButton=()=>{
         console.log("Button pressed");
     }
-
+    const today = new Date();
+    const todayString = today.toISOString().substring(0, 10);
     useEffect(()=>{
         const getBatches = async()=>{
             try{
@@ -48,6 +50,31 @@ const BatchesScreen = ()=>{
         }
         getBatches();
     },[]);
+
+    useEffect(() => {
+        const getDay = async () => {
+            for (const batch of allBatchesList.batches) {
+                const { responseData, errorMessage, success } = await getHook(`/api/v3/batch/${batch.batch_id}/day/${todayString}`);
+                console.log("Today : -------------------------------------------->>>>>>>>>>>>>>>", todayString);
+                console.log(batch.batch_id);
+                if (success) {
+                    if (responseData) {
+                        console.log(responseData);
+                        setCurrentDay((prevState: any) => ({
+                            ...prevState,
+                            [batch.batch_id]: responseData.current_day,
+                        }));
+                    }
+                } else {
+                    console.log("failure");
+                }
+            }
+        };
+        if (allBatchesList.batches) {
+            getDay();
+        }
+    }, [allBatchesList]);
+    
     return(
         <View style={styles.container}>
             <Text style = {styles.text}>Batches</Text>
@@ -68,7 +95,7 @@ const BatchesScreen = ()=>{
                                 traineeNo={item.noOfTrainees}
                                 date={item.start_date} 
                                 totalDays={'22'}
-                                progressDays={(item.progress).toString} 
+                                progressDays={currentDay[item.batch_id]} 
                                 onPressFunc={()=>onPressBatchCard(item.batch_id)}/>}
                             keyExtractor={item => item.id}
                         />
