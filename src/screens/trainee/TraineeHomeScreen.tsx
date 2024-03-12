@@ -15,6 +15,7 @@ import { userNames } from "../../context/userNameSlice";
 const TraineeHomeScreen = () => {
   const user_id = useSelector((state: any) => state.userDetailsReducer.user_id);
 
+
   useEffect(() => {
     const percipioReport = async () => {
       const { success, responseData } = await percipioReportAPI(Number(user_id));
@@ -199,7 +200,6 @@ const styles = StyleSheet.create({
     fontFamily: ilpex.fontMedium,
 
   },
-
   textSize: {
     color: ilpex.white,
     fontFamily: ilpex.fontSemiBold,

@@ -64,6 +64,10 @@ const LoginScreen = () => {
           const trainee_id = await getItem(Constants.TRAINEE_ID);
           console.log('trainee id is',trainee_id);
 
+          setStringItem(Constants.USER_NAME,loginResp.user_name);
+          const user_name = await getItem(Constants.USER_NAME);
+          console.log('trainee id is',user_name);
+
           
            const userTokenString = await getItem(Constants.TOKEN)
            console.log(`token as string`,userTokenString);

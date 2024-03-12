@@ -53,6 +53,7 @@ const CreateCourseScreen = () => {
                 setSuccess(true);
                 console.log("statusCode - ", statusCode);
                 console.log("Success - ", success);
+                setSelectedFile(null);
             }
             else
             {

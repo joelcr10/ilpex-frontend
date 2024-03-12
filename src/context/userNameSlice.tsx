@@ -12,10 +12,9 @@ export const userNameSlice = createSlice({
   name: 'userName',
   initialState,
   reducers: {
-    userNames(state: UserNameState, action: PayloadAction<UserNameState>) {
+    userNames(state: UserNameState, action: PayloadAction<string>) {
 
-      state.user_name=action.payload.user_name;
-
+      state.user_name=action.payload;
     },
   },
 });
