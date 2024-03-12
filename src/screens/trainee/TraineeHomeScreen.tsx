@@ -14,7 +14,7 @@ import { userNames } from "../../context/userNameSlice";
 
 const TraineeHomeScreen = () => {
   const user_id = useSelector((state: any) => state.userDetailsReducer.user_id);
-  
+
 
   useEffect(() => {
     const percipioReport = async () => {
@@ -199,13 +199,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontFamily: ilpex.fontMedium,
 
-  },  textSize: {
-    color: ilpex.white,
-    fontFamily: ilpex.fontSemiBold,
-    fontSize: 30,
-    marginTop: -8
   },
-
   textSize: {
     color: ilpex.white,
     fontFamily: ilpex.fontSemiBold,

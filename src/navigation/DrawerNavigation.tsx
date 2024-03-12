@@ -20,11 +20,14 @@ import { getHook } from '../network/getHook/getHook';
 import { userNames } from '../context/userNameSlice';
 
 const CustomDrawerContent : any = (props : any) => {
+
+    const user_name = useSelector((state: any) => state.userDetailsReducer.user_name);
+
     
     return (
       <DrawerContentScrollView {...props}>
         <View style={styles.drawerHeader}>
-          <Text style={styles.caption}>Jordan S Ben</Text>
+          <Text style={styles.caption}>{user_name}</Text>
         </View>
         <DrawerItemList {...props} />
       </DrawerContentScrollView>
@@ -44,10 +47,11 @@ const DrawerNavigation = () => {
         setStringItem(Constants.TRAINEE_ID, '');
         setStringItem(Constants.USER_ID,'');
         dispatch(userDetails({
-            token : '',
+            token: '',
             user_id: '',
             role_id: '',
-            trainee_id:'',
+            trainee_id: '',
+            user_name: ''
         }));
         dispatch(userLogin(false));
     }
