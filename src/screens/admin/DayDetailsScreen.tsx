@@ -67,7 +67,6 @@ return(
         <ScrollView>
         <View style={styles.container1}>
           <BackButton color = 'white'/>
-          <ThreeDots color = 'white'></ThreeDots>
             <View style ={styles.textData}>
             <Text style={styles.text}>Day</Text>
             </View>

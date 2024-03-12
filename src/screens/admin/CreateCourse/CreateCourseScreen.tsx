@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import TopBlackHeading from "../../components/TopBlackHeading";
+import TopBlackHeading from "../../../components/TopBlackHeading";
 import Modal from "react-native-modal";
-import ilpex from "../../utils/ilpexUI";
+import ilpex from "../../../utils/ilpexUI";
 import DocumentPicker from 'react-native-document-picker';
-import { getItem } from "../../utils/utils";
-import Constants from "../../utils/Constants";
+import { getItem } from "../../../utils/utils";
+import Constants from "../../../utils/Constants";
 import { createCourse } from "./CreateCourseHook";
-import FileUploadField from "../../components/FileUploadField";
-import Button from "../../components/Button";
-import DisabledBigButton from "../../components/DisabledBigButton";
-import BackButton from "../../components/BackButton";
-import ToastDemo from "../../components/ToastComponent";
-import ConfirmationModal from "../../components/ConfirmationModal";
+import FileUploadField from "../../../components/FileUploadField";
+import Button from "../../../components/Button";
+import DisabledBigButton from "../../../components/DisabledBigButton";
+import BackButton from "../../../components/BackButton";
+import ToastDemo from "../../../components/ToastComponent";
+import ConfirmationModal from "../../../components/ConfirmationModal";
 
 const CreateCourseScreen = () => {
 

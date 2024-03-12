@@ -23,13 +23,13 @@ const CourseCard=({name,duration,status}:cardProps)=>{
                 {status&&
                 <View style={{flexDirection:'row', marginTop:'auto', padding:10}}>
                     <Icon name='done' style={[styles.icon,styles.done]}/>
-                    <Text style={[styles.status,styles.done]}>completed</Text>
+                    <Text style={[styles.status,styles.done]}>Completed</Text>
                 </View>
                 }
                 {!status&&
                 <View style={{flexDirection:'row', marginTop:'auto', padding:10}}>
                     <Icon name='close' style={[styles.icon,styles.pending]}/>
-                    <Text style={[styles.status,styles.pending]}>incomplete</Text>
+                    <Text style={[styles.status,styles.pending]}>Incomplete</Text>
                 </View>
                 }
            
