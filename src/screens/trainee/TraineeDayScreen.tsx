@@ -56,7 +56,7 @@ const TraineeDayScreen=()=>{
 
 
     return(
-        <ScrollView >
+        // <ScrollView >
         <View >
             
             <View style={{backgroundColor:ilpex.main}}>
@@ -75,7 +75,7 @@ const TraineeDayScreen=()=>{
                      
                     {!isLoading &&
                     
-                    <View style={{height:Dimensions.get('window').height}}>
+                    <View style={{height:Dimensions.get('window').height-280}}>
                     <FlatList
                         showsVerticalScrollIndicator={false}
                         
@@ -91,7 +91,7 @@ const TraineeDayScreen=()=>{
             </View>
             
         </View>
-        </ScrollView>
+        // </ScrollView>
     )
 }
 
