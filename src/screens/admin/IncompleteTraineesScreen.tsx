@@ -46,7 +46,7 @@ const IncompleteTraineesScreen = () => {
             `/api/v2/batch/${batch}/pending/day/${day}`,
           );
           if (responseData) {
-            setLoading(true);
+            
             setTraineeList(responseData);
 
           }
@@ -54,6 +54,9 @@ const IncompleteTraineesScreen = () => {
 
         } catch (error) {
           console.error('Error:', error);
+        }
+        finally{
+          setLoading(true);
         }
       };
 
@@ -95,7 +98,6 @@ return (
       <ScrollView>
         <View style={styles.pageContainer}>
           <BackButton color={"white"}></BackButton>
-          <Text style={{ color:'white',fontSize:20,textAlign:'center',position : 'absolute',top : 30, left : 25,}}>Day {day}</Text>
           <View style={styles.innerContainer}>
              <Text style={styles.incompleteText}>Incomplete</Text>
              <Text style={styles.traineeText}>Trainees</Text>
@@ -138,6 +140,7 @@ const styles = StyleSheet.create({
     paddingLeft: '10%',
     paddingRight: '10%',
     flex: 1,
+    minHeight:800
   },
   containerHeading: {
     color: 'white',
