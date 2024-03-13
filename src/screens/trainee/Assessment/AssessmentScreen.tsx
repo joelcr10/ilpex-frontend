@@ -15,6 +15,7 @@ import { useSelector } from "react-redux";
 import { Circle } from "react-native-progress";
 import CircularProgress from "../../../components/CircularProgress";
 import DisabledButton from "../../../components/DisabledButton";
+import ModalComponent from "../../../components/ResultModalComponent";
 
 type questionType = {
     question_id: number,
@@ -94,17 +95,19 @@ const AssessmentScreen = () => {
     }
 
     const updateScore = async () =>{
+
+        let testScore : number = score;
         if(selectedId===questionList[index].correct_answer){
             console.log("+++++++++++++++++++");
-            console.log(score);
+            // console.log(score);
+            // setScore(prevScore => prevScore+1);
+            // console.log(score);
+            testScore++;
             setScore(score+1);
-            console.log(score);
         }
-        console.log("marks: ",score,questionList.length);
-        const scorePercentage = (score/questionList.length)*100;
-        console.log("marks: ",scorePercentage,score,questionList.length);
-        console.log("userId",user_id, "assessment_id", assessment_id, "score",score);
-        const {success, responseData} = await updateScoreAPI(assessment_id,user_id,score);
+        const scorePercentage = (testScore/questionList.length)*100;
+        console.log(scorePercentage);
+        const {success, responseData} = await updateScoreAPI(assessment_id,user_id,scorePercentage);
         if(success){
             
             console.log(responseData);
@@ -117,7 +120,7 @@ const AssessmentScreen = () => {
     return ( 
         <View style={styles.container}>
             <View style={styles.topPartContainer}>
-                <Text style={styles.topPartText}>Assessment {score}</Text> 
+                <Text style={styles.topPartText}>Assessment</Text> 
             </View> 
             
             <View style={styles.contentContainer}>
@@ -129,15 +132,17 @@ const AssessmentScreen = () => {
                     {isLoading && <QuestionCardShimmer />}
                     {!isLoading && <View>
                             <QuestionCard questionNumber={index+1} currentQuestion={questionList[index]} selectedId={selectedId} setSelectedId={setSelectedId} />
-                            <BarProgress progress={index+1} total={questionList.length}/>
+                           
                             {invalid && !submitResult && <DisabledButton name="Submit Answer"/>}
                             {!submitResult && !invalid && <SmallButton name="Submit Answer" onPress={checkAnswer}/>}
                             {submitResult && <SmallButton name="Finish" onPress={updateScore}/>}
+
+                             <BarProgress progress={index+1} total={questionList.length}/>
                         </View>}     
                 </View>
             </View>
 
-                    <Modal
+                    {/* <Modal
                         animationType="slide"
                         transparent={true}
                         visible={showResult}
@@ -145,31 +150,18 @@ const AssessmentScreen = () => {
                         <View style = {styles.modalContainer}>
                             <View style={styles.modalContent}>
                                 <Text style={{color:'black', fontWeight: 'bold', fontSize: 20, marginBottom: 20}}>{assessment_name} Result</Text>
-                                
-                                {/* <Circle
-                                    size={100}
-                                    indeterminate={false}
-                                    progress={score/questionList.length}
-                                    borderWidth={0}
-                                    thickness={10}
-                                    color="#52be4f"
-                                    unfilledColor='#E1D8D7'
-                                    showsText={true}
-                                    textStyle={styles.progressText}
-                                    animated={true}
-                                /> */}
 
-                                <CircularProgress completeStatus={(score/questionList.length)*100} color={ilpex.success}/>
-                               
-                                {/* <CircularProgress progress={Number((score/questionList.length)*100)} /> */}
-                                
+
+                                <CircularProgress completeStatus={(score/questionList.length)*100} color={ilpex.success}/>                                
                                 <TouchableOpacity onPress={() => navigation.navigate("TraineeHome")}>
                                     <Text style={{backgroundColor: ilpex.primary, borderRadius: 5, color: 'white', textAlign: 'center', justifyContent:'center', alignItems: 'center', height: 35, width: 100, marginTop:20, paddingTop: 8 }}>Go Home</Text>
                                 </TouchableOpacity>
                                 
                             </View>
                         </View>
-                    </Modal>
+                    </Modal> */}
+
+                    <ModalComponent isVisible={showResult} closeModal={() => navigation.navigate("TraineeHome")} score={(score/questionList.length)*100} setMessageVisible={() =>console.log('yes')}/>
 
            
         </View>
