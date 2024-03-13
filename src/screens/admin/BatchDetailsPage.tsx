@@ -126,7 +126,6 @@ return(
         <ScrollView>
         <View style={styles.container1}>
           <BackButton color = 'white'/>
-          <ThreeDots color = 'white'></ThreeDots>
             <View style ={styles.textData}>
             <Text style={styles.text}>Batch</Text>
             </View>
@@ -135,26 +134,22 @@ return(
 
               {isLoading && <ChartPieHeaderShimmer/>} 
                {!isLoading && <><View style ={styles.detail}>
-                    <Text style={{fontWeight:'700',color:'black',fontSize:28,marginBottom:20}}>{batchData.batch_details.batch_name}</Text>
-                    <View style={{justifyContent:'flex-start'}}>
-                    <View style ={styles.eachDetail}>
-                    <Text style={{fontWeight:'500',color:'black',fontSize:15}}>Start Date </Text> 
-                    <Text style={{marginLeft:30,color:'#8F00FF',fontWeight:'500'}}>{batchData.batch_details.start_date.split('T')[0]}</Text>
-                    </View>
-                    <View style ={styles.eachDetail}>
-                    <Text style={{fontWeight:'500',color:'black',fontSize:15}}>End Date </Text> 
-                    <Text style={{marginLeft:30,color:'#8F00FF',fontWeight:'500'}}>{batchData.batch_details.end_date.split('T')[0]}</Text>
-                    </View>
-                    <View style ={styles.eachDetail}>
-                    <Text style={{fontWeight:'500',color:'black',fontSize:15}}>Trainees </Text> 
-                    <Text style={{marginLeft:30,color:'#8F00FF',fontWeight:'500'}}>{batchData.noOfTrainees}                   </Text>
-                    </View>
-                    <View style ={styles.eachDetail}>
-                    <Text style={{fontWeight:'500',color:'black',fontSize:15}}>Current Status </Text> 
-                    <Text style={{marginLeft:30,color:'#8F00FF',fontWeight:'500'}}>{currentDate.current_day}                   </Text>
                     
+                    <Text style={{fontWeight:'700',color:'black',fontSize:28,marginBottom:20}}>{batchData.batch_details.batch_name}</Text>
+                    <View style={{justifyContent:'flex-start',display:'flex',flexDirection:'row',marginLeft:55}}>
+                    <View style={{flex:1}}>
+                    <Text style={{fontWeight:'500',color:'black',fontSize:15}}>Start Date </Text> 
+                    <Text style={{fontWeight:'500',color:'black',fontSize:15}}>End Date </Text> 
+                    <Text style={{fontWeight:'500',color:'black',fontSize:15}}>Trainees </Text> 
+                    <Text style={{fontWeight:'500',color:'black',fontSize:15}}>Current Status </Text> 
                     </View>
+                    <View style={{flex:1}}>
+                    <Text style={{marginLeft:30,color:'#8F00FF',fontWeight:'500'}}>{batchData.batch_details.start_date.split('T')[0]}</Text>
+                    <Text style={{marginLeft:30,color:'#8F00FF',fontWeight:'500'}}>{batchData.batch_details.end_date.split('T')[0]}</Text>
+                    <Text style={{marginLeft:30,color:'#8F00FF',fontWeight:'500'}}>{batchData.noOfTrainees}</Text>
+                    <Text style={{marginLeft:30,color:'#8F00FF',fontWeight:'500'}}>{currentDate.current_day}</Text>
                     </View>
+                  </View>
                 </View>
                 </>}
               

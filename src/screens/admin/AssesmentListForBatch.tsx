@@ -3,49 +3,37 @@ import { View } from "react-native";
 import { StyleSheet } from "react-native";
 import { Text } from "react-native";
 import { FlatList } from "react-native";
-import BatchCard from "../../components/BatchCard";
 import ilpex from "../../utils/ilpexUI";
-import ThreeDots from "../../components/ThreeDots";
 import { getHook } from "../../network/getHook/getHook";
-import CreateButton from "../../components/CreateButton";
 import { useNavigation } from "@react-navigation/native";
 import BatchCardShimmer from "../../components/loading/BatchCardShimmer";
-import { getItem } from "../../utils/utils";
-import Constants from "../../utils/Constants";
-import { batch } from "react-redux";
 import AssesmentListCard from "../../components/AssesmentListCard";
+import DrawerNavigationHamburger from "../../components/DrawerNavigationHamburger";
 
 const AssesmentListScreen = ()=>{
     const navigation : any= useNavigation();
     const [assesmentList,setAssesmentList] = useState<any>([]);
-    let assessList : any = [];
+
     const [isLoading,setLoading] = useState(false);
-    const onPressBatchCard=()=>{
-        navigation.navigate("BatchDetails");
+   
+    const onPressButton=(assessment_id:any,assessment_name:any)=>{
+        console.log('hello')
+        navigation.navigate("updateAssesments",{assessment_id:assessment_id,assessment_name:assessment_name});
     }
-    const onPressButton=()=>{
-        console.log("Button pressed");
-    }
+
     useEffect(()=>{
         const getBatches = async()=>{
             try{
                 
-                const { success,statusCode,responseData,errorMessage} = await getHook('/api/v2/assessment?offset:3&sortOrder:-1&sortBy:"assessment_name"');
-                console.log(success,statusCode,responseData.assessments[0].assessment_name);
+                const { success,statusCode,responseData,errorMessage} = await getHook('/api/v2/assessment');
                 if(success){
                     if(responseData){
                         setAssesmentList(responseData.assessments);
-                        assessList = responseData.assessments;
-                        console.log("assess list: ",assessList);
+                        console.log('this is data',responseData)
+                        // assessList = responseData.assessments;
                         setLoading(true); 
-                        console.log("->>>>>>>>>>");
-                        console.log(assesmentList);
-                        console.log(assesmentList.assessment_name)
+                     }
                 }
-                }
-
-                const tid = await getItem(Constants.TRAINEE_ID);
-                console.log("tid: ",tid);
             }
             catch(err){
                 console.error('Error', err);
@@ -55,20 +43,17 @@ const AssesmentListScreen = ()=>{
     },[]);
     return(
         <View style={styles.container}>
-            <ThreeDots color='white'></ThreeDots>
-            <Text style = {styles.text}>Assesment </Text>
+            <DrawerNavigationHamburger/>
+            <Text style = {styles.text}>Assesments</Text>
             <View style={styles.box}>
                 <View style = {styles.dataContainer}>
                 
                     {isLoading? (
-                       
-
-                        <FlatList
+                       <FlatList
+                            showsVerticalScrollIndicator={false}
                             data={assesmentList}
-                            renderItem = {({item}) => <AssesmentListCard assessment_name={item.assessment_name} />}
+                            renderItem = {({item}) => <AssesmentListCard assessment_name={item.assessment_name} onPressButton={()=>onPressButton(item.assessment_id,item.assessment_name)}/>}
                         />
-                        
-                        
                     ):(
                     <View>
                        <BatchCardShimmer isLoading></BatchCardShimmer>
@@ -76,8 +61,9 @@ const AssesmentListScreen = ()=>{
                        <BatchCardShimmer isLoading></BatchCardShimmer>
                     </View>
                     )}
+
                     <View style={styles.createButton}>
-                        <CreateButton onPress={onPressButton}></CreateButton>
+                        {/* <CreateButton onPress={onPressButton}></CreateButton> */}
                     </View>
                 </View>
             </View>
@@ -88,7 +74,7 @@ const AssesmentListScreen = ()=>{
 const styles = StyleSheet.create({
     container :{
         backgroundColor:ilpex.main,
-        height : '100%',
+        minHeight : 800
     },
     dataContainer : {
         margin : '5%',

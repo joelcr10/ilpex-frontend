@@ -3,12 +3,11 @@ import { TouchableOpacity, View } from "react-native";
 import { Text } from "react-native";
 import { StyleSheet } from "react-native";
 import ilpex from "../utils/ilpexUI";
-import CircularProgress from "./CircularProgress";
 import { useNavigation } from "@react-navigation/native";
 
-type BatchComponentProps = {batch_name : string, traineeNo : string, date : string,progress : number,onPressFunc:()=>void};
+type BatchComponentProps = {batch_name : string, traineeNo : string, date : string,totalDays : string,progressDays : any,onPressFunc:()=>void};
 
-const BatchCard=({batch_name,traineeNo,date,progress,onPressFunc} : BatchComponentProps)=>{
+const BatchCard=({batch_name,traineeNo,date,totalDays,progressDays,onPressFunc} : BatchComponentProps)=>{
     const navigation : any= useNavigation();
     const buttonPress = (batch_id:number)=>{
         navigation.navigate("BatchDetails", {
@@ -56,8 +55,12 @@ const BatchCard=({batch_name,traineeNo,date,progress,onPressFunc} : BatchCompone
                     </View>
                     <Text style={styles.date}>{formattedDate}</Text>
                 </View>
-                <View style={styles.circularProgress}>
-                    <CircularProgress completeStatus={progress} color={ilpex.main}></CircularProgress>
+                <View style={styles.dayContainer}>
+                    <View style={styles.dayTextContainer}>
+                    <Text style={styles.dayText}>Day</Text>
+                    <Text style={styles.dayText}>{progressDays}/{totalDays}</Text>
+                    {/* <CircularProgress completeStatus={progress} color={ilpex.main}></CircularProgress> */}
+                    </View>
                 </View>
             </View>
         </TouchableOpacity>
@@ -78,7 +81,7 @@ const styles = StyleSheet.create({
     },
     dataContainer : {
         marginStart:10,
-        width : 230
+        width : 220
     },
     batch_name:{
         marginTop:10,
@@ -114,8 +117,24 @@ const styles = StyleSheet.create({
         borderRadius:5,
         alignSelf :'center'
     },
-    circularProgress : {
-        marginTop:20
+    dayContainer:{
+        marginTop:13,
+        marginEnd : 30,
+        backgroundColor:ilpex.active,
+        borderRadius:90,
+        height:80,
+        width : 80,
+        alignContent:'center',
+        alignItems:'center'
+    },
+    dayTextContainer : {
+        marginTop:10
+    },
+    dayText : {
+        color : ilpex.white,
+        fontFamily:ilpex.fontSemiBold,
+        textAlign:'center',
+        fontSize:17
     }
 })
 

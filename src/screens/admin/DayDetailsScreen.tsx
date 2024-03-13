@@ -67,16 +67,15 @@ return(
         <ScrollView>
         <View style={styles.container1}>
           <BackButton color = 'white'/>
-          <ThreeDots color = 'white'></ThreeDots>
             <View style ={styles.textData}>
-            <Text style={styles.text}>Day</Text>
+            <Text style={styles.text}>Day {day}</Text>
             </View>
             <View style ={styles.body1}>
               <View>
               
               {isLoading && <ChartPieHeaderShimmer/>} 
                {!isLoading && <><View style ={styles.detail}>
-                    <Text style={{fontWeight:'700',color:'black',fontSize:28,marginBottom:20}}>Day {day}</Text>
+                    
                     <Text style={{marginRight:185}}>Courses</Text>
                     <FlatList
                         data={dayWiseCourseList}
@@ -129,12 +128,10 @@ const styles = StyleSheet.create({
     },
     detail: {
       alignItems:'center',
-      // borderColor:'black',
-       //borderWidth:3,
-      marginTop:25,
+      
+      marginTop:40,
       marginHorizontal:30,
       borderRadius:30,
-      // elevation:8,
       backgroundColor:"white",
       marginBottom : 20
     },

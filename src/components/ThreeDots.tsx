@@ -43,10 +43,11 @@ const ThreeDots = (props : PropsType) => {
         setStringItem(Constants.TRAINEE_ID, '');
         setStringItem(Constants.USER_ID,'');
         dispatch(userDetails({
-            token : '',
+            token: '',
             user_id: '',
             role_id: '',
-            trainee_id:'',
+            trainee_id: '',
+            user_name: ''
         }));
         dispatch(userLogin(false));
     }
@@ -76,7 +77,7 @@ const ThreeDots = (props : PropsType) => {
 
     return (
         <View style = {styles.threeDotsContainer}>
-            {setColor() ? (
+            {setColor() ? ( 
                 <TouchableOpacity onPress={togglePopup}>
                 <Image 
                     style = {styles.threeDots}
@@ -93,6 +94,7 @@ const ThreeDots = (props : PropsType) => {
             )}
             
             {isPopupVisible && (
+                
                 <View style = {styles.popup}>           
                     <View style = {styles.popupContent}> 
                         <TouchableOpacity  style = {styles.popupcolumn} onPress={profileNavigator}>

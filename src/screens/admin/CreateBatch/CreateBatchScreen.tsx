@@ -1,21 +1,21 @@
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
-import TopBlackHeading from "../../components/TopBlackHeading";
-import InputField from "../../components/InputField";
-import CalenderModal from "../../components/CalenderModal";
-import ilpex from "../../utils/ilpexUI";
-import DateSelector from "../../components/DateSelector";
+import TopBlackHeading from "../../../components/TopBlackHeading";
+import InputField from "../../../components/InputField";
+import CalenderModal from "../../../components/CalenderModal";
+import ilpex from "../../../utils/ilpexUI";
+import DateSelector from "../../../components/DateSelector";
 import DocumentPicker from 'react-native-document-picker';
-import { getItem } from "../../utils/utils";
-import Constants from "../../utils/Constants";
+import { getItem } from "../../../utils/utils";
+import Constants from "../../../utils/Constants";
 import { createBatch } from "./CreateBatchHook";
-import FileUploadField from "../../components/FileUploadField";
-import Button from "../../components/Button";
-import DisabledBigButton from "../../components/DisabledBigButton";
-import BackButton from "../../components/BackButton";
+import FileUploadField from "../../../components/FileUploadField";
+import Button from "../../../components/Button";
+import DisabledBigButton from "../../../components/DisabledBigButton";
+import BackButton from "../../../components/BackButton";
 import { useNavigation } from "@react-navigation/native";
-import ToastDemo from "../../components/ToastComponent";
-import ConfirmationModal from "../../components/ConfirmationModal";
+import ToastDemo from "../../../components/ToastComponent";
+import ConfirmationModal from "../../../components/ConfirmationModal";
 
 const CreateBatchScreen = () => {
 
@@ -27,7 +27,7 @@ const CreateBatchScreen = () => {
     const [success, setSuccess] = useState(false);
     const [buttonLoaded, setButtonLoaded] = useState(false);
     const [failure, setFailure] = useState(false);
-    
+    const [errorMessage, setErrorMessage] = useState('');
     const today = new Date();
     const januaryFirst = new Date(today.getFullYear(), 0, 1);
     const nextYear = new Date(today.getFullYear() + 100, today.getMonth(), today.getDate());
@@ -78,10 +78,15 @@ const CreateBatchScreen = () => {
                 setSuccess(true);
                 console.log("statusCode - ", statusCode);
                 console.log("Success - ", success);
+                setBatchName('');
+                setStartDate(null);
+                setEndDate(null);
+                setSelectedFile(null);
             }
             else
             {
                 setButtonLoaded(false);
+                setErrorMessage(errorMessage);
                 setFailure(true);
                 console.log("statusCode - ", statusCode);
                 console.log("Error Message - ", errorMessage);
@@ -117,8 +122,8 @@ const CreateBatchScreen = () => {
                 <Button name="Create Batch" onPress={handleFileUpload} buttonPressed={buttonLoaded} />
             )
             }
-            {success && <ConfirmationModal success = {success} message = "Batch has been created Successfully!" />}
-            {failure && <ToastDemo BgColor="red" message="Failed To create Batch" textColor="white"/>}
+            {success && <ConfirmationModal success = {success} message = {"Batch has been created Successfully!"} />}
+            {failure && <ToastDemo BgColor="red" message={errorMessage} textColor="white"/>}
         </View>
     );
 }
