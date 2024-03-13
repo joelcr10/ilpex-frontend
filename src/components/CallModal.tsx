@@ -8,9 +8,10 @@ const CallModal = () => {
 
   const showModal = () => {
     setModalVisible(true);
-  };
+  };  
 
   const hideModal = () => {
+
     setModalVisible(false);
   };
 

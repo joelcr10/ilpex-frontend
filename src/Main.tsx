@@ -40,7 +40,7 @@ const Main =  () =>{
     console.log('user_id ----------',user_id);
     console.log('token is ---------',token);
     console.log('user_name is----------',user_name);
-    console.log('user details stored globally');
+    console.log('user details stored globally ----->');
 
     console.log("hi")
     useEffect(() => {

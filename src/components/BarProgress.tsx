@@ -17,7 +17,8 @@ const BarProgress = (props: propsType) => {
 
 const styles = StyleSheet.create({
     barProgressContainer:{
-        marginBottom: 20,
+        marginBottom: 0,
+        marginTop: 30,
         display: 'flex' , 
         flexDirection: 'column',
         justifyContent:'center', 
