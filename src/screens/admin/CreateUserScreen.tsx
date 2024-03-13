@@ -43,7 +43,7 @@ const CreateUserScreen = () => {
   
 
   return (
-    <View>
+    <View style={styles.mainView}>
       <TopBlackHeading 
         heading={"Create User"} 
         />
@@ -82,6 +82,11 @@ const CreateUserScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  mainView:{
+    justifyContent:'center',
+    alignContent:'center',
+    height:'100%'
+  },
   errorText: {
     color: ilpex.failure,
     fontSize: 14,

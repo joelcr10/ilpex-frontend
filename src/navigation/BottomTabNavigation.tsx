@@ -4,10 +4,11 @@ import LoginScreen from "../screens/authentication/LoginScreen";
 import BatchesScreen from "../screens/admin/BatchesScreen";
 import TraineeScreen from "../screens/admin/TraineesScreen";
 import TraineeProfile from "../screens/trainee/TraineeProfileScreen";
-import CreateAssessment from "../screens/admin/CreateAssessmentScreen";
+import CreateAssessment from "../screens/admin/CreateAssessment/CreateAssessmentScreen";
 import UserManagementScreen from '../screens/admin/UserManagementScreen';
 import IncompleteTraineesScreen from "../screens/admin/IncompleteTraineesScreen";
-
+import UpdateAssessmentScreen from "../screens/admin/UpdateAssessment/UpdateAssessmentScreen";
+import AssesmentListScreen from "../screens/admin/AssesmentListForBatch";
 const BottomTab = createBottomTabNavigator();
 
 const BottomTabNavigation = () =>{
@@ -44,7 +45,7 @@ const BottomTabNavigation = () =>{
                     }
                 }}
             /> 
-            <BottomTab.Screen
+            {/* <BottomTab.Screen
                 name = "Profile"
                 component = {TraineeProfile}
                 options={{
@@ -55,10 +56,11 @@ const BottomTabNavigation = () =>{
                         )
                     }
                 }}
-            />
-                       <BottomTab.Screen
-                name = "Assessment"
-                component = {CreateAssessment}
+            /> */}
+
+            <BottomTab.Screen
+                name = "Assesments"
+                component = {AssesmentListScreen}
                 options={{
                     headerShown: false,
                     tabBarIcon: ({color}) =>{
@@ -68,7 +70,19 @@ const BottomTabNavigation = () =>{
                     }
                 }}
             />
-            <BottomTab.Screen
+                       <BottomTab.Screen
+                name = "Update"
+                component = {UpdateAssessmentScreen}
+                options={{
+                    headerShown: false,
+                    tabBarIcon: ({color}) =>{
+                        return(
+                            <Icon name="users" size={30} color={color}/>
+                        )
+                    }
+                }}
+            />
+            {/* <BottomTab.Screen
                 name = "Incomplete"
                 component = {IncompleteTraineesScreen}
                 options={{
@@ -79,7 +93,7 @@ const BottomTabNavigation = () =>{
                         )
                     }
                 }}
-            />
+            /> */}
                <BottomTab.Screen 
                 name="ManageUser"
                 component={UserManagementScreen}   

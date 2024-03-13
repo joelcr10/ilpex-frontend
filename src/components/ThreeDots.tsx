@@ -40,7 +40,6 @@ const ThreeDots = (props : PropsType) => {
     const handleLogout = () => {
         setStringItem(Constants.IS_LOGIN, 'false');
         setStringItem(Constants.ROLE_ID, '' );
-        // setStringItem(Constants.TOKEN, '');
         setStringItem(Constants.TRAINEE_ID, '');
         setStringItem(Constants.USER_ID,'');
         dispatch(userDetails({

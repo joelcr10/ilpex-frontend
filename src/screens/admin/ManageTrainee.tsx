@@ -9,21 +9,27 @@ import Constants from "../../utils/Constants";
 import { getHook } from "../../network/getHook/getHook";
 import { useRoute } from "@react-navigation/native";
 import { UpdateTraineeStatus } from "./ManageTraineeHook";
+import BackButton from "../../components/BackButton";
 
 const ManageTraineeScreen = () => {
-  const route = useRoute();
+  const route: any = useRoute();
+  const user_id = route.params?.user_id;
+
   const [traineeName, setTraineeName] = useState("");
   const [traineeBatch, setTraineeBatch] = useState("");
   const [traineeEmail, setTraineeEmail] = useState("");
   const [percepioEmail, setPercepioEmail] = useState("");
   const [isActive, setIsActive] = useState(false);
+  const [activateButtonPressed, setActivateButtonPressed] = useState(false);
+  const [deactivateButtonPressed, setDeactivateButtonPressed] = useState(false);
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [successText, setSuccessText] = useState("");
+  const [failureText, setFailureText] = useState("");
 
   useEffect(() => {
     const getTraineeDetails = async () => {
       try {
-      //   const user_id = route.params["user_id"];
-      //   const { responseData, errorMessage } = await getHook(`/api/v3/profile/${user_id}`);
-        const { responseData, errorMessage } = await getHook(`/api/v3/profile/6`);
+        const { responseData, errorMessage } = await getHook(`/api/v3/profile/${user_id}`);
 
         if (responseData) {
           setTraineeName(responseData.data.user_name);
@@ -44,26 +50,20 @@ const ManageTraineeScreen = () => {
 
     traineeDetailsLoader();
   }, [route.params]);
-// });
-
-
-  const [activateButtonPressed, setActivateButtonPressed] = useState(false);
-  const [deactivateButtonPressed, setDeactivateButtonPressed] = useState(false);
-  const [isModalVisible, setModalVisible] = useState(false);
 
   const showModal = () => {
     setModalVisible(true);
-    setActivateButtonPressed(false);
   };
 
   const hideModal = () => {
     setModalVisible(false);
+    setSuccessText("");
+    setFailureText("");
   };
 
   const activateTrainee = () => {
     if (!isActive) {
       setActivateButtonPressed(true);
-      showModal();
       handleManageTrainee();
     }
   };
@@ -71,24 +71,47 @@ const ManageTraineeScreen = () => {
   const deactivateTrainee = () => {
     if (isActive) {
       setDeactivateButtonPressed(true);
-      showModal();
       handleManageTrainee();
     }
   };
 
   const handleManageTrainee = async () => {
-    setDeactivateButtonPressed(false);
-    const user_idString = await getItem(Constants.USER_ID);
-    const user_id = user_idString ? parseInt(user_idString) : 0;
-    
-    if (activateButtonPressed) {
-      await UpdateTraineeStatus({ user_id, status: 1 }); 
-    }
-    if(deactivateButtonPressed) {
-        await UpdateTraineeStatus({ user_id, status: 0 }); 
+    console.log(user_id);
+    const JWT_token = (await getItem(Constants.TOKEN)) || ''; 
+
+    try {
+      if (activateButtonPressed) {
+        const response = await UpdateTraineeStatus({ user_id: user_id, status: 1 ,JWT_token,});
+        // Check the response and update the state accordingly
+        console.log(response);
+        if (response.success) {
+          setIsActive(true);
+          setActivateButtonPressed(false);
+        }
+      }
+  
+      else if (deactivateButtonPressed) {
+        const response = await UpdateTraineeStatus({ user_id: user_id, status: 0, JWT_token, });
+        // Check the response and update the state accordingly
+        console.log(response);
+        if (response.success) {
+          setIsActive(false);
+          setDeactivateButtonPressed(false);
+        }
+      }
+  
+      // Set the success and failure texts based on the isActive state
+      const successText = isActive ? "This Account has been deactivated" : "";
+      const failureText = isActive ? "" : "This account cannot be activated";
+  
+      // Show the modal with the appropriate texts
+      setSuccessText(successText);
+      setFailureText(failureText);
+      showModal();
+    } catch (error) {
+      console.log('Error updating trainee status:', error);
     }
   };
-  
   
 
   return (
@@ -106,27 +129,27 @@ const ManageTraineeScreen = () => {
       </View>
       <View>
         {isActive ? (
-              <Button
-                name={"Deactivate"}
-                onPress={deactivateTrainee}
-                buttonPressed={deactivateButtonPressed}
-              />
-        ) : null}
-          {!isActive ? (
-              <Button
-                name={"Activate"}
-                onPress={activateTrainee}
-                buttonPressed={activateButtonPressed}
-              />
-                      ) : null}
+          <Button
+            name={"Deactivate"}
+            onPress={deactivateTrainee}
+            buttonPressed={deactivateButtonPressed}
+          />
+        ) : (
+          <Button
+            name={"Activate"}
+            onPress={activateTrainee}
+            buttonPressed={activateButtonPressed}
+          />
+        )}
       </View>
       <ModalComponent
         isVisible={isModalVisible}
         closeModal={hideModal}
         setMessageVisible={setModalVisible}
-        successText={"This Account has been activated"}
-        failureText={"This account cannot be deactivated"}
+        successText={successText}
+        failureText={failureText}
       />
+      <BackButton color={"black"} />
     </View>
   );
 };
@@ -147,7 +170,6 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     margin: 30,
   },
-  
 });
 
 export default ManageTraineeScreen;

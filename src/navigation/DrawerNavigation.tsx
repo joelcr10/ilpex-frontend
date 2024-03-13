@@ -7,6 +7,10 @@ import ilpex from '../utils/ilpexUI';
 import TraineeProfileScreen from '../screens/trainee/TraineeProfileScreen';
 import BottomTabNavigation from "./BottomTabNavigation";
 import CreateBatchScreen from '../screens/admin/CreateBatchScreen';
+import CreateCourseScreen from '../screens/admin/CreateCourseScreen';
+
+import CreateAssessmentScreen from '../screens/admin/CreateAssessment/CreateAssessmentScreen';
+import CreateUserScreen from '../screens/admin/CreateUserScreen';
 const Drawer = createDrawerNavigator();
 
 const CustomDrawerContent : any = (props : any) => {
@@ -81,10 +85,10 @@ const DrawerNavigation = () => {
             />
 
             <Drawer.Screen 
-                name="Create A User" 
-                component={BottomTabNavigation} 
+                name="Create User" 
+                component={CreateUserScreen} 
                 options={{
-                    title: 'Create A User',
+                    title: 'Create User',
                     drawerIcon: ({focused, size}) => (
                         <View style = {styles.iconContainer}>
                             <Image
@@ -93,12 +97,27 @@ const DrawerNavigation = () => {
                     ),
                  }}
             />
+
+            <Drawer.Screen 
+                name="Create Course" 
+                component={CreateCourseScreen} 
+                options={{
+                    title: 'Create Course',
+                    drawerIcon: ({focused, size}) => (
+                        <View style = {styles.iconContainer}>
+                            <Image
+                            style = {styles.iconStyling}
+                            source={require('../../assets/icons/course.png')}/>
+                        </View>
+                    ),
+                 }}
+            />
             
             <Drawer.Screen 
-                name="Create A Batch" 
+                name="Create Batch" 
                 component={CreateBatchScreen} 
                 options={{
-                    title: 'Create A Batch',
+                    title: 'Create Batch',
                     drawerIcon: ({focused, size}) => (
                         <View style = {styles.iconContainer}>
                             <Image
@@ -110,7 +129,7 @@ const DrawerNavigation = () => {
 
             <Drawer.Screen 
                 name="Create Assessment" 
-                component={BottomTabNavigation} 
+                component={CreateAssessmentScreen} 
                 options={{
                     title: 'Create Assessment',
                     drawerIcon: ({focused, size}) => (

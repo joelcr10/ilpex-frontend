@@ -4,4 +4,5 @@ export default {
     TOKEN: 'TOKEN',
     ROLE_ID:'ROLE_ID',
     TRAINEE_ID:'TRAINEE_ID',
+    USER_NAME:'USER_NAME',
 }
