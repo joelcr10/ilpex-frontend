@@ -7,7 +7,6 @@ import BarGraph from "../../components/BarChart";
 import { getHook } from "../../network/getHook/getHook";
 import { getItem } from "../../utils/utils";
 import Constants from "../../utils/Constants";
-import { useSelector } from "react-redux";
 import TraineeProfileShimmer from "../../components/loading/TraineeProfileShimmer";
 
 const TraineeProfileScreen = () => {
@@ -188,7 +187,7 @@ const TraineeProfileScreen = () => {
                         <View style = {styles.statsContainer}>
                             <View style = {styles.statsRow}>
                                 <View style = {styles.statsKey}>
-                                    <Text style = {styles.statsKeyLabel}>Current Status</Text>
+                                    <Text style = {styles.statsKeyLabel}>Current Day</Text>
                                 </View>
                                 <View style = {styles.statsValue}>
                                 <Text style = {styles.statsValueLabel}>Day {currentDay}</Text>
@@ -205,9 +204,9 @@ const TraineeProfileScreen = () => {
                                         {averageAssessmentScore}%
                                         </Text>
                                     </View>
-                                    <Text style ={styles.remarksLabel}>
+                                    {/* <Text style ={styles.remarksLabel}>
                                         {marksFeedback}
-                                    </Text>
+                                    </Text> */}
                                 </View>
                             </View>
                         </View>
@@ -281,29 +280,29 @@ const styles = StyleSheet.create({
         justifyContent : 'center'
     },
     profilePictureCircle : {
-        width : 140,
-        height : 140,
+        width : 120,
+        height : 120,
         alignSelf : 'center',
         borderRadius : 70
     },
     profileImageStyle : {
         width : 107,
         height : 107,
-        marginLeft : 16,
-        marginTop : 15,
+        marginLeft : 7,
+        marginTop : 8,
     },
     nameLabel : {
         textAlign : 'center',
         fontFamily : ilpex.fontSemiBold,
         color : 'black',
-        fontSize : 30,
-        height : 40
+        fontSize : 23,
+        height : 30
     },
     batchLabel : {
         textAlign : 'center',
         fontFamily : ilpex.fontSemiBold,
         color : '#737373',
-        fontSize : 22,
+        fontSize : 18,
     }, 
     statsRow : {
         flexDirection : 'row',
@@ -311,36 +310,43 @@ const styles = StyleSheet.create({
     },
     statsKey : {
         alignSelf : 'flex-start',
-        marginLeft : 25,
-        width : 280,
+        // marginLeft : 25,
+        // width : 280,
+        width : '70%'
     },
     statsValue : {
         width : 80,
+        // backgroundColor : 'red'
     },
     statsContainer : {
         marginTop : 40,
+        // backgroundColor : 'red',
+        marginLeft : '8%',
+        // marginRight : '5%'
+        // marginRight : 2
     },
     statsKeyLabel : {
         fontFamily : ilpex.fontMedium,
         color : 'black',
-        fontSize : 17,
+        fontSize : 14,
     },
     statsValueLabel : {
         fontFamily : ilpex.fontMedium,
         color : 'black',
-        fontSize : 17,
-        textAlign :'center'
+        fontSize : 14,
+        textAlign :'center',
+        paddingLeft : '5%'
     }, 
     percentageLabel : {
         fontFamily : ilpex.fontMedium,
         color : 'black',
-        fontSize : 20,
+        fontSize : 14,
         textAlign :'center',
     },
     remarksLabel : {
         fontFamily : ilpex.fontMedium,
         color : 'black',
-        fontSize : 17,
+        fontSize : 14,
         textAlign : 'center',
         height : 56
     },
