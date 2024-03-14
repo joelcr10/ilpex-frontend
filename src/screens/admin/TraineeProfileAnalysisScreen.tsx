@@ -6,29 +6,28 @@ import BarGraph from "../../components/BarChart";
 import { getHook } from "../../network/getHook/getHook";
 import TraineeProfileShimmer from "../../components/loading/TraineeProfileShimmer";
 import { useRoute } from "@react-navigation/native";
-import { useNavigation } from "@react-navigation/native";
 
 const TraineeProileAnalysisScreen = () => {
 
     const route:any = useRoute();
-    const navigation = useNavigation();
 
     const [traineeName, setTraineeName] = useState<any[]>([]);
     const [traineeBatch, setTraineeBatch] = useState<any[]>([]);
     const [currentDay, setCurrentDay] = useState(2);
     const [averageAssessmentScore, setAverageAssessmentScore] = useState<any[]>([]) ;
     const [marksIndicatorColor, setMarkIndicatorColor] = useState('black');
-    const [marksFeedback, setMarksFeedBack] = useState('placeholder');
     const [resultID, setResultID] = useState<any[]>([]);
     const [highScore, setHighScore] = useState<any[]>([]);
     const [isLoadingCurrentDay, setLoadingCurrentDay] = useState(false);
-    let batchId : number = 0; 
+    const [traineeProgress, setTraineeProgress] = useState('placeholder');
+    const [incompleteCourseList, setIncompleteCourseList] = useState<string[]>([]);
 
+    let batchId : number = 0; 
+    const user_id = route.params.user_id;
+    const trainee_id = route.params.trainee_id;
     useEffect(() => {
         const getTraineeProfile = async() => {
             try {
-                
-                const user_id = route.params.user_id;
                 const {responseData, errorMessage} = await getHook(`/api/v3/profile/${user_id}`);
                 if(responseData)
                 {
@@ -43,7 +42,6 @@ const TraineeProileAnalysisScreen = () => {
 
         const getTraineeScores = async() => {
             try {
-                const trainee_id = route.params.trainee_id;
                 const {responseData, errorMessage} = await getHook(`/api/v2/trainee/${trainee_id}/scores`);
                 console.log('Trainee ID Inside Trainee Scores Function------', trainee_id)
                 if(responseData)
@@ -93,7 +91,7 @@ const TraineeProileAnalysisScreen = () => {
                 if(responseData)
                 {
                     setCurrentDay(responseData.current_day);
-                    console.log("Current Day Is ----------",responseData.current_day )
+                    console.log("Current Day Is ---------->",responseData.current_day )
                     setLoadingCurrentDay(true);
                 }
             } catch(error) {
@@ -103,14 +101,51 @@ const TraineeProileAnalysisScreen = () => {
 
         const getTraineeProgress = async() => {
             try {
-                const trainee_id = route.params.trainee_id;
+                const daysList : number[] = [];
                 const {responseData, errorMessage} = await getHook(`/api/v3/trainee/${trainee_id}/days`);
-                console.log('Trainee ID Inside Trainee Progress Function------', trainee_id)
                 if(responseData)
                 {
-                    console.log("Trainee Progress ----->", responseData);
+                    console.log("Trainee Progress : ", responseData.data);
+                    for (const object of responseData.data)
+                    {
+                        if(object.status === true)
+                            daysList.push(object.day_number);
+                    }
+                    console.log("Days List : ", daysList)
+                    const largestDayNumber: number = Math.max(...daysList);
+                    console.log("Current Day Progress Number: ", largestDayNumber);
+                    if(largestDayNumber >= currentDay)
+                        setTraineeProgress('OnTrack');
+                    else
+                    {
+                        setTraineeProgress('Lagging');
+                        console.log("Ooops")
+                        courseListFromDatabase(largestDayNumber, trainee_id);
+                    }
                 }
             }catch (error)
+            {
+                console.log("Error", error);
+            }
+        }
+
+        const courseListFromDatabase = async(largestDayNumber : number, trainee_id : number) => {
+            try
+            {
+                const incompleteCourseList : string [] = [];
+                const courseList : string [] = [];
+                const {responseData, errorMessage} = await getHook(`/api/v3/trainee/${trainee_id}/course/day/${largestDayNumber}`);
+                if(responseData)
+                {
+                    for(const object of responseData.message)
+                    {
+                        if(object.status === false)
+                            incompleteCourseList.push(object.course_name);
+                    }
+                    console.log("Incomplete Course List :", incompleteCourseList);
+                    setIncompleteCourseList(incompleteCourseList);
+                }
+            }catch(error)
             {
                 console.log("Error", error);
             }
@@ -123,10 +158,7 @@ const TraineeProileAnalysisScreen = () => {
             await getCurrentDay();
         }
 
-
-        traineeProfileLoader();
-
-        
+        traineeProfileLoader();        
     }, []);
 
     const colorArray = [
@@ -186,6 +218,7 @@ const TraineeProileAnalysisScreen = () => {
                             </View>
                         </View>
                     </View>
+                    {/* {traineeProgress === } */}
                     <BarGraph data={highScore} labels={resultID}></BarGraph>
                 </View>
             )
