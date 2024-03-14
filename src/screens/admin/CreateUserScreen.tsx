@@ -106,7 +106,7 @@ const CreateUserScreen = () => {
     <View style={styles.mainView}>
       <BackButton color = 'black'/>
       <TopBlackHeading 
-        heading={"Create User"} 
+        heading={"Create Admin"} 
         />
       <InputField 
         label={"User Name"} 
