@@ -1,17 +1,17 @@
 import { DocumentPickerResponse } from 'react-native-document-picker';
-import instance from '../../network/api';
-import Constants from '../../utils/Constants';
-import { getItem } from '../../utils/utils';
+import instance from '../../../network/api';
+import Constants from '../../../utils/Constants';
+import { getItem } from '../../../utils/utils';
 import axios from 'axios';
  
-interface CreateBatchResponse {
+interface CreateCourseResponse {
   success: boolean;
   errorMessage: string;
   statusCode: string;
   loginResp: any;
 }
  
-export async function createBatch(formData: FormData): Promise<CreateBatchResponse> {
+export async function createCourse(formData: FormData): Promise<CreateCourseResponse> {
   let success: boolean = false;
   let errorMessage: string = '';
   let statusCode: string = '';
@@ -27,12 +27,12 @@ export async function createBatch(formData: FormData): Promise<CreateBatchRespon
           'Content-Type': 'multipart/form-data',
         }
     }
-    const url = '/api/v2/batch';
+    const url = '/api/v2/course';
     console.log("Form Data Is : ", formData);
-    const createBatchResponse = await instance.post(url, formData, authorization);
+    const createCourseResponse = await instance.post(url, formData, authorization);
 
-    console.log(createBatchResponse);
-    statusCode = createBatchResponse.status.toString();
+    console.log(createCourseResponse);
+    statusCode = createCourseResponse.status.toString();
     {
       statusCode === '200' ? (success = true) : (success = false);
     }

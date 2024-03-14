@@ -43,10 +43,11 @@ const ThreeDots = (props : PropsType) => {
         setStringItem(Constants.TRAINEE_ID, '');
         setStringItem(Constants.USER_ID,'');
         dispatch(userDetails({
-            token : '',
+            token: '',
             user_id: '',
             role_id: '',
-            trainee_id:'',
+            trainee_id: '',
+            user_name: ''
         }));
         dispatch(userLogin(false));
     }
@@ -76,7 +77,7 @@ const ThreeDots = (props : PropsType) => {
 
     return (
         <View style = {styles.threeDotsContainer}>
-            {setColor() ? (
+            {setColor() ? ( 
                 <TouchableOpacity onPress={togglePopup}>
                 <Image 
                     style = {styles.threeDots}
@@ -93,6 +94,7 @@ const ThreeDots = (props : PropsType) => {
             )}
             
             {isPopupVisible && (
+                
                 <View style = {styles.popup}>           
                     <View style = {styles.popupContent}> 
                         <TouchableOpacity  style = {styles.popupcolumn} onPress={profileNavigator}>
@@ -128,8 +130,8 @@ const styles = StyleSheet.create({
         zIndex: 1,
     },
     threeDots : {
-        width : 32,
-        height : 32,
+        width : 24,
+        height : 24,
         marginTop : 30,
         marginRight : 27,
     },
@@ -140,34 +142,35 @@ const styles = StyleSheet.create({
         fontSize : 17,
     },
     popupicons : {
-        width : 33,
-        height : 33,
-        marginLeft : 8,
+        width : 30,
+        height : 30,
+        marginLeft : 2,
     },
     popupContent : {
         alignContent : 'center',
     },
     popupcolumn : {
         flexDirection : 'row',
-        marginBottom : 13,
+        marginBottom : 10,
     },
     columnLabel : {
         paddingTop : 3,
         paddingLeft : 10,
         color : 'black',
         fontFamily : ilpex.fontRegular,
-        fontSize : 17,
+        fontSize : 14,
     },
     popup : {
         position : 'absolute',
-        width : 160,
-        height : 112,
-        top : 70,
+        width : 135,
+        height : 95,
+        top : 60,
         right : 30,
         backgroundColor : 'white',
         borderRadius : 15,
         padding : 15,
-        zIndex: 10
+        zIndex: 10,
+        elevation : 2,
     },
     modalText:{
         fontSize:20,

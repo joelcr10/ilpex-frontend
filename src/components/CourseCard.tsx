@@ -23,13 +23,13 @@ const CourseCard=({name,duration,status}:cardProps)=>{
                 {status&&
                 <View style={{flexDirection:'row', marginTop:'auto', padding:10}}>
                     <Icon name='done' style={[styles.icon,styles.done]}/>
-                    <Text style={[styles.status,styles.done]}>completed</Text>
+                    <Text style={[styles.status,styles.done]}>Completed</Text>
                 </View>
                 }
                 {!status&&
                 <View style={{flexDirection:'row', marginTop:'auto', padding:10}}>
                     <Icon name='close' style={[styles.icon,styles.pending]}/>
-                    <Text style={[styles.status,styles.pending]}>incomplete</Text>
+                    <Text style={[styles.status,styles.pending]}>Incomplete</Text>
                 </View>
                 }
            
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
             borderRadius: 10,
             marginHorizontal:30,
             marginVertical:10,
-            paddingHorizontal:20,
+            paddingHorizontal:10,
             paddingVertical:10,
             shadowColor: '#000',
             shadowOffset: {
@@ -61,13 +61,13 @@ const styles = StyleSheet.create({
     },
     course:{
         fontFamily:ilpex.fontMedium,
-        fontSize:20,
+        fontSize:14,
         color:'black',
         marginHorizontal:10,
-        marginVertical:5,
+        marginVertical:1,
     },
     duration:{
-        fontSize:18,
+        fontSize:13,
         color:ilpex.darkGrey,
         marginHorizontal:10,
         marginVertical:5,
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     },
     status:{
         textAlignVertical:'center',
-        fontSize:16,
+        fontSize:14,
     },
     icon:{
         fontSize:20,

@@ -7,7 +7,6 @@ import BarGraph from "../../components/BarChart";
 import { getHook } from "../../network/getHook/getHook";
 import { getItem } from "../../utils/utils";
 import Constants from "../../utils/Constants";
-import { useSelector } from "react-redux";
 import TraineeProfileShimmer from "../../components/loading/TraineeProfileShimmer";
 
 const TraineeProfileScreen = () => {
@@ -116,7 +115,9 @@ const TraineeProfileScreen = () => {
                 if(role_id === '103')
                 {
                     const currentDate = new Date();
-                    currentDate.setDate(currentDate.getDate() + 1);
+                    currentDate.setHours(currentDate.getHours() + 5);
+                    currentDate.setMinutes(currentDate.getMinutes() + 30);
+                    console.log("Current DATE --------------", currentDate);
                     const isoString = currentDate.toISOString();
                     const dateString = isoString.substring(0, isoString.indexOf('T'));
                     const {responseData, errorMessage} = await getHook(`/api/v3/batch/${batchId}/day/${dateString}`);
@@ -146,14 +147,14 @@ const TraineeProfileScreen = () => {
         
     }, []);
 
+    const colorArray = [
+        '#FF6347', '#FF7F50', '#FFA07A', '#FFD700', '#FF69B4', '#FF1493', '#FFC0CB', '#87CEEB', '#4682B4', '#40E0D0', '#00FF7F', '#7FFF00', '#32CD32', '#ADFF2F', '#00FF00', '#6B8E23', '#228B22', '#7CFC00', '#98FB98', '#008000', '#556B2F', '#20B2AA', '#00CED1', '#1E90FF', '#4169E1', '#0000FF', '#000080', '#8A2BE2', '#4B0082', '#800080', '#9932CC', '#9400D3', '#8B008B', '#A52A2A', '#D2691E', '#B22222', '#800000'
+      ];
+      
     const getRandomColor = () => {
-        const generatedColor =  '#' + Math.floor(Math.random()*16777215).toString(16);
-    if(generatedColor === '#bdd8c' || generatedColor === '#6de5b')
-        getRandomColor();
-    else
-    console.log(generatedColor);
-    return generatedColor;
-}
+    const randomIndex = Math.floor(Math.random() * colorArray.length);
+    return colorArray[randomIndex];
+    };
 
     const [circleBackgroundColor, setCircleBackgroundColor] = useState(getRandomColor());
 
@@ -186,7 +187,7 @@ const TraineeProfileScreen = () => {
                         <View style = {styles.statsContainer}>
                             <View style = {styles.statsRow}>
                                 <View style = {styles.statsKey}>
-                                    <Text style = {styles.statsKeyLabel}>Current Status</Text>
+                                    <Text style = {styles.statsKeyLabel}>Current Day</Text>
                                 </View>
                                 <View style = {styles.statsValue}>
                                 <Text style = {styles.statsValueLabel}>Day {currentDay}</Text>
@@ -203,9 +204,9 @@ const TraineeProfileScreen = () => {
                                         {averageAssessmentScore}%
                                         </Text>
                                     </View>
-                                    <Text style ={styles.remarksLabel}>
+                                    {/* <Text style ={styles.remarksLabel}>
                                         {marksFeedback}
-                                    </Text>
+                                    </Text> */}
                                 </View>
                             </View>
                         </View>
@@ -279,29 +280,29 @@ const styles = StyleSheet.create({
         justifyContent : 'center'
     },
     profilePictureCircle : {
-        width : 140,
-        height : 140,
+        width : 120,
+        height : 120,
         alignSelf : 'center',
         borderRadius : 70
     },
     profileImageStyle : {
         width : 107,
         height : 107,
-        marginLeft : 16,
-        marginTop : 15,
+        marginLeft : 7,
+        marginTop : 8,
     },
     nameLabel : {
         textAlign : 'center',
         fontFamily : ilpex.fontSemiBold,
         color : 'black',
-        fontSize : 30,
-        height : 40
+        fontSize : 23,
+        height : 30
     },
     batchLabel : {
         textAlign : 'center',
         fontFamily : ilpex.fontSemiBold,
         color : '#737373',
-        fontSize : 22,
+        fontSize : 18,
     }, 
     statsRow : {
         flexDirection : 'row',
@@ -309,36 +310,43 @@ const styles = StyleSheet.create({
     },
     statsKey : {
         alignSelf : 'flex-start',
-        marginLeft : 25,
-        width : 280,
+        // marginLeft : 25,
+        // width : 280,
+        width : '70%'
     },
     statsValue : {
         width : 80,
+        // backgroundColor : 'red'
     },
     statsContainer : {
         marginTop : 40,
+        // backgroundColor : 'red',
+        marginLeft : '8%',
+        // marginRight : '5%'
+        // marginRight : 2
     },
     statsKeyLabel : {
         fontFamily : ilpex.fontMedium,
         color : 'black',
-        fontSize : 17,
+        fontSize : 14,
     },
     statsValueLabel : {
         fontFamily : ilpex.fontMedium,
         color : 'black',
-        fontSize : 17,
-        textAlign :'center'
+        fontSize : 14,
+        textAlign :'center',
+        paddingLeft : '5%'
     }, 
     percentageLabel : {
         fontFamily : ilpex.fontMedium,
         color : 'black',
-        fontSize : 20,
+        fontSize : 14,
         textAlign :'center',
     },
     remarksLabel : {
         fontFamily : ilpex.fontMedium,
         color : 'black',
-        fontSize : 17,
+        fontSize : 14,
         textAlign : 'center',
         height : 56
     },

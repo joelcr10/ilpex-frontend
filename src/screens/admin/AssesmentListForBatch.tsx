@@ -3,17 +3,12 @@ import { View } from "react-native";
 import { StyleSheet } from "react-native";
 import { Text } from "react-native";
 import { FlatList } from "react-native";
-import BatchCard from "../../components/BatchCard";
 import ilpex from "../../utils/ilpexUI";
-import ThreeDots from "../../components/ThreeDots";
 import { getHook } from "../../network/getHook/getHook";
-import CreateButton from "../../components/CreateButton";
 import { useNavigation } from "@react-navigation/native";
 import BatchCardShimmer from "../../components/loading/BatchCardShimmer";
-import { getItem } from "../../utils/utils";
-import Constants from "../../utils/Constants";
-import { batch } from "react-redux";
 import AssesmentListCard from "../../components/AssesmentListCard";
+import DrawerNavigationHamburger from "../../components/DrawerNavigationHamburger";
 
 const AssesmentListScreen = ()=>{
     const navigation : any= useNavigation();
@@ -48,7 +43,7 @@ const AssesmentListScreen = ()=>{
     },[]);
     return(
         <View style={styles.container}>
-            <ThreeDots color='white'></ThreeDots>
+            <DrawerNavigationHamburger/>
             <Text style = {styles.text}>Assesments</Text>
             <View style={styles.box}>
                 <View style = {styles.dataContainer}>
@@ -79,7 +74,7 @@ const AssesmentListScreen = ()=>{
 const styles = StyleSheet.create({
     container :{
         backgroundColor:ilpex.main,
-        height : '100%',
+        minHeight : 800
     },
     dataContainer : {
         margin : '5%',
