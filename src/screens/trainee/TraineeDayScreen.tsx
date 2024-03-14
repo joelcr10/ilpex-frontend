@@ -92,6 +92,7 @@ const styles = StyleSheet.create({
         backgroundColor:ilpex.white,
         borderTopLeftRadius:20,
         borderTopRightRadius:20,
+        minHeight : 750
         
     },
     headerText: {
