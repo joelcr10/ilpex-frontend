@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import ilpex from "../../utils/ilpexUI";
 import BackButton from "../../components/BackButton";
-import ThreeDots from "../../components/ThreeDots";
 import BarGraph from "../../components/BarChart";
 import { getHook } from "../../network/getHook/getHook";
 import TraineeProfileShimmer from "../../components/loading/TraineeProfileShimmer";
@@ -17,7 +16,7 @@ const TraineeProileAnalysisScreen = () => {
     const [traineeName, setTraineeName] = useState<any[]>([]);
     const [traineeBatch, setTraineeBatch] = useState<any[]>([]);
     const [currentDay, setCurrentDay] = useState(2);
-    const [averageAssessmentScore, setAverageAssessmentScore] = useState<any[]>([]);
+    const [averageAssessmentScore, setAverageAssessmentScore] = useState<any[]>([]) ;
     const [marksIndicatorColor, setMarkIndicatorColor] = useState('black');
     const [marksFeedback, setMarksFeedBack] = useState('placeholder');
     const [resultID, setResultID] = useState<any[]>([]);
@@ -46,11 +45,15 @@ const TraineeProileAnalysisScreen = () => {
             try {
                 const trainee_id = route.params.trainee_id;
                 const {responseData, errorMessage} = await getHook(`/api/v2/trainee/${trainee_id}/scores`);
-                console.log('Trainee ID ------', trainee_id)
+                console.log('Trainee ID Inside Trainee Scores Function------', trainee_id)
                 if(responseData)
                 {
                     console.log("Marks = ", responseData);
-                    const averageScore = responseData.scoreDetails.scoreAverage;
+                    let averageScore;
+                    if(responseData.scoreDetails.scoreAverage === null)
+                        averageScore =0;
+                    else
+                        averageScore = responseData.scoreDetails.scoreAverage;
                     setAverageAssessmentScore(averageScore);
                     const resultIds: string[] = [];
                     const highScores: string[] = [];
@@ -63,27 +66,15 @@ const TraineeProileAnalysisScreen = () => {
                     
                     setResultID(resultIds);
                     setHighScore(highScores);
-
+                    
                     if(averageScore >= 90)
-                    {
                         setMarkIndicatorColor('green')
-                        setMarksFeedBack('Excellent');
-                    }
                     else if (averageScore >= 70)
-                    {
                         setMarkIndicatorColor('orange');
-                        setMarksFeedBack('Above Average');
-                    }
                     else if(averageScore >= 50)
-                    {
                         setMarkIndicatorColor('yellow');
-                        setMarksFeedBack('Below Average');
-                    }
                     else
-                    {
                         setMarkIndicatorColor('red');
-                        setMarksFeedBack('Danger Zone');
-                    }       
                 }
             } catch(error) {
                 console.log('Error', error);
@@ -110,11 +101,28 @@ const TraineeProileAnalysisScreen = () => {
             }
         };
 
+        const getTraineeProgress = async() => {
+            try {
+                const trainee_id = route.params.trainee_id;
+                const {responseData, errorMessage} = await getHook(`/api/v3/trainee/${trainee_id}/days`);
+                console.log('Trainee ID Inside Trainee Progress Function------', trainee_id)
+                if(responseData)
+                {
+                    console.log("Trainee Progress ----->", responseData);
+                }
+            }catch (error)
+            {
+                console.log("Error", error);
+            }
+        }
+
         const traineeProfileLoader = async () =>{
             await getTraineeScores();
-           await getTraineeProfile();
-           await getCurrentDay();
+            await getTraineeProfile();
+            await getTraineeProgress();
+            await getCurrentDay();
         }
+
 
         traineeProfileLoader();
 
@@ -158,7 +166,7 @@ const TraineeProileAnalysisScreen = () => {
                     <View style = {styles.statsContainer}>
                         <View style = {styles.statsRow}>
                             <View style = {styles.statsKey}>
-                                <Text style = {styles.statsKeyLabel}>Current Status</Text>
+                                <Text style = {styles.statsKeyLabel}>Current Day</Text>
                             </View>
                             <View style = {styles.statsValue}>
                             <Text style = {styles.statsValueLabel}>Day {currentDay}</Text>
@@ -175,9 +183,6 @@ const TraineeProileAnalysisScreen = () => {
                                     {averageAssessmentScore}%
                                     </Text>
                                 </View>
-                                <Text style ={styles.remarksLabel}>
-                                    {marksFeedback}
-                                </Text>
                             </View>
                         </View>
                     </View>
@@ -194,35 +199,39 @@ const styles = StyleSheet.create({
         backgroundColor : ilpex.white,
         height : '100%',
     },
+    adminContainer : {
+        backgroundColor : ilpex.white,
+        height : 1000,
+    },
     profilePictureContainer : {
         height : 150,
-        marginTop : 70,
+        marginTop : 40,
         justifyContent : 'center'
     },
     profilePictureCircle : {
-        width : 140,
-        height : 140,
+        width : 120,
+        height : 120,
         alignSelf : 'center',
         borderRadius : 70
     },
     profileImageStyle : {
         width : 107,
         height : 107,
-        marginLeft : 16,
-        marginTop : 15,
+        marginLeft : 7,
+        marginTop : 8,
     },
     nameLabel : {
         textAlign : 'center',
         fontFamily : ilpex.fontSemiBold,
         color : 'black',
-        fontSize : 30,
-        height : 40
+        fontSize : 23,
+        height : 30
     },
     batchLabel : {
         textAlign : 'center',
         fontFamily : ilpex.fontSemiBold,
         color : '#737373',
-        fontSize : 22,
+        fontSize : 18,
     }, 
     statsRow : {
         flexDirection : 'row',
@@ -230,43 +239,44 @@ const styles = StyleSheet.create({
     },
     statsKey : {
         alignSelf : 'flex-start',
-        marginLeft : 25,
-        width : 280,
+        width : '70%'
     },
     statsValue : {
         width : 80,
     },
     statsContainer : {
         marginTop : 40,
+        marginLeft : '8%',
     },
     statsKeyLabel : {
         fontFamily : ilpex.fontMedium,
         color : 'black',
-        fontSize : 17,
+        fontSize : 14,
     },
     statsValueLabel : {
         fontFamily : ilpex.fontMedium,
         color : 'black',
-        fontSize : 17,
-        textAlign :'center'
+        fontSize : 14,
+        textAlign :'center',
+        paddingLeft : '5%'
     }, 
     percentageLabel : {
         fontFamily : ilpex.fontMedium,
         color : 'black',
-        fontSize : 20,
+        fontSize : 14,
         textAlign :'center',
     },
     remarksLabel : {
         fontFamily : ilpex.fontMedium,
         color : 'black',
-        fontSize : 17,
+        fontSize : 14,
         textAlign : 'center',
         height : 56
     },
     colorDot : {
         width : 13,
         height : 13,
-        marginTop : 6,
+        marginTop : '4%',
         marginRight : 10,
         borderRadius : 6.5,
         backgroundColor : 'lime',

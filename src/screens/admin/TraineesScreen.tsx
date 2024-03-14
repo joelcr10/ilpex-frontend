@@ -59,6 +59,7 @@ const TraineeScreen = () => {
                         </TextInput>
                         <MaterialCommunityIcons name="magnify" size={20}/>
                     </View>
+                    <View style = {styles.cardContainer}>
                     {!isLoading ? (
                         <TraineeCardShimmer/>
                     ) : (
@@ -76,6 +77,7 @@ const TraineeScreen = () => {
                         keyExtractor={item => item.id}
                         />
                     )}            
+                    </View>
                 </View>
             </View>
         </ScrollView>
@@ -92,18 +94,22 @@ const styles = StyleSheet.create({
     innerContainer : {
         backgroundColor : 'white',
         height : '100%',
-        marginTop : '2.5%',
+        marginTop : '5%',
         borderTopEndRadius : 30,
         borderTopStartRadius : 30,
         paddingTop : '10%',
-        paddingLeft : '10%',
-        paddingRight : '10%',
+    },
+
+    cardContainer : {
+        paddingTop : '10%',
+        paddingLeft : '7%',
+        paddingRight : '7%',
     },
     containerHeading : {
         color : 'white',
         textAlign : 'center',
-        fontSize : 50,
-        marginTop : 80,
+        fontSize: 35,
+        marginTop : '17%',
         fontFamily : 'Poppins-SemiBold',
     },
     shimmer:{
@@ -117,12 +123,16 @@ const styles = StyleSheet.create({
         display:'flex',
         flexDirection:'row',
         backgroundColor:'#E4D8FE',
+        // backgroundColor : 'red',
         borderRadius:10,
-        marginTop:25,
-        marginBottom:25,
+        marginTop:'3.5%',
+        marginRight : '5%',
+        marginBottom:'1%',
         alignItems:'center',
-        width:330,
+        width:'90%',
         height:50,
+        margin : '5%',
+        alignSelf : 'center'
      },
      searchBarStyles:{
         marginLeft:15,
