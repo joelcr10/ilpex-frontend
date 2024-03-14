@@ -34,10 +34,11 @@ const Daywise = (props: PropsType) => {
               </View>
               <View>
                {status && progressValue === 100 && (
-                            <View style={{flexDirection: 'row'}}>
-                  
-                              <Icon name="check" color={ilpex.success} size={17} />
-                              <Text style={styles.completeText}>Completed</Text>
+                            <View style={{flexDirection: 'row', alignItems : 'center'}}>
+                              <View style = {{paddingBottom : 5}}>
+                              <Icon name="check" color={ilpex.success} size={17}/>
+                              </View>
+                              <Text style={styles.completeText}>Completed</Text> 
                             </View>
                           )}
                 {!status && (
@@ -84,15 +85,18 @@ const styles = StyleSheet.create({
     marginTop: 10,
     margin: 10,
     zIndex: 10,
+  
   },
   learningLabel: {
     position:'relative',
-    fontSize: 25,
+    fontSize: 20,
     color: ilpex.black,
+    fontFamily : ilpex.fontMedium
   },
   learningTime: {
     color: ilpex.darkGrey,
-    fontSize: 15,
+    fontSize: 13,
+    fontFamily : ilpex.fontMedium,
     position:'relative',
   },
 
@@ -103,9 +107,9 @@ const styles = StyleSheet.create({
   },
   completeText: {
     fontSize: 15,
-    fontWeight: "normal",
+    fontFamily : ilpex.fontMedium,
     marginRight: 10,
-    paddingLeft : 10,
+    paddingLeft : 5,
     color: ilpex.success ,
     position:'relative',
   },

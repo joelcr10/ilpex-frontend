@@ -33,35 +33,63 @@ const ResetPasswordScreen = ()=> {
             navigation.navigate('Login');
           };
 
-        const handleResetPassword = async() =>{
+          const handleResetPassword = async () => {
             setButtonpressed(true);
-    
-        try {
-            if (newPassword !== confirmPassword) {
-                setPasswordMatchError("Passwords don't match");
-                return;
-            }
-    
-            const { success, statusCode, resetPasswordResp, errorMessage } = await ResetPassword({
-                email,
-                newPassword,
-                confirmPassword,
-            });
+        
+            try {
+                // Password validation criteria
+                const symbolRegex = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
+                const capitalRegex = /[A-Z]/;
+                const numberRegex = /[0-9]/;
 
-            setSuccessValue(success);
-    
-            if (success) {
-                console.log("Your Password has been changed ", resetPasswordResp.user_name);
-                showModal();// Show the modal on success
                 setButtonpressed(false);
-            }else{
-                showModal();// Show the modal with failure message
-                setButtonpressed(false);
+        
+                let validationErrorMessage = ""; // Renamed variable
+        
+                if (!symbolRegex.test(newPassword)) {
+                    validationErrorMessage += "Password must contain at least one symbol. ";
+                }
+                if (!capitalRegex.test(newPassword)) {
+                    validationErrorMessage += "Password must contain at least one capital letter. ";
+                }
+                if (!numberRegex.test(newPassword)) {
+                    validationErrorMessage += "Password must contain at least one number. ";
+                }
+                if (newPassword.length < 12) {
+                    validationErrorMessage += "Password must be at least 12 characters long. ";
+                }
+        
+                if (validationErrorMessage !== "") {
+                    setPasswordMatchError(validationErrorMessage);
+                    return;
+                }
+        
+                if (newPassword !== confirmPassword) {
+                    setPasswordMatchError("Passwords don't match");
+                    return;
+                }
+        
+                const { success, statusCode, resetPasswordResp, errorMessage } = await ResetPassword({
+                    email,
+                    newPassword,
+                    confirmPassword,
+                });
+        
+                setSuccessValue(success);
+        
+                if (success) {
+                    console.log("Your Password has been changed ", resetPasswordResp.user_name);
+                    showModal(); // Show the modal on success
+                    setButtonpressed(false);
+                } else {
+                    showModal(); // Show the modal with failure message
+                    setButtonpressed(false);
+                }
+            } catch (error) {
+                console.error("Error during password change", error);
             }
-        } catch (error) {
-        console.error("Error during password change", error);
-        }
-    };
+        };
+        
 
 
     return(
@@ -82,11 +110,14 @@ const ResetPasswordScreen = ()=> {
                 />
             {passwordMatchError ? <Text style={styles.errorText}>{passwordMatchError}</Text> : null}
              <Text>{"\n"}{"\n"}{"\n"}</Text>
-            <Button 
+             <View style={styles.buttonview}>
+             <Button 
                 name={"Save"} 
                 onPress={handleResetPassword}
                 buttonPressed={buttonPressed}
             />
+             </View>
+            
             {/* Conditionally render the ModalComponent with dynamic text */}
             <ModalComponent
                 isVisible={isModalVisible}
@@ -112,6 +143,9 @@ const styles = StyleSheet.create({
         marginTop: 5,
         textAlign:'center'
       },
+      buttonview:{
+        alignSelf:'center',
+    },
 })
 
 

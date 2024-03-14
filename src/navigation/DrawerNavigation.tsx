@@ -116,10 +116,10 @@ const DrawerNavigation = () => {
             /> */}
 
             <Drawer.Screen 
-                name="Create User" 
+                name="Create Admin" 
                 component={CreateUserScreen} 
                 options={{
-                    title: 'Create User',
+                    title: 'Create Admin',
                     drawerIcon: ({focused, size}) => (
                         <View style = {styles.iconContainer}>
                             <Image
