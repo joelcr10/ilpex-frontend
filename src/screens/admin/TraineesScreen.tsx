@@ -1,72 +1,82 @@
-import React, { useState } from "react";
-import { FlatList, ScrollView, StyleSheet, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { FlatList, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import TraineeCard from "../../components/TraineeCard";
 import TraineeCardShimmer from "../../components/loading/TraineeCardShimmer";
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { getHook } from "../../network/getHook/getHook";
+import DrawerNavigationHamburger from "../../components/DrawerNavigationHamburger";
 
 const TraineeScreen = () => {
 
-    const [isLoading, setLoading] = useState(true);     //To the Page designer, set it to false for proper working
-    
-    // Replace the below data part with API call
-    const data = [
-        {
-            id : '1',
-            traineeName : 'Joel C Raju',
-            batchName : 'ILP 2023-24 B2'
-        },
-        {
-            id : '2',
-            traineeName : 'Nigin N Manayil',
-            batchName : 'ILP 2023-24 B2'
-        },
-        {
-            id : '3',
-            traineeName : 'Thimna Raphel',
-            batchName : 'ILP 2023-24 B2'
-        },
-        {
-            id : '4',
-            traineeName : 'Elena Maria Varghese',
-            batchName : 'ILP 2023-24 B2'
-        },
-        {
-            id : '5',
-            traineeName : 'Sreejaya V S',
-            batchName : 'ILP 2023-24 B2'
-        },
-        {
-            id : '6',
-            traineeName : 'Ashik George',
-            batchName : 'ILP 2023-24 B2'
-        },
-        {
-            id : '5',
-            traineeName : 'Nebil V',
-            batchName : 'ILP 2023-24 B2'
-        },
-    ]
+    const [isLoading, setLoading] = useState(true);
+    const [traineesList, setTraineesList] = useState<any[]>([]);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [filteredTraineesList, setFilteredTraineesList] = useState<any[]>([]);
+
+    const handleSearch = (text : string) => {
+        console.log(text)
+        setSearchQuery(text);
+        // Filter the data based on the search query
+        const filteredTrainees : any = traineesList.filter(item =>
+          item.user.user_name.toLowerCase().includes(text.toLowerCase())
+        );
+        setFilteredTraineesList(filteredTrainees);
+    };
+
+    useEffect (() => {
+        const getTraineesList = async() => {
+            try {
+                const {responseData, errorMessage} = await getHook(`/api/v2/trainee`);
+                if(responseData)
+                {
+                    setTraineesList(responseData);
+                    setFilteredTraineesList(responseData);
+                }
+            }
+            catch(error) {
+                console.log('Error', error);
+            }
+        };
+
+        getTraineesList();
+    }, []);
 
     return (
-        <ScrollView>
+        <ScrollView 
+        showsVerticalScrollIndicator={false} 
+        >
             <View style = {styles.pageContainer}>
-                    {/* Below container is the main container for all the cards. Try not to modify. Adjust Margin Top to change the distance between the white part and the purple part. Remove this comment when designing the page.*/}
-                    <View style = {styles.innerContainer}>
+                <DrawerNavigationHamburger/>
+                <Text style={styles.containerHeading}>Trainees</Text>
+                <View style = {styles.innerContainer}>
+                    <View style={styles.searchBarContainer}>
+                        <TextInput  
+                            style={styles.searchBarStyles}
+                            placeholder="Search here"
+                            onChangeText={handleSearch}
+                            value={searchQuery}
+                        >
+                        </TextInput>
+                        <MaterialCommunityIcons name="magnify" size={20}/>
+                    </View>
                     {!isLoading ? (
                         <TraineeCardShimmer/>
-                        ) : (
+                    ) : (
                         <FlatList
                         showsVerticalScrollIndicator={false}
-                        data={data}
+                        data={filteredTraineesList}
                         renderItem={({ item }) => (
                             <TraineeCard
-                            traineeName={item.traineeName}
-                            batchName={item.batchName}
+                            traineeName={item.user.user_name}
+                            batchName={item.batch.batch_name}
+                            traineeId = {item.trainee_id}
+                            userId = {item.user_id}
                             />
                         )}
                         keyExtractor={item => item.id}
                         />
                     )}            
-                    </View>
+                </View>
             </View>
         </ScrollView>
     );
@@ -76,14 +86,15 @@ const TraineeScreen = () => {
 const styles = StyleSheet.create({
     pageContainer : {
         backgroundColor : '#8518FF',
-        height : '100%',
+        minHeight : 850,
+        marginBottom : 40,
     },
     innerContainer : {
         backgroundColor : 'white',
         height : '100%',
-        marginTop : '15%',
-        borderTopStartRadius : 50,
-        borderTopEndRadius : 50,
+        marginTop : '2.5%',
+        borderTopEndRadius : 30,
+        borderTopStartRadius : 30,
         paddingTop : '10%',
         paddingLeft : '10%',
         paddingRight : '10%',
@@ -102,6 +113,22 @@ const styles = StyleSheet.create({
         marginBottom : 25,
         elevation : 4,
     },
+    searchBarContainer:{
+        display:'flex',
+        flexDirection:'row',
+        backgroundColor:'#E4D8FE',
+        borderRadius:10,
+        marginTop:25,
+        marginBottom:25,
+        alignItems:'center',
+        width:330,
+        height:50,
+     },
+     searchBarStyles:{
+        marginLeft:15,
+        textAlign:'left',
+        flex:0.9
+     }
 })
 
 

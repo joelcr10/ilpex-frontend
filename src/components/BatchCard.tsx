@@ -3,11 +3,17 @@ import { TouchableOpacity, View } from "react-native";
 import { Text } from "react-native";
 import { StyleSheet } from "react-native";
 import ilpex from "../utils/ilpexUI";
-import CircularProgress from "./CircularProgress";
+import { useNavigation } from "@react-navigation/native";
 
-type BatchComponentProps = {batchName : string, traineeNo : string, date : string,progress : number,onPress:()=>any};
+type BatchComponentProps = {batch_name : string, traineeNo : string, date : string,totalDays : string,progressDays : any,onPressFunc:()=>void};
 
-const BatchCard=({batchName,traineeNo,date,progress,onPress} : BatchComponentProps)=>{
+const BatchCard=({batch_name,traineeNo,date,totalDays,progressDays,onPressFunc} : BatchComponentProps)=>{
+    const navigation : any= useNavigation();
+    const buttonPress = (batch_id:number)=>{
+        navigation.navigate("BatchDetails", {
+            batch_id: batch_id,
+          });
+        }
 
     const getMonthName=(month : number)=> {
         const months = [
@@ -35,12 +41,10 @@ const BatchCard=({batchName,traineeNo,date,progress,onPress} : BatchComponentPro
     const formattedDate = `${monthName} ${day} ${year}`;
 
     return(
-        <TouchableOpacity onPress={onPress}>
+        <TouchableOpacity onPress={onPressFunc}>
             <View style={styles.container}>
-                <View style={{
-                    marginStart:10
-                }}>
-                    <Text style={styles.batchName}>{batchName}</Text>
+                <View style={styles.dataContainer}>
+                    <Text style={styles.batch_name}>{batch_name}</Text>
                     <View style = {{
                         flexDirection : 'row'
                     }}>
@@ -51,8 +55,12 @@ const BatchCard=({batchName,traineeNo,date,progress,onPress} : BatchComponentPro
                     </View>
                     <Text style={styles.date}>{formattedDate}</Text>
                 </View>
-                <View style={styles.circularProgress}>
-                    <CircularProgress completeStatus={progress}></CircularProgress>
+                <View style={styles.dayContainer}>
+                    <View style={styles.dayTextContainer}>
+                    <Text style={styles.dayText}>Day</Text>
+                    <Text style={styles.dayText}>{progressDays}/{totalDays}</Text>
+                    {/* <CircularProgress completeStatus={progress} color={ilpex.main}></CircularProgress> */}
+                    </View>
                 </View>
             </View>
         </TouchableOpacity>
@@ -69,9 +77,14 @@ const styles = StyleSheet.create({
         marginBottom : '8%',
         elevation:5,
         flexDirection:'row',
-        alignSelf:'center'
+        alignSelf:'center',
+        shadowColor: ilpex.black,
     },
-    batchName:{
+    dataContainer : {
+        marginStart:10,
+        width : 220
+    },
+    batch_name:{
         marginTop:10,
         marginStart:20,
         color : 'black',
@@ -105,9 +118,24 @@ const styles = StyleSheet.create({
         borderRadius:5,
         alignSelf :'center'
     },
-    circularProgress : {
-        marginStart:40,
-        marginTop:20
+    dayContainer:{
+        marginTop:13,
+        marginEnd : 30,
+        backgroundColor:ilpex.active,
+        borderRadius:90,
+        height:80,
+        width : 80,
+        alignContent:'center',
+        alignItems:'center'
+    },
+    dayTextContainer : {
+        marginTop:10
+    },
+    dayText : {
+        color : ilpex.white,
+        fontFamily:ilpex.fontSemiBold,
+        textAlign:'center',
+        fontSize:17
     }
 })
 

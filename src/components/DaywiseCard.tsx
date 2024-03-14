@@ -37,7 +37,7 @@ const Daywise = (props: PropsType) => {
                             <View style={{flexDirection: 'row'}}>
                   
                               <Icon name="check" color={ilpex.success} size={17} />
-                              <Text style={styles.completeText}>complete</Text>
+                              <Text style={styles.completeText}>Completed</Text>
                             </View>
                           )}
                 {!status && (
@@ -49,7 +49,7 @@ const Daywise = (props: PropsType) => {
                 
                 {status && progressValue !== 100 && (
                     <View>
-                      <CircularProgress completeStatus={progressValue} />
+                      <CircularProgress completeStatus={Math.ceil(progressValue)} color={ilpex.main} />
                     </View>
                   )}
               </View>
@@ -105,6 +105,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "normal",
     marginRight: 10,
+    paddingLeft : 10,
     color: ilpex.success ,
     position:'relative',
   },

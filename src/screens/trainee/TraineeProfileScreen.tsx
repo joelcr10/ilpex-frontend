@@ -15,12 +15,13 @@ const TraineeProfileScreen = () => {
     const [traineeName, setTraineeName] = useState<any[]>([]);
     const [traineeBatch, setTraineeBatch] = useState<any[]>([]);
     const [currentDay, setCurrentDay] = useState(2);
-    const [averageAssessmentScore, setAverageAssessmentScore] = useState<number>(0);
+    const [averageAssessmentScore, setAverageAssessmentScore] = useState<any[]>([]);
     const [marksIndicatorColor, setMarkIndicatorColor] = useState('black');
     const [marksFeedback, setMarksFeedBack] = useState('placeholder');
     const [resultID, setResultID] = useState<any[]>([]);
     const [highScore, setHighScore] = useState<any[]>([]);
     const [isLoadingCurrentDay, setLoadingCurrentDay] = useState(false);
+    const [roleId, setRoleId] = useState('roleid');
     let batchId : number = 0; 
 
     useEffect(() => {
@@ -28,17 +29,23 @@ const TraineeProfileScreen = () => {
             try {
                 
                 const role_id = await getItem(Constants.ROLE_ID);
+                if(role_id)
+                    setRoleId(role_id);
+                console.log("Profile Role ID : ", role_id);
                 const user_id = await getItem(Constants.USER_ID);
-                console.log('Role ID ------', role_id)
-                console.log('User ID ------', user_id)
                 const {responseData, errorMessage} = await getHook(`/api/v3/profile/${user_id}`);
                 if(responseData)
                 {
-                    setTraineeName(responseData.profileDetails.user.user_name);
-                    setTraineeBatch(responseData.profileDetails.batch.batch_name);
-                    batchId = responseData.profileDetails.batch_id;
-
-                    console.log("batch id set",responseData.profileDetails.batch_id);
+                    if(role_id === '103')
+                    {
+                        setTraineeName(responseData.data.user_name);
+                        setTraineeBatch(responseData.data.trainee.batch.batch_name);
+                        batchId = responseData.data.trainee.batch_id;
+                    }
+                    else
+                    {
+                        setTraineeName(responseData.data.user_name);
+                    }
                 }
             } catch(error) {
                 console.log('Error', error);
@@ -47,50 +54,53 @@ const TraineeProfileScreen = () => {
 
         const getTraineeScores = async() => {
             try {
-                const trainee_id = await getItem(Constants.TRAINEE_ID);
-                const {responseData, errorMessage} = await getHook(`/api/v2/trainee/${trainee_id}/scores`);
-                console.log('Trainee ID ------', trainee_id)
-                if(responseData)
+                const role_id = await getItem(Constants.ROLE_ID);
+                if(role_id)
+                    setRoleId(role_id);
+                console.log("Score Role ID : ", role_id);
+                if(role_id === '103')
                 {
-                    console.log("Marks = ", responseData);
-                    if(responseData.scoreDetails.ScoreAverage === null)
-                        setAverageAssessmentScore(0)
-                    else
-                        setAverageAssessmentScore(responseData.scoreDetails.ScoreAverage);
-                    
-                    const resultIds: string[] = [];
-                    const highScores: string[] = [];
+                    const trainee_id = await getItem(Constants.TRAINEE_ID);
+                    const {responseData, errorMessage} = await getHook(`/api/v2/trainee/${trainee_id}/scores`);
+                    console.log('Trainee ID ------', trainee_id)
+                    if(responseData)
+                    {
+                        console.log("Marks = ", responseData);
+                        const averageScore = responseData.scoreDetails.scoreAverage;
+                        setAverageAssessmentScore(averageScore);
+                        const resultIds: string[] = [];
+                        const highScores: string[] = [];
+                        const scores = responseData.scoreDetails.scores;
+                        scores.forEach((score: any, index: number) => {
+                            resultIds.push(`A${index + 1}`);
+                            highScores.push(score.high_score);
+                            console.log(`RESULT ID : A${index + 1}, HIGH SCORE : ${score.high_score}`);
+                        });
+                        
+                        setResultID(resultIds);
+                        setHighScore(highScores);
 
-                    responseData.scoreDetails.scores.forEach((score : any, index : number) => {
-                        resultIds.push(`A${index + 1}`);
-                        highScores.push(score.high_score);
-                        console.log(`RESULT ID : A${index + 1}, HIGH SCORE : ${score.highScore}`);
-
-                    });
-                    
-                    setResultID(resultIds);
-                    setHighScore(highScores);
-
-                    if(responseData.scoreDetails.ScoreAverage >= 90)
-                    {
-                        setMarkIndicatorColor('green')
-                        setMarksFeedBack('Excellent');
+                        if(averageScore >= 90)
+                        {
+                            setMarkIndicatorColor('green')
+                            setMarksFeedBack('Excellent');
+                        }
+                        else if (averageScore >= 70)
+                        {
+                            setMarkIndicatorColor('orange');
+                            setMarksFeedBack('Above Average');
+                        }
+                        else if(averageScore >= 50)
+                        {
+                            setMarkIndicatorColor('yellow');
+                            setMarksFeedBack('Below Average');
+                        }
+                        else
+                        {
+                            setMarkIndicatorColor('red');
+                            setMarksFeedBack('Danger Zone');
+                        }       
                     }
-                    else if (responseData.scoreDetails.ScoreAverage >= 70)
-                    {
-                        setMarkIndicatorColor('orange');
-                        setMarksFeedBack('Above Average');
-                    }
-                    else if(responseData.scoreDetails.ScoreAverage >= 50)
-                    {
-                        setMarkIndicatorColor('yellow');
-                        setMarksFeedBack('Below Average');
-                    }
-                    else
-                    {
-                        setMarkIndicatorColor('red');
-                        setMarksFeedBack('Danger Zone');
-                    }       
                 }
             } catch(error) {
                 console.log('Error', error);
@@ -99,17 +109,27 @@ const TraineeProfileScreen = () => {
 
         const getCurrentDay = async() => {
             try {
-                const currentDate = new Date();
-                currentDate.setDate(currentDate.getDate() + 1);
-                const isoString = currentDate.toISOString();
-                const dateString = isoString.substring(0, isoString.indexOf('T'));
-                console.log("CurrentDate = ", dateString);
-                console.log("Batch ID = ", batchId);
-                const {responseData, errorMessage} = await getHook(`/api/v3/batch/${batchId}/day/${dateString}`);
-                if(responseData)
+                const role_id = await getItem(Constants.ROLE_ID);
+                if(role_id)
+                    setRoleId(role_id);
+                console.log("Day Role ID : ", role_id);
+                if(role_id === '103')
                 {
-                    setCurrentDay(responseData.current_day);
-                    console.log("Current Day Is ----------",responseData.current_day )
+                    const currentDate = new Date();
+                    currentDate.setHours(currentDate.getHours() + 5);
+                    currentDate.setMinutes(currentDate.getMinutes() + 30);
+                    console.log("Current DATE --------------", currentDate);
+                    const isoString = currentDate.toISOString();
+                    const dateString = isoString.substring(0, isoString.indexOf('T'));
+                    const {responseData, errorMessage} = await getHook(`/api/v3/batch/${batchId}/day/${dateString}`);
+                    if(responseData)
+                    {
+                        setCurrentDay(responseData.current_day);
+                        setLoadingCurrentDay(true);
+                    }
+                }
+                else 
+                {
                     setLoadingCurrentDay(true);
                 }
             } catch(error) {
@@ -118,8 +138,8 @@ const TraineeProfileScreen = () => {
         };
 
         const traineeProfileLoader = async () =>{
+            await getTraineeScores();
            await getTraineeProfile();
-           await getTraineeScores();
            await getCurrentDay();
         }
 
@@ -128,79 +148,132 @@ const TraineeProfileScreen = () => {
         
     }, []);
 
+    const colorArray = [
+        '#FF6347', '#FF7F50', '#FFA07A', '#FFD700', '#FF69B4', '#FF1493', '#FFC0CB', '#87CEEB', '#4682B4', '#40E0D0', '#00FF7F', '#7FFF00', '#32CD32', '#ADFF2F', '#00FF00', '#6B8E23', '#228B22', '#7CFC00', '#98FB98', '#008000', '#556B2F', '#20B2AA', '#00CED1', '#1E90FF', '#4169E1', '#0000FF', '#000080', '#8A2BE2', '#4B0082', '#800080', '#9932CC', '#9400D3', '#8B008B', '#A52A2A', '#D2691E', '#B22222', '#800000'
+      ];
+      
     const getRandomColor = () => {
-        const generatedColor =  '#' + Math.floor(Math.random()*16777215).toString(16);
-    if(generatedColor === '#bdd8c' || generatedColor === '#6de5b')
-        getRandomColor();
-    else
-    console.log(generatedColor);
-    return generatedColor;
-}
+    const randomIndex = Math.floor(Math.random() * colorArray.length);
+    return colorArray[randomIndex];
+    };
 
     const [circleBackgroundColor, setCircleBackgroundColor] = useState(getRandomColor());
 
-    return(
-        <ScrollView>
-        {
-            (!isLoadingCurrentDay) ? (
-                <TraineeProfileShimmer/>
-            ) : (
-                <View style = {styles.pageContainer}>
-                    <BackButton color = 'black'/>
-                    <ThreeDots color = 'black'/>
-                    <View style = {styles.profilePictureContainer}>
-                        <View style = {[styles.profilePictureCircle, {backgroundColor : circleBackgroundColor}]}>
-                            <Image
-                                style = {styles.profileImageStyle}
-                                source = {require('../../../assets/icons/user.png')}/>
-                        </View>
-                    </View>
-                    <View>
-                        <Text style = {styles.nameLabel}>
-                            {traineeName}
-                        </Text>
-                        <Text style = {styles.batchLabel}>
-                            {traineeBatch}
-                        </Text>
-                    </View>
-                    <View style = {styles.statsContainer}>
-                        <View style = {styles.statsRow}>
-                            <View style = {styles.statsKey}>
-                                <Text style = {styles.statsKeyLabel}>Current Status</Text>
-                            </View>
-                            <View style = {styles.statsValue}>
-                            <Text style = {styles.statsValueLabel}>Day {currentDay}</Text>
+    if (roleId === '103')
+    {
+        return(
+            <ScrollView>
+            {
+                (!isLoadingCurrentDay) ? (
+                    <TraineeProfileShimmer/>
+                ) : (
+                    <View style = {styles.pageContainer}>
+                        <BackButton color = 'black'/>
+                        <ThreeDots color = 'black'/>
+                        <View style = {styles.profilePictureContainer}>
+                            <View style = {[styles.profilePictureCircle, {backgroundColor : circleBackgroundColor}]}>
+                                <Image
+                                    style = {styles.profileImageStyle}
+                                    source = {require('../../../assets/icons/user.png')}/>
                             </View>
                         </View>
-                        <View style = {styles.statsRow}>
-                            <View style = {styles.statsKey}>
-                                <Text style = {styles.statsKeyLabel}>Average Assessment Score</Text>
+                        <View>
+                            <Text style = {styles.nameLabel}>
+                                {traineeName}
+                            </Text>
+                            <Text style = {styles.batchLabel}>
+                                {traineeBatch}
+                            </Text>
+                        </View>
+                        <View style = {styles.statsContainer}>
+                            <View style = {styles.statsRow}>
+                                <View style = {styles.statsKey}>
+                                    <Text style = {styles.statsKeyLabel}>Current Status</Text>
+                                </View>
+                                <View style = {styles.statsValue}>
+                                <Text style = {styles.statsValueLabel}>Day {currentDay}</Text>
+                                </View>
                             </View>
-                            <View style = {styles.statsValue}>
-                                <View style = {styles.percentageAndColorContainer}>
-                                    <View style = {[styles.colorDot, {backgroundColor : marksIndicatorColor}]}></View>
-                                    <Text style ={styles.percentageLabel}>
-                                    {averageAssessmentScore}%
+                            <View style = {styles.statsRow}>
+                                <View style = {styles.statsKey}>
+                                    <Text style = {styles.statsKeyLabel}>Average Assessment Score</Text>
+                                </View>
+                                <View style = {styles.statsValue}>
+                                    <View style = {styles.percentageAndColorContainer}>
+                                        <View style = {[styles.colorDot, {backgroundColor : marksIndicatorColor}]}></View>
+                                        <Text style ={styles.percentageLabel}>
+                                        {averageAssessmentScore}%
+                                        </Text>
+                                    </View>
+                                    <Text style ={styles.remarksLabel}>
+                                        {marksFeedback}
                                     </Text>
                                 </View>
-                                <Text style ={styles.remarksLabel}>
-                                    {marksFeedback}
-                                </Text>
+                            </View>
+                        </View>
+                        <BarGraph data={highScore} labels={resultID}></BarGraph>
+                    </View>
+                )
+            }
+            </ScrollView>
+        );
+    }
+    else 
+    {
+        return(
+            <ScrollView>
+            {
+                (!isLoadingCurrentDay) ? (
+                    <TraineeProfileShimmer/>
+                ) : (
+                    <View style = {styles.adminContainer}>
+                        <BackButton color = 'black'/>
+                        <View style = {styles.profilePictureContainer}>
+                            <View style = {[styles.profilePictureCircle, {backgroundColor : circleBackgroundColor}]}>
+                                <Image
+                                    style = {styles.profileImageStyle}
+                                    source = {require('../../../assets/icons/user.png')}/>
+                            </View>
+                        </View>
+                        <View>
+                            <Text style = {styles.nameLabel}>
+                                {traineeName}
+                            </Text>
+                        </View>
+                        <View style = {styles.statsContainer}>
+                            <View style = {styles.statsRow}>
+                                <View style = {styles.statsKey}>
+                                    <Text style = {styles.statsKeyLabel}>Role ID</Text>
+                                </View>
+                                <View style = {styles.statsValue}>
+                                <Text style = {styles.statsValueLabel}>{roleId}</Text>
+                                </View>
+                            </View>
+                            <View style = {styles.statsRow}>
+                                <View style = {styles.statsKey}>
+                                    <Text style = {styles.statsKeyLabel}>Employee Status</Text>
+                                </View>
+                                <View style = {styles.statsValue}>
+                                <Text style = {styles.statsValueLabel}>Trainer</Text>
+                                </View>
                             </View>
                         </View>
                     </View>
-                    <BarGraph data={highScore} labels={resultID}></BarGraph>
-                </View>
-            )
-        }
-        </ScrollView>
-    );
+                )
+            }
+            </ScrollView>
+        );
+    }
 }
 
 const styles = StyleSheet.create({
     pageContainer : {
         backgroundColor : ilpex.white,
         height : '100%',
+    },
+    adminContainer : {
+        backgroundColor : ilpex.white,
+        height : 1000,
     },
     profilePictureContainer : {
         height : 150,

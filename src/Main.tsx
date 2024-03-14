@@ -27,37 +27,43 @@ const Main =  () =>{
     const role_id = useSelector((state: any) => state.userDetailsReducer.role_id);
     const trainee_id = useSelector((state: any) => state.userDetailsReducer.trainee_id);
     const user_id = useSelector((state: any) => state.userDetailsReducer.user_id);
-    // const isLoggedIn = false;
+    const token = useSelector((state: any) => state.userDetailsReducer.token);
+    const user_name = useSelector((state: any) => state.userDetailsReducer.user_name);
+    
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState<boolean>(true);
+
+   
     
-    //  const role_id: string = '103' //change this to '103' to navigate to Trainee screen
     console.log('role id ----------',role_id);
     console.log('trainee_id ----------',trainee_id);
     console.log('user_id ----------',user_id);
-    console.log('user details stored globally');
+    console.log('token is ---------',token);
+    console.log('user_name is----------',user_name);
+    console.log('user details stored globally ----->');
 
     console.log("hi")
     useEffect(() => {
         setIsLoading(true);
         (async () => {
           const isLogin = await getItem(Constants.IS_LOGIN);
-
-
+          
+          
           const token = await getItem(Constants.TOKEN);
           const role_id = await getItem(Constants.ROLE_ID);
           const user_id = await getItem(Constants.USER_ID);
           const trainee_id = await getItem(Constants.TRAINEE_ID);
+          const user_name = await getItem(Constants.USER_NAME);
 
           const loginResp = {
             token: token||'',
             role_id: role_id||'',
             user_id: user_id||'',
             trainee_id:trainee_id||'',
+            user_name:user_name||'',
           }
           console.log(loginResp);
 
-          // const isLogin = 'true';
           
 
           if (isLogin === 'true') {
@@ -76,6 +82,7 @@ const Main =  () =>{
         <SplashScreen />
       ) : (
         <NavigationContainer>
+          
             {isLoggedIn ? (
                 role_id=='103'? 
                 <TraineeNavigation /> : <AdminNavigation/>

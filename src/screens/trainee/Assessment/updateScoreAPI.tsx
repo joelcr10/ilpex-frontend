@@ -1,12 +1,7 @@
+import { useSelector } from "react-redux";
 import api from "../../../network/api";
-
-
-interface scoreProp{
-    assessment_id: number;
-    user_id: number;
-    score: number;
-}
-
+import Constants from "../../../utils/Constants";
+import { getItem } from "../../../utils/utils";
 
 
 type responseType = {message: string}
@@ -25,27 +20,36 @@ export async function updateScoreAPI(assessment_id: number, user_id: number, sco
     let statusCode: string = '';
     let responseData: any;
 
+  
+
+    const token = await getItem(Constants.TOKEN);
+
+    const authorization =  {
+        headers: {
+          'Authorization': 'Bearer ' + token
+        }
+    }
+
 
     const payload = {
         assessment_id: assessment_id,
-        user_id: user_id,
+        user_id: Number(user_id),
         score: score
     }
 
     try{
         const response = await api.post(
-            `/api/v3/assessment/`,
-            payload
+            `/api/v3/assessment`,
+            payload,
+            authorization
         );
         
-
         statusCode = response.status.toString();
         {
             statusCode === '200' ? (success = true) : (success = false);
         }
 
         responseData = response.data;
-
 
     }catch(error: any){
         console.log('Error while updating assessment score:', error);

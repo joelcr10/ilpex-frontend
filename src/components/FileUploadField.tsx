@@ -4,33 +4,20 @@ import DocumentPicker from 'react-native-document-picker';
 import ilpex from '../utils/ilpexUI';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-const FileUploadField = () => {
 
-    const [selectedFile, setSelectedFile] = useState<any | null>(null);
-    console.log(selectedFile);
-
-  const pickDocument = async () => {
-    try {
-      const result = await DocumentPicker.pick({
-        type: [DocumentPicker.types.allFiles],
-      });
-      setSelectedFile(result);
-      
-    } catch (err) {
-      if (DocumentPicker.isCancel(err)) {
-      } else {
-        console.error('Error picking document', err);
-      }
-    }
-  };
+type FileUploadProps = {
+  onSelect: () => void;
+  selectedFile:string
+};
+const FileUploadField = ({onSelect,selectedFile}:FileUploadProps) => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.buttonContainer} onPress={pickDocument}>
+      <TouchableOpacity style={styles.buttonContainer} onPress={onSelect}>
         <View style={{flexDirection:'row'}}>
         <Icon name='upload-file' color={ilpex.darkGrey} size={28}></Icon>
             <Text style={styles.buttonText} ellipsizeMode="tail">
-                {selectedFile ?`${selectedFile[0].name.slice(0,10)+'...'}` : 'Choose File'}
+                {selectedFile ?`${selectedFile.name.slice(0,10)+'...'}` : 'Choose File'}
             </Text> 
         </View>
              

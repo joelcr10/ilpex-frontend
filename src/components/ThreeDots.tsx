@@ -8,6 +8,7 @@ import Constants from '../utils/Constants';
 import React from "react";
 import ilpex from "../utils/ilpexUI";
 import { useNavigation } from "@react-navigation/native";
+import { userDetails } from "../context/userDetailsSlice";
 
 type PropsType = {color : string};
 const ThreeDots = (props : PropsType) => {
@@ -38,6 +39,16 @@ const ThreeDots = (props : PropsType) => {
     
     const handleLogout = () => {
         setStringItem(Constants.IS_LOGIN, 'false');
+        setStringItem(Constants.ROLE_ID, '' );
+        setStringItem(Constants.TRAINEE_ID, '');
+        setStringItem(Constants.USER_ID,'');
+        dispatch(userDetails({
+            token: '',
+            user_id: '',
+            role_id: '',
+            trainee_id: '',
+            user_name: ''
+        }));
         dispatch(userLogin(false));
     }
 
@@ -66,7 +77,7 @@ const ThreeDots = (props : PropsType) => {
 
     return (
         <View style = {styles.threeDotsContainer}>
-            {setColor() ? (
+            {setColor() ? ( 
                 <TouchableOpacity onPress={togglePopup}>
                 <Image 
                     style = {styles.threeDots}
@@ -83,6 +94,7 @@ const ThreeDots = (props : PropsType) => {
             )}
             
             {isPopupVisible && (
+                
                 <View style = {styles.popup}>           
                     <View style = {styles.popupContent}> 
                         <TouchableOpacity  style = {styles.popupcolumn} onPress={profileNavigator}>

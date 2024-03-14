@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
       shadowRadius: 4,
       elevation: 5, 
       marginHorizontal:80,
+      width: 250,
     },
     buttonText: {
       color: ilpex.white,

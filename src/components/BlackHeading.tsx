@@ -23,22 +23,17 @@ return(
 const styles = StyleSheet.create({
 
 
-    background:{
-      position:'absolute',
-      display:'flex',
-      flexDirection:'row'
-    },
-    headingStyle: {
-      position:'relative',
-      fontFamily: ilpex.fontRegular,
-      justifyContent: 'center',
-      color: ilpex.black,
-      fontWeight: 'bold',
-      fontSize: 40,
-      textAlign: 'center',
-      marginTop: 160,
-      marginBottom:50,
-      left:150,
+  background:{
+    alignContent:'center',
+    justifyContent:'center',
+    alignItems:'center'
+    
+  },
+  headingStyle: {
+      fontFamily:ilpex.fontRegular,
+      fontWeight:'700',
+      fontSize:40,
+      color:ilpex.black,
     },
   });
 
