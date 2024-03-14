@@ -45,10 +45,14 @@ const ForgotPasswordScreen = ()=>{
         />
         {missingFieldError ? <Text style={styles.errorText}>{missingFieldError}</Text> : null}
         <Text>{"\n"}{"\n"}</Text>
-        <Button 
-            name={"Submit"} 
-            onPress={handleForgotPassword} 
-            buttonPressed={buttonPressed}/>
+        <View style={styles.buttonView}>
+            <Button 
+                name={"Submit"} 
+                onPress={handleForgotPassword} 
+                buttonPressed={buttonPressed}
+            />
+        </View>
+        
     </View>
    );
 
@@ -77,6 +81,9 @@ const styles = StyleSheet.create({
         marginTop: 5,
         textAlign:'center'
       },
+    buttonView: {
+        alignSelf:'center',
+    }
 
 });
 

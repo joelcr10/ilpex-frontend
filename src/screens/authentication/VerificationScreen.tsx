@@ -48,11 +48,13 @@ const VerificationScreen = () => {
         onChangeText={handleInputChange}
         value={enteredOtp}
       />
-      <Button
-        name={"Verify"}
-        onPress={handleVerification}
-        buttonPressed={buttonPressed}
-      />
+      <View style={{alignSelf:'center'}}>
+        <Button
+          name={"Verify"}
+          onPress={handleVerification}
+          buttonPressed={buttonPressed}
+        />
+      </View>
     </View>
   );
 };
