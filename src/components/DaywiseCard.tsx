@@ -85,9 +85,11 @@ const styles = StyleSheet.create({
     marginTop: 10,
     margin: 10,
     zIndex: 10,
+  
   },
   learningLabel: {
     position:'relative',
+    fontSize: 20,
     fontSize: 20,
     color: ilpex.black,
     fontFamily : ilpex.fontMedium

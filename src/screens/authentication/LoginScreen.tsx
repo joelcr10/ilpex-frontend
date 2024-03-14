@@ -103,8 +103,8 @@ const LoginScreen = () => {
                     value={loginPassword}
                     onChangeText={setloginPassword}
                   />
-                  <View style={{alignItems:'center'}}>
-                    <Link to={{screen:'Forgot Password'}}>Forgot Password?</Link>
+                  <View style={styles.textView}>
+                    <Link to={{screen:'Forgot Password'}} style={styles.textView}>Forgot Password?</Link>
                   </View>
                   {missingFieldError!=='' ? <Text style={styles.errorText}>{missingFieldError}</Text> : null}
                   <View style={styles.buttonview}>
@@ -128,7 +128,14 @@ const styles = StyleSheet.create({
     height:'100%'
   },
   buttonview:{
-      top:50,
+      marginTop:50,
+      alignSelf:'center',
+  },
+  textView:{
+    color:ilpex.black,
+    alignItems:'center',
+    fontFamily:ilpex.fontMedium,
+    fontSize:15,
   },
   errorText: {
     color: ilpex.failure,
