@@ -25,7 +25,7 @@ const ModalComponent: React.FC<ModalProps> = ({
           <Text style={{ color: ilpex.darkGrey,fontFamily:ilpex.fontMedium,fontSize:20, textAlign: 'center' }}>
             Congratulations!!!!
           </Text>
-          <View style={{ marginLeft: 90, marginTop: 20 }}>
+          <View style={{justifyContent: 'center', display: 'flex', flexDirection: 'row' }}>
             <CircularProgress color={`${ilpex.success}`} completeStatus={score} />
           </View>
         </>

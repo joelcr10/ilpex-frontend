@@ -77,7 +77,8 @@ const styles = StyleSheet.create({
         marginBottom : '8%',
         elevation:5,
         flexDirection:'row',
-        alignSelf:'center'
+        alignSelf:'center',
+        shadowColor: ilpex.black,
     },
     dataContainer : {
         marginStart:10,
