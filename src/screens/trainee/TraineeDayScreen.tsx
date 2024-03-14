@@ -75,7 +75,7 @@ const TraineeDayScreen=()=>{
                      
                     {!isLoading &&
                     
-                    <View style={{height:Dimensions.get('window').height-280}}>
+                    <View style={{height:'74.5%'}}>
                     <FlatList
                         showsVerticalScrollIndicator={false}
                         
@@ -97,29 +97,30 @@ const TraineeDayScreen=()=>{
 
 const styles = StyleSheet.create({
     subTitle:{
-        fontFamily:ilpex.fontSemiBold,
-        fontSize:20,
-        margin:20,
-        color:'#000',
+        fontFamily: ilpex.fontSemiBold,
+        fontSize: 20,
+        margin: '5%', // 5% of the parent container's width
+        color: '#000',
     },
     container:{
-        backgroundColor:ilpex.white,
-        borderTopLeftRadius:20,
-        borderTopRightRadius:20,
-        
+        backgroundColor: ilpex.white,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
     },
     headerText: {
-        color:ilpex.white,
+        color: ilpex.white,
         fontSize: 32,
-        textAlign:'center',
-        fontFamily:ilpex.fontSemiBold,
-      },
-      topbar:{
+        textAlign: 'center',
+        fontFamily: ilpex.fontSemiBold,
+        marginTop: '10%',
+    },
+    topbar:{
         backgroundColor: 'transparent',
-        height:184,
+        height: '21%',
         justifyContent: 'center',
         alignItems: 'center',
-      }
+    }
 })
+
 
 export default TraineeDayScreen;
