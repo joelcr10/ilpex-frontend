@@ -3,7 +3,6 @@ import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "
 import TraineeCard from "../../components/TraineeCard";
 import TraineeCardShimmer from "../../components/loading/TraineeCardShimmer";
 import ilpex from "../../utils/ilpexUI";
-import { useSelector } from "react-redux";
 import { getHook } from "../../network/getHook/getHook";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { sendMail } from "../../network/EmailApiHook";
@@ -34,86 +33,90 @@ const IncompleteTraineesScreen = () => {
       }
     };
 
-
     const onPress = () => {
       sendMailToTrainees();
     };
 
- useEffect(() => {
+    useEffect(() => {
       const getDayCards = async () => {
         try {
           const { responseData } = await getHook(
             `/api/v2/batch/${batch}/pending/day/${day}`,
           );
           if (responseData) {
-            
             setTraineeList(responseData);
-
           }
-
-
         } catch (error) {
           console.error('Error:', error);
-        }
-        finally{
-          setLoading(true);
+        } finally {
+          console.log("set loading to true",isLoading);
         }
       };
-
       getDayCards();
-
-
     }, []);
 
+    useEffect(() => {
+      if (traineeList.length === undefined) {
+        setLoading(true);
+      }
+    }, [traineeList]);
+
     return (
-      <ScrollView>
-        { (!isLoading)?(<View><TraineeCardShimmer></TraineeCardShimmer></View>):
-        (<View>
-        <FlatList
-          scrollEnabled={false}
-          showsVerticalScrollIndicator={false}
-          data={traineeList.IncompleteTraineeList}
-          renderItem={({ item }) => (
-            <TraineeCard
-              traineeName={item.user_name}
-              batchName={item.Batch} traineeId={item.trainee_id} userId={item.user_id} />
-          )}
-          keyExtractor={item => item.id}
-        />
+      <ScrollView style={styles.scrollView}>
+        {!isLoading ? (
+          <TraineeCardShimmer></TraineeCardShimmer>
+        ) : (
+          <View>
+            <FlatList
+              scrollEnabled={false}
+              showsVerticalScrollIndicator={false}
+              data={traineeList.IncompleteTraineeList}
+              renderItem={({ item }) => (
+                <TraineeCard
+                  traineeName={item.user_name}
+                  batchName={item.Batch}
+                  traineeId={item.trainee_id}
+                  userId={item.user_id}
+                />
+              )}
+              keyExtractor={item => item.trainee_id}
+            />
+          </View>
+        )}
 
         <TouchableOpacity onPress={onPress} style={styles.fixedButton}>
           <View style={styles.box}>
             <Icon name="send" color={ilpex.white} size={30}></Icon>
           </View>
         </TouchableOpacity>
-        </View>)}
-
       </ScrollView>
-
     );
   }
 
-return (
-    <View>
-      <ScrollView>
-        <View style={styles.pageContainer}>
-          <BackButton color={"white"}></BackButton>
-          <View style={styles.innerContainer}>
-             <Text style={styles.incompleteText}>Incomplete</Text>
-             <Text style={styles.traineeText}>Trainees</Text>
-             <View><TraineesDisplay></TraineesDisplay></View>
-          </View>
+  return (
+    <View style={styles.container}>
+      <View style={styles.pageContainer}>
+        <BackButton color={"white"}></BackButton>
+        <View style={styles.innerContainer}>
+          <Text style={styles.incompleteText}>Incomplete</Text>
+          <Text style={styles.traineeText}>Trainees</Text>
+          <TraineesDisplay />
         </View>
-      </ScrollView>
+      </View>
     </View>
   );
-
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  scrollView: {
+    // flex: 1,
+  },
   pageContainer: {
     backgroundColor: '#8518FF',
-    height: '100%',
+    flex: 1,
   },
   box: {
     height: 54,
@@ -126,21 +129,21 @@ const styles = StyleSheet.create({
   },
   fixedButton: {
     position: 'absolute',
-    bottom: 40,
-    right: 20,
+    bottom: 0,
+    right: 0,
     zIndex: 10,
+    alignSelf:'flex-end'
   },
   innerContainer: {
     backgroundColor: 'white',
-    height: '100%',
+    flex: 1,
     marginTop: '25%',
     borderTopStartRadius: 50,
     borderTopEndRadius: 50,
     paddingTop: '10%',
     paddingLeft: '10%',
     paddingRight: '10%',
-    flex: 1,
-    minHeight:800
+    position:'relative',
   },
   containerHeading: {
     color: 'white',
@@ -153,7 +156,6 @@ const styles = StyleSheet.create({
     fontFamily: ilpex.fontRegular,
     color: ilpex.black,
     fontSize: 17,
-
   },
   incompleteText: {
     fontFamily: ilpex.fontSemiBold,
@@ -161,17 +163,9 @@ const styles = StyleSheet.create({
     fontSize: 27,
     textAlign: 'center',
     marginBottom: 5,
-
-
   },
-  shimmer: {
-    height: 90,
-    borderRadius: 17,
-    width: 350,
-    marginBottom: 25,
-    elevation: 4,
-  },
-})
+});
+
 
 
 export default IncompleteTraineesScreen;
