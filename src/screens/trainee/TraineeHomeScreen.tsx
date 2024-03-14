@@ -40,7 +40,7 @@ const TraineeHomeScreen = () => {
         </View>
         <View style={styles.contentContainer}>
           <View>
-            <Text style={styles.heading}>Assessment</Text>
+            <Text style={styles.heading}>Assessments</Text>
 
             <AssessmentDisplay></AssessmentDisplay>
           </View>
@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
   textSize: {
     color: ilpex.white,
     fontFamily: ilpex.fontSemiBold,
-    fontSize: 30,
+    fontSize: 28,
     marginTop: -8
   },
 
@@ -233,7 +233,7 @@ const styles = StyleSheet.create({
   },
 
   heading: {
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: 'bold',
     color: 'black',
     margin: 10

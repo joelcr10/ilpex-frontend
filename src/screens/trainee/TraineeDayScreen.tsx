@@ -3,14 +3,8 @@ import { useEffect, useState } from "react";
 import CourseCard from "../../components/CourseCard";
 import { useRoute } from "@react-navigation/native";
 import ilpex from "../../utils/ilpexUI";
-import Button from "../../components/Button";
-import SmallButton from "../../components/SmallButton";
-import IconButton from "../../components/IconButton";
-import FileUploadField from "../../components/FileUploadField";
 import React from "react";
 import { getHook } from "../../network/getHook/getHook";
-import ShimmerPlaceholder from "react-native-shimmer-placeholder";
-import LinearGradient from "react-native-linear-gradient";
 import BackButton from "../../components/BackButton";
 import ThreeDots from "../../components/ThreeDots";
 import CourseCardShimmer from "../../components/loading/CourseCardShimmer";
@@ -24,13 +18,6 @@ const TraineeDayScreen=()=>{
 
     const route:any = useRoute();
     const day_id=route.params.Day;
-
-
-    // const day_id=1;
-    // const trainee_id=6;
-
-
-
 
     const [isLoading, setLoading] = useState(true);
 
@@ -56,7 +43,7 @@ const TraineeDayScreen=()=>{
 
 
     return(
-        // <ScrollView >
+        <ScrollView >
         <View >
             
             <View style={{backgroundColor:ilpex.main}}>
@@ -74,11 +61,10 @@ const TraineeDayScreen=()=>{
                     }
                      
                     {!isLoading &&
-                    
-                    <View style={{height:Dimensions.get('window').height-280}}>
+                    // style={{height:Dimensions.get('window').height-280}}
+                    <View>
                     <FlatList
                         showsVerticalScrollIndicator={false}
-                        
                         data={courselist.message}
                         renderItem={({item})=><CourseCard name={item.course_name} duration={item.course_duration} status={item.status}/>}
                         keyExtractor={item=>item.course_id}
@@ -91,14 +77,14 @@ const TraineeDayScreen=()=>{
             </View>
             
         </View>
-        // </ScrollView>
+         </ScrollView>
     )
 }
 
 const styles = StyleSheet.create({
     subTitle:{
         fontFamily:ilpex.fontSemiBold,
-        fontSize:20,
+        fontSize:16,
         margin:20,
         color:'#000',
     },
