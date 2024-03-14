@@ -43,6 +43,33 @@ const CreateUserScreen = () => {
     setButtonpressed(true);
   
     const JWT_token = (await getItem(Constants.TOKEN)) || '';
+
+     // Password validation criteria
+     const symbolRegex = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
+     const capitalRegex = /[A-Z]/;
+     const numberRegex = /[0-9]/;
+
+     setButtonpressed(false);
+
+     let validationErrorMessage = ""; // Renamed variable
+
+     if (!symbolRegex.test(password)) {
+         validationErrorMessage += "Password must contain at least one symbol. ";
+     }
+     if (!capitalRegex.test(password)) {
+         validationErrorMessage += "Password must contain at least one capital letter. ";
+     }
+     if (!numberRegex.test(password)) {
+         validationErrorMessage += "Password must contain at least one number. ";
+     }
+     if (password.length < 12) {
+         validationErrorMessage += "Password must be at least 12 characters long. ";
+     }
+
+     if (validationErrorMessage !== "") {
+         setPasswordMatchError(validationErrorMessage);
+         return;
+     }
   
     try {
       if (password !== createPassword) {
