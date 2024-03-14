@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     },
     text:{
         textAlign:'center',
-        fontSize:50,
+        fontSize:35,
         color: "white",
         marginTop:'17%',
         fontFamily: ilpex.fontSemiBold
