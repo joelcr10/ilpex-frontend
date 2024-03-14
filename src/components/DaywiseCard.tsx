@@ -90,7 +90,6 @@ const styles = StyleSheet.create({
   learningLabel: {
     position:'relative',
     fontSize: 20,
-    fontSize: 20,
     color: ilpex.black,
     fontFamily : ilpex.fontMedium
   },
