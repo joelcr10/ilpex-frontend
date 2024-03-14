@@ -1,8 +1,5 @@
 import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
-import BarGraph from "../BarChart";
-import BackButton from "../BackButton";
-import ThreeDots from "../ThreeDots";
+import { StyleSheet, View } from "react-native";
 import ShimmerPlaceholder from "react-native-shimmer-placeholder";
 import ilpex from "../../utils/ilpexUI";
 import LinearGradient from "react-native-linear-gradient";
@@ -30,7 +27,7 @@ const TraineeProfileShimmer = () => {
                         LinearGradient={LinearGradient}
                         style={styles.statsKeyLabel} />
                     </View>
-                    <View style={styles.statsValue}>
+                    <View>
                         <ShimmerPlaceholder 
                         LinearGradient={LinearGradient}
                         style={styles.statsValueLabel} />
@@ -42,7 +39,7 @@ const TraineeProfileShimmer = () => {
                         LinearGradient={LinearGradient}
                         style={styles.statsKeyLabel} />
                     </View>
-                    <View style={styles.statsValue}>
+                    <View>
                         <ShimmerPlaceholder 
                         LinearGradient={LinearGradient}
                         style={styles.statsValueLabel} />
@@ -56,7 +53,7 @@ const TraineeProfileShimmer = () => {
                         LinearGradient={LinearGradient}
                         style={styles.statsKeyLabel} />
                     </View>
-                    <View style={styles.statsValue}>
+                    <View>
                         <ShimmerPlaceholder 
                         LinearGradient={LinearGradient}
                         style={styles.statsValueLabel} />
@@ -68,7 +65,7 @@ const TraineeProfileShimmer = () => {
                         LinearGradient={LinearGradient}
                         style={styles.statsKeyLabel} />
                     </View>
-                    <View style={styles.statsValue}>
+                    <View>
                         <ShimmerPlaceholder 
                         LinearGradient={LinearGradient}
                         style={styles.statsValueLabel} />
@@ -83,94 +80,65 @@ const TraineeProfileShimmer = () => {
 
 const styles = StyleSheet.create({
     pageContainer : {
-        backgroundColor : ilpex.white,
         height : '100%',
+        // margin : '5%'
     },
     profilePictureContainer : {
         height : 150,
-        marginTop : 70,
+        marginTop : 40,
         justifyContent : 'center'
     },
     profilePictureCircle : {
-        width : 140,
-        height : 140,
+        width : 120,
+        height : 120,
         alignSelf : 'center',
         borderRadius : 70
     },
     profileImageStyle : {
         width : 107,
         height : 107,
-        marginLeft : 16,
-        marginTop : 15,
     },
     nameLabel : {
         alignSelf : 'center',
         fontFamily : ilpex.fontSemiBold,
         color : 'black',
-        fontSize : 30,
+        fontSize : 23,
         height : 20,
-        marginBottom : 10
+        marginBottom : '4%'
     },
     batchLabel : {
         alignSelf : 'center',
         fontFamily : ilpex.fontSemiBold,
         color : '#737373',
-        fontSize : 22,
+        fontSize : 18,
     }, 
     statsRow : {
         flexDirection : 'row',
-        marginBottom : 20
+        marginBottom : '5%'
     },
     statsKey : {
         alignSelf : 'flex-start',
-        marginLeft : 25,
-        width : 280,
-    },
-    statsValue : {
-        width : 80,
+        marginLeft : '10%',
+        width : 200,
     },
     statsContainer : {
-        marginTop : 40,
-        marginRight : 40
+        marginTop : '10%',
+        marginRight : '10%'
     },
     statsKeyLabel : {
         fontFamily : ilpex.fontMedium,
         color : 'black',
         fontSize : 17,
-        width : 150,
+        width : 110,
     },
     statsValueLabel : {
         fontFamily : ilpex.fontMedium,
         color : 'black',
         fontSize : 17,
         alignSelf : 'center',
-        width : 150,
-        marginRight : 60,
+        width : 110,
+        marginRight : '80%'
     }, 
-    percentageLabel : {
-        fontFamily : ilpex.fontMedium,
-        color : 'black',
-        fontSize : 20,
-        alignSelf : 'center'
-    },
-    remarksLabel : {
-        fontFamily : ilpex.fontMedium,
-        color : 'black',
-        fontSize : 17,
-        alignSelf : 'center',
-        height : 56
-    },
-    colorDot : {
-        width : 13,
-        height : 13,
-        marginTop : 6,
-        marginRight : 10,
-        borderRadius : 6.5,
-        backgroundColor : 'lime',
-    },
-    percentageAndColorContainer : {
-        flexDirection : 'row'
-    }
 })
 
 export default TraineeProfileShimmer;

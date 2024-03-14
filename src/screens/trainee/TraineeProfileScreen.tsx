@@ -204,9 +204,6 @@ const TraineeProfileScreen = () => {
                                         {averageAssessmentScore}%
                                         </Text>
                                     </View>
-                                    {/* <Text style ={styles.remarksLabel}>
-                                        {marksFeedback}
-                                    </Text> */}
                                 </View>
                             </View>
                         </View>
@@ -276,7 +273,7 @@ const styles = StyleSheet.create({
     },
     profilePictureContainer : {
         height : 150,
-        marginTop : 70,
+        marginTop : 40,
         justifyContent : 'center'
     },
     profilePictureCircle : {
@@ -310,20 +307,14 @@ const styles = StyleSheet.create({
     },
     statsKey : {
         alignSelf : 'flex-start',
-        // marginLeft : 25,
-        // width : 280,
         width : '70%'
     },
     statsValue : {
         width : 80,
-        // backgroundColor : 'red'
     },
     statsContainer : {
         marginTop : 40,
-        // backgroundColor : 'red',
         marginLeft : '8%',
-        // marginRight : '5%'
-        // marginRight : 2
     },
     statsKeyLabel : {
         fontFamily : ilpex.fontMedium,
