@@ -12,6 +12,7 @@ import DayWiseProgressBar from "../../components/DayWiseProgressBar";
 import DayWiseProgressBarShimmer from "../../components/loading/DayWiseProgressBarShimmer";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import DayWiseDetailsPage from "./DayDetailsScreen";
+import { List } from 'react-native-paper';
 import moment from 'moment'
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
@@ -121,6 +122,9 @@ const arrayOfObjects =[];
 const hai =()=>{
   
 }
+const [expanded, setExpanded] = useState(true);
+
+  const handlePress = () => setExpanded(!expanded);
 return(
   <GestureHandlerRootView>
         <ScrollView>
@@ -152,6 +156,37 @@ return(
                   </View>
                 </View>
                 </>}
+
+
+              
+                <List.Accordion
+                    title="Trainees"
+                    left={props => <List.Icon {...props} icon="folder" />}
+                    expanded={expanded}
+                    onPress={handlePress}>
+                    {/* <List.Item title="First item" />
+                    <List.Item title="Second item" /> */}
+                    <View style = {styles.graphContainer}>
+                  <Text style={{marginRight:255,marginBottom:20,fontSize:25}}>Days</Text>
+                  <FlatList 
+                    contentContainerStyle = {{paddingBottom : 5}}
+                    data = {arrayOfObjects}
+                    renderItem = {({item}) => 
+                      
+                      <DayWiseProgressBar dayNumber = {parseInt(item.key)} percentage = {item.value} onPress={()=>onPress(batch_id,parseInt(item.key))}/>
+                    }
+                  
+                  />
+                </View> 
+                </List.Accordion>
+            
+
+
+
+
+
+
+
               
                  {/* <View>
                    <IconButtonComponent  name={'Report'} onPress={()=>{}} buttonPressed={false} icon={'description'}/>
@@ -166,7 +201,7 @@ return(
               </>
               }
               
-              <View style = {styles.graphContainer}>
+                <View style = {styles.graphContainer}>
                   <Text style={{marginRight:255,marginBottom:20,fontSize:25}}>Days</Text>
                   <FlatList 
                     contentContainerStyle = {{paddingBottom : 5}}
@@ -177,9 +212,10 @@ return(
                     }
                   
                   />
-                </View>
+                </View> 
               
-              
+               
+  
             </View>
         
         </View>
