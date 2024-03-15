@@ -6,6 +6,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { getHook } from "../../network/getHook/getHook";
 import DrawerNavigationHamburger from "../../components/DrawerNavigationHamburger";
 import { useFocusEffect } from "@react-navigation/native";
+import DropdownComponent from "../../components/DropDown";
 
 const TraineeScreen = () => {
 
@@ -13,6 +14,10 @@ const TraineeScreen = () => {
     const [traineesList, setTraineesList] = useState<any[]>([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [filteredTraineesList, setFilteredTraineesList] = useState<any[]>([]);
+    const [allBatchesName,setBatchesName] = useState<any>([]);
+    const [selectedBatch,setBatch] = useState('');
+    const [allBatches,setAllBatches] = useState<any>([]);
+    const [batchId,setbatchId] = useState(Number);
 
     const handleSearch = (text : string) => {
         console.log(text)
@@ -28,7 +33,7 @@ const TraineeScreen = () => {
         React.useCallback(() => {
             const getTraineesList = async() => {
                 try {
-                    const {responseData, errorMessage} = await getHook(`/api/v2/trainee`);
+                    const {responseData, errorMessage} = await getHook(`/api/v2/trainee?batch_id=${batchId}`);
                     if(responseData)
                     {
                         setTraineesList(responseData);
@@ -41,8 +46,57 @@ const TraineeScreen = () => {
             };
 
             getTraineesList();
-        }, [])
+        }, [batchId])
     )
+
+    //get Batches 
+
+
+    useEffect(()=>{
+        const getBatches = async()=>{
+            try{
+                const { success,statusCode,responseData,errorMessage} = await getHook('/api/v2/batch');
+                console.log(success,statusCode);
+                if(success){
+                    if(responseData){
+                        setAllBatches(responseData.batches)
+                        setBatchesName(
+                            [{label:'All Batches',
+                            value:'All'}]); 
+                        setBatchesName(prevBatches => [
+                            ...prevBatches,
+                            ...responseData.batches.map((batch: { batch_id: number; batch_name: string; }) => ({
+                                label: batch.batch_name,
+                                value: batch.batch_name
+                            }))
+                        ]);
+                    }
+                }
+            }
+            catch(err){
+                console.error('Error', err);
+            }
+        }
+        getBatches();
+    },[]);
+
+
+    const getBatchId = (selectedBatch : string) => {
+        for (const batch of allBatches) {
+            if (batch.batch_name === selectedBatch) {
+              return batch.batch_id;
+            }
+          }
+          return 0;
+    }
+
+    const batchSelection  = async() => {
+        const batch_id= await getBatchId(selectedBatch)
+        console.log(batch_id);
+        setbatchId(batch_id);
+    }
+    
+    batchSelection();
 
     return (
         <ScrollView 
@@ -62,7 +116,8 @@ const TraineeScreen = () => {
                         </TextInput>
                         <MaterialCommunityIcons name="magnify" size={20}/>
                     </View>
-                    <View style = {styles.cardContainer}>
+                    <DropdownComponent placeholder="All Batch" data={allBatchesName} setBatch={setBatch}/>
+
                     {!isLoading ? (
                         <TraineeCardShimmer/>
                     ) : (
@@ -80,7 +135,6 @@ const TraineeScreen = () => {
                         keyExtractor={item => item.id}
                         />
                     )}            
-                    </View>
                 </View>
             </View>
         </ScrollView>

@@ -43,7 +43,7 @@ const TraineeDayScreen=()=>{
 
 
     return(
-        <ScrollView >
+        // <ScrollView >
         <View >
             
             <View style={{backgroundColor:ilpex.main}}>
@@ -57,12 +57,19 @@ const TraineeDayScreen=()=>{
                         <Text style={styles.subTitle}>Learning Courses</Text>
                        
                     {isLoading &&
-                       <CourseCardShimmer/>
+                    <View style={{height:'75.5%'}}>
+                        <CourseCardShimmer/>
+                        <CourseCardShimmer/>
+                        <CourseCardShimmer/>
+                        <CourseCardShimmer/>
+                        <CourseCardShimmer/>
+                    </View>
+                       
                     }
                      
                     {!isLoading &&
-                    // style={{height:Dimensions.get('window').height-280}}
-                    <View>
+                    
+                    <View style={{height:'75.5%'}}>
                     <FlatList
                         showsVerticalScrollIndicator={false}
                         data={courselist.message}
@@ -77,7 +84,7 @@ const TraineeDayScreen=()=>{
             </View>
             
         </View>
-         </ScrollView>
+        //  </ScrollView>
     )
 }
 
@@ -85,28 +92,28 @@ const styles = StyleSheet.create({
     subTitle:{
         fontFamily:ilpex.fontSemiBold,
         fontSize:16,
-        margin:20,
+        margin:'5%',
         color:'#000',
     },
     container:{
-        backgroundColor:ilpex.white,
-        borderTopLeftRadius:20,
-        borderTopRightRadius:20,
-        minHeight : 750
-        
+        backgroundColor: ilpex.white,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
     },
     headerText: {
-        color:ilpex.white,
+        color: ilpex.white,
         fontSize: 32,
-        textAlign:'center',
-        fontFamily:ilpex.fontSemiBold,
-      },
-      topbar:{
+        textAlign: 'center',
+        fontFamily: ilpex.fontSemiBold,
+        marginTop: '10%',
+    },
+    topbar:{
         backgroundColor: 'transparent',
-        height:184,
+        height: '21%',
         justifyContent: 'center',
         alignItems: 'center',
-      }
+    }
 })
+
 
 export default TraineeDayScreen;

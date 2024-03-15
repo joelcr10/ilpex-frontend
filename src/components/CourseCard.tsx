@@ -13,10 +13,7 @@ const CourseCard=({name,duration,status}:cardProps)=>{
     return(
         <View style={styles.card}>
             <View>
-                {name.length<25 &&
-                <Text style={styles.course}>{name}</Text>}
-                {name.length>25 &&
-                <Text style={styles.course} numberOfLines={2} ellipsizeMode="tail">{name}</Text>}
+                <Text style={styles.course} numberOfLines={2} ellipsizeMode="tail">{name}</Text>
             </View>
             <View style={styles.container}>
             <Text style={styles.duration}>{duration}</Text>
@@ -40,37 +37,36 @@ const CourseCard=({name,duration,status}:cardProps)=>{
 }
 
 const styles = StyleSheet.create({
-
     card:{
-            // flexDirection:'row',
-            justifyContent:'space-between',
-            backgroundColor:ilpex.white,
-            borderRadius: 10,
-            marginHorizontal:30,
-            marginVertical:10,
-            paddingHorizontal:10,
-            paddingVertical:10,
-            shadowColor: '#000',
-            shadowOffset: {
-                width: 0,
-                height: 3,
-              },
-              shadowOpacity: 0.5,
-              shadowRadius: 3,
-              elevation: 2,
+        // flexDirection:'row',
+        justifyContent:'space-between',
+        backgroundColor: ilpex.white,
+        borderRadius: 10,
+        marginHorizontal: '5%', 
+        marginVertical: '2%',
+        paddingHorizontal: '6%',
+        paddingVertical: '3%', 
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 3,
+        },
+        shadowOpacity: 0.5,
+        shadowRadius: 3,
+        elevation: 2,
     },
     course:{
         fontFamily:ilpex.fontMedium,
         fontSize:14,
         color:'black',
-        marginHorizontal:10,
-        marginVertical:1,
+        marginHorizontal:'1%',
+        marginVertical:'0.5%',
     },
     duration:{
         fontSize:13,
         color:ilpex.darkGrey,
-        marginHorizontal:10,
-        marginVertical:5,
+        marginHorizontal:'1%',
+        marginVertical:'0.5%',
         textAlignVertical:'center',
     },
     status:{
@@ -78,20 +74,21 @@ const styles = StyleSheet.create({
         fontSize:14,
     },
     icon:{
-        fontSize:20,
-        marginHorizontal:10,
-        textAlignVertical:'center',
+        fontSize: 20,
+        marginHorizontal: '1%', 
+        textAlignVertical: 'center',
     },
     done:{
-        color:ilpex.success,
+        color: ilpex.success,
     },
     pending:{
-        color:ilpex.warning,
+        color: ilpex.warning,
     },
     container:{
-        flexDirection:'row',
-        justifyContent:'space-between'
+        flexDirection: 'row',
+        justifyContent: 'space-between'
     }
 })
+
 
 export default CourseCard;

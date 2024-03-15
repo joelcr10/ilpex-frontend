@@ -6,7 +6,10 @@ import { getHook } from "../../network/getHook/getHook";
 import ThreeDots from "../../components/ThreeDots";
 import TraineeNameCard from "../../components/TraineeNameCard";
 import SearchField from "../../components/SearchField";
+import TraineeNameCardShimmer from "../../components/loading/TraineeNameListShimmer";
 import TraineeNameShimmer from "../../components/loading/TraineeNameListShimmer";
+import BackButton from "../../components/BackButton";
+
 import { useFocusEffect } from "@react-navigation/native";
 
 const UserManagementScreen=()=>{
@@ -51,7 +54,7 @@ const UserManagementScreen=()=>{
         // <ScrollView>
         <View>
             <View style={{backgroundColor:ilpex.main}}>
-                {/* <BackButton color='white'/> */}
+                <BackButton color='white'/>
                 <View style={styles.topbar}>
                    
                     <Text style={styles.headerText}>{`User Management`}</Text>
@@ -62,11 +65,14 @@ const UserManagementScreen=()=>{
                         <SearchField onChangeText={handleSearch as any} value={searchQuery}/>
                         <Text style={styles.subTitle}>Trainees</Text>
                     {isLoading  &&
-                    <TraineeNameShimmer/>
+                    <View style={{height:'63%'}}>
+                      <TraineeNameShimmer/>
+                    </View>
+                      
                     }
                     {!isLoading &&
                     
-                    <View style={{height:450,paddingBottom:40}}>
+                    <View style={{height:'63%'}}>
                     <FlatList
                         data={filteredData}
                         renderItem={({item})=><TraineeNameCard traineeName={item.user.user_name} user_id={item.user_id} />}
@@ -88,7 +94,7 @@ const styles = StyleSheet.create({
     subTitle:{
         fontFamily:ilpex.fontSemiBold,
         fontSize:20,
-        margin:20,
+        margin:'5%',
         color:'#000',
     },
     container:{
@@ -104,7 +110,7 @@ const styles = StyleSheet.create({
       },
       topbar:{
         backgroundColor: 'transparent',
-        height:184,
+        height:'21%',
         justifyContent: 'center',
         alignItems: 'center',
       }
