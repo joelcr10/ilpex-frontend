@@ -5,6 +5,7 @@ import TraineeCardShimmer from "../../components/loading/TraineeCardShimmer";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { getHook } from "../../network/getHook/getHook";
 import DrawerNavigationHamburger from "../../components/DrawerNavigationHamburger";
+import { useFocusEffect } from "@react-navigation/native";
 
 const TraineeScreen = () => {
 
@@ -23,23 +24,25 @@ const TraineeScreen = () => {
         setFilteredTraineesList(filteredTrainees);
     };
 
-    useEffect (() => {
-        const getTraineesList = async() => {
-            try {
-                const {responseData, errorMessage} = await getHook(`/api/v2/trainee`);
-                if(responseData)
-                {
-                    setTraineesList(responseData);
-                    setFilteredTraineesList(responseData);
+    useFocusEffect(
+        React.useCallback(() => {
+            const getTraineesList = async() => {
+                try {
+                    const {responseData, errorMessage} = await getHook(`/api/v2/trainee`);
+                    if(responseData)
+                    {
+                        setTraineesList(responseData);
+                        setFilteredTraineesList(responseData);
+                    }
                 }
-            }
-            catch(error) {
-                console.log('Error', error);
-            }
-        };
+                catch(error) {
+                    console.log('Error', error);
+                }
+            };
 
-        getTraineesList();
-    }, []);
+            getTraineesList();
+        }, [])
+    )
 
     return (
         <ScrollView 
@@ -140,6 +143,5 @@ const styles = StyleSheet.create({
         flex:0.9
      }
 })
-
 
 export default TraineeScreen;
