@@ -44,13 +44,13 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   label: {
-    fontSize: 20,
+    fontSize: 18,
     color: '#868686',
     fontWeight:'500',
     fontFamily:ilpex.fontMedium,
 
     alignSelf: 'flex-start',
-    marginLeft: 50,
+    marginLeft: '10%',
     marginBottom: 5,
     marginTop: 10,
   },

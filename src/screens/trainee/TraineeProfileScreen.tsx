@@ -45,7 +45,6 @@ const TraineeProfileScreen = () => {
             await getTraineeProfile();
             await getCurrentDay();
             await getTraineeProgress();
-            // setFinalLoading(true);
         }
         traineeProfileLoader();        
     }, [])
