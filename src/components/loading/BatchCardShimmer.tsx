@@ -17,34 +17,38 @@ const BatchCardShimmer = ({isLoading} : BatchCardShimmerProps)=>{
         </View>
     )
 }
-
 const styles = StyleSheet.create({
     shimmerContainer :{
-        backgroundColor:ilpex.card,
-        borderRadius:20,
-        height:105,
-        width : 330,
-        marginBottom : '5%',
-        elevation:5,
-        alignSelf:'center'
+        backgroundColor: ilpex.card,
+        borderRadius: 20,
+        height: '15%',
+        width: '90%', 
+        paddingBottom:'5%',
+        marginBottom: '3%',
+        elevation: 5,
+        alignSelf: 'center'
     },
     shimmerBatchName:{
-        marginTop:17,
-        marginStart:20,
-        marginBottom:15,
-        height:20,
-        borderRadius:7
+        marginTop: '5%',
+        marginStart: '6%', 
+        marginBottom: '3%',
+        height: '25%',
+        borderRadius: 7,
+        width:'60%',
     },
     shimmerTraineeText:{
-        marginBottom:10,
-        marginStart:20,
-        width : 130,
-        borderRadius:5
+        marginBottom: '2%',
+        marginStart: '6%', 
+        width: '40%', 
+        height:'20%',
+        borderRadius: 5
     },
     shimmerDate : {
-        marginStart:20,
-        borderRadius:5
+        marginStart: '6%', 
+        borderRadius: 5,
+        width:'20%'
     },
 })
+
 
 export default BatchCardShimmer;
