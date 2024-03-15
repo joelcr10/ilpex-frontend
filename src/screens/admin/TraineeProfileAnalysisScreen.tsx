@@ -6,128 +6,183 @@ import BarGraph from "../../components/BarChart";
 import { getHook } from "../../network/getHook/getHook";
 import TraineeProfileShimmer from "../../components/loading/TraineeProfileShimmer";
 import { useRoute } from "@react-navigation/native";
-import { useNavigation } from "@react-navigation/native";
-
+import Accordion from "../../components/Accordion";
+import { ListItem } from '@rneui/themed';
 const TraineeProileAnalysisScreen = () => {
 
     const route:any = useRoute();
-    const navigation = useNavigation();
 
     const [traineeName, setTraineeName] = useState<any[]>([]);
     const [traineeBatch, setTraineeBatch] = useState<any[]>([]);
     const [currentDay, setCurrentDay] = useState(2);
     const [averageAssessmentScore, setAverageAssessmentScore] = useState<any[]>([]) ;
     const [marksIndicatorColor, setMarkIndicatorColor] = useState('black');
-    const [marksFeedback, setMarksFeedBack] = useState('placeholder');
     const [resultID, setResultID] = useState<any[]>([]);
     const [highScore, setHighScore] = useState<any[]>([]);
     const [isLoadingCurrentDay, setLoadingCurrentDay] = useState(false);
+    const [traineeProgress, setTraineeProgress] = useState('placeholder');
+    const [incompleteCourseList, setIncompleteCourseList] = useState<string[]>([]);
+    const [finalLoading, setFinalLoading] = useState(false);
+    const [traineeCurrentDay, setTraineeCurrentDay] = useState(false);
     let batchId : number = 0; 
-
+    const user_id = route.params.user_id;
+    const trainee_id = route.params.trainee_id;
     useEffect(() => {
-        const getTraineeProfile = async() => {
-            try {
-                
-                const user_id = route.params.user_id;
-                const {responseData, errorMessage} = await getHook(`/api/v3/profile/${user_id}`);
-                if(responseData)
-                {
-                    setTraineeName(responseData.data.user_name);
-                    setTraineeBatch(responseData.data.trainee.batch.batch_name);
-                    batchId = responseData.data.trainee.batch_id;
-                }
-            } catch(error) {
-                console.log('Error', error);
-            }
-        };
-
-        const getTraineeScores = async() => {
-            try {
-                const trainee_id = route.params.trainee_id;
-                const {responseData, errorMessage} = await getHook(`/api/v2/trainee/${trainee_id}/scores`);
-                console.log('Trainee ID Inside Trainee Scores Function------', trainee_id)
-                if(responseData)
-                {
-                    console.log("Marks = ", responseData);
-                    let averageScore;
-                    if(responseData.scoreDetails.scoreAverage === null)
-                        averageScore =0;
-                    else
-                        averageScore = responseData.scoreDetails.scoreAverage;
-                    setAverageAssessmentScore(averageScore);
-                    const resultIds: string[] = [];
-                    const highScores: string[] = [];
-                    const scores = responseData.scoreDetails.scores;
-                    scores.forEach((score: any, index: number) => {
-                        resultIds.push(`A${index + 1}`);
-                        highScores.push(score.high_score);
-                        console.log(`RESULT ID : A${index + 1}, HIGH SCORE : ${score.high_score}`);
-                    });
-                    
-                    setResultID(resultIds);
-                    setHighScore(highScores);
-                    
-                    if(averageScore >= 90)
-                        setMarkIndicatorColor('green')
-                    else if (averageScore >= 70)
-                        setMarkIndicatorColor('orange');
-                    else if(averageScore >= 50)
-                        setMarkIndicatorColor('yellow');
-                    else
-                        setMarkIndicatorColor('red');
-                }
-            } catch(error) {
-                console.log('Error', error);
-            }
-        };
-
-        const getCurrentDay = async() => {
-            try {
-                const currentDate = new Date();
-                currentDate.setDate(currentDate.getDate() + 1);
-                const isoString = currentDate.toISOString();
-                const dateString = isoString.substring(0, isoString.indexOf('T'));
-                console.log("CurrentDate = ", dateString);
-                console.log("Batch ID = ", batchId);
-                const {responseData, errorMessage} = await getHook(`/api/v3/batch/${batchId}/day/${dateString}`);
-                if(responseData)
-                {
-                    setCurrentDay(responseData.current_day);
-                    console.log("Current Day Is ----------",responseData.current_day )
-                    setLoadingCurrentDay(true);
-                }
-            } catch(error) {
-                console.log('Error', error);
-            }
-        };
-
-        const getTraineeProgress = async() => {
-            try {
-                const trainee_id = route.params.trainee_id;
-                const {responseData, errorMessage} = await getHook(`/api/v3/trainee/${trainee_id}/days`);
-                console.log('Trainee ID Inside Trainee Progress Function------', trainee_id)
-                if(responseData)
-                {
-                    console.log("Trainee Progress ----->", responseData);
-                }
-            }catch (error)
-            {
-                console.log("Error", error);
-            }
-        }
 
         const traineeProfileLoader = async () =>{
             await getTraineeScores();
             await getTraineeProfile();
-            await getTraineeProgress();
             await getCurrentDay();
+            await getTraineeProgress();
+            // setFinalLoading(true);
         }
 
-
-        traineeProfileLoader();
-
-        
+        traineeProfileLoader();        
     }, []);
+
+    useEffect(() => {
+
+        const traineeProfileLoading = async () =>{
+            await getTraineeProgress();
+            setFinalLoading(true);
+        }
+        
+        traineeProfileLoading();
+    }, [traineeCurrentDay]);
+
+    useEffect (() => {
+        
+    })
+
+    const getTraineeProfile = async() => {
+        try {
+            const {responseData, errorMessage} = await getHook(`/api/v3/profile/${user_id}`);
+            if(responseData)
+            {
+                setTraineeName(responseData.data.user_name);
+                setTraineeBatch(responseData.data.trainee.batch.batch_name);
+                batchId = responseData.data.trainee.batch_id;
+            }
+        } catch(error) {
+            console.log('Error', error);
+        }
+    };
+
+    const getTraineeScores = async() => {
+        try {
+            const {responseData, errorMessage} = await getHook(`/api/v2/trainee/${trainee_id}/scores`);
+            console.log('Trainee ID Inside Trainee Scores Function------', trainee_id)
+            if(responseData)
+            {
+                console.log("Marks = ", responseData);
+                let averageScore;
+                if(responseData.scoreDetails.scoreAverage === null)
+                    averageScore =0;
+                else
+                    averageScore = responseData.scoreDetails.scoreAverage;
+                setAverageAssessmentScore(averageScore);
+                const resultIds: string[] = [];
+                const highScores: string[] = [];
+                const scores = responseData.scoreDetails.scores;
+                scores.forEach((score: any, index: number) => {
+                    resultIds.push(`A${index + 1}`);
+                    highScores.push(score.high_score);
+                    console.log(`RESULT ID : A${index + 1}, HIGH SCORE : ${score.high_score}`);
+                });
+                
+                setResultID(resultIds);
+                setHighScore(highScores);
+                
+                if(averageScore >= 90)
+                    setMarkIndicatorColor('green')
+                else if (averageScore >= 70)
+                    setMarkIndicatorColor('orange');
+                else if(averageScore >= 50)
+                    setMarkIndicatorColor('yellow');
+                else
+                    setMarkIndicatorColor('red');
+            }
+        } catch(error) {
+            console.log('Error', error);
+        }
+    };
+
+    const getCurrentDay = async() => {
+        try {
+            const currentDate = new Date();
+            currentDate.setDate(currentDate.getDate() + 1);
+            const isoString = currentDate.toISOString();
+            const dateString = isoString.substring(0, isoString.indexOf('T'));
+            console.log("CurrentDate = ", dateString);
+            console.log("Batch ID = ", batchId);
+            const {responseData, errorMessage} = await getHook(`/api/v3/batch/${batchId}/day/${dateString}`);
+            if(responseData)
+            {
+                setCurrentDay(responseData.current_day);
+                console.log("Current Day Is ---------->",responseData.current_day )
+                setLoadingCurrentDay(true);
+            }
+        } catch(error) {
+            console.log('Error', error);
+        }
+    };
+
+    const getTraineeProgress = async() => {
+        try {
+            const daysList : number[] = [];
+            const {responseData, errorMessage} = await getHook(`/api/v3/trainee/${trainee_id}/days`);
+            if(responseData)
+            {
+                console.log("Trainee Progress : ", responseData.data);
+                for (const object of responseData.data)
+                {
+                    if(object.status === true)
+                        daysList.push(object.day_number);
+                }
+                console.log("Days List : ", daysList)
+                const largestDayNumber: number = Math.max(...daysList);
+                console.log("Current Day Progress Number: ", largestDayNumber);
+                setTraineeCurrentDay(true);
+                if(largestDayNumber >= currentDay)
+                {
+                    setTraineeProgress('OnTrack');
+                    
+                }
+                else
+                {
+                    setTraineeProgress('Lagging');
+                    console.log("Ooops")
+                    await courseListFromDatabase(largestDayNumber, trainee_id);
+                }
+            }
+        }catch (error)
+        {
+            console.log("Error", error);
+        }
+    }
+
+    const courseListFromDatabase = async(largestDayNumber : number, trainee_id : number) => {
+        try
+        {
+            const incompleteCourseList : string [] = [];
+            const courseList : string [] = [];
+            const {responseData, errorMessage} = await getHook(`/api/v3/trainee/${trainee_id}/course/day/${largestDayNumber}`);
+            if(responseData)
+            {
+                for(const object of responseData.message)
+                {
+                    if(object.status === false)
+                        incompleteCourseList.push(object.course_name);
+                }
+                console.log("Incomplete Course List :", incompleteCourseList);
+                setIncompleteCourseList(incompleteCourseList);
+                console.log("Yooo")
+            }
+        }catch(error)
+        {
+            console.log("Error", error);
+        }
+    }
 
     const colorArray = [
         '#FF6347', '#FF7F50', '#FFA07A', '#FFD700', '#FF69B4', '#FF1493', '#FFC0CB', '#87CEEB', '#4682B4', '#40E0D0', '#00FF7F', '#7FFF00', '#32CD32', '#ADFF2F', '#00FF00', '#6B8E23', '#228B22', '#7CFC00', '#98FB98', '#008000', '#556B2F', '#20B2AA', '#00CED1', '#1E90FF', '#4169E1', '#0000FF', '#000080', '#8A2BE2', '#4B0082', '#800080', '#9932CC', '#9400D3', '#8B008B', '#A52A2A', '#D2691E', '#B22222', '#800000'
@@ -143,7 +198,7 @@ const TraineeProileAnalysisScreen = () => {
     return(
         <ScrollView>
         {
-            (!isLoadingCurrentDay) ? (
+            (!isLoadingCurrentDay || !finalLoading) ? (
                 <TraineeProfileShimmer/>
             ) : (
                 <View style = {styles.pageContainer}>
@@ -186,6 +241,15 @@ const TraineeProileAnalysisScreen = () => {
                             </View>
                         </View>
                     </View>
+                    {/* {traineeProgress === } */}
+                    {/* {traineeProgress === 'Lagging' && (
+                    <View>
+                        {incompleteCourseList.map((value, index) => (
+                            <Accordion value={value} key={index} />
+                        ))}
+                    </View>
+                )
+                } */}
                     <BarGraph data={highScore} labels={resultID}></BarGraph>
                 </View>
             )
