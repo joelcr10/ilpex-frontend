@@ -8,6 +8,7 @@ import TraineeNameCard from "../../components/TraineeNameCard";
 import SearchField from "../../components/SearchField";
 import TraineeNameCardShimmer from "../../components/loading/TraineeNameListShimmer";
 import TraineeNameShimmer from "../../components/loading/TraineeNameListShimmer";
+import BackButton from "../../components/BackButton";
 
 
 
@@ -52,7 +53,7 @@ const UserManagementScreen=()=>{
         // <ScrollView>
         <View>
             <View style={{backgroundColor:ilpex.main}}>
-                {/* <BackButton color='white'/> */}
+                <BackButton color='white'/>
                 <View style={styles.topbar}>
                    
                     <Text style={styles.headerText}>{`User Management`}</Text>
@@ -63,7 +64,10 @@ const UserManagementScreen=()=>{
                         <SearchField onChangeText={handleSearch as any} value={searchQuery}/>
                         <Text style={styles.subTitle}>Trainees</Text>
                     {isLoading  &&
+                    <View style={{height:'63%'}}>
                       <TraineeNameShimmer/>
+                    </View>
+                      
                     }
                     {!isLoading &&
                     

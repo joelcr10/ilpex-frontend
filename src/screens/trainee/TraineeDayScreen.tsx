@@ -57,7 +57,14 @@ const TraineeDayScreen=()=>{
                         <Text style={styles.subTitle}>Learning Courses</Text>
                        
                     {isLoading &&
-                       <CourseCardShimmer/>
+                    <View style={{height:'75.5%'}}>
+                        <CourseCardShimmer/>
+                        <CourseCardShimmer/>
+                        <CourseCardShimmer/>
+                        <CourseCardShimmer/>
+                        <CourseCardShimmer/>
+                    </View>
+                       
                     }
                      
                     {!isLoading &&
