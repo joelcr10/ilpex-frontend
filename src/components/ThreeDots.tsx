@@ -63,12 +63,12 @@ const ThreeDots = (props : PropsType) => {
                 <View style={styles.logoutModal}>
                 <Text style={styles.modalText}>Are you sure you want to sign out?</Text>
                     <View style = {styles.modalButtonContainer}>
-                    <TouchableOpacity style={styles.cancelButton} onPress={toggleLogoutBottomsheet}>
-                        <Text style={styles.cancelButtonStyling}>Cancel</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.signoutButton} onPress={handleLogout}>
-                        <Text style={styles.signoutButtonStyling}>Sign Out</Text>
-                    </TouchableOpacity>
+                        <TouchableOpacity style={styles.cancelButton} onPress={toggleLogoutBottomsheet}>
+                            <Text style={styles.cancelButtonStyling}>Cancel</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.signoutButton} onPress={handleLogout}>
+                            <Text style={styles.signoutButtonStyling}>Sign Out</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
             </Modal>
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
         elevation : 2,
     },
     modalText:{
-        fontSize:20,
+        fontSize:19,
         textAlign:'center',
         color:'black',
         padding:20,
@@ -185,6 +185,7 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         margin:0,
         marginTop:300,
+        // paddingBottom : 300
     },
     signoutButton:{
         width : 150,
@@ -193,7 +194,7 @@ const styles = StyleSheet.create({
         backgroundColor:'#8518FF',
         marginLeft : 20,
         marginRight : 20,
-        marginBottom : 20,
+        marginBottom : '30%',
         borderRadius:5,
     },
     cancelButton : {
@@ -216,24 +217,25 @@ const styles = StyleSheet.create({
         width : '100%',
         flex : 1, 
         justifyContent : 'flex-end',
-        margin:0
+        margin:0,
     },
     logoutModal:{
-        height:150,
+        // height:150,
         borderColor:'black',
         backgroundColor:'white',
+        height : '22%'
     },
     modalButtonContainer : {
         flexDirection : 'row',
         justifyContent : 'center'
     },
     cancelButtonStyling : {
-        fontSize:20,
+        fontSize:18,
         color:'black',
         textAlign:'center'
     },
     signoutButtonStyling : {
-        fontSize:20,
+        fontSize:18,
         color:'white',
         textAlign:'center'
     }

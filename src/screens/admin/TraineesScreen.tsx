@@ -183,7 +183,6 @@ const styles = StyleSheet.create({
         display:'flex',
         flexDirection:'row',
         backgroundColor:'#E4D8FE',
-        // backgroundColor : 'red',
         borderRadius:10,
         marginTop:'3.5%',
         marginRight : '5%',

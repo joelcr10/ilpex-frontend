@@ -1,29 +1,37 @@
 import React, { useEffect, useState } from "react";
-import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import { FlatList, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import ilpex from "../../utils/ilpexUI";
 import BackButton from "../../components/BackButton";
 import BarGraph from "../../components/BarChart";
 import { getHook } from "../../network/getHook/getHook";
 import TraineeProfileShimmer from "../../components/loading/TraineeProfileShimmer";
 import { useRoute } from "@react-navigation/native";
-import Accordion from "../../components/Accordion";
-import { ListItem } from '@rneui/themed';
+import { List } from 'react-native-paper';
 const TraineeProileAnalysisScreen = () => {
 
     const route:any = useRoute();
 
-    const [traineeName, setTraineeName] = useState<any[]>([]);
-    const [traineeBatch, setTraineeBatch] = useState<any[]>([]);
+    const [traineeName, setTraineeName] = useState<string[]>([]);
+    const [traineeBatch, setTraineeBatch] = useState<string[]>([]);
     const [currentDay, setCurrentDay] = useState(2);
-    const [averageAssessmentScore, setAverageAssessmentScore] = useState<any[]>([]) ;
+    const [currentTraineeDay, setCurrentTraineeDay] = useState(3);
+    const [averageAssessmentScore, setAverageAssessmentScore] = useState<number[]>([]) ;
     const [marksIndicatorColor, setMarkIndicatorColor] = useState('black');
     const [resultID, setResultID] = useState<any[]>([]);
     const [highScore, setHighScore] = useState<any[]>([]);
     const [isLoadingCurrentDay, setLoadingCurrentDay] = useState(false);
-    const [traineeProgress, setTraineeProgress] = useState('placeholder');
+    const [traineeProgress, setTraineeProgress] = useState('PENDING');
     const [incompleteCourseList, setIncompleteCourseList] = useState<string[]>([]);
     const [finalLoading, setFinalLoading] = useState(false);
     const [traineeCurrentDay, setTraineeCurrentDay] = useState(false);
+    const [expandedAccordion, setExpandedAccordion] = useState(true);
+    const [traineeProgressStatus, setTraineeProgressStatus] = useState(false);
+
+    const changeExpand=()=>{
+        setExpandedAccordion(!expandedAccordion)
+        console.log('entered')
+    }
+
     let batchId : number = 0; 
     const user_id = route.params.user_id;
     const trainee_id = route.params.trainee_id;
@@ -70,6 +78,7 @@ const TraineeProileAnalysisScreen = () => {
 
     const getTraineeScores = async() => {
         try {
+            setTraineeProgress('PENDING');
             const {responseData, errorMessage} = await getHook(`/api/v2/trainee/${trainee_id}/scores`);
             console.log('Trainee ID Inside Trainee Scores Function------', trainee_id)
             if(responseData)
@@ -141,19 +150,17 @@ const TraineeProileAnalysisScreen = () => {
                 }
                 console.log("Days List : ", daysList)
                 const largestDayNumber: number = Math.max(...daysList);
+                setCurrentTraineeDay(largestDayNumber);
                 console.log("Current Day Progress Number: ", largestDayNumber);
                 setTraineeCurrentDay(true);
+
                 if(largestDayNumber >= currentDay)
-                {
-                    setTraineeProgress('OnTrack');
-                    
-                }
+                    setTraineeProgress('ON TRACK');
                 else
-                {
-                    setTraineeProgress('Lagging');
-                    console.log("Ooops")
-                    await courseListFromDatabase(largestDayNumber, trainee_id);
-                }
+                    setTraineeProgress('BEHIND');
+                
+                setTraineeProgressStatus(true);
+                await courseListFromDatabase(largestDayNumber, trainee_id)
             }
         }catch (error)
         {
@@ -194,6 +201,9 @@ const TraineeProileAnalysisScreen = () => {
       };
 
     const [circleBackgroundColor, setCircleBackgroundColor] = useState(getRandomColor());
+    const [expanded, setExpanded] = useState(true);
+
+    const handlePress = () => setExpanded(!expanded);
 
     return(
         <ScrollView>
@@ -221,10 +231,41 @@ const TraineeProileAnalysisScreen = () => {
                     <View style = {styles.statsContainer}>
                         <View style = {styles.statsRow}>
                             <View style = {styles.statsKey}>
-                                <Text style = {styles.statsKeyLabel}>Current Day</Text>
+                                <Text style = {styles.statsKeyLabel}>Current Day of the Batch</Text>
                             </View>
                             <View style = {styles.statsValue}>
                             <Text style = {styles.statsValueLabel}>Day {currentDay}</Text>
+                            </View>
+                        </View>
+                        <View style = {styles.statsRow}>
+                            <View style = {styles.statsKey}>
+                                <Text style = {styles.statsKeyLabel}>Current Day of the Trainee</Text>
+                            </View>
+                            <View style = {styles.statsValue}>
+                            <Text style = {styles.statsValueLabel}>Day {currentTraineeDay}</Text>
+                            </View>
+                        </View>
+                        <View style = {styles.statsRow}>
+                            <View style = {styles.statsKey}>
+                                <Text style = {styles.statsKeyLabel}>Current Progress of the Trainee</Text>
+                            </View>
+                            <View style = {styles.statsValue}>
+                            {traineeProgressStatus === false ? (
+                                <Text style={[styles.statsValueLabel, { color: 'yellow', fontFamily: ilpex.fontSemiBold }]}>
+                                    {traineeProgress}
+                                </Text>
+                            ) : (
+                                traineeProgress === 'ON TRACK' ? (
+                                    <Text style={[styles.statsValueLabel, { color: 'green', fontFamily: ilpex.fontSemiBold }]}>
+                                        {traineeProgress}
+                                    </Text>
+                                ) : (
+                                    <Text style={[styles.statsValueLabel, { color: 'red', fontFamily: ilpex.fontSemiBold }]}>
+                                        {traineeProgress}
+                                    </Text>
+                                )
+                            )}
+                            
                             </View>
                         </View>
                         <View style = {styles.statsRow}>
@@ -237,20 +278,80 @@ const TraineeProileAnalysisScreen = () => {
                                     <Text style ={styles.percentageLabel}>
                                     {averageAssessmentScore}%
                                     </Text>
+                                    
                                 </View>
                             </View>
                         </View>
                     </View>
-                    {/* {traineeProgress === } */}
-                    {/* {traineeProgress === 'Lagging' && (
-                    <View>
-                        {incompleteCourseList.map((value, index) => (
-                            <Accordion value={value} key={index} />
-                        ))}
+
+                    <View style={{
+                            marginBottom : '10%',
+                            marginTop : '5%',
+                            flex:1
+                        }}>
+                            <List.Accordion
+                            title="Courses left for the day"
+                            left={props => <List.Icon {...props} icon="book" />}
+                            expanded={!expandedAccordion}
+                            onPress={changeExpand}
+                            style={styles.accordion}
+                            titleStyle={styles.accordionTitle}
+                            >
+                                <View style={styles.accordionView}>
+                            
+                                    <FlatList
+                                    showsVerticalScrollIndicator={false}
+                                    data={incompleteCourseList}
+                                    renderItem={({ item,index }) => (
+                                    <View style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
+                                        <Text style={styles.accordionText}>
+                                        {index + 1} .  {item}</Text>
+                                        </View>
+                                    )}
+                                    keyExtractor={item => item.id}
+                                    />
+                                
+                                </View>
+                            </List.Accordion>
                     </View>
-                )
-                } */}
-                    <BarGraph data={highScore} labels={resultID}></BarGraph>
+                     <View  style={{
+                        flexDirection:'column'
+                     }}> 
+                        <View style={{
+                            flex:1
+                        }}>
+                            <BarGraph data={highScore} labels={resultID}></BarGraph>
+                        </View>
+                        {/* <View style={{
+                            marginBottom : '10%',
+                            flex:1
+                        }}>
+                            <List.Accordion
+                            title="Courses left for the day"
+                            left={props => <List.Icon {...props} icon="book" />}
+                            expanded={!expandedAccordion}
+                            onPress={changeExpand}
+                            style={styles.accordion}
+                            titleStyle={styles.accordionTitle}
+                            >
+                                <View style={styles.accordionView}>
+                            
+                                    <FlatList
+                                    showsVerticalScrollIndicator={false}
+                                    data={incompleteCourseList}
+                                    renderItem={({ item,index }) => (
+                                    <View style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
+                                        <Text style={styles.accordionText}>
+                                        {index + 1} .  {item}</Text>
+                                        </View>
+                                    )}
+                                    keyExtractor={item => item.id}
+                                    />
+                                
+                                </View>
+                            </List.Accordion>
+                        </View> */}
+                    </View>  
                 </View>
             )
         }
@@ -261,11 +362,13 @@ const TraineeProileAnalysisScreen = () => {
 const styles = StyleSheet.create({
     pageContainer : {
         backgroundColor : ilpex.white,
-        height : '100%',
+        minHeight : "100%",
+        position:'relative',
+        zIndex:0
     },
     adminContainer : {
         backgroundColor : ilpex.white,
-        height : 1000,
+        minHeight : 1000,
     },
     profilePictureContainer : {
         height : 150,
@@ -349,6 +452,51 @@ const styles = StyleSheet.create({
         flexDirection : 'row',
         justifyContent : 'center',
         alignContent : 'center'
-    }
+    },
+    accordionText:{
+        paddingTop : '4%',
+        fontFamily : ilpex.fontMedium,
+        fontSize : 16,
+        color : 'black',
+      },
+    accordion:{
+        // borderRadius:20,
+        borderTopLeftRadius : 10, 
+        borderTopRightRadius : 10,
+        // marginHorizontal:30,
+        // marginLeft : 10,
+        // marginRight : 10,
+        backgroundColor:'white',
+        elevation:5,
+        marginLeft : '3%',
+        marginRight : '3%',
+        // paddingLeft : '8%',
+        // paddingRight : '8%',
+        },
+    accordionView:{
+            // borderRadius:20,
+            borderBottomLeftRadius : 10,
+            borderBottomRightRadius : 10,
+            // marginHorizontal:10,
+            backgroundColor:'white',
+            elevation:5,
+            // marginTop:80,
+            // left:20,
+            // width:350,
+            paddingBottom : 30,
+            // position:'absolute',
+            // zIndex:1
+            marginLeft : '3%',
+            marginRight : '3%',
+            paddingLeft : '8%',
+            paddingRight : '8%',
+    },
+    accordionTitle:{
+        // marginLeft:20,
+        // fontWeight:'700',
+        fontFamily : ilpex.fontRegular,
+        fontSize: 17
+    },
+
 })
 export default TraineeProileAnalysisScreen;
