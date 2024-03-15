@@ -58,10 +58,6 @@ const TraineeProileAnalysisScreen = () => {
         traineeProfileLoading();
     }, [traineeCurrentDay]);
 
-    useEffect (() => {
-        
-    })
-
     const getTraineeProfile = async() => {
         try {
             const {responseData, errorMessage} = await getHook(`/api/v3/profile/${user_id}`);
