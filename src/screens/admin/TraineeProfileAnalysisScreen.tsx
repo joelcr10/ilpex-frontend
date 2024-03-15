@@ -322,35 +322,6 @@ const TraineeProileAnalysisScreen = () => {
                         }}>
                             <BarGraph data={highScore} labels={resultID}></BarGraph>
                         </View>
-                        {/* <View style={{
-                            marginBottom : '10%',
-                            flex:1
-                        }}>
-                            <List.Accordion
-                            title="Courses left for the day"
-                            left={props => <List.Icon {...props} icon="book" />}
-                            expanded={!expandedAccordion}
-                            onPress={changeExpand}
-                            style={styles.accordion}
-                            titleStyle={styles.accordionTitle}
-                            >
-                                <View style={styles.accordionView}>
-                            
-                                    <FlatList
-                                    showsVerticalScrollIndicator={false}
-                                    data={incompleteCourseList}
-                                    renderItem={({ item,index }) => (
-                                    <View style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
-                                        <Text style={styles.accordionText}>
-                                        {index + 1} .  {item}</Text>
-                                        </View>
-                                    )}
-                                    keyExtractor={item => item.id}
-                                    />
-                                
-                                </View>
-                            </List.Accordion>
-                        </View> */}
                     </View>  
                 </View>
             )
@@ -460,40 +431,25 @@ const styles = StyleSheet.create({
         color : 'black',
       },
     accordion:{
-        // borderRadius:20,
         borderTopLeftRadius : 10, 
         borderTopRightRadius : 10,
-        // marginHorizontal:30,
-        // marginLeft : 10,
-        // marginRight : 10,
         backgroundColor:'white',
         elevation:5,
         marginLeft : '3%',
         marginRight : '3%',
-        // paddingLeft : '8%',
-        // paddingRight : '8%',
         },
     accordionView:{
-            // borderRadius:20,
             borderBottomLeftRadius : 10,
             borderBottomRightRadius : 10,
-            // marginHorizontal:10,
             backgroundColor:'white',
             elevation:5,
-            // marginTop:80,
-            // left:20,
-            // width:350,
             paddingBottom : 30,
-            // position:'absolute',
-            // zIndex:1
             marginLeft : '3%',
             marginRight : '3%',
             paddingLeft : '8%',
             paddingRight : '8%',
     },
     accordionTitle:{
-        // marginLeft:20,
-        // fontWeight:'700',
         fontFamily : ilpex.fontRegular,
         fontSize: 17
     },

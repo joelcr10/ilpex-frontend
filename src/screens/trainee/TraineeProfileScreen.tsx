@@ -9,6 +9,7 @@ import { getItem } from "../../utils/utils";
 import Constants from "../../utils/Constants";
 import TraineeProfileShimmer from "../../components/loading/TraineeProfileShimmer";
 import { List } from "react-native-paper";
+import { useFocusEffect } from "@react-navigation/native";
 
 const TraineeProfileScreen = () => {
 
@@ -36,7 +37,8 @@ const TraineeProfileScreen = () => {
 
     let batchId : number = 0; 
 
-    useEffect(() => {
+    useFocusEffect(
+        React.useCallback(() => {
 
         const traineeProfileLoader = async () =>{
             await getTraineeScores();
@@ -45,11 +47,12 @@ const TraineeProfileScreen = () => {
             await getTraineeProgress();
             // setFinalLoading(true);
         }
-
         traineeProfileLoader();        
-    }, []);
+    }, [])
+    );
 
-    useEffect(() => {
+    useFocusEffect(
+        React.useCallback(() => {
 
         const traineeProfileLoading = async () =>{
             await getTraineeProgress();
@@ -57,8 +60,9 @@ const TraineeProfileScreen = () => {
         }
         
         traineeProfileLoading();
-    }, [traineeCurrentDay]);
-
+    }, [traineeCurrentDay])
+    )
+    
     const getTraineeProfile = async() => {
         try {
             
@@ -220,7 +224,6 @@ const TraineeProfileScreen = () => {
         }
     }
 
-
     const colorArray = [
         '#FF6347', '#FF7F50', '#FFA07A', '#FFD700', '#FF69B4', '#FF1493', '#FFC0CB', '#87CEEB', '#4682B4', '#40E0D0', '#00FF7F', '#7FFF00', '#32CD32', '#ADFF2F', '#00FF00', '#6B8E23', '#228B22', '#7CFC00', '#98FB98', '#008000', '#556B2F', '#20B2AA', '#00CED1', '#1E90FF', '#4169E1', '#0000FF', '#000080', '#8A2BE2', '#4B0082', '#800080', '#9932CC', '#9400D3', '#8B008B', '#A52A2A', '#D2691E', '#B22222', '#800000'
       ];
@@ -294,8 +297,7 @@ const TraineeProfileScreen = () => {
                                         {traineeProgress}
                                     </Text>
                                 )
-                            )}
-                            
+                            )}                          
                             </View>
                         </View>
                             <View style = {styles.statsRow}>
@@ -312,7 +314,6 @@ const TraineeProfileScreen = () => {
                                 </View>
                             </View>
                         </View>
-
 
                         <View style={{
                             marginBottom : '10%',
@@ -343,45 +344,16 @@ const TraineeProfileScreen = () => {
                                 
                                 </View>
                             </List.Accordion>
-                    </View>
-                     <View  style={{
-                        flexDirection:'column'
-                     }}> 
-                        <View style={{
-                            flex:1
-                        }}>
-                            <BarGraph data={highScore} labels={resultID}></BarGraph>
                         </View>
-                        {/* <View style={{
-                            marginBottom : '10%',
-                            flex:1
-                        }}>
-                            <List.Accordion
-                            title="Courses left for the day"
-                            left={props => <List.Icon {...props} icon="book" />}
-                            expanded={!expandedAccordion}
-                            onPress={changeExpand}
-                            style={styles.accordion}
-                            titleStyle={styles.accordionTitle}
-                            >
-                                <View style={styles.accordionView}>
-                            
-                                    <FlatList
-                                    showsVerticalScrollIndicator={false}
-                                    data={incompleteCourseList}
-                                    renderItem={({ item,index }) => (
-                                    <View style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
-                                        <Text style={styles.accordionText}>
-                                        {index + 1} .  {item}</Text>
-                                        </View>
-                                    )}
-                                    keyExtractor={item => item.id}
-                                    />
-                                
-                                </View>
-                            </List.Accordion>
-                        </View> */}
-                    </View>  
+                        <View  style={{
+                        flexDirection:'column'
+                        }}> 
+                            <View style={{
+                                flex:1
+                            }}>
+                                <BarGraph data={highScore} labels={resultID}></BarGraph>
+                            </View>
+                        </View>  
                     </View>
                 )
             }
@@ -537,40 +509,25 @@ const styles = StyleSheet.create({
         color : 'black',
       },
     accordion:{
-        // borderRadius:20,
         borderTopLeftRadius : 10, 
         borderTopRightRadius : 10,
-        // marginHorizontal:30,
-        // marginLeft : 10,
-        // marginRight : 10,
         backgroundColor:'white',
         elevation:5,
         marginLeft : '3%',
         marginRight : '3%',
-        // paddingLeft : '8%',
-        // paddingRight : '8%',
         },
     accordionView:{
-            // borderRadius:20,
-            borderBottomLeftRadius : 10,
-            borderBottomRightRadius : 10,
-            // marginHorizontal:10,
-            backgroundColor:'white',
-            elevation:5,
-            // marginTop:80,
-            // left:20,
-            // width:350,
-            paddingBottom : 30,
-            // position:'absolute',
-            // zIndex:1
-            marginLeft : '3%',
-            marginRight : '3%',
-            paddingLeft : '8%',
-            paddingRight : '8%',
+        borderBottomLeftRadius : 10,
+        borderBottomRightRadius : 10,
+        backgroundColor:'white',
+        elevation:5,
+        paddingBottom : 30,
+        marginLeft : '3%',
+        marginRight : '3%',
+        paddingLeft : '8%',
+        paddingRight : '8%',
     },
     accordionTitle:{
-        // marginLeft:20,
-        // fontWeight:'700',
         fontFamily : ilpex.fontRegular,
         fontSize: 17
     },
