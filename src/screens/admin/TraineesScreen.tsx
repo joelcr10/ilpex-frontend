@@ -121,6 +121,7 @@ const TraineeScreen = () => {
                     {!isLoading ? (
                         <TraineeCardShimmer/>
                     ) : (
+                        <View style = {styles.cardContainer}>
                         <FlatList
                         showsVerticalScrollIndicator={false}
                         data={filteredTraineesList}
@@ -134,6 +135,7 @@ const TraineeScreen = () => {
                         )}
                         keyExtractor={item => item.id}
                         />
+                        </View>
                     )}            
                 </View>
             </View>
@@ -158,9 +160,10 @@ const styles = StyleSheet.create({
     },
 
     cardContainer : {
-        paddingTop : '10%',
+        paddingTop : '7%',
         paddingLeft : '7%',
         paddingRight : '7%',
+        
     },
     containerHeading : {
         color : 'white',
