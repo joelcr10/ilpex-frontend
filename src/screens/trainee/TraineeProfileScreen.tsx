@@ -17,7 +17,6 @@ const TraineeProfileScreen = () => {
     const [currentDay, setCurrentDay] = useState(2);
     const [averageAssessmentScore, setAverageAssessmentScore] = useState<any[]>([]);
     const [marksIndicatorColor, setMarkIndicatorColor] = useState('black');
-    const [marksFeedback, setMarksFeedBack] = useState('placeholder');
     const [resultID, setResultID] = useState<any[]>([]);
     const [highScore, setHighScore] = useState<any[]>([]);
     const [isLoadingCurrentDay, setLoadingCurrentDay] = useState(false);
