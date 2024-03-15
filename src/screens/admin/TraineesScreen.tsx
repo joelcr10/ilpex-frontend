@@ -5,6 +5,7 @@ import TraineeCardShimmer from "../../components/loading/TraineeCardShimmer";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { getHook } from "../../network/getHook/getHook";
 import DrawerNavigationHamburger from "../../components/DrawerNavigationHamburger";
+import { useFocusEffect } from "@react-navigation/native";
 import DropdownComponent from "../../components/DropDown";
 
 const TraineeScreen = () => {
@@ -28,23 +29,25 @@ const TraineeScreen = () => {
         setFilteredTraineesList(filteredTrainees);
     };
 
-    useEffect (() => {
-        const getTraineesList = async() => {
-            try {
-                const {responseData, errorMessage} = await getHook(`/api/v2/trainee?batch_id=${batchId}`);
-                if(responseData)
-                {
-                    setTraineesList(responseData);
-                    setFilteredTraineesList(responseData);
+    useFocusEffect(
+        React.useCallback(() => {
+            const getTraineesList = async() => {
+                try {
+                    const {responseData, errorMessage} = await getHook(`/api/v2/trainee?batch_id=${batchId}`);
+                    if(responseData)
+                    {
+                        setTraineesList(responseData);
+                        setFilteredTraineesList(responseData);
+                    }
                 }
-            }
-            catch(error) {
-                console.log('Error', error);
-            }
-        };
+                catch(error) {
+                    console.log('Error', error);
+                }
+            };
 
-        getTraineesList();
-    }, [batchId]);
+            getTraineesList();
+        }, [batchId])
+    )
 
     //get Batches 
 

@@ -5,7 +5,7 @@ import { Text } from "react-native";
 import { FlatList } from "react-native";
 import ilpex from "../../utils/ilpexUI";
 import { getHook } from "../../network/getHook/getHook";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import BatchCardShimmer from "../../components/loading/BatchCardShimmer";
 import AssesmentListCard from "../../components/AssesmentListCard";
 import DrawerNavigationHamburger from "../../components/DrawerNavigationHamburger";
@@ -21,26 +21,29 @@ const AssesmentListScreen = ()=>{
         navigation.navigate("updateAssesments",{assessment_id:assessment_id,assessment_name:assessment_name});
     }
 
-    useEffect(()=>{
-        const getBatches = async()=>{
-            try{
-                
-                const { success,statusCode,responseData,errorMessage} = await getHook('/api/v2/assessment');
-                if(success){
-                    if(responseData){
-                        setAssesmentList(responseData.assessments);
-                        console.log('this is data',responseData)
-                        // assessList = responseData.assessments;
-                        setLoading(true); 
-                     }
+    useFocusEffect(
+        React.useCallback(() => {
+            const getBatches = async()=>{
+                try{
+                    
+                    const { success,statusCode,responseData,errorMessage} = await getHook('/api/v2/assessment');
+                    if(success){
+                        if(responseData){
+                            setAssesmentList(responseData.assessments);
+                            console.log('this is data',responseData)
+                            // assessList = responseData.assessments;
+                            setLoading(true); 
+                        }
+                    }
+                }
+                catch(err){
+                    console.error('Error', err);
                 }
             }
-            catch(err){
-                console.error('Error', err);
-            }
-        }
-        getBatches();
-    },[]);
+            getBatches();
+        },[])
+    )
+
     return(
         <View style={styles.container}>
             <DrawerNavigationHamburger/>

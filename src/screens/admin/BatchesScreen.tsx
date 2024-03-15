@@ -6,7 +6,7 @@ import { FlatList } from "react-native";
 import BatchCard from "../../components/BatchCard";
 import ilpex from "../../utils/ilpexUI";
 import { getHook } from "../../network/getHook/getHook";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import BatchCardShimmer from "../../components/loading/BatchCardShimmer";
 import { getItem } from "../../utils/utils";
 import Constants from "../../utils/Constants";
@@ -29,7 +29,9 @@ const BatchesScreen = ()=>{
     const today = new Date();
     const newDateTime = new Date(today.getTime() + (5.5 * 60 * 60 * 1000));
     const todayString = newDateTime.toISOString().substring(0, 10);
-    useEffect(()=>{
+    useFocusEffect(
+        React.useCallback(() => {
+            console.log("First Focus Effect")
         const getBatches = async()=>{
             try{
                 const { success,statusCode,responseData,errorMessage} = await getHook('/api/v2/batch');
@@ -50,32 +52,33 @@ const BatchesScreen = ()=>{
             }
         }
         getBatches();
-    },[]);
-
-    useEffect(() => {
-        const getDay = async () => {
-            for (const batch of allBatchesList.batches) {
-                const { responseData, errorMessage, success } = await getHook(`/api/v3/batch/${batch.batch_id}/day/${todayString}`);
-                console.log("Today : -------------------------------------------->>>>>>>>>>>>>>>", todayString);
-                console.log(batch.batch_id);
-                if (success) {
-                    if (responseData) {
-                        console.log(responseData);
-                        setCurrentDay((prevState: any) => ({
-                            ...prevState,
-                            [batch.batch_id]: responseData.current_day,
-                        }));
+    },[])
+    );
+    useFocusEffect(
+        React.useCallback(() => {
+            const getDay = async () => {
+                for (const batch of allBatchesList.batches) {
+                    const { responseData, errorMessage, success } = await getHook(`/api/v3/batch/${batch.batch_id}/day/${todayString}`);
+                    console.log("Today : -------------------------------------------->>>>>>>>>>>>>>>", todayString);
+                    console.log(batch.batch_id);
+                    if (success) {
+                        if (responseData) {
+                            console.log(responseData);
+                            setCurrentDay((prevState: any) => ({
+                                ...prevState,
+                                [batch.batch_id]: responseData.current_day,
+                            }));
+                        }
+                    } else {
+                        console.log("failure");
                     }
-                } else {
-                    console.log("failure");
                 }
+            };
+            if (allBatchesList.batches) {
+                getDay();
             }
-        };
-        if (allBatchesList.batches) {
-            getDay();
-        }
-    }, [allBatchesList]);
-    
+        }, [allBatchesList])
+    );
     return(
         <ScrollView
         showsVerticalScrollIndicator={false}>
