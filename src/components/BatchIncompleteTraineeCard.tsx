@@ -8,14 +8,15 @@ type PropsType = {
     batch_name : string, 
     courses_left : number,
     total_number_of_courses : number,
-    course_list : string[]
+    course_list : string[],
+    currentDay : number
 }
 
-const IncompleteTraineeCard = (props : PropsType) => {
+const BatchIncompleteTraineeCard = (props : PropsType) => {
 
     const [expandedAccordion, setExpandedAccordion] = useState(true);
 
-    const {trainee_name, batch_name, courses_left, total_number_of_courses, course_list} = props;
+    const {trainee_name, batch_name, courses_left, total_number_of_courses, course_list, currentDay} = props;
 
     const changeExpand=()=>{
         setExpandedAccordion(!expandedAccordion)
@@ -34,57 +35,62 @@ const IncompleteTraineeCard = (props : PropsType) => {
     const [circleBackgroundColor, setCircleBackgroundColor] = useState(getRandomColor());
     
     return(
-        <View style = {styles.cardContainer}>
-            <View style = {styles.dataContainer}>
-                <View style = {styles.profilePicture}>
-                    <View style = {[styles.circleContainer, {backgroundColor: circleBackgroundColor}]}>
-                        <Image 
-                        style = {styles.imageLogo}
-                        source = {require('../../assets/icons/user.png')}
-                        />
+            <View style = {styles.cardContainer}>
+                <View style = {styles.dataContainer}>
+                    <View style = {styles.profilePicture}>
+                        <View style = {[styles.circleContainer, {backgroundColor: circleBackgroundColor}]}>
+                            <Image 
+                            style = {styles.imageLogo}
+                            source = {require('../../assets/icons/user.png')}
+                            />
+                        </View>
+                    </View>
+                    <View style = {styles.dataPart}>
+                        <Text style = {styles.traineeName} numberOfLines={1}>
+                            {trainee_name}
+                        </Text>
+                        <Text style =  {styles.batchName}>
+                           {batch_name}
+                        </Text>
                     </View>
                 </View>
-                <View style = {styles.dataPart}>
-                    <Text style = {styles.traineeName} numberOfLines={1}>
-                        {trainee_name}
-                    </Text>
-                    <Text style =  {styles.batchName}>
-                        {batch_name}
-                    </Text>
+                <View style = {styles.dividerLine}></View>
+                <View style = {styles.courseStatusContainer}>
+                    <Text style = {styles.currentDayCaption}>Current Day</Text>
+                    <Text>                   </Text>
+                    <Text style = {styles.coursesLeftValue}>{currentDay}</Text>   
+                </View>
+                <View aria-label="Accordion Container">
+                    <List.Accordion
+                    title={
+                        <>
+                            <Text style = {styles.coursesLeftCaption}>Courses Left</Text>
+                            <Text>           </Text>
+                            <Text style = {styles.coursesLeftValue}>{courses_left}/{total_number_of_courses}</Text> 
+                        </>
+                    }
+                    expanded={!expandedAccordion}
+                    onPress={changeExpand}
+                    style={styles.accordion}
+                    titleStyle={styles.accordionTitle}
+                    >
+                        <View style={styles.accordionView}>
+                        <Text style={styles.accordionViewHeading}>Incomplete Courses</Text>
+                            <FlatList
+                            showsVerticalScrollIndicator={false}
+                            data={course_list}
+                            renderItem={({ item,index }) => (
+                            <View style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
+                                <Text style={styles.accordionText}>
+                                {index + 1} .  {item}</Text>
+                                </View>
+                            )}
+                            keyExtractor={item => item.id}
+                            />
+                        </View>
+                    </List.Accordion>
                 </View>
             </View>
-            <View style = {styles.dividerLine}></View>
-            <View aria-label="Accordion Container">
-                <List.Accordion
-                title={
-                    <>
-                        <Text style = {styles.coursesLeftCaption}>Courses Left</Text>
-                        <Text>           </Text>
-                        <Text style = {styles.coursesLeftValue}>{courses_left}/{total_number_of_courses}</Text>
-                    </>
-                }
-                expanded={!expandedAccordion}
-                onPress={changeExpand}
-                style={styles.accordion}
-                titleStyle={styles.accordionTitle}
-                >
-                    <View style={styles.accordionView}>
-                    <Text style={styles.accordionViewHeading}>Incomplete Courses</Text>
-                        <FlatList
-                        showsVerticalScrollIndicator={false}
-                        data={course_list}
-                        renderItem={({ item,index }) => (
-                        <View style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
-                            <Text style={styles.accordionText}>
-                            {index + 1} .  {item}</Text>
-                            </View>
-                        )}
-                        keyExtractor={item => item.id}
-                        />
-                    </View>
-                </List.Accordion>
-            </View>
-        </View>
     )
 }
 
@@ -109,9 +115,14 @@ const styles = StyleSheet.create({
         elevation : 4,
         shadowColor : 'black',
         marginBottom : 25,
-        flexDirection : 'column', 
+        flexDirection : 'column',  
         marginLeft : '5%',
-        marginRight : '5%' 
+        marginRight : '5%'
+    },
+    courseStatusContainer : {
+        marginLeft : '5%',
+        marginTop : '5%',
+        flexDirection : 'row'
     },
     dataContainer : {
         flexDirection : 'row',
@@ -173,6 +184,11 @@ const styles = StyleSheet.create({
         fontSize : 18,
         fontFamily : ilpex.fontRegular
     },
+    currentDayCaption : {
+        color : ilpex.black,
+        fontSize : 18,
+        fontFamily : ilpex.fontRegular
+    },
     coursesLeftValue : {
         color : ilpex.main,
         fontFamily : ilpex.fontMedium,
@@ -184,4 +200,4 @@ const styles = StyleSheet.create({
         fontSize : 18,
     }
 })
-export default IncompleteTraineeCard
+export default BatchIncompleteTraineeCard;
