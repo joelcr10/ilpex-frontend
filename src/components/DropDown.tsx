@@ -53,6 +53,7 @@ import ilpex from '../utils/ilpexUI';
       paddingHorizontal: 8,
       width : 300,
       alignSelf:'center',
+      alignSelf:'center',
     },
     icon: {
       marginRight: 5,

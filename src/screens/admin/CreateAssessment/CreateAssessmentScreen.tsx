@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View } from "react-native";
 import { StyleSheet } from "react-native";
-import { Text } from "react-native";
+import { Text,Platform } from "react-native";
 import ilpex from "../../../utils/ilpexUI";
 import { getHook } from "../../../network/getHook/getHook";
 import { getItem } from "../../../utils/utils";
@@ -18,6 +18,9 @@ import FileUploadField from "../../../components/FileUploadField";
 import DisabledBigButton from "../../../components/DisabledBigButton";
 import ToastDemo from "../../../components/ToastComponent";
 import ConfirmationModal from "../../../components/ConfirmationModal";
+import RNFS from 'react-native-fs';
+import { Image } from "react-native-svg";
+
 
 const CreateAssessmentScreen = ()=>{
     const [assessmentName,setAssessementName] = useState('');
@@ -69,6 +72,7 @@ const CreateAssessmentScreen = ()=>{
             }
         }
     };
+
 
 
     const today = new Date();
@@ -183,6 +187,19 @@ const CreateAssessmentScreen = ()=>{
             console.log("Error",err);
         }
     }
+
+    const copyFileToCache = async () => {
+        const assetsFilePath = '../../../../assets/files/AssessmentTemplate.xlsx'; // Path to the Excel file in your assets directory
+        const cacheFilePath = `${RNFS.CachesDirectoryPath}/AssessmentTemplate.xlsx`;
+    
+        try {
+          await RNFS.copyFileAssets(assetsFilePath, cacheFilePath);
+          console.log('Excel file copied to cache directory:', cacheFilePath);
+        } catch (error) {
+          console.error('Error copying Excel file to cache:', error);
+          // Handle error
+        }
+      };
  return (
     <View style={styles.container}>
         <BackButton color={"white"}></BackButton>
@@ -211,6 +228,9 @@ const CreateAssessmentScreen = ()=>{
                     </View>
                     )
                     }
+                </View>
+                <View>
+                    <Button name={"Download"} onPress={copyFileToCache} buttonPressed={false}></Button>
                 </View>
                 {success && <ConfirmationModal success={true} message={"Assessment created successfully"}></ConfirmationModal>}
                 {failure && <ToastDemo BgColor={ilpex.failure} message={errorText} textColor={ilpex.white}></ToastDemo>}
