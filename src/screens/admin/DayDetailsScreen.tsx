@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
           marginHorizontal:10,
           backgroundColor:'white',
           elevation:5,
-          marginTop:80,
+          marginTop:10,
           // position: 'absolute',
           // zIndex: 1,
           left:20,
