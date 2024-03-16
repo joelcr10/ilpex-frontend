@@ -41,7 +41,7 @@ const BatchCard=({batch_name,traineeNo,date,totalDays,progressDays,onPressFunc} 
     const formattedDate = `${monthName} ${day} ${year}`;
 
     return(
-        <TouchableOpacity onPress={onPressFunc}>
+        <TouchableOpacity onPress={onPressFunc} activeOpacity={1}>
             <View style={styles.container}>
                 <View style={styles.dataContainer}>
                     <Text style={styles.batch_name}>{batch_name}</Text>
@@ -137,6 +137,7 @@ const styles = StyleSheet.create({
         textAlign:'center',
         fontSize:17
     }
+
 })
 
 export default BatchCard;
