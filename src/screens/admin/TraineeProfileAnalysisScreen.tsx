@@ -26,7 +26,6 @@ const TraineeProileAnalysisScreen = () => {
     const [traineeCurrentDay, setTraineeCurrentDay] = useState(false);
     const [expandedAccordion, setExpandedAccordion] = useState(true);
     const [traineeProgressStatus, setTraineeProgressStatus] = useState(false);
-    const [assessmentName,setAssessmentName] = useState<any[]>([]);
 
     const changeExpand=()=>{
         setExpandedAccordion(!expandedAccordion)
@@ -34,18 +33,6 @@ const TraineeProileAnalysisScreen = () => {
     }
 
     let batchId : number = 0; 
-    useEffect(() => {
-
-        const traineeProfileLoader = async () =>{
-            await getTraineeScores();
-            await getTraineeProfile();
-            await getCurrentDay();
-            await getTraineeProgress();
-            // setFinalLoading(true);
-        }
-
-        traineeProfileLoader();        
-    }, []);
     const user_id = route.params.user_id;
     const trainee_id = route.params.trainee_id;
     useFocusEffect(
@@ -89,7 +76,6 @@ const TraineeProileAnalysisScreen = () => {
 
     const getTraineeScores = async() => {
         try {
-            
             const {responseData, errorMessage} = await getHook(`/api/v2/trainee/${trainee_id}/scores`);
             console.log('Trainee ID Inside Trainee Scores Function------', trainee_id)
             if(responseData)
@@ -103,21 +89,15 @@ const TraineeProileAnalysisScreen = () => {
                 setAverageAssessmentScore(averageScore);
                 const resultIds: string[] = [];
                 const highScores: string[] = [];
-                const assessmentNames: string[] = [];
                 const scores = responseData.scoreDetails.scores;
                 scores.forEach((score: any, index: number) => {
                     resultIds.push(`A${index + 1}`);
                     highScores.push(score.high_score);
-                    const assessments = score.assessmentName.assessments
-                        assessments.forEach((assessment: any, index: number) => {
-                            assessmentNames.push(assessment.assessment_name);
-                        })
                     console.log(`RESULT ID : A${index + 1}, HIGH SCORE : ${score.high_score}`);
                 });
                 
                 setResultID(resultIds);
                 setHighScore(highScores);
-                setAssessmentName(assessmentNames);
                 
                 if(averageScore >= 90)
                     setMarkIndicatorColor('green')
@@ -327,7 +307,7 @@ const TraineeProileAnalysisScreen = () => {
                                         {index + 1} .  {item}</Text>
                                         </View>
                                     )}
-                                    keyExtractor={item => item}
+                                    keyExtractor={item => item.id}
                                     />
                                 
                                 </View>
@@ -339,7 +319,7 @@ const TraineeProileAnalysisScreen = () => {
                         <View style={{
                             flex:1
                         }}>
-                            <BarGraph data={highScore} labels={resultID} names={assessmentName}></BarGraph>
+                            <BarGraph data={highScore} labels={resultID}></BarGraph>
                         </View>
                     </View>  
                 </View>

@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {StyleSheet, ScrollView, StatusBar, Text, View,Button} from 'react-native';
-import {StyleSheet, ScrollView, StatusBar, Text, View,Button} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import PieChart from 'react-native-pie-chart';
 import * as Animatable from 'react-native-animatable';

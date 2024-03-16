@@ -1,5 +1,4 @@
 import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native"
-import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { batchDetails } from "../../network/ApiHook";
 import ChartPie from "../../components/PieChartComponent";
 import { useEffect, useState } from "react";
@@ -13,8 +12,6 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { List } from "react-native-paper";
 import ilpex from "../../utils/ilpexUI";
-import { List } from "react-native-paper";
-import ilpex from "../../utils/ilpexUI";
 const DayWiseDetailsPage =()=>{
     const route:any = useRoute();
     const navigation : any = useNavigation();
@@ -25,13 +22,6 @@ const DayWiseDetailsPage =()=>{
     const [isLoading,setLoading] =useState(true);
     const [currentDateCompletion, setCurrentDateCompletion] = useState<any>([]);
     const [dayWiseCourseList,setDayWiseCourseList] = useState<any>([]);
-    const [expanded, setExpanded] = useState(true);
-    
-
-    const loadFunction =()=>{
-      setExpanded(!expanded)
-      
-    }
     const [expanded, setExpanded] = useState(true);
     
 
