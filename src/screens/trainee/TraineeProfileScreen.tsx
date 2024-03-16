@@ -10,8 +10,6 @@ import Constants from "../../utils/Constants";
 import TraineeProfileShimmer from "../../components/loading/TraineeProfileShimmer";
 import { List } from "react-native-paper";
 import { useFocusEffect } from "@react-navigation/native";
-import { List } from "react-native-paper";
-import { useFocusEffect } from "@react-navigation/native";
 
 const TraineeProfileScreen = () => {
 
@@ -24,19 +22,6 @@ const TraineeProfileScreen = () => {
     const [highScore, setHighScore] = useState<any[]>([]);
     const [isLoadingCurrentDay, setLoadingCurrentDay] = useState(false);
     const [roleId, setRoleId] = useState('roleid');
-    const [currentTraineeDay, setCurrentTraineeDay] = useState(3);
-    const [traineeProgress, setTraineeProgress] = useState('PENDING');
-    const [incompleteCourseList, setIncompleteCourseList] = useState<string[]>([]);
-    const [finalLoading, setFinalLoading] = useState(false);
-    const [traineeCurrentDay, setTraineeCurrentDay] = useState(false);
-    const [expandedAccordion, setExpandedAccordion] = useState(true);
-    const [traineeProgressStatus, setTraineeProgressStatus] = useState(false);
-    
-    const changeExpand=()=>{
-        setExpandedAccordion(!expandedAccordion)
-        console.log('entered')
-    }
-
     const [currentTraineeDay, setCurrentTraineeDay] = useState(3);
     const [traineeProgress, setTraineeProgress] = useState('PENDING');
     const [incompleteCourseList, setIncompleteCourseList] = useState<string[]>([]);
