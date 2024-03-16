@@ -147,8 +147,10 @@ const UpdateAssessmentScreen=()=>{
                         <DateSelector startDate={startDate} endDate={endDate} onPress={handleOpen}></DateSelector>
                     </View>
                     <CalenderModal minDate={start_date} maxDate={end_date} isVisible={isVisible}  setStartDate={setStartDate} setEndDate={setEndDate} closeModal={handleClose}></CalenderModal>
-                    {(startDate === null || endDate === null)? (
+                    {(startDate === null || endDate === null || selectedBatch === '')? (
+                        <View style={styles.button}>
                         <DisabledBigButton name="Save Changes"/>
+                        </View>
                             ) : (
                         <View style={styles.button}>
                             <Button name={'Save Changes'} onPress={updateAssessment} buttonPressed={false}></Button>
@@ -223,7 +225,8 @@ const styles = StyleSheet.create ({
         marginTop : '-5%'
     },
     button : {
-        marginTop : '30%'
+        marginTop : '30%',
+        alignSelf : 'center'
     },
     errorText: {
         color: ilpex.failure,

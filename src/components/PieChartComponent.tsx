@@ -42,8 +42,9 @@ const ChartPie = (props:chart) => {
     
        <ScrollView style={styles.scrollContainer}>
          <View style={styles.container}>
+  
           <View style={styles.heading}>
-          <Text style={{fontWeight:'700',color:'black',fontSize:23}}>{chartName}</Text>
+          <Text style={{fontFamily : 'Poppins-SemiBold',color:'black',fontSize:20}}>{chartName}</Text>
           </View>
           {good !== 0 &&
           <View style={styles.head}>
@@ -96,28 +97,31 @@ const ChartPie = (props:chart) => {
                <View style={styles.percentage1} ></View>
                <Text style={styles.footPercentage}>{excellent}</Text>
             </View>
-             <Text style={{fontWeight:'700',color:'black',fontSize:17}}>{option1}</Text>
-           </View>
-           {good !== 0 &&<View>
-             <View style={styles.footer}>
-               <View style={styles.percentage2}></View>
-               <Text style={styles.footPercentage}>{good}</Text>
-             </View>
-             <Text style={{fontWeight:'700',color:'black',fontSize:17}}>{option2}</Text>
-           </View>}
-          <View>
-             <View style={styles.footer}>
-               <View style={styles.percentage3}></View>
-               <Text style={styles.footPercentage}>{poor}</Text>
-             </View>
-             <TouchableOpacity onPress={incomplete}>
-             <Text style={{fontWeight:'700',color:'black',fontSize:17}}>{option3}</Text>
-             </TouchableOpacity>
-            </View>
-           </View>
+            <Text style={{fontFamily : 'Poppins-Medium',color:'#6D6D6D',fontSize:15}}>{option1}</Text>
           </View>
-       </ScrollView>
-      
+          {good !== 0 &&<View>
+            <View style={styles.footer}>
+              <View style={styles.percentage2}></View>
+              <Text style={styles.footPercentage}>{good}</Text>
+            </View>
+            <Text style={{fontFamily : 'Poppins-Medium',color:'#6D6D6D',fontSize:15}}>{option2}</Text>
+          </View>}
+          
+  
+          <View>
+            <View style={styles.footer}>
+              <View style={styles.percentage3}></View>
+              <Text style={styles.footPercentage}>{poor}</Text>
+            </View>
+            <TouchableOpacity onPress={incomplete}>
+            <Text style={{fontFamily : 'Poppins-Medium',color:'#6D6D6D',fontSize:15}}>{option3}</Text>
+            </TouchableOpacity>
+            
+           </View>
+  
+          </View>
+        </View>
+      </ScrollView>
     );
 
   }
@@ -127,18 +131,15 @@ const ChartPie = (props:chart) => {
 const styles = StyleSheet.create({
   scrollContainer: {
      flex: 1,
+     height : 440,
   },
   container: {
-    // flex: 1,
-    // borderColor:'black',
-    // borderWidth:3,
     marginTop:10,
     marginHorizontal:30,
     borderRadius:30,
-    // elevation:8,
+    elevation:6,
     backgroundColor:"white",
     marginBottom:10,
-  
   },
   title: {
     fontSize: 24,
@@ -175,6 +176,7 @@ const styles = StyleSheet.create({
     borderRadius:50
   },
   bottom:{
+    
     display:'flex',
     flexDirection:'row',
     justifyContent:'space-evenly',
@@ -184,25 +186,28 @@ const styles = StyleSheet.create({
     display:'flex',
     flexDirection:'row',
     alignItems:'center',
-    
+    justifyContent : 'center'
   },
   footPercentage:{
-    margin:10,
-    fontSize:20,
-    color:"black",
-    fontWeight:'500'
+    marginLeft : 7,
+    marginRight : 10,
+    marginTop : 10,
+    marginBottom : 10,
+    fontSize:14,
+    // color:"black",
+    fontFamily : 'Poppins-Medium',
+    color : '#6D6D6D',
   },
   head:{
     display:'flex',
     flexDirection:'row',
     justifyContent:'space-evenly',
-    marginHorizontal:30
+    // marginHorizontal:30,
   },
   headPercentage:{
     display:'flex',
     flexDirection:'row',
-    marginBottom:5
-    
+    marginBottom:5,
   },
 });
 

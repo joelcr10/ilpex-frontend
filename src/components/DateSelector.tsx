@@ -141,9 +141,9 @@ const styles = StyleSheet.create({
     },
     dateSelectFieldNameLabel : {
         fontFamily : ilpex.fontMedium,
-        marginLeft : 45,
         marginBottom : 10,
         fontSize : 20,
+        textAlign : 'center'
     },
     datesDisplay : {
         fontFamily : ilpex.fontMedium,

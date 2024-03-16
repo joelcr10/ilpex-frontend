@@ -5,7 +5,7 @@ import BackButton from "../../components/BackButton";
 import BarGraph from "../../components/BarChart";
 import { getHook } from "../../network/getHook/getHook";
 import TraineeProfileShimmer from "../../components/loading/TraineeProfileShimmer";
-import { useRoute } from "@react-navigation/native";
+import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { List } from 'react-native-paper';
 const TraineeProileAnalysisScreen = () => {
 
@@ -35,18 +35,20 @@ const TraineeProileAnalysisScreen = () => {
     let batchId : number = 0; 
     const user_id = route.params.user_id;
     const trainee_id = route.params.trainee_id;
-    useEffect(() => {
+    useFocusEffect(
+        React.useCallback(() => {
 
-        const traineeProfileLoader = async () =>{
-            await getTraineeScores();
-            await getTraineeProfile();
-            await getCurrentDay();
-            await getTraineeProgress();
-            // setFinalLoading(true);
-        }
+            const traineeProfileLoader = async () =>{
+                await getTraineeScores();
+                await getTraineeProfile();
+                await getCurrentDay();
+                await getTraineeProgress();
+                // setFinalLoading(true);
+            }
 
-        traineeProfileLoader();        
-    }, []);
+            traineeProfileLoader();        
+        }, [])
+    )
 
     useEffect(() => {
 
@@ -74,7 +76,6 @@ const TraineeProileAnalysisScreen = () => {
 
     const getTraineeScores = async() => {
         try {
-            setTraineeProgress('PENDING');
             const {responseData, errorMessage} = await getHook(`/api/v2/trainee/${trainee_id}/scores`);
             console.log('Trainee ID Inside Trainee Scores Function------', trainee_id)
             if(responseData)
@@ -115,16 +116,15 @@ const TraineeProileAnalysisScreen = () => {
     const getCurrentDay = async() => {
         try {
             const currentDate = new Date();
-            currentDate.setDate(currentDate.getDate() + 1);
+            currentDate.setHours(currentDate.getHours() + 5);
+            currentDate.setMinutes(currentDate.getMinutes() + 30);
+            console.log("Current DATE --------------", currentDate);
             const isoString = currentDate.toISOString();
             const dateString = isoString.substring(0, isoString.indexOf('T'));
-            console.log("CurrentDate = ", dateString);
-            console.log("Batch ID = ", batchId);
             const {responseData, errorMessage} = await getHook(`/api/v3/batch/${batchId}/day/${dateString}`);
             if(responseData)
             {
                 setCurrentDay(responseData.current_day);
-                console.log("Current Day Is ---------->",responseData.current_day )
                 setLoadingCurrentDay(true);
             }
         } catch(error) {
@@ -284,7 +284,9 @@ const TraineeProileAnalysisScreen = () => {
                     <View style={{
                             marginBottom : '10%',
                             marginTop : '5%',
-                            flex:1
+                            flex:1,
+                            marginLeft : '1%',
+                            marginRight : '1%'
                         }}>
                             <List.Accordion
                             title="Courses left for the day"
