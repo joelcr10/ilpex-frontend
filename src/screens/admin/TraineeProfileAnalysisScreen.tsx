@@ -76,7 +76,6 @@ const TraineeProileAnalysisScreen = () => {
 
     const getTraineeScores = async() => {
         try {
-            setTraineeProgress('PENDING');
             const {responseData, errorMessage} = await getHook(`/api/v2/trainee/${trainee_id}/scores`);
             console.log('Trainee ID Inside Trainee Scores Function------', trainee_id)
             if(responseData)
@@ -285,7 +284,9 @@ const TraineeProileAnalysisScreen = () => {
                     <View style={{
                             marginBottom : '10%',
                             marginTop : '5%',
-                            flex:1
+                            flex:1,
+                            marginLeft : '1%',
+                            marginRight : '1%'
                         }}>
                             <List.Accordion
                             title="Courses left for the day"

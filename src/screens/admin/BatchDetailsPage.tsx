@@ -37,9 +37,9 @@ const BatchDetailsPage =()=>{
       
        navigation.navigate("batchDayWiswDetails",{ batch_id:batch_id, day:day_id});
     }
-    const toTrainee=(user_id:number)=>{
+    const toTrainee=(user_id:number, trainee_id : number)=>{
       console.log('user id ashik',user_id)
-       navigation.navigate("TraineeProileAnalysisScreen",{ user_id:user_id});
+       navigation.navigate("TraineeProileAnalysisScreen",{ user_id:user_id, trainee_id : trainee_id});
     }
     var count:number =1;
     const loadFunction =()=>{
@@ -175,10 +175,6 @@ return(
                     <Text style={{fontFamily : 'Poppins-SemiBold',color:'black',fontSize:24,marginBottom:20}}>{batchData.batch_details.batch_name}</Text>
                     <View style={{justifyContent:'flex-start',display:'flex',flexDirection:'row',marginLeft : '10%'}}>
                     <View style={{flex:1}}>
-                    <Text style={{fontWeight:'500',color:'black',fontSize:15}}>Start Date </Text> 
-                    <Text style={{fontWeight:'500',color:'black',fontSize:15}}>End Date </Text> 
-                    <Text style={{fontWeight:'500',color:'black',fontSize:15}}>Trainees </Text> 
-                    <Text style={{fontWeight:'500',color:'black',fontSize:15}}>Current Date </Text> 
                     <Text style={{fontFamily : 'Poppins-Regular',color:'black',fontSize:14}}>Start Date </Text> 
                     <Text style={{fontFamily : 'Poppins-Regular',color:'black',fontSize:14}}>End Date </Text> 
                     <Text style={{fontFamily : 'Poppins-Regular',color:'black',fontSize:14}}>Trainees </Text> 
@@ -196,33 +192,35 @@ return(
 
 
               
-                <List.Accordion
-                    title="Trainees"
-                    left={props => <List.Icon {...props} icon="folder" />}
-                    expanded={!expanded}
-                    onPress={loadFunction}
-                    style={styles.accordian}
-                    titleStyle={styles.accordianTitle}
-                    >
-                     <View style={styles.accordianView}>
-                    
-                        <FlatList
-                        showsVerticalScrollIndicator={false}
-                        // contentContainerStyle = {{paddingBottom : 30}}
-                        data={traineeList}
-                        renderItem={({ item,index }) => (
-                          <TouchableOpacity onPress={()=>toTrainee(item.user_id)}>
-                          <View style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
-                              <Text style={styles.accordianText}>
-                              {index + 1} .  {item.user.user_name}</Text>
-                            </View>
-                            </TouchableOpacity>
-                        )}
-                        keyExtractor={item => item.id}
-                        />
-                        
-                   </View>
-                </List.Accordion>
+                <View style ={{marginBottom : '5%'}}>
+                  <List.Accordion
+                      title="List of Trainees"
+                      left={props => <List.Icon {...props} icon="account" />}
+                      expanded={!expanded}
+                      onPress={loadFunction}
+                      style={styles.accordian}
+                      titleStyle={styles.accordianTitle}
+                      >
+                      <View style={styles.accordianView}>
+                      
+                          <FlatList
+                          showsVerticalScrollIndicator={false}
+                          // contentContainerStyle = {{paddingBottom : 30}}
+                          data={traineeList}
+                          renderItem={({ item,index }) => (
+                            <TouchableOpacity onPress={()=>toTrainee(item.user_id, item.trainee_id)}>
+                            <View style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
+                                <Text style={styles.accordianText}>
+                                {index + 1} .  {item.user.user_name}</Text>
+                              </View>
+                              </TouchableOpacity>
+                          )}
+                          keyExtractor={item => item.id}
+                          />
+                          
+                    </View>
+                  </List.Accordion>
+                </View>
             
 
 
@@ -247,7 +245,7 @@ return(
               
               <View style = {styles.graphContainer}>
                   <View style = {{flexDirection : 'row'}}>
-                  <Text style={{ marginBottom: '5%', fontSize: 17, fontFamily: 'Poppins-Regular', flex: 0.3, paddingTop: '2%', flexDirection: 'column' }}>Days</Text>
+                  <Text style={{ marginBottom: '5%', fontSize: 17, fontFamily: 'Poppins-Regular', flex: 0.3, paddingTop: '2%', flexDirection: 'column', paddingLeft : '2.5%'}}>Days</Text>
                   <Text style={{marginBottom:'5%',fontSize:15, fontFamily : 'Poppins-Regular', flex : 0.7, justifyContent : 'center'}}>Percentage of Courses Completed</Text>
                   </View>
                   <FlatList 
@@ -259,9 +257,6 @@ return(
                   
                   />
                 </View> 
-              
-               
-  
             </View>
         
         </View>
@@ -276,28 +271,30 @@ const styles = StyleSheet.create({
     
   },
   accordianText:{
+    paddingTop : '4%',
     fontFamily : ilpex.fontMedium,
-    fontSize : 21,
+    fontSize : 16,
     color : 'black',
   },
   accordian:{
-        borderRadius:20,
-        marginHorizontal:30,
-        backgroundColor:'white',
-        // elevation:5,
+    borderTopLeftRadius : 10, 
+    borderTopRightRadius : 10,
+    backgroundColor:'white',
+    elevation:5,
+    marginLeft : '9%',
+    marginRight : '9%',
        
       },
       accordianView:{
-        borderRadius:20,
-        marginHorizontal:10,
+        borderBottomLeftRadius : 10,
+        borderBottomRightRadius : 10,
         backgroundColor:'white',
         elevation:5,
-        marginTop:10,
-        // position: 'absolute',
-        // zIndex: 1,
-        left:20,
-        width:350,
-        paddingBottom : 30
+        paddingBottom : 30,
+        marginLeft : '9%',
+        marginRight : '9%',
+        paddingLeft : '8%',
+        paddingRight : '8%',
         },
 
       body1:{
