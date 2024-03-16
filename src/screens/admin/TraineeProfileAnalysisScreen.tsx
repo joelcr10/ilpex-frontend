@@ -26,7 +26,7 @@ const TraineeProileAnalysisScreen = () => {
     const [traineeCurrentDay, setTraineeCurrentDay] = useState(false);
     const [expandedAccordion, setExpandedAccordion] = useState(true);
     const [traineeProgressStatus, setTraineeProgressStatus] = useState(false);
-
+    const [assessmentName,setAssessmentName] = useState<any[]>([]);
     const changeExpand=()=>{
         setExpandedAccordion(!expandedAccordion)
         console.log('entered')
@@ -89,15 +89,22 @@ const TraineeProileAnalysisScreen = () => {
                 setAverageAssessmentScore(averageScore);
                 const resultIds: string[] = [];
                 const highScores: string[] = [];
+                const assessmentNames:string[] = [];
                 const scores = responseData.scoreDetails.scores;
                 scores.forEach((score: any, index: number) => {
                     resultIds.push(`A${index + 1}`);
                     highScores.push(score.high_score);
                     console.log(`RESULT ID : A${index + 1}, HIGH SCORE : ${score.high_score}`);
+                    const assessments = score.assessmentName.assessments
+                    assessments.forEach((assessment: any, index: number) => {
+                        assessmentNames.push(assessment.assessment_name);
+                    })
                 });
                 
                 setResultID(resultIds);
                 setHighScore(highScores);
+                setAssessmentName(assessmentNames);
+
                 
                 if(averageScore >= 90)
                     setMarkIndicatorColor('green')
@@ -307,7 +314,7 @@ const TraineeProileAnalysisScreen = () => {
                                         {index + 1} .  {item}</Text>
                                         </View>
                                     )}
-                                    keyExtractor={item => item.id}
+                                    keyExtractor={item => item}
                                     />
                                 
                                 </View>
