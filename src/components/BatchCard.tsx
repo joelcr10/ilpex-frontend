@@ -41,7 +41,7 @@ const BatchCard=({batch_name,traineeNo,date,totalDays,progressDays,onPressFunc} 
     const formattedDate = `${monthName} ${day} ${year}`;
 
     return(
-        <TouchableOpacity onPress={onPressFunc}>
+        <TouchableOpacity onPress={onPressFunc} activeOpacity={1}>
             <View style={styles.container}>
                 <View style={styles.dataContainer}>
                     <Text style={styles.batch_name}>{batch_name}</Text>
@@ -67,13 +67,11 @@ const BatchCard=({batch_name,traineeNo,date,totalDays,progressDays,onPressFunc} 
     )
 }
 
-
 const styles = StyleSheet.create({
     container:{
         backgroundColor:ilpex.card,
         borderRadius:20,
-        height:105,
-        width : 330,
+        paddingBottom : '4%',
         marginBottom : '8%',
         elevation:5,
         flexDirection:'row',
@@ -82,29 +80,29 @@ const styles = StyleSheet.create({
     },
     dataContainer : {
         marginStart:10,
-        width : 220
+        width : '75%'
     },
     batch_name:{
         marginTop:10,
         marginStart:20,
         color : 'black',
-        fontSize:21,
+        fontSize:19,
         fontFamily:ilpex.fontMedium
     },
     traineeText:{
         marginStart:20,
-        fontSize:18,
+        fontSize:15,
         fontFamily:ilpex.fontMedium
     },
     traineeNo :{
         color:ilpex.secondary,
-        fontSize:15,
+        fontSize:14,
         alignSelf:'center',
     },
     date : {
         marginStart:20,
         color:ilpex.secondary,
-        fontSize:15,
+        fontSize:13,
         fontFamily:ilpex.fontMedium
     },
     traineeBox : {
@@ -119,23 +117,23 @@ const styles = StyleSheet.create({
         alignSelf :'center'
     },
     dayContainer:{
-        marginTop:13,
+        marginTop:'5%',
         marginEnd : 30,
         backgroundColor:ilpex.active,
-        borderRadius:90,
-        height:80,
-        width : 80,
+        borderRadius:35,
+        height:70,
+        width : 70,
         alignContent:'center',
         alignItems:'center'
     },
     dayTextContainer : {
-        marginTop:10
+        marginTop:'14%',
     },
     dayText : {
         color : ilpex.white,
         fontFamily:ilpex.fontSemiBold,
         textAlign:'center',
-        fontSize:17
+        fontSize:14,
     }
 })
 
