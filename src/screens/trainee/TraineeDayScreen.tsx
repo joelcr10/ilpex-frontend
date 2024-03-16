@@ -53,11 +53,17 @@ const TraineeDayScreen=()=>{
                     <Text style={styles.headerText}>{`Day ${day_id}`}</Text>
                 </View>
                     <View style={styles.container}>
-                        {/* <FileUploadField/> */}
                         <Text style={styles.subTitle}>Learning Courses</Text>
                        
                     {isLoading &&
-                       <CourseCardShimmer/>
+                    <View style={{height:'75.5%'}}>
+                        <CourseCardShimmer/>
+                        <CourseCardShimmer/>
+                        <CourseCardShimmer/>
+                        <CourseCardShimmer/>
+                        <CourseCardShimmer/>
+                    </View>
+                       
                     }
                      
                     {!isLoading &&

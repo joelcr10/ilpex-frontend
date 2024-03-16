@@ -1,16 +1,22 @@
 import React from 'react';
-import { View, StyleSheet, Dimensions, Text } from 'react-native';
+import { View, StyleSheet, Dimensions, Text, ScrollView } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 import ilpex from '../utils/ilpexUI';
-import { ScrollView } from 'react-native-gesture-handler';
+
 import CircularProgress from './CircularProgress';
 
-interface LineGraphProps {
-  labels: string[];
+interface Dataset {
+  // labels: string[];
   data: number[];
-  chartName:string,
-  progressTitle:string,
-  progress:number,
+  color:string;
+}
+
+interface LineGraphProps {
+  datasets: Dataset[];
+  chartName: string;
+  progressTitle: string;
+  progress: number;
+  labels: string[];
 }
 
 const hexToRgba = (hex:string, opacity:number) => {
@@ -22,17 +28,19 @@ const hexToRgba = (hex:string, opacity:number) => {
     return `rgba(${r},${g},${b},${opacity || 1})`;
   };
 
-const LineGraph: React.FC<LineGraphProps> = ({ labels, data,chartName,progressTitle,progress}) => {
-  const chartData = {
-    labels,
-    datasets: [
-      {
-        data,
-        color: (opacity = 1) =>hexToRgba(ilpex.graphStroke,1),
+const LineGraph: React.FC<LineGraphProps> = ({datasets,
+  chartName,
+  progressTitle,
+  progress,
+  labels}) => {
+    const chartData = {
+      labels:labels, 
+      datasets: datasets.map(dataset => ({
+        data: dataset.data,
+        color: (opacity = 1) => hexToRgba(dataset.color, 1),
         strokeWidth: 2,
-      },
-    ],
-  };
+      })),
+    };
 
   return (
     <View style={styles.container} >
@@ -43,10 +51,11 @@ const LineGraph: React.FC<LineGraphProps> = ({ labels, data,chartName,progressTi
         </View>
         <ScrollView
         horizontal
-        showsHorizontalScrollIndicator={false}>
+        showsHorizontalScrollIndicator={false}
+        style={{alignSelf:'flex-start'}}>
         <LineChart
             data={chartData}
-            width={chartData.labels.length*50}
+            width={chartData.labels.length*70}
             withVerticalLines={false}
             height={230}
             withOuterLines={false}
@@ -63,7 +72,7 @@ const LineGraph: React.FC<LineGraphProps> = ({ labels, data,chartName,progressTi
             propsForDots: {
                 r: "5",
                 strokeWidth: "2",
-                stroke:ilpex.graphStroke,
+                // stroke:ilpex.graphStroke,
             }
             }}
             bezier

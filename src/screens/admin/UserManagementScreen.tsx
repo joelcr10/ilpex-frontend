@@ -1,4 +1,4 @@
-import { FlatList, SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
+import { FlatList, StyleSheet, Text, View } from "react-native";
 import { useEffect, useState } from "react";
 import ilpex from "../../utils/ilpexUI";
 import React from "react";
@@ -8,9 +8,9 @@ import TraineeNameCard from "../../components/TraineeNameCard";
 import SearchField from "../../components/SearchField";
 import TraineeNameCardShimmer from "../../components/loading/TraineeNameListShimmer";
 import TraineeNameShimmer from "../../components/loading/TraineeNameListShimmer";
+import BackButton from "../../components/BackButton";
 
-
-
+import { useFocusEffect } from "@react-navigation/native";
 
 const UserManagementScreen=()=>{
 
@@ -32,27 +32,29 @@ const UserManagementScreen=()=>{
       };
 
 
-    useEffect(() => {
-        const getTrainees = async () => {
+      useFocusEffect(
+        React.useCallback(() => {
+          const getTrainees = async () => {
 
-          try {
-            const {responseData, errorMessage} = await getHook(`/api/v2/trainee`);
-            setLoading(false);
-            setTrainees(responseData);
-            setFilteredData(responseData);
+            try {
+              const {responseData, errorMessage} = await getHook(`/api/v2/trainee`);
+              setLoading(false);
+              setTrainees(responseData);
+              setFilteredData(responseData);
 
-          } catch (error) {
-            console.error('Error:', error);
-          }
-        };
-        getTrainees();
-        },[]);
+            } catch (error) {
+              console.error('Error:', error);
+            }
+          };
+          getTrainees();
+          },[])
+      )
 
     return(
         // <ScrollView>
         <View>
             <View style={{backgroundColor:ilpex.main}}>
-                {/* <BackButton color='white'/> */}
+                <BackButton color='white'/>
                 <View style={styles.topbar}>
                    
                     <Text style={styles.headerText}>{`User Management`}</Text>
@@ -63,7 +65,10 @@ const UserManagementScreen=()=>{
                         <SearchField onChangeText={handleSearch as any} value={searchQuery}/>
                         <Text style={styles.subTitle}>Trainees</Text>
                     {isLoading  &&
+                    <View style={{height:'63%'}}>
                       <TraineeNameShimmer/>
+                    </View>
+                      
                     }
                     {!isLoading &&
                     

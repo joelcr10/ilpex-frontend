@@ -59,13 +59,13 @@ const DrawerNavigation = () => {
         drawerActiveTintColor : ilpex.main,
         drawerStyle: {
           backgroundColor: ilpex.white,
-          width: 280,
+          width: 250,
           borderTopRightRadius : 15,
           borderBottomRightRadius : 15,
         },
         drawerLabelStyle: {
             fontFamily : ilpex.fontMedium,
-            fontSize : 16,
+            fontSize : 13,
             color : '#464242'
         }
       }}>
@@ -215,7 +215,7 @@ const styles = StyleSheet.create({
       borderBottomColor: '#464242',
     },
     caption: {
-      fontSize: 24,
+      fontSize: 22,
       fontFamily : ilpex.fontSemiBold,
       color : 'black',
     },
