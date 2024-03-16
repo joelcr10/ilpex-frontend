@@ -7,6 +7,7 @@ import { getHook } from "../../network/getHook/getHook";
 import TraineeProfileShimmer from "../../components/loading/TraineeProfileShimmer";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { List } from 'react-native-paper';
+import TraineeDuration from "../trainee/TraineeDuration";
 const TraineeProileAnalysisScreen = () => {
 
     const route:any = useRoute();
@@ -328,7 +329,10 @@ const TraineeProileAnalysisScreen = () => {
                         }}>
                             <BarGraph data={highScore} labels={resultID} names={assessmentName}></BarGraph>
                         </View>
-                    </View>  
+                    </View> 
+                    <View>
+                        <TraineeDuration userID = {user_id}/>    
+                    </View> 
                 </View>
             )
         }
