@@ -1,5 +1,4 @@
 import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native"
-import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { batchDetails } from "../../network/ApiHook";
 import ChartPie from "../../components/PieChartComponent";
 import { useEffect, useState } from "react";
@@ -271,6 +270,10 @@ const styles = StyleSheet.create({
     backgroundColor:'#8518FF',
     
   },
+  accordianTitle:{
+    fontFamily : ilpex.fontRegular,
+    fontSize: 17
+},
   accordianText:{
     paddingTop : '4%',
     fontFamily : ilpex.fontMedium,

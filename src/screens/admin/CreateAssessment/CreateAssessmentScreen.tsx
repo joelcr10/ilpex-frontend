@@ -230,7 +230,7 @@ const CreateAssessmentScreen = ()=>{
                     }
                 </View>
                 <View>
-                    <Button name={"Download"} onPress={copyFileToCache} buttonPressed={false}></Button>
+                    <Button name={"Download"} onPress={()=>console.log("Hiiiiiiiii everyone")} buttonPressed={false}></Button>
                 </View>
                 {success && <ConfirmationModal success={true} message={"Assessment created successfully"}></ConfirmationModal>}
                 {failure && <ToastDemo BgColor={ilpex.failure} message={errorText} textColor={ilpex.white}></ToastDemo>}
