@@ -272,8 +272,8 @@ return(
               
               <View style = {styles.graphContainer}>
                   <View style = {{flexDirection : 'row'}}>
-                  <Text style={{ marginBottom: '5%', fontSize: 17, fontFamily: 'Poppins-Regular', flex: 0.3, paddingTop: '2%', flexDirection: 'column', paddingLeft : '2.5%'}}>Days</Text>
-                  <Text style={{marginBottom:'5%',fontSize:15, fontFamily : 'Poppins-Regular', flex : 0.7, justifyContent : 'center'}}>Percentage of Courses Completed</Text>
+                  <Text style={{ marginBottom: '5%', fontSize: 17, fontFamily: 'Poppins-Regular', flex: 0.3, paddingTop: '2%', flexDirection: 'column', paddingLeft : '2.5%', color : ilpex.darkGrey}}>Days</Text>
+                  <Text style={{marginBottom:'5%',fontSize:15, fontFamily : 'Poppins-Regular', flex : 0.7, justifyContent : 'center', color : ilpex.darkGrey}}>Percentage of Courses Completed</Text>
                   </View>
                   <FlatList 
                     contentContainerStyle = {{paddingBottom : 5}}
@@ -297,6 +297,10 @@ const styles = StyleSheet.create({
     backgroundColor:'#8518FF',
     
   },
+  accordianTitle:{
+    fontFamily : ilpex.fontRegular,
+    fontSize: 17
+},
   accordianText:{
     paddingTop : '4%',
     fontFamily : ilpex.fontMedium,
