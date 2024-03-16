@@ -221,10 +221,10 @@ const CreateAssessmentScreen = ()=>{
                 <View style = {styles.fileUploadContainer}>
                     <FileUploadField onSelect={pickDocument} selectedFile={selectedFile}/>
                     {(assessmentName === '' || startDate === null || endDate === null || selectedFile === null)? (
-                    <DisabledBigButton name="Create Assessment"/>
+                    <View style ={{marginTop : '-8%'}}><DisabledBigButton name="Create Assessment"/></View>
                     ) : (
                     <View>
-                    <Button name="Create Assessment" onPress={createAssessment} buttonPressed={isloading} /> 
+                    <View style ={{marginTop : '-8%'}}><Button name="Create Assessment" onPress={createAssessment} buttonPressed={isloading} /></View>
                     </View>
                     )
                     }
@@ -299,7 +299,8 @@ const styles = StyleSheet.create ({
         textAlign:'center'
       },   
       fileUploadContainer : {
-        paddingTop : 40
+        // paddingTop : '12%',
+        alignSelf : 'center'
     } 
 })
 

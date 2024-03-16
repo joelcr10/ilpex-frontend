@@ -1,4 +1,5 @@
 import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native"
+import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { batchDetails } from "../../network/ApiHook";
 import ChartPie from "../../components/PieChartComponent";
 import { useEffect, useState } from "react";
@@ -12,6 +13,8 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { List } from "react-native-paper";
 import ilpex from "../../utils/ilpexUI";
+import { List } from "react-native-paper";
+import ilpex from "../../utils/ilpexUI";
 const DayWiseDetailsPage =()=>{
     const route:any = useRoute();
     const navigation : any = useNavigation();
@@ -22,6 +25,13 @@ const DayWiseDetailsPage =()=>{
     const [isLoading,setLoading] =useState(true);
     const [currentDateCompletion, setCurrentDateCompletion] = useState<any>([]);
     const [dayWiseCourseList,setDayWiseCourseList] = useState<any>([]);
+    const [expanded, setExpanded] = useState(true);
+    
+
+    const loadFunction =()=>{
+      setExpanded(!expanded)
+      
+    }
     const [expanded, setExpanded] = useState(true);
     
 
@@ -82,6 +92,7 @@ return(
               <View>
               
               {isLoading && <ChartPieHeaderShimmer/>} 
+              <View style = {{marginTop : '15%', marginBottom : '8%', marginLeft : '4.5%',marginRight : '4.5%'}}>
               <List.Accordion
                     title="Courses"
                     left={props => <List.Icon {...props} icon="folder" />}
@@ -95,14 +106,14 @@ return(
                      <FlatList
                         data={dayWiseCourseList}
                         renderItem = {({item,index}) =><View style ={styles.eachDetail}>
-                        <Text style={{fontWeight:'500',color:'black',fontSize:15}}>{index+1} . {item.course_name.substring(0,20)}...</Text> 
-                        <Text style={{marginLeft:30,fontWeight:'500'}}>{item.course_duration}</Text>
+                        <Text style={styles.accordionText}>{index+1} . {item.course_name.substring(0,20)}...</Text> 
+                        <Text style={styles.accordionTextTime}>{item.course_duration}</Text>
                         </View>}
                         />
                         
                    </View>
                 </List.Accordion>
-               
+                </View>
               
                  {/* <View>
                    <IconButtonComponent  name={'Report'} onPress={()=>{}} buttonPressed={false} icon={'description'}/>
@@ -120,56 +131,66 @@ return(
     }
 const styles = StyleSheet.create({
       container1:{
-        height:'100%',
+        minHeight : 800,
         backgroundColor:'#8518FF'
       },
       body1:{
         height:'100%',
         backgroundColor:'white',
-        borderTopEndRadius:50,
-        borderTopLeftRadius:50,
-        marginTop:30,
+        borderTopEndRadius:30,
+        borderTopLeftRadius:30,
+        marginTop:'5%',
         //  justifyContent:'center'
         
     },
+    accordionText : {
+      fontFamily : ilpex.fontMedium,
+    },
+
+    accordionTextTime : {
+      fontFamily : ilpex.fontMedium,
+    },
     accordianTitle:{
-      marginLeft:20,
-      fontWeight:'700',
-      fontSize:20
+      fontFamily : ilpex.fontRegular,
+      fontSize: 17,
+      paddingTop : '3%'
       
   },
     accordianText:{
+      paddingTop : '4%',
       fontFamily : ilpex.fontMedium,
-      fontSize : 21,
+      fontSize : 16,
       color : 'black',
     },
     accordian:{
-          borderRadius:20,
-          marginHorizontal:30,
-          backgroundColor:'white',
-          // elevation:5,
-         
+      borderTopLeftRadius : 10, 
+      borderTopRightRadius : 10,
+      backgroundColor:'white',
+      elevation:5,
+      marginLeft : '3%',
+      marginRight : '3%',
         },
         accordianView:{
-          borderRadius:20,
-          marginHorizontal:10,
+          borderBottomLeftRadius : 10,
+          borderBottomRightRadius : 10,
           backgroundColor:'white',
           elevation:5,
-          marginTop:10,
-          // position: 'absolute',
-          // zIndex: 1,
-          left:20,
-          width:350
+          paddingBottom : 30,
+          marginLeft : '3%',
+          marginRight : '3%',
+          paddingLeft : '8%',
+          // paddingRight : '8%',
           },
       text:{
         fontFamily:'poppins',
         fontWeight:'bold',
-        fontSize:45,
+        fontSize:35,
         color:'white',
         marginTop:45
     },
     textData:{
-        
+        marginTop : '3%',
+        marginBottom : '6%',
         alignItems:'center'
     },
     detail: {

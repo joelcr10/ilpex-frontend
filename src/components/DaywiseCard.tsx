@@ -81,21 +81,23 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     elevation: 4,
     paddingHorizontal: 20,
-    paddingVertical: 15,
-    marginTop: 10,
+    // paddingVertical: 15,
+    paddingTop : '4%',
+    paddingBottom : '4%',
+    marginTop: '3%',
     margin: 10,
     zIndex: 10,
   
   },
   learningLabel: {
     position:'relative',
-    fontSize: 20,
+    fontSize: 19,
     color: ilpex.black,
     fontFamily : ilpex.fontMedium
   },
   learningTime: {
     color: ilpex.darkGrey,
-    fontSize: 13,
+    fontSize: 12.5,
     fontFamily : ilpex.fontMedium,
     position:'relative',
   },

@@ -53,6 +53,7 @@ import ilpex from '../utils/ilpexUI';
       paddingHorizontal: 8,
       width : 300,
       alignSelf:'center',
+      alignSelf:'center',
     },
     icon: {
       marginRight: 5,
@@ -68,7 +69,7 @@ import ilpex from '../utils/ilpexUI';
     //   fontSize: 14,
     // },
     placeholderStyle: {
-      fontSize: 20,
+      fontSize: 18,
       fontFamily:ilpex.fontRegular,
       color : 'gray'
     },

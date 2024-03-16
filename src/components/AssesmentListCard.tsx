@@ -12,7 +12,7 @@ const AssesmentListCard=(props: BatchComponentProps)=>{
     const {assessment_name,onPressButton} = props;
     console.log("asseement list card: ",assessment_name);
     return(
-        <TouchableOpacity onPress={onPressButton}>
+        <TouchableOpacity onPress={onPressButton} activeOpacity={1}>
             <View style={styles.container}>
                 <View style={{
                     marginStart:10
@@ -34,10 +34,8 @@ const styles = StyleSheet.create({
         borderRadius:20,
         shadowColor:ilpex.black,
         width : 330,
-        marginBottom : '8%',
-        // shadowOffset: { width: -1, height: 4 },
+        marginBottom : '7%',
         shadowOpacity: 0.4,
-        // shadowRadius: 4,
         elevation: 5,
         flexDirection:'row',
         alignSelf:'center'
@@ -46,7 +44,7 @@ const styles = StyleSheet.create({
         marginTop:10,
         marginStart:20,
         color : 'black',
-        fontSize:21,
+        fontSize:18,
         fontFamily:ilpex.fontMedium
     },
     
