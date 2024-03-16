@@ -17,11 +17,7 @@ export async function getHook(api_url: string): Promise<Response>{
     let statusCode: string = '';
     let responseData: any;
 
-    // const token = await getItem(Constants.TOKEN);
-
     const token = await getItem(Constants.TOKEN);
-
-    console.log("--------------:"+token+":-------------------------");
 
     const authorization =  {
         headers: {
@@ -40,9 +36,6 @@ export async function getHook(api_url: string): Promise<Response>{
         }
 
         responseData = response.data;
-
-        console.log("assessment testing",responseData);
-
 
     }catch(error: any){
         console.log('Error in getHook:', error);
