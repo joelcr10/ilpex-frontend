@@ -1,4 +1,4 @@
-import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native"
+import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { batchDetails } from "../../network/ApiHook";
 import ChartPie from "../../components/PieChartComponent";
 import { useEffect, useState } from "react";
@@ -10,6 +10,8 @@ import ThreeDots from "../../components/ThreeDots";
 import BackButton from "../../components/BackButton";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { List } from "react-native-paper";
+import ilpex from "../../utils/ilpexUI";
 const DayWiseDetailsPage =()=>{
     const route:any = useRoute();
     const navigation : any = useNavigation();
@@ -20,7 +22,13 @@ const DayWiseDetailsPage =()=>{
     const [isLoading,setLoading] =useState(true);
     const [currentDateCompletion, setCurrentDateCompletion] = useState<any>([]);
     const [dayWiseCourseList,setDayWiseCourseList] = useState<any>([]);
+    const [expanded, setExpanded] = useState(true);
+    
 
+    const loadFunction =()=>{
+      setExpanded(!expanded)
+      
+    }
     useEffect(() => {
       console.log('effect activated');
       const getStory = async () => {
@@ -74,18 +82,27 @@ return(
               <View>
               
               {isLoading && <ChartPieHeaderShimmer/>} 
-               {!isLoading && <><View style ={styles.detail}>
+              <List.Accordion
+                    title="Courses"
+                    left={props => <List.Icon {...props} icon="folder" />}
+                    expanded={!expanded}
+                    onPress={loadFunction}
+                    style={styles.accordian}
+                    titleStyle={styles.accordianTitle}
+                    >
+                     <View style={styles.accordianView}>
                     
-                    <Text style={{marginRight:185}}>Courses</Text>
-                    <FlatList
+                     <FlatList
                         data={dayWiseCourseList}
-                        renderItem = {({item}) =><View style ={styles.eachDetail}>
-                        <Text style={{fontWeight:'500',color:'black',fontSize:15}}>{item.course_name.substring(0,20)}...</Text> 
+                        renderItem = {({item,index}) =><View style ={styles.eachDetail}>
+                        <Text style={{fontWeight:'500',color:'black',fontSize:15}}>{index+1} . {item.course_name.substring(0,20)}...</Text> 
                         <Text style={{marginLeft:30,fontWeight:'500'}}>{item.course_duration}</Text>
                         </View>}
                         />
-                    
-                </View></>}
+                        
+                   </View>
+                </List.Accordion>
+               
               
                  {/* <View>
                    <IconButtonComponent  name={'Report'} onPress={()=>{}} buttonPressed={false} icon={'description'}/>
@@ -115,6 +132,35 @@ const styles = StyleSheet.create({
         //  justifyContent:'center'
         
     },
+    accordianTitle:{
+      marginLeft:20,
+      fontWeight:'700',
+      fontSize:20
+      
+  },
+    accordianText:{
+      fontFamily : ilpex.fontMedium,
+      fontSize : 21,
+      color : 'black',
+    },
+    accordian:{
+          borderRadius:20,
+          marginHorizontal:30,
+          backgroundColor:'white',
+          // elevation:5,
+         
+        },
+        accordianView:{
+          borderRadius:20,
+          marginHorizontal:10,
+          backgroundColor:'white',
+          elevation:5,
+          marginTop:10,
+          // position: 'absolute',
+          // zIndex: 1,
+          left:20,
+          width:350
+          },
       text:{
         fontFamily:'poppins',
         fontWeight:'bold',
@@ -139,8 +185,9 @@ const styles = StyleSheet.create({
       display:'flex',
       flexDirection:'row',
       justifyContent:'space-between',
-      margin:3,
-      
+      margin:5,
+      marginRight:15,
+      right:6
   },
 })
 export default DayWiseDetailsPage;

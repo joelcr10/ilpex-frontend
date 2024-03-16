@@ -78,9 +78,10 @@ const styles = StyleSheet.create({
     },
 
     subText:{
-        fontSize: 18,
+        fontSize: 15,
         marginTop: 0,
-        fontFamily: ilpex.fontMedium
+        fontFamily: ilpex.fontMedium,
+        color: ilpex.inactive
     },
 
     bottomContainer:{

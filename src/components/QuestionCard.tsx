@@ -8,7 +8,6 @@ type radioButtonType = {id: string, label: string, value: string};
 type propTypes = {questionNumber: number, question: string, radioButtons: radioButtonType[] , selectedId: string, setSelectedId : any};
 
 const QuestionCard = (props : any) => {
-    // const {questionNumber, question, radioButtons, selectedId, setSelectedId} = props;
     const {questionNumber,currentQuestion, selectedId, setSelectedId} = props;
 
     
@@ -64,8 +63,9 @@ const styles = StyleSheet.create({
    },
 
    radioLabel:{
-    fontFamily: ilpex.fontSemiBold,
-    fontSize: 17
+    fontFamily: ilpex.fontRegular,
+    fontSize: 17,
+    color: ilpex.black,
    },
    
     questionContainer:{
@@ -74,17 +74,17 @@ const styles = StyleSheet.create({
         borderRadius: 5,
     },
     questionText:{
-        fontWeight: 'bold',
-        fontSize: 18
+        // fontWeight: 'bold',
+        fontFamily: ilpex.fontMedium,
+        fontSize: 18,
+        color: ilpex.black
     },
     assessmentContainer:{
         backgroundColor: ilpex.white,
         borderRadius: 10,
-        // padding: 20,
-        // elevation: 5,
         margin: 15,
-        // padding: 10,
         paddingBottom: 20,
+        marginTop: '10%',
     },
     
     options:{

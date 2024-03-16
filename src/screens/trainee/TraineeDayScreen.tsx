@@ -3,14 +3,8 @@ import { useEffect, useState } from "react";
 import CourseCard from "../../components/CourseCard";
 import { useRoute } from "@react-navigation/native";
 import ilpex from "../../utils/ilpexUI";
-import Button from "../../components/Button";
-import SmallButton from "../../components/SmallButton";
-import IconButton from "../../components/IconButton";
-import FileUploadField from "../../components/FileUploadField";
 import React from "react";
 import { getHook } from "../../network/getHook/getHook";
-import ShimmerPlaceholder from "react-native-shimmer-placeholder";
-import LinearGradient from "react-native-linear-gradient";
 import BackButton from "../../components/BackButton";
 import ThreeDots from "../../components/ThreeDots";
 import CourseCardShimmer from "../../components/loading/CourseCardShimmer";
@@ -24,13 +18,6 @@ const TraineeDayScreen=()=>{
 
     const route:any = useRoute();
     const day_id=route.params.Day;
-
-
-    // const day_id=1;
-    // const trainee_id=6;
-
-
-
 
     const [isLoading, setLoading] = useState(true);
 
@@ -66,19 +53,24 @@ const TraineeDayScreen=()=>{
                     <Text style={styles.headerText}>{`Day ${day_id}`}</Text>
                 </View>
                     <View style={styles.container}>
-                        {/* <FileUploadField/> */}
                         <Text style={styles.subTitle}>Learning Courses</Text>
                        
                     {isLoading &&
-                       <CourseCardShimmer/>
+                    <View style={{height:'75.5%'}}>
+                        <CourseCardShimmer/>
+                        <CourseCardShimmer/>
+                        <CourseCardShimmer/>
+                        <CourseCardShimmer/>
+                        <CourseCardShimmer/>
+                    </View>
+                       
                     }
                      
                     {!isLoading &&
                     
-                    <View style={{height:Dimensions.get('window').height-280}}>
+                    <View style={{height:'75.5%'}}>
                     <FlatList
                         showsVerticalScrollIndicator={false}
-                        
                         data={courselist.message}
                         renderItem={({item})=><CourseCard name={item.course_name} duration={item.course_duration} status={item.status}/>}
                         keyExtractor={item=>item.course_id}
@@ -91,35 +83,36 @@ const TraineeDayScreen=()=>{
             </View>
             
         </View>
-        // </ScrollView>
+        //  </ScrollView>
     )
 }
 
 const styles = StyleSheet.create({
     subTitle:{
         fontFamily:ilpex.fontSemiBold,
-        fontSize:20,
-        margin:20,
+        fontSize:16,
+        margin:'5%',
         color:'#000',
     },
     container:{
-        backgroundColor:ilpex.white,
-        borderTopLeftRadius:20,
-        borderTopRightRadius:20,
-        
+        backgroundColor: ilpex.white,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
     },
     headerText: {
-        color:ilpex.white,
+        color: ilpex.white,
         fontSize: 32,
-        textAlign:'center',
-        fontFamily:ilpex.fontSemiBold,
-      },
-      topbar:{
+        textAlign: 'center',
+        fontFamily: ilpex.fontSemiBold,
+        marginTop: '10%',
+    },
+    topbar:{
         backgroundColor: 'transparent',
-        height:184,
+        height: '21%',
         justifyContent: 'center',
         alignItems: 'center',
-      }
+    }
 })
+
 
 export default TraineeDayScreen;
