@@ -326,7 +326,7 @@ const TraineeProileAnalysisScreen = () => {
                         <View style={{
                             flex:1
                         }}>
-                            <BarGraph data={highScore} labels={resultID}></BarGraph>
+                            <BarGraph data={highScore} labels={resultID} names={assessmentName}></BarGraph>
                         </View>
                     </View>  
                 </View>
