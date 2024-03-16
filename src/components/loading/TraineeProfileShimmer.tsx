@@ -12,7 +12,7 @@ const TraineeProfileShimmer = () => {
                 LinearGradient={LinearGradient}
                 style={styles.profilePictureCircle} />
             </View>
-            <View>
+            <View style = {{alignContent : 'center'}}>
                 <ShimmerPlaceholder 
                 LinearGradient={LinearGradient}
                 style={styles.nameLabel} />
@@ -81,7 +81,8 @@ const TraineeProfileShimmer = () => {
 const styles = StyleSheet.create({
     pageContainer : {
         height : '100%',
-        // margin : '5%'
+        alignContent : 'center',
+        justifyContent : 'center'
     },
     profilePictureContainer : {
         height : 150,
@@ -114,22 +115,24 @@ const styles = StyleSheet.create({
     }, 
     statsRow : {
         flexDirection : 'row',
-        marginBottom : '5%'
+        marginBottom : '5%',
+        alignSelf : 'center'
     },
     statsKey : {
         alignSelf : 'flex-start',
-        marginLeft : '10%',
         width : 200,
     },
     statsContainer : {
         marginTop : '10%',
-        marginRight : '10%'
+        width : '90%',
+        alignSelf : 'center',
     },
     statsKeyLabel : {
         fontFamily : ilpex.fontMedium,
         color : 'black',
         fontSize : 17,
         width : 110,
+        alignContent : 'center'
     },
     statsValueLabel : {
         fontFamily : ilpex.fontMedium,
@@ -137,7 +140,6 @@ const styles = StyleSheet.create({
         fontSize : 17,
         alignSelf : 'center',
         width : 110,
-        marginRight : '80%'
     }, 
 })
 

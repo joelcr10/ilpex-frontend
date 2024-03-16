@@ -99,6 +99,7 @@ const styles = StyleSheet.create({
         flex : 0.2
     },
     cardContainer : {
+        alignSelf : 'center',
         justifyContent : 'center',
         backgroundColor : '#FAFAFA',
         minHeight : 150,
@@ -110,6 +111,7 @@ const styles = StyleSheet.create({
         shadowColor : 'black',
         marginBottom : 25,
         flexDirection : 'column', 
+        width : '85%',
         marginLeft : '5%',
         marginRight : '5%' 
     },
@@ -158,11 +160,11 @@ const styles = StyleSheet.create({
         alignSelf : 'center'
     },
     accordionView:{
-            paddingBottom : 30,
-            marginLeft : '3%',
-            marginRight : '3%',
-            paddingLeft : '8%',
-            paddingRight : '8%',
+        paddingBottom : 30,
+        marginLeft : '3%',
+        marginRight : '3%',
+        paddingLeft : '8%',
+        paddingRight : '8%',
     },
     accordionTitle:{
         fontFamily : ilpex.fontRegular,

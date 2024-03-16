@@ -99,24 +99,30 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   chart: {
-    marginVertical: '1%',
     borderRadius: 16,
   },
   container:{
     backgroundColor:ilpex.white,
-    padding:'5%',
+    paddingRight : '5%',
+    paddingLeft : '1%',
     overflow: 'hidden',
+    alignSelf: 'center',
   },
   headertext:{
     fontFamily:ilpex.fontSemiBold,
-    fontSize:18,
+    fontSize:21,
     color:ilpex.black,
-    margin:'5%',
+    marginTop : '5%',
+    marginRight : '5%',
+    marginBottom : '5%',
+    marginLeft : '10%'
+
   },
   progressTitle:{
     fontFamily:ilpex.fontRegular,
-    fontSize:16,
+    fontSize:17,
     color:ilpex.black,
+    marginLeft : '1%',
     textAlignVertical:'center',
   },
   percentage:{
@@ -129,7 +135,7 @@ const styles = StyleSheet.create({
     flexDirection:'row',
     marginVertical:'5%',
     marginHorizontal:'10%',
-    marginBottom:'20%',
+    marginBottom:'10%',
     justifyContent:'space-between',
 
   },

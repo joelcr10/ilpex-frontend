@@ -84,10 +84,9 @@ const BarGraph = ({data,labels,names} : BarGraphProps)=>{
 
 const styles = StyleSheet.create({
     container: {
-        height: 400,
+        height: 360,
         width: 360,
         backgroundColor: ilpex.white,
-        // elevation: 5,
         shadowColor: ilpex.black,
         shadowOffset: { width: 0, height: 0 },
         alignSelf: 'center',
@@ -95,11 +94,10 @@ const styles = StyleSheet.create({
     },
     head: {
         color: ilpex.black,
-        fontSize: 22,
+        fontSize: 21,
         fontFamily: ilpex.fontSemiBold,
-        // marginTop: 12,
-        marginStart: 20,
-        marginBottom: 30
+        marginBottom: 30,
+        marginLeft : '5%'
     },
     tooltipContainer: {
         position: 'absolute',
