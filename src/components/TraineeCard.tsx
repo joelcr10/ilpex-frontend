@@ -51,9 +51,9 @@ const colorArray = [
 const styles = StyleSheet.create({
     dataPart : {
         flex : 0.8,
-        paddingLeft : '12%',
+        paddingLeft : '8%',
         paddingRight : '7%',
-        paddingTop : '6%',
+        paddingTop : '4%',
     },
     profilePicture : {
         flex : 0.2
@@ -61,39 +61,38 @@ const styles = StyleSheet.create({
     cardContainer : {
         justifyContent : 'center',
         backgroundColor : '#FAFAFA',
-        height : 80,
+        height : 70,
         borderRadius : 20,
         elevation : 4,
         shadowColor : 'black',
-        marginBottom : 25,
+        marginBottom : 18,
         flexDirection : 'row',  
         paddingBottom : 10,
     },
     batchName : {
         color : '#737373',
-        fontSize : 15,
+        fontSize : 14,
         paddingBottom : 2,
         fontFamily : ilpex.fontMedium,
     },
     traineeName : {
         fontFamily : ilpex.fontMedium,
-        fontSize : 18,
+        fontSize : 17,
         color : 'black',
         // backgroundColor : 'red',
         marginTop : '-2%'
     },
     circleContainer : {
-        height : 50,
-        width : 50,
-        borderRadius : 25,
-        // marginTop : '50%',
+        height : 48,
+        width : 48,
+        borderRadius : 24,
         marginLeft : '32%',
         justifyContent : 'center',
-        marginTop : '26%'
+        marginTop : '17%'
     },
     imageLogo : {
-        width : '66%',
-        height : '66%',
+        width : '60%',
+        height : '60%',
         alignSelf : 'center',
     },
 })

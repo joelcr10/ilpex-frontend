@@ -133,11 +133,13 @@ const CreateUserScreen = () => {
       onChangeText={setcreatePassword} 
       />
       {passwordMatchError ? <Text style={styles.errorText}>{passwordMatchError}</Text> : null}
+      <View style = {{alignSelf : 'center'}}>
       <Button 
         name="Create" 
         onPress={createAdmin} 
         buttonPressed={buttonpressed} 
         />
+      </View>
       <ModalComponent
         isVisible={isModalVisible}
         closeModal={hideModal}
