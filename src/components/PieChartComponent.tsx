@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {StyleSheet, ScrollView, StatusBar, Text, View,Button} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-// import PieChart from 'react-native-pie-chart';
-import {PieChart} from '../index';
+import PieChart from 'react-native-pie-chart';
+// import {PieChart} from '../index';
 import * as Animatable from 'react-native-animatable';
 
 import Svg, { Path, G } from 'react-native-svg';
@@ -45,6 +45,7 @@ const ChartPie = (props:chart) => {
           <View style={styles.heading}>
           <Text style={{fontWeight:'700',color:'black',fontSize:23}}>{chartName}</Text>
           </View>
+          {good !== 0 &&
           <View style={styles.head}>
           <View style={styles.headPercentage}>
              <View style={styles.percentage1}>
@@ -61,30 +62,31 @@ const ChartPie = (props:chart) => {
            </View>
             <Text style={{marginLeft:5}}> &lt; 25%</Text>
             </View>
-          </View>
+          </View>}
+
            <View style={styles.chart}>
           <Animatable.View animation="fadeIn" duration={8000} style={{ flex: 1 }}>
-               {/* <PieChart
+               <PieChart
                 widthAndHeight={widthAndHeight}
                 series={series}
                 sliceColor={sliceColor}
                 doughnut={true}
                 coverRadius={0.45}
                 coverFill={'#FFF'}
-              /> */}
+              />
 
-              <PieChart
+              {/* <PieChart
                       donut
                       showText
                       textColor="black"
                       innerRadius={65}
-                       showTextBackground
-                     textBackgroundColor="white"
+                      // showTextBackground
+                      // textBackgroundColor="white"
                       textBackgroundRadius={18}
                       data={pieData}
                       focusOnPress
                       inwardExtraLengthForFocused={30}
-                    />
+                    /> */}
   
           </Animatable.View>
          </View>
@@ -133,7 +135,7 @@ const styles = StyleSheet.create({
     marginTop:10,
     marginHorizontal:30,
     borderRadius:30,
-    elevation:8,
+    // elevation:8,
     backgroundColor:"white",
     marginBottom:10,
   
