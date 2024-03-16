@@ -204,6 +204,7 @@ const TraineeProileAnalysisScreen = () => {
 
     return(
         <ScrollView>
+        
         {
             (!isLoadingCurrentDay || !finalLoading) ? (
                 <TraineeProfileShimmer/>
