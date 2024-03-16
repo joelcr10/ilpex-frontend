@@ -271,10 +271,10 @@ return(
               }
               
               <View style = {styles.graphContainer}>
-                  <View style = {{flexDirection : 'row'}}>
-                  <Text style={{ marginBottom: '5%', fontSize: 17, fontFamily: 'Poppins-Regular', flex: 0.3, paddingTop: '2%', flexDirection: 'column', paddingLeft : '2.5%', color : ilpex.darkGrey}}>Days</Text>
-                  <Text style={{marginBottom:'5%',fontSize:15, fontFamily : 'Poppins-Regular', flex : 0.7, justifyContent : 'center', color : ilpex.darkGrey}}>Percentage of Courses Completed</Text>
-                  </View>
+              <View style = {{flexDirection : 'row', alignSelf : 'center', width : '100%'}}>
+                  <Text style={{ marginBottom: '5%', fontSize: 17, fontFamily: 'Poppins-Regular', paddingTop: '2%', flexDirection: 'column',width : 70, textAlign : 'center',color : ilpex.darkGrey}}>Days   </Text>
+                  <Text style={{marginTop : '2%', marginBottom:'5%',fontSize:15, fontFamily : 'Poppins-Regular', textAlign : 'center', justifyContent : 'center', color : ilpex.darkGrey, marginLeft : '13%'}}>Percentage of Courses {'\n'}Completed</Text>
+                  </View>    
                   <FlatList 
                     contentContainerStyle = {{paddingBottom : 5}}
                     data = {arrayOfObjects}
