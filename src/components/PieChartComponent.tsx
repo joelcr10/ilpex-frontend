@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import {StyleSheet, ScrollView, StatusBar, Text, View,Button} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import PieChart from 'react-native-pie-chart';
+// import {PieChart} from '../index';
 import * as Animatable from 'react-native-animatable';
 
 import Svg, { Path, G } from 'react-native-svg';
@@ -19,52 +20,47 @@ const ChartPie = (props:chart) => {
   const series = [excellent,good,poor];
   const sliceColor = [ '#29A662', '#FFA600','#D3583D'];
 
+  // const pieData = [
+  //   {value: excellent, color: '#29A662'},
+  //   {value: good, color: '#FFA600'},
+  //   {value: poor, color: '#D3583D'},
+  //   // {value: poor, color: '#D3583D', text:poor},
+  // ];
 
-  if(excellent==0 && good==0 && poor==0){
+  
     return(
-      <ScrollView style={styles.scrollContainer}>
-        <View style={styles.container}>
-          <Text style={{fontSize:30,marginLeft:40}}>NO ONE IS STARTED</Text>
-        </View>
-      </ScrollView>
-    )
-
-  }
-  else{
-    return (
-
-    
        <ScrollView style={styles.scrollContainer}>
          <View style={styles.container}>
   
           <View style={styles.heading}>
           <Text style={{fontFamily : 'Poppins-SemiBold',color:'black',fontSize:20}}>{chartName}</Text>
           </View>
+          {excellent==0 && good==0 && poor==0 ?<Text></Text> :
+          
+          <View>
+          {good !== 0 &&
           <View style={styles.head}>
-  
-           <View style={styles.headPercentage}>
+          <View style={styles.headPercentage}>
              <View style={styles.percentage1}>
              </View>
              <Text style={{marginLeft:5}}> &gt; 95%</Text>
              </View>
-  
              {good !== 0 &&<View style={styles.headPercentage}>
              <View style={styles.percentage2}>
-                     </View>
+            </View>
             <Text style={{marginLeft:5}}> &gt; 25%</Text>
             </View>}
-  
             <View style={styles.headPercentage}>
             <View style={styles.percentage3}>
            </View>
             <Text style={{marginLeft:5}}> &lt; 25%</Text>
             </View>
-          </View>
+          </View>}
+          </View>}
+            
+          {excellent==0 && good==0 && poor==0 ?<Text style={{fontFamily : 'Poppins-Regular',color:'black',fontSize:14,marginLeft:80}}>Assesments are not started</Text>:
            <View style={styles.chart}>
-  
-          
-                
-           <Animatable.View animation="fadeIn" duration={8000} style={{ flex: 1 }}>
+          {/* <Animatable.View animation="fadeIn" duration={8000} style={{ flex: 1 }}> */}
                <PieChart
                 widthAndHeight={widthAndHeight}
                 series={series}
@@ -73,15 +69,25 @@ const ChartPie = (props:chart) => {
                 coverRadius={0.45}
                 coverFill={'#FFF'}
               />
-          </Animatable.View>
 
-          
+              {/* <PieChart
+                      donut
+                      showText
+                      textColor="black"
+                      innerRadius={65}
+                      // showTextBackground
+                      // textBackgroundColor="white"
+                      textBackgroundRadius={18}
+                      data={pieData}
+                      focusOnPress
+                      inwardExtraLengthForFocused={30}
+                    /> */}
   
-          </View>
-  
+          {/* </Animatable.View> */}
+         </View>}
+         {excellent==0 && good==0 && poor==0 ?<Text></Text> :
         <View style={styles.bottom}>
-  
-        <View>
+       <View>
            <View style={styles.footer}>
                <View style={styles.percentage1} ></View>
                <Text style={styles.footPercentage}>{excellent}</Text>
@@ -108,12 +114,12 @@ const ChartPie = (props:chart) => {
             
            </View>
   
-          </View>
+          </View>}
         </View>
       </ScrollView>
     );
 
-  }
+  
 }
  
 
@@ -126,7 +132,7 @@ const styles = StyleSheet.create({
     marginTop:10,
     marginHorizontal:30,
     borderRadius:30,
-    elevation:6,
+    // elevation:6,
     backgroundColor:"white",
     marginBottom:10,
   },
@@ -201,3 +207,16 @@ const styles = StyleSheet.create({
 });
 
 export default ChartPie;
+
+
+
+
+
+
+
+
+
+    
+      
+  
+

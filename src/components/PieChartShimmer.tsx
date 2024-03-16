@@ -9,13 +9,9 @@ const ChartPieShimmer = ( ) => {
         
         <ShimmerPlaceholder 
         LinearGradient={LinearGradient}
-            visible={true}
+            // visible={true}
             style={styles.container}>
-
-          
-  
-  
-          </ShimmerPlaceholder>
+        </ShimmerPlaceholder>
       </ScrollView>
     );
   };
@@ -34,7 +30,8 @@ const ChartPieShimmer = ( ) => {
       elevation:8,
       backgroundColor:"white",
       marginBottom : 20,
-      height:500
+      height:500,
+      width:345
     },
     title: {
       fontSize: 24,
