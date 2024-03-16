@@ -10,7 +10,7 @@ const  DayWiseProgressBar = (props : PropsType) => {
 		<TouchableOpacity onPress={onPress}>
 			<View style = {styles.graphsSection}>
 				<Text style = {styles.dayCount}>Day {dayNumber}</Text>
-				<Progress.Bar color = {'#D155FD'} progress={valueToBeLoaded} width={230} height={(60)} style = {styles.progressBar} unfilledColor='#E4E3E3' borderColor='white'/>
+				<Progress.Bar color = {'#D155FD'} progress={valueToBeLoaded} width={200} height={(60)} style = {styles.progressBar} unfilledColor='#E4E3E3' borderColor='white'/>
         </View>
 		</TouchableOpacity>
         
@@ -28,7 +28,8 @@ const styles = StyleSheet.create({
 		color : 'black',
 		width : 70,
 		fontFamily : 'Poppins-Regular',
-		fontSize : 20,
+		fontSize : 16,
+		paddingTop : '2%',
 	},
     progressBar : {
 		marginTop : 8,

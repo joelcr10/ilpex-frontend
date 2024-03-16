@@ -317,7 +317,9 @@ const TraineeProfileScreen = () => {
                         <View style={{
                             marginBottom : '10%',
                             marginTop : '5%',
-                            flex:1
+                            flex:1,
+                            marginLeft : '1%',
+                            marginRight : '1%'
                         }}>
                             <List.Accordion
                             title="Courses left for the day"

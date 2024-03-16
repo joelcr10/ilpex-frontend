@@ -68,7 +68,7 @@ import ilpex from '../utils/ilpexUI';
     //   fontSize: 14,
     // },
     placeholderStyle: {
-      fontSize: 20,
+      fontSize: 18,
       fontFamily:ilpex.fontRegular,
       color : 'gray'
     },
