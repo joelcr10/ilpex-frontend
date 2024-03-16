@@ -29,12 +29,16 @@ const AssesmentListCard=(props: BatchComponentProps)=>{
 
 const styles = StyleSheet.create({
     container:{
+        height:50,
         backgroundColor:ilpex.card,
         borderRadius:20,
-        height:50,
+        shadowColor:ilpex.black,
         width : 330,
         marginBottom : '8%',
-        elevation:5,
+        // shadowOffset: { width: -1, height: 4 },
+        shadowOpacity: 0.4,
+        // shadowRadius: 4,
+        elevation: 5,
         flexDirection:'row',
         alignSelf:'center'
     },

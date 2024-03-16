@@ -33,13 +33,13 @@ const BackButton = (props : PropsType) => {
 
 const styles = StyleSheet.create({
     backButton : {
-        width : 25,
-        height : 25,
+        width : 20,
+        height : 20,
     },
     backButtonContainer : {
         zIndex : 5,
         position : 'absolute',
-        top : 30,
+        top : 35,
         left : 25,
         width : 25,
         height : 25,

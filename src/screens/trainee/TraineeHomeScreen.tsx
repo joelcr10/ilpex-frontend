@@ -11,6 +11,7 @@ import { percipioReportAPI } from "./percipioReportAPI";
 import ShimmerDaywise from "../../components/loading/DayWiseCardShimmer";
 import ShimmerAssessmentCard from "../../components/loading/AssessmentCardShimmer";
 import { userNames } from "../../context/userNameSlice";
+import { useFocusEffect } from "@react-navigation/native";
 
 const TraineeHomeScreen = () => {
   const user_id = useSelector((state: any) => state.userDetailsReducer.user_id);
@@ -40,7 +41,7 @@ const TraineeHomeScreen = () => {
         </View>
         <View style={styles.contentContainer}>
           <View>
-            <Text style={styles.heading}>Assessment</Text>
+            <Text style={styles.heading}>Assessments</Text>
 
             <AssessmentDisplay></AssessmentDisplay>
           </View>
@@ -61,7 +62,8 @@ const UserName = () => {
 
   const [userName, setUserName] = useState<any[]>([]);
   const user_id = useSelector((state: any) => state.userDetailsReducer.user_id);
-  useEffect(() => {
+  useFocusEffect(
+    React.useCallback(() => {
     const getUserName = async () => {
       try {
         const { responseData } = await getHook(
@@ -77,7 +79,8 @@ const UserName = () => {
       }
     };
     getUserName();
-  }, []);
+  }, [])
+  )
   return (
     <Text style={styles.textSize}>{userName}</Text>
 
@@ -89,7 +92,8 @@ const DaysDisplay = () => {
   const [isLoading, setLoading] = useState(false);
 
 
-    useEffect(() => {
+  useFocusEffect(
+    React.useCallback(() => {
       const getDayCards= async () => {
         try {
           const {responseData} = await getHook(
@@ -107,7 +111,8 @@ const DaysDisplay = () => {
         }
       };
       getDayCards();
-    }, []);
+    }, [])
+  )
     return (
       <ScrollView>
         { (!isLoading)?
@@ -141,7 +146,8 @@ const AssessmentDisplay = () => {
   const user_id = useSelector((state: any) => state.userDetailsReducer.user_id);
   const [isLoading, setLoading] = useState(false);
 
-  useEffect(() => {
+  useFocusEffect(
+    React.useCallback(() => {
     const getAssessments = async () => {
       try {
         const { responseData } = await getHook(
@@ -156,7 +162,8 @@ const AssessmentDisplay = () => {
       }
     };
     getAssessments();
-  }, []);
+  }, [])
+  )
 
   return (
     <View>
@@ -219,7 +226,7 @@ const styles = StyleSheet.create({
   textSize: {
     color: ilpex.white,
     fontFamily: ilpex.fontSemiBold,
-    fontSize: 30,
+    fontSize: 28,
     marginTop: -8
   },
 
@@ -233,7 +240,7 @@ const styles = StyleSheet.create({
   },
 
   heading: {
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: 'bold',
     color: 'black',
     margin: 10

@@ -131,35 +131,22 @@ const AssessmentScreen = () => {
                     {/* {invalid && <Text style={styles.invalidText}>Select an option</Text>} */}
                     {isLoading && <QuestionCardShimmer />}
                     {!isLoading && <View>
+
+                            <BarProgress progress={index+1} total={questionList.length}/>
                             <QuestionCard questionNumber={index+1} currentQuestion={questionList[index]} selectedId={selectedId} setSelectedId={setSelectedId} />
                            
-                            {invalid && !submitResult && <DisabledButton name="Submit Answer"/>}
-                            {!submitResult && !invalid && <SmallButton name="Submit Answer" onPress={checkAnswer}/>}
-                            {submitResult && <SmallButton name="Finish" onPress={updateScore}/>}
+                            <View style = {styles.OuterButtonContainer}>
+                                <View style={styles.buttonContainer}>
+                                    {invalid && !submitResult && <DisabledButton name="Submit Answer"/>}
+                                    {!submitResult && !invalid && <SmallButton name="Submit Answer" onPress={checkAnswer}/>}
+                                    {submitResult && <SmallButton name="Finish" onPress={updateScore}/>}
+                                </View>
+                            </View>
 
-                             <BarProgress progress={index+1} total={questionList.length}/>
+                             
                         </View>}     
                 </View>
             </View>
-
-                    {/* <Modal
-                        animationType="slide"
-                        transparent={true}
-                        visible={showResult}
-                        >
-                        <View style = {styles.modalContainer}>
-                            <View style={styles.modalContent}>
-                                <Text style={{color:'black', fontWeight: 'bold', fontSize: 20, marginBottom: 20}}>{assessment_name} Result</Text>
-
-
-                                <CircularProgress completeStatus={(score/questionList.length)*100} color={ilpex.success}/>                                
-                                <TouchableOpacity onPress={() => navigation.navigate("TraineeHome")}>
-                                    <Text style={{backgroundColor: ilpex.primary, borderRadius: 5, color: 'white', textAlign: 'center', justifyContent:'center', alignItems: 'center', height: 35, width: 100, marginTop:20, paddingTop: 8 }}>Go Home</Text>
-                                </TouchableOpacity>
-                                
-                            </View>
-                        </View>
-                    </Modal> */}
 
                     <ModalComponent isVisible={showResult} closeModal={() => navigation.navigate("TraineeHome")} score={(score/questionList.length)*100} setMessageVisible={() =>console.log('yes')}/>
 
@@ -169,6 +156,20 @@ const AssessmentScreen = () => {
 }
 
 const styles = StyleSheet.create({
+    OuterButtonContainer:{
+        // backgroundColor: 'blue',
+        display: 'flex',
+        flexDirection: 'row',
+
+        justifyContent: 'center',
+        marginTop: '5%'
+    },
+
+    buttonContainer:{
+        // backgroundColor: 'red',
+        width: '60%',
+        margin: 'auto'
+    },
     invalidText:{
         color: ilpex.pink,
         textAlign: 'center',
