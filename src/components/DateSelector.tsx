@@ -75,9 +75,11 @@ const styles = StyleSheet.create({
         height : 1000,
     },
     selectedDatesContainer : {
+        alignSelf : 'center',
         borderWidth : 1,
         marginLeft : '10%',
         marginRight : '10%',
+        width : '80%',
         height : 70,
         flexDirection : 'row',
         paddingTop : 7,
@@ -85,43 +87,50 @@ const styles = StyleSheet.create({
     }, 
     selectedDatesCaption : {
         fontFamily : ilpex.fontRegular,
-        fontSize : 18
+        color : ilpex.black,
+        fontSize : 15
     },
     selectDateField : {
-
+        width : '80%',
+        marginLeft : '10%',
+        marginRight : '10%'
     },
     dateDataContainer : {
         flexDirection : 'column',
         marginLeft : '5%',
         justifyContent : 'center',
-        width : 260,
+        // width : 260,
     },
     beforeDateSelectedContainer : {
+        alignSelf : 'center',
         borderWidth : 1,
-        marginLeft : '10%',
-        marginRight : '10%',
         height : 40,
         flexDirection : 'row',
-        justifyContent : 'center',
         paddingTop : 7,
         borderRadius : 10,
+        width : '100%'
     },
     beforeDateCaptionContainer : {
-        flex : 0.9,
+        flex : 0.8,
+        alignContent : 'flex-start',
     },
     selectDateLabel : {
         fontFamily : ilpex.fontRegular,
-        fontSize : 17
+        fontSize : 13,
+        color : ilpex.darkGrey,
+        marginLeft : '5%'
     },
     beforeDateIconContainer : {
         flexDirection : 'row',
-        alignContent : 'flex-end'
+        justifyContent : 'flex-end',
+        marginRight : '5%',
+        flex :  0.2
     },
     afterDateIconContainer : {
         flexDirection : 'row',
-        alignContent : 'flex-end',
-        marginLeft : 15,
-        marginTop : 15,
+        justifyContent : 'flex-end',
+        marginRight : '5%',
+        flex :  0.2
     },
     calendarStyle : {
         height : 25,
@@ -139,7 +148,9 @@ const styles = StyleSheet.create({
     datesDisplay : {
         fontFamily : ilpex.fontMedium,
         color : ilpex.black,
-        fontSize : 16
+        fontSize : 16,
+        flex : 0.8,
+        alignContent : 'flex-start',
     }
 })
 

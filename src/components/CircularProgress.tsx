@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import ProgressCircle from 'react-native-progress-circle'
+import ilpex from '../utils/ilpexUI';
  
  
 type ProgressProps = {
@@ -20,7 +21,7 @@ const CircularProgress= (Props :ProgressProps) => {
     shadowColor="#FAFAFA"
     bgColor="#FAFAFA"
 >
-    <Text style={{ fontSize: 17,fontWeight:"700" }}>{completeStatus}%</Text>
+    <Text style={{ fontSize: 17,fontWeight:"700", color: ilpex.black }}>{completeStatus}%</Text>
 </ProgressCircle>
   );
 };

@@ -116,14 +116,16 @@ const CreateBatchScreen = () => {
             <View style = {styles.fileUploadContainer}>
                 <FileUploadField onSelect={pickDocument} selectedFile={selectedFile}/>
             </View>
-            {(batchName === '' || startDate === null || endDate === null || selectedFile === null)? (
-                <DisabledBigButton name="Create Batch"/>
-            ) : (
-                <Button name="Create Batch" onPress={handleFileUpload} buttonPressed={buttonLoaded} />
-            )
-            }
-            {success && <ConfirmationModal success = {success} message = {"Batch has been created Successfully!"} />}
-            {failure && <ToastDemo BgColor="red" message={errorMessage} textColor="white"/>}
+            <View style = {{alignItems : 'center'}}>
+                {(batchName === '' || startDate === null || endDate === null || selectedFile === null)? (
+                    <DisabledBigButton name="Create Batch"/>
+                ) : (
+                    <Button name="Create Batch" onPress={handleFileUpload} buttonPressed={buttonLoaded} />
+                )
+                }
+                {success && <ConfirmationModal success = {success} message = {"Batch has been created Successfully!"} />}
+                {failure && <ToastDemo BgColor="red" message={errorMessage} textColor="white"/>}
+            </View>
         </View>
     );
 }
@@ -134,7 +136,8 @@ const styles = StyleSheet.create({
         height : 1000,
     },
     fileUploadContainer : {
-        paddingTop : 40
+        paddingTop : 40,
+        alignSelf : 'center'
     },
 })
 
