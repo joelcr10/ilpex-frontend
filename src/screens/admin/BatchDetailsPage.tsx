@@ -135,19 +135,19 @@ return(
               {isLoading && <ChartPieHeaderShimmer/>} 
                {!isLoading && <><View style ={styles.detail}>
                     
-                    <Text style={{fontWeight:'700',color:'black',fontSize:28,marginBottom:20}}>{batchData.batch_details.batch_name}</Text>
-                    <View style={{justifyContent:'flex-start',display:'flex',flexDirection:'row',marginLeft:55}}>
+                    <Text style={{fontFamily : 'Poppins-SemiBold',color:'black',fontSize:24,marginBottom:20}}>{batchData.batch_details.batch_name}</Text>
+                    <View style={{justifyContent:'flex-start',display:'flex',flexDirection:'row',marginLeft : '10%'}}>
                     <View style={{flex:1}}>
-                    <Text style={{fontWeight:'500',color:'black',fontSize:15}}>Start Date </Text> 
-                    <Text style={{fontWeight:'500',color:'black',fontSize:15}}>End Date </Text> 
-                    <Text style={{fontWeight:'500',color:'black',fontSize:15}}>Trainees </Text> 
-                    <Text style={{fontWeight:'500',color:'black',fontSize:15}}>Current Status </Text> 
+                    <Text style={{fontFamily : 'Poppins-Regular',color:'black',fontSize:14}}>Start Date </Text> 
+                    <Text style={{fontFamily : 'Poppins-Regular',color:'black',fontSize:14}}>End Date </Text> 
+                    <Text style={{fontFamily : 'Poppins-Regular',color:'black',fontSize:14}}>Trainees </Text> 
+                    <Text style={{fontFamily : 'Poppins-Regular',color:'black',fontSize:14}}>Current Day </Text> 
                     </View>
                     <View style={{flex:1}}>
-                    <Text style={{marginLeft:30,color:'#8F00FF',fontWeight:'500'}}>{batchData.batch_details.start_date.split('T')[0]}</Text>
-                    <Text style={{marginLeft:30,color:'#8F00FF',fontWeight:'500'}}>{batchData.batch_details.end_date.split('T')[0]}</Text>
-                    <Text style={{marginLeft:30,color:'#8F00FF',fontWeight:'500'}}>{batchData.noOfTrainees}</Text>
-                    <Text style={{marginLeft:30,color:'#8F00FF',fontWeight:'500'}}>{currentDate.current_day}</Text>
+                    <Text style={{fontFamily : 'Poppins-Medium', marginLeft:'24%',color:'#8F00FF', fontSize : 14}}>{batchData.batch_details.start_date.split('T')[0]}</Text>
+                    <Text style={{fontFamily : 'Poppins-Medium', marginLeft:'24%',color:'#8F00FF', fontSize : 14}}>{batchData.batch_details.end_date.split('T')[0]}</Text>
+                    <Text style={{fontFamily : 'Poppins-Medium', marginLeft:'24%',color:'#8F00FF', fontSize : 14}}>{batchData.noOfTrainees}</Text>
+                    <Text style={{fontFamily : 'Poppins-Medium', marginLeft:'24%',color:'#8F00FF', fontSize : 14}}>{currentDate.current_day}</Text>
                     </View>
                   </View>
                 </View>
@@ -167,12 +167,14 @@ return(
               }
               
               <View style = {styles.graphContainer}>
-                  <Text style={{marginRight:255,marginBottom:20,fontSize:25}}>Days</Text>
+                  <View style = {{flexDirection : 'row'}}>
+                  <Text style={{ marginBottom: '5%', fontSize: 17, fontFamily: 'Poppins-Regular', flex: 0.3, paddingTop: '2%', flexDirection: 'column' }}>Days</Text>
+                  <Text style={{marginBottom:'5%',fontSize:15, fontFamily : 'Poppins-Regular', flex : 0.7, justifyContent : 'center'}}>Percentage of Courses Completed</Text>
+                  </View>
                   <FlatList 
                     contentContainerStyle = {{paddingBottom : 5}}
                     data = {arrayOfObjects}
                     renderItem = {({item}) => 
-                      
                       <DayWiseProgressBar dayNumber = {parseInt(item.key)} percentage = {item.value} onPress={()=>onPress(batch_id,parseInt(item.key))}/>
                     }
                   
@@ -195,18 +197,16 @@ const styles = StyleSheet.create({
       body1:{
         height:'100%',
         backgroundColor:'white',
-        borderTopEndRadius:50,
-        borderTopLeftRadius:50,
-        marginTop:30,
-        //  justifyContent:'center'
-        
+        borderTopEndRadius : 30,
+        borderTopStartRadius : 30,
+        marginTop : '5%',
     },
       text:{
-        fontFamily:'poppins',
-        fontWeight:'bold',
-        fontSize:45,
+        fontFamily:'Poppins-SemiBold',
+        // fontWeight:'bold',
+        fontSize:35,
         color:'white',
-        marginTop:45
+        marginTop:'17%'
     },
     textData:{
         

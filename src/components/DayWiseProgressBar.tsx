@@ -28,7 +28,8 @@ const styles = StyleSheet.create({
 		color : 'black',
 		width : 70,
 		fontFamily : 'Poppins-Regular',
-		fontSize : 20,
+		fontSize : 16,
+		paddingTop : '2%',
 	},
     progressBar : {
 		marginTop : 8,
