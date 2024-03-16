@@ -5,6 +5,8 @@ import TraineeCardShimmer from "../../components/loading/TraineeCardShimmer";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { getHook } from "../../network/getHook/getHook";
 import DrawerNavigationHamburger from "../../components/DrawerNavigationHamburger";
+import { useFocusEffect } from "@react-navigation/native";
+import DropdownComponent from "../../components/DropDown";
 
 const TraineeScreen = () => {
 
@@ -12,6 +14,10 @@ const TraineeScreen = () => {
     const [traineesList, setTraineesList] = useState<any[]>([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [filteredTraineesList, setFilteredTraineesList] = useState<any[]>([]);
+    const [allBatchesName,setBatchesName] = useState<any>([]);
+    const [selectedBatch,setBatch] = useState('');
+    const [allBatches,setAllBatches] = useState<any>([]);
+    const [batchId,setbatchId] = useState(Number);
 
     const handleSearch = (text : string) => {
         console.log(text)
@@ -23,23 +29,74 @@ const TraineeScreen = () => {
         setFilteredTraineesList(filteredTrainees);
     };
 
-    useEffect (() => {
-        const getTraineesList = async() => {
-            try {
-                const {responseData, errorMessage} = await getHook(`/api/v2/trainee`);
-                if(responseData)
-                {
-                    setTraineesList(responseData);
-                    setFilteredTraineesList(responseData);
+    useFocusEffect(
+        React.useCallback(() => {
+            const getTraineesList = async() => {
+                try {
+                    const {responseData, errorMessage} = await getHook(`/api/v2/trainee?batch_id=${batchId}`);
+                    if(responseData)
+                    {
+                        setTraineesList(responseData);
+                        setFilteredTraineesList(responseData);
+                    }
+                }
+                catch(error) {
+                    console.log('Error', error);
+                }
+            };
+
+            getTraineesList();
+        }, [batchId])
+    )
+
+    //get Batches 
+
+
+    useEffect(()=>{
+        const getBatches = async()=>{
+            try{
+                const { success,statusCode,responseData,errorMessage} = await getHook('/api/v2/batch');
+                console.log(success,statusCode);
+                if(success){
+                    if(responseData){
+                        setAllBatches(responseData.batches)
+                        setBatchesName(
+                            [{label:'All Batches',
+                            value:'All'}]); 
+                        setBatchesName(prevBatches => [
+                            ...prevBatches,
+                            ...responseData.batches.map((batch: { batch_id: number; batch_name: string; }) => ({
+                                label: batch.batch_name,
+                                value: batch.batch_name
+                            }))
+                        ]);
+                    }
                 }
             }
-            catch(error) {
-                console.log('Error', error);
+            catch(err){
+                console.error('Error', err);
             }
-        };
+        }
+        getBatches();
+    },[]);
 
-        getTraineesList();
-    }, []);
+
+    const getBatchId = (selectedBatch : string) => {
+        for (const batch of allBatches) {
+            if (batch.batch_name === selectedBatch) {
+              return batch.batch_id;
+            }
+          }
+          return 0;
+    }
+
+    const batchSelection  = async() => {
+        const batch_id= await getBatchId(selectedBatch)
+        console.log(batch_id);
+        setbatchId(batch_id);
+    }
+    
+    batchSelection();
 
     return (
         <ScrollView 
@@ -59,9 +116,12 @@ const TraineeScreen = () => {
                         </TextInput>
                         <MaterialCommunityIcons name="magnify" size={20}/>
                     </View>
+                    <DropdownComponent placeholder="All Batch" data={allBatchesName} setBatch={setBatch}/>
+
                     {!isLoading ? (
                         <TraineeCardShimmer/>
                     ) : (
+                        <View style = {styles.cardContainer}>
                         <FlatList
                         showsVerticalScrollIndicator={false}
                         data={filteredTraineesList}
@@ -75,6 +135,7 @@ const TraineeScreen = () => {
                         )}
                         keyExtractor={item => item.id}
                         />
+                        </View>
                     )}            
                 </View>
             </View>
@@ -92,18 +153,23 @@ const styles = StyleSheet.create({
     innerContainer : {
         backgroundColor : 'white',
         height : '100%',
-        marginTop : '2.5%',
+        marginTop : '5%',
         borderTopEndRadius : 30,
         borderTopStartRadius : 30,
         paddingTop : '10%',
-        paddingLeft : '10%',
-        paddingRight : '10%',
+    },
+
+    cardContainer : {
+        paddingTop : '7%',
+        paddingLeft : '7%',
+        paddingRight : '7%',
+        
     },
     containerHeading : {
         color : 'white',
         textAlign : 'center',
-        fontSize : 50,
-        marginTop : 80,
+        fontSize: 35,
+        marginTop : '17%',
         fontFamily : 'Poppins-SemiBold',
     },
     shimmer:{
@@ -118,11 +184,14 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         backgroundColor:'#E4D8FE',
         borderRadius:10,
-        marginTop:25,
-        marginBottom:25,
+        marginTop:'3.5%',
+        marginRight : '5%',
+        marginBottom:'1%',
         alignItems:'center',
-        width:330,
+        width:'90%',
         height:50,
+        margin : '5%',
+        alignSelf : 'center'
      },
      searchBarStyles:{
         marginLeft:15,
@@ -130,6 +199,5 @@ const styles = StyleSheet.create({
         flex:0.9
      }
 })
-
 
 export default TraineeScreen;

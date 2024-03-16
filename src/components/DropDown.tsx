@@ -52,7 +52,7 @@ import ilpex from '../utils/ilpexUI';
       borderRadius: 8,
       paddingHorizontal: 8,
       width : 300,
-      alignSelf:'center'
+      alignSelf:'center',
     },
     icon: {
       marginRight: 5,
@@ -69,11 +69,13 @@ import ilpex from '../utils/ilpexUI';
     // },
     placeholderStyle: {
       fontSize: 20,
-      fontFamily:ilpex.fontRegular
+      fontFamily:ilpex.fontRegular,
+      color : 'gray'
     },
     selectedTextStyle: {
-        fontSize: 20,
-        fontFamily:ilpex.fontRegular
+        fontSize: 16,
+        fontFamily:ilpex.fontRegular,
+        color : 'black'
     },
     iconStyle: {
       width: 25,
@@ -82,6 +84,6 @@ import ilpex from '../utils/ilpexUI';
     inputSearchStyle: {
       height: 40,
       fontSize: 15,
-      fontFamily:ilpex.fontRegular
+      fontFamily:ilpex.fontRegular,
     },
   });
