@@ -1,4 +1,4 @@
-import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native"
+import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { batchDetails } from "../../network/ApiHook";
 import ChartPie from "../../components/PieChartComponent";
 import { useEffect, useState } from "react";
@@ -12,9 +12,13 @@ import DayWiseProgressBar from "../../components/DayWiseProgressBar";
 import DayWiseProgressBarShimmer from "../../components/loading/DayWiseProgressBarShimmer";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import DayWiseDetailsPage from "./DayDetailsScreen";
+import TraineeProileAnalysisScreen from "./TraineeProfileAnalysisScreen";
 import { List } from 'react-native-paper';
 import moment from 'moment'
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import TraineeCardShimmer from "../../components/loading/TraineeCardShimmer";
+import TraineeCard from "../../components/TraineeCard";
+import ilpex from "../../utils/ilpexUI";
 
 const BatchDetailsPage =()=>{
    const todayDate = moment().format('YYYY-MM-DD');
@@ -28,9 +32,19 @@ const BatchDetailsPage =()=>{
     const [currentDate,setCurrentDate] = useState<any>([]);
     const [courseCompletion,setCourseCompletion] = useState<any>([]);
     const [dayWiseProgress,setdayWiseProgress] = useState<any>([]);
+    const [traineeList,setTraineeList] = useState<any>([]);
     const onPress=(batch_id:number,day_id:number)=>{
       
        navigation.navigate("batchDayWiswDetails",{ batch_id:batch_id, day:day_id});
+    }
+    const toTrainee=(user_id:number)=>{
+      console.log('user id ashik',user_id)
+       navigation.navigate("TraineeProileAnalysisScreen",{ user_id:user_id});
+    }
+    var count:number =1;
+    const loadFunction =()=>{
+      setExpanded(!expanded)
+      count = 1;
     }
     useEffect(() => {
       const getStory = async () => {
@@ -48,7 +62,24 @@ const BatchDetailsPage =()=>{
       };
       getStory();
   }, []);
+     
 
+  useEffect(() => {
+    const getStory = async () => {
+      try {
+        const {responseData, errorMessage} = await getHook(`api/v2/trainee?batch_id=${batch_id}`)
+        if(responseData)
+        {
+           setTraineeList(responseData);
+        }
+        if(errorMessage)
+          console.log(errorMessage)
+        } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+    getStory();
+}, []);
 
     useEffect(() => {
         const getStory = async () => {
@@ -84,8 +115,11 @@ const BatchDetailsPage =()=>{
         try {
           const {responseData, errorMessage} = await getHook(`/api/v2/batch/${batch_id}`)
            if(responseData){
-             setBatchData(responseData);
+            console.log('this is batch data',responseData)
+            setBatchData(responseData);
             setLoading(false);
+          
+            
           }
           } catch (error) {
           console.error('Error:', error);
@@ -123,8 +157,7 @@ const hai =()=>{
   
 }
 const [expanded, setExpanded] = useState(true);
-
-  const handlePress = () => setExpanded(!expanded);
+ 
 return(
   <GestureHandlerRootView>
         <ScrollView>
@@ -137,7 +170,7 @@ return(
               <View>
 
               {isLoading && <ChartPieHeaderShimmer/>} 
-               {!isLoading && <><View style ={styles.detail}>
+               {!isLoading && <View style ={styles.detail}>
                     
                     <Text style={{fontWeight:'700',color:'black',fontSize:28,marginBottom:20}}>{batchData.batch_details.batch_name}</Text>
                     <View style={{justifyContent:'flex-start',display:'flex',flexDirection:'row',marginLeft:55}}>
@@ -145,7 +178,7 @@ return(
                     <Text style={{fontWeight:'500',color:'black',fontSize:15}}>Start Date </Text> 
                     <Text style={{fontWeight:'500',color:'black',fontSize:15}}>End Date </Text> 
                     <Text style={{fontWeight:'500',color:'black',fontSize:15}}>Trainees </Text> 
-                    <Text style={{fontWeight:'500',color:'black',fontSize:15}}>Current Status </Text> 
+                    <Text style={{fontWeight:'500',color:'black',fontSize:15}}>Current Date </Text> 
                     </View>
                     <View style={{flex:1}}>
                     <Text style={{marginLeft:30,color:'#8F00FF',fontWeight:'500'}}>{batchData.batch_details.start_date.split('T')[0]}</Text>
@@ -155,29 +188,36 @@ return(
                     </View>
                   </View>
                 </View>
-                </>}
+                }
 
 
               
                 <List.Accordion
                     title="Trainees"
                     left={props => <List.Icon {...props} icon="folder" />}
-                    expanded={expanded}
-                    onPress={handlePress}>
-                    {/* <List.Item title="First item" />
-                    <List.Item title="Second item" /> */}
-                    <View style = {styles.graphContainer}>
-                  <Text style={{marginRight:255,marginBottom:20,fontSize:25}}>Days</Text>
-                  <FlatList 
-                    contentContainerStyle = {{paddingBottom : 5}}
-                    data = {arrayOfObjects}
-                    renderItem = {({item}) => 
-                      
-                      <DayWiseProgressBar dayNumber = {parseInt(item.key)} percentage = {item.value} onPress={()=>onPress(batch_id,parseInt(item.key))}/>
-                    }
-                  
-                  />
-                </View> 
+                    expanded={!expanded}
+                    onPress={loadFunction}
+                    style={styles.accordian}
+                    titleStyle={styles.accordianTitle}
+                    >
+                     <View style={styles.accordianView}>
+                    
+                        <FlatList
+                        showsVerticalScrollIndicator={false}
+                        // contentContainerStyle = {{paddingBottom : 30}}
+                        data={traineeList}
+                        renderItem={({ item,index }) => (
+                          <TouchableOpacity onPress={()=>toTrainee(item.user_id)}>
+                          <View style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
+                              <Text style={styles.accordianText}>
+                              {index + 1} .  {item.user.user_name}</Text>
+                            </View>
+                            </TouchableOpacity>
+                        )}
+                        keyExtractor={item => item.id}
+                        />
+                        
+                   </View>
                 </List.Accordion>
             
 
@@ -224,19 +264,53 @@ return(
     )
     }
 const styles = StyleSheet.create({
-      container1:{
-        height:'100%',
-        backgroundColor:'#8518FF'
+  container1:{
+    height:'100%',
+    backgroundColor:'#8518FF',
+    
+  },
+  accordianText:{
+    fontFamily : ilpex.fontMedium,
+    fontSize : 21,
+    color : 'black',
+  },
+  accordian:{
+        borderRadius:20,
+        marginHorizontal:30,
+        backgroundColor:'white',
+        // elevation:5,
+       
       },
+      accordianView:{
+        borderRadius:20,
+        marginHorizontal:10,
+        backgroundColor:'white',
+        elevation:5,
+        marginTop:80,
+        // position: 'absolute',
+        // zIndex: 1,
+        left:20,
+        width:350,
+        paddingBottom : 30
+        },
+
       body1:{
         height:'100%',
         backgroundColor:'white',
         borderTopEndRadius:50,
         borderTopLeftRadius:50,
         marginTop:30,
+        // flex: 1,
+        position: 'relative'
         //  justifyContent:'center'
         
     },
+    accordianTitle:{
+      marginLeft:20,
+      fontWeight:'700',
+      fontSize:20
+      
+  },
       text:{
         fontFamily:'poppins',
         fontWeight:'bold',

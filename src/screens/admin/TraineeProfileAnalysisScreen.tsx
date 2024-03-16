@@ -45,6 +45,7 @@ const TraineeProileAnalysisScreen = () => {
         const getTraineeScores = async() => {
             try {
                 const trainee_id = route.params.trainee_id;
+                console.log('this is trainee id',trainee_id)
                 const {responseData, errorMessage} = await getHook(`/api/v2/trainee/${trainee_id}/scores`);
                 console.log('Trainee ID ------', trainee_id)
                 if(responseData)
@@ -134,6 +135,7 @@ const TraineeProileAnalysisScreen = () => {
 
     return(
         <ScrollView>
+        
         {
             (!isLoadingCurrentDay) ? (
                 <TraineeProfileShimmer/>
