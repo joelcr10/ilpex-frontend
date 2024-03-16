@@ -270,6 +270,10 @@ const styles = StyleSheet.create({
     backgroundColor:'#8518FF',
     
   },
+  accordianTitle:{
+    fontFamily : ilpex.fontRegular,
+    fontSize: 17
+},
   accordianText:{
     paddingTop : '4%',
     fontFamily : ilpex.fontMedium,

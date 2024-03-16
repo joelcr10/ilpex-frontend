@@ -340,7 +340,7 @@ const TraineeProfileScreen = () => {
                                         {index + 1} .  {item}</Text>
                                         </View>
                                     )}
-                                    keyExtractor={item => item.id}
+                                    keyExtractor={item => item}
                                     />
                                 
                                 </View>
@@ -352,7 +352,7 @@ const TraineeProfileScreen = () => {
                             <View style={{
                                 flex:1
                             }}>
-                                <BarGraph data={highScore} labels={resultID}></BarGraph>
+                                <BarGraph data={highScore} labels={resultID} ></BarGraph>
                             </View>
                         </View>  
                     </View>
