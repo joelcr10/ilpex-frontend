@@ -96,6 +96,9 @@ const CreateBatchScreen = () => {
             console.log("Error : ", error);
         }
     }
+
+    
+
     return(
         <View style = {styles.pageContainer}>
             <BackButton color = "black"/>
