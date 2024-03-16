@@ -110,7 +110,7 @@ const DaysDisplay = () => {
     }, []);
     return (
       <ScrollView>
-        { (!isLoading)?
+        {!(isLoading)?
         (<View>
           <ShimmerDaywise></ShimmerDaywise>
           <ShimmerDaywise></ShimmerDaywise>

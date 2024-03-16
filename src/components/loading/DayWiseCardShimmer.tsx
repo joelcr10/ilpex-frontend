@@ -8,8 +8,6 @@ const ShimmerDaywise = () => {
 
 
   return (
-    <View style={styles.container}>
-     
         <View style={styles.learningDay}>
         <View style={styles.cardContainer}>
               <View>
@@ -37,50 +35,36 @@ const ShimmerDaywise = () => {
         </View>
         
       </View>
-   
-    </View>
   );
 };
 
 const styles = StyleSheet.create({
   cardContainer:{
-    display: 'flex',
     flexDirection: 'row',
     justifyContent:'space-between',
-    alignItems: 'center',
-  },
-
-  container: {
-    maxWidth: "100%",
-    padding: 20,  
-
   },
   learningDay: {
-    width: 350,
-    borderRadius: 15,
-    padding: 5,
-    marginTop: 10,
-
-    height: 100,
+    borderRadius:15,
+    padding: '3%',
+    margin:'2%',
+    marginHorizontal:'3%',
+    paddingHorizontal:'5%',
+    height:'23%',
+    backgroundColor:'#ffffff',
+    elevation: 4,
   },
   learningLabel: {
-    fontSize: 25,
+    borderRadius:10,
+    height:'52%',
+    width:'50%'
   },
   learningTime: {
-    fontSize: 15,
-    marginTop:20
-   
-  },
-
-  lockedText: {
-    fontSize: 14,
-    fontWeight: "500",
+    marginTop:'6%',
+    borderRadius:6,
+    width:'30%'
   },
   completeText: {
-    fontSize: 15,
-    fontWeight: "normal",
-    marginLeft:9,
-
+    marginLeft:'3%',
     width:50,
     height:50,
     borderRadius:25
