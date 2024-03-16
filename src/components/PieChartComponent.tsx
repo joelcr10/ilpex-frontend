@@ -1,9 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
-import {StyleSheet, ScrollView, StatusBar, Text, View, Animated, Easing} from 'react-native';
+import {StyleSheet, ScrollView, StatusBar, Text, View,Button} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import PieChart from 'react-native-pie-chart';
+import * as Animatable from 'react-native-animatable';
+
+import Svg, { Path, G } from 'react-native-svg';
+import Animated, { Easing } from 'react-native-reanimated';
+import { duration } from 'moment';
+
 // import { VictoryPie } from 'victory-native';
 type chart ={excellent:number,good:number,poor:number,chartName:string,option1:string,option2:string,option3:string,incomplete:()=>void}
+
 
 const ChartPie = (props:chart) => {
 
@@ -11,6 +18,8 @@ const ChartPie = (props:chart) => {
   const widthAndHeight = 200
   const series = [excellent,good,poor];
   const sliceColor = [ '#29A662', '#FFA600','#D3583D'];
+
+
   if(excellent==0 && good==0 && poor==0){
     return(
       <ScrollView style={styles.scrollContainer}>
@@ -23,88 +32,94 @@ const ChartPie = (props:chart) => {
   }
   else{
     return (
-      <ScrollView style={styles.scrollContainer}>
-        <View style={styles.container}>
+
+    
+       <ScrollView style={styles.scrollContainer}>
+         <View style={styles.container}>
   
-          <View style={styles.heading}>
+           <View style={styles.heading}>
           <Text style={{fontWeight:'700',color:'black',fontSize:23}}>{chartName}</Text>
           </View>
           <View style={styles.head}>
   
-            <View style={styles.headPercentage}>
-            <View style={styles.percentage1}>
-            </View>
-            <Text style={{marginLeft:5}}> &gt; 95%</Text>
-            </View>
+           <View style={styles.headPercentage}>
+             <View style={styles.percentage1}>
+             </View>
+             <Text style={{marginLeft:5}}> &gt; 95%</Text>
+             </View>
   
-            {good !== 0 &&<View style={styles.headPercentage}>
-            <View style={styles.percentage2}>
-            </View>
+             {good !== 0 &&<View style={styles.headPercentage}>
+             <View style={styles.percentage2}>
+                     </View>
             <Text style={{marginLeft:5}}> &gt; 25%</Text>
             </View>}
   
             <View style={styles.headPercentage}>
             <View style={styles.percentage3}>
-            </View>
+           </View>
             <Text style={{marginLeft:5}}> &lt; 25%</Text>
             </View>
           </View>
-          <View style={styles.chart}>
+           <View style={styles.chart}>
   
-          <PieChart
-            widthAndHeight={widthAndHeight}
-            series={series}
-            sliceColor={sliceColor}
-            doughnut={true}
-            coverRadius={0.45}
-            coverFill={'#FFF'}
-          >
+          
                 
-          </PieChart>
+           <Animatable.View animation="fadeIn" duration={8000} style={{ flex: 1 }}>
+               <PieChart
+                widthAndHeight={widthAndHeight}
+                series={series}
+                sliceColor={sliceColor}
+                doughnut={true}
+                coverRadius={0.45}
+                coverFill={'#FFF'}
+              />
+          </Animatable.View>
+
           
   
           </View>
   
-          <View style={styles.bottom}>
+        <View style={styles.bottom}>
   
-          <View>
-            <View style={styles.footer}>
-              <View style={styles.percentage1} ></View>
-              <Text style={styles.footPercentage}>{excellent}</Text>
+        <View>
+           <View style={styles.footer}>
+               <View style={styles.percentage1} ></View>
+               <Text style={styles.footPercentage}>{excellent}</Text>
             </View>
-            <Text style={{fontWeight:'700',color:'black',fontSize:17}}>{option1}</Text>
-          </View>
-          {good !== 0 &&<View>
-            <View style={styles.footer}>
-              <View style={styles.percentage2}></View>
-              <Text style={styles.footPercentage}>{good}</Text>
-            </View>
-            <Text style={{fontWeight:'700',color:'black',fontSize:17}}>{option2}</Text>
-          </View>}
+             <Text style={{fontWeight:'700',color:'black',fontSize:17}}>{option1}</Text>
+           </View>
+           {good !== 0 &&<View>
+             <View style={styles.footer}>
+               <View style={styles.percentage2}></View>
+               <Text style={styles.footPercentage}>{good}</Text>
+             </View>
+             <Text style={{fontWeight:'700',color:'black',fontSize:17}}>{option2}</Text>
+           </View>}
           
   
-          <View>
-            <View style={styles.footer}>
-              <View style={styles.percentage3}></View>
-              <Text style={styles.footPercentage}>{poor}</Text>
-            </View>
-            <TouchableOpacity onPress={incomplete}>
-            <Text style={{fontWeight:'700',color:'black',fontSize:17}}>{option3}</Text>
-            </TouchableOpacity>
+           <View>
+             <View style={styles.footer}>
+               <View style={styles.percentage3}></View>
+               <Text style={styles.footPercentage}>{poor}</Text>
+             </View>
+             <TouchableOpacity onPress={incomplete}>
+             <Text style={{fontWeight:'700',color:'black',fontSize:17}}>{option3}</Text>
+             </TouchableOpacity>
             
-          </View>
+           </View>
   
-          </View>
+           </View>
           
   
   
-        </View>
-      </ScrollView>
+         </View>
+       </ScrollView>
+      
     );
 
   }
+}
  
-};
 
 const styles = StyleSheet.create({
   scrollContainer: {

@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect} from 'react';
 import 'react-native-gesture-handler';
-import { DrawerContentScrollView, DrawerItem, DrawerItemList, createDrawerNavigator } from '@react-navigation/drawer';
+import { DrawerContentScrollView, DrawerItemList, createDrawerNavigator } from '@react-navigation/drawer';
 import { StyleSheet, Text, View } from 'react-native';
-import { Image, ImageProps } from 'react-native';
+import { Image} from 'react-native';
 import ilpex from '../utils/ilpexUI';
 import TraineeProfileScreen from '../screens/trainee/TraineeProfileScreen';
 import BottomTabNavigation from "./BottomTabNavigation";
@@ -16,14 +16,11 @@ import { userDetails } from "../context/userDetailsSlice";
 import { userLogin } from "../context/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import UserManagementScreen from '../screens/admin/UserManagementScreen';
-import { getHook } from '../network/getHook/getHook';
-import { userNames } from '../context/userNameSlice';
 
 const CustomDrawerContent : any = (props : any) => {
 
     const user_name = useSelector((state: any) => state.userDetailsReducer.user_name);
-
-    
+ 
     return (
       <DrawerContentScrollView {...props}>
         <View style={styles.drawerHeader}>
@@ -33,8 +30,6 @@ const CustomDrawerContent : any = (props : any) => {
       </DrawerContentScrollView>
     );
   };
-
-
 
 const DrawerNavigation = () => {
 
@@ -64,13 +59,14 @@ const DrawerNavigation = () => {
         drawerActiveTintColor : ilpex.main,
         drawerStyle: {
           backgroundColor: ilpex.white,
-          width: 280,
+          width: 250,
           borderTopRightRadius : 15,
           borderBottomRightRadius : 15,
         },
         drawerLabelStyle: {
             fontFamily : ilpex.fontMedium,
-            fontSize : 16,
+            fontSize : 13,
+            color : '#464242'
         }
       }}>
             <Drawer.Screen 
@@ -81,7 +77,7 @@ const DrawerNavigation = () => {
                     drawerIcon: ({focused, size}) => (
                         <View style = {styles.iconContainer}>
                             <Image style = {styles.iconStyling}
-                            source={require('../../assets/icons/home_coloured.png')}/>
+                            source={require('../../assets/icons/home.png')}/>
                         </View>
                     ),
                  }}
@@ -216,10 +212,10 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       borderBottomWidth: 1,
       borderTopRightRadius : 30,
-      borderBottomColor: '#ccc',
+      borderBottomColor: '#464242',
     },
     caption: {
-      fontSize: 24,
+      fontSize: 22,
       fontFamily : ilpex.fontSemiBold,
       color : 'black',
     },
