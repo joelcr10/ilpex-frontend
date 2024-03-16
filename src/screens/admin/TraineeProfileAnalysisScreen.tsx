@@ -289,9 +289,18 @@ const TraineeProileAnalysisScreen = () => {
                         </View>
                     </View>
 
+                     <View  style={{
+                        flexDirection:'column'
+                     }}> 
+                        <View style={{
+                            flex:1
+                        }}>
+                            <BarGraph data={highScore} labels={resultID} names={assessmentName}></BarGraph>
+                        </View>
+                    </View> 
+
                     <View style={{
                             marginBottom : '10%',
-                            marginTop : '5%',
                             flex:1,
                             marginLeft : '1%',
                             marginRight : '1%'
@@ -321,16 +330,8 @@ const TraineeProileAnalysisScreen = () => {
                                 </View>
                             </List.Accordion>
                     </View>
-                     <View  style={{
-                        flexDirection:'column'
-                     }}> 
-                        <View style={{
-                            flex:1
-                        }}>
-                            <BarGraph data={highScore} labels={resultID} names={assessmentName}></BarGraph>
-                        </View>
-                    </View> 
-                    <View>
+                    
+                    <View style = {{marginLeft:-20}}>
                         <TraineeDuration userID = {user_id}/>    
                     </View> 
                 </View>
