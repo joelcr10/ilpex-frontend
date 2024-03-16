@@ -99,6 +99,7 @@ return(
                         <Text style={styles.accordionText}>{index+1} . {item.course_name.substring(0,20)}...</Text> 
                         <Text style={styles.accordionTextTime}>{item.course_duration}</Text>
                         </View>}
+                        keyExtractor={item => item.id}
                         />
                         
                    </View>
@@ -135,10 +136,12 @@ const styles = StyleSheet.create({
     },
     accordionText : {
       fontFamily : ilpex.fontMedium,
+      color : ilpex.darkGrey
     },
 
     accordionTextTime : {
       fontFamily : ilpex.fontMedium,
+      color : ilpex.darkGrey
     },
     accordianTitle:{
       fontFamily : ilpex.fontRegular,
