@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     headingStyle: {
         fontFamily:ilpex.fontMedium,
         fontWeight:'600',
-        fontSize:40,
+        fontSize:34,
         color:ilpex.black,
         marginTop:100
     },

@@ -77,12 +77,14 @@ const CreateCourseScreen = () => {
             <View style = {styles.fileUploadContainer}>
                 <FileUploadField onSelect={pickDocument} selectedFile={selectedFile}/>
             </View>
-            {(selectedFile === null)? (
+           <View style ={{alignItems : 'center'}}>
+           {(selectedFile === null)? (
                 <DisabledBigButton name="Create Course"/>
             ) : (
                 <Button name="Create Course" onPress={handleFileUpload} buttonPressed={buttonLoaded} />
             )
             }
+           </View>
             {success && <ConfirmationModal success = {success} message = "Course has been created Successfully!" />}
             {failure && <ToastDemo BgColor="red" message="Failed To create Course" textColor="white"/>}
         </View>
@@ -95,7 +97,8 @@ const styles = StyleSheet.create({
         height : 1000,
     },
     fileUploadContainer : {
-        paddingTop : 40
+        paddingTop : 40,
+        alignItems : 'center'
     }
 })
 
