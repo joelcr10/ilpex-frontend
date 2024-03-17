@@ -80,7 +80,7 @@ const IncompleteTraineeCard = (props : PropsType) => {
                             {index + 1} .  {item}</Text>
                             </View>
                         )}
-                        keyExtractor={item => item.id}
+                        keyExtractor={(item, index) => index.toString()}
                         />
                     </View>
                 </List.Accordion>
