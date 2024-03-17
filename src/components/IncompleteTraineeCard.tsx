@@ -70,19 +70,7 @@ const IncompleteTraineeCard = (props : PropsType) => {
                 >
                     <View style={styles.accordionView}>
                     <Text style={styles.accordionViewHeading}>Incomplete Courses</Text>
-                        {/* <FlatList
-                        scrollEnabled={false}
-                        showsVerticalScrollIndicator={false}
-                        data={course_list}
-                        renderItem={({ item, index}) => (
-                            <View style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
-                                <Text style={styles.accordionText}style={styles.accordionText}>
-                                {index + 1} .  {item}</Text>
-                            </View>
-                        )}
-                        keyExtractor={item => item}
-                        /> */}
-
+                       
                         {course_list.map( (item,index) =>{
                             return(
                                 <View style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
