@@ -28,6 +28,7 @@ const BatchDetailsPage =()=>{
     
     const [isLoading,setLoading] =useState(true);
     const [feedList, setStoryList] = useState<any>([]);
+    const [percipioScore, setPercipioScore] = useState<any>([]);
     const [batchData,setBatchData] = useState<any>([]);
     const [currentDate,setCurrentDate] = useState<any>([]);
     const [courseCompletion,setCourseCompletion] = useState<any>([]);
@@ -105,6 +106,24 @@ const BatchDetailsPage =()=>{
     useEffect(() => {
       const getStory = async () => {
         try {
+          const {responseData, errorMessage} = await getHook(`api/v2/percipioAssesmentAvg/${batch_id}`)
+          if(responseData)
+          {
+            console.log('this is avg of percipio assesments',responseData)
+            setPercipioScore(responseData);
+          }
+          if(errorMessage)
+            console.log(errorMessage)
+          } catch (error) {
+          console.error('Error:', error);
+        }
+      };
+      getStory();
+  }, []);
+
+    useEffect(() => {
+      const getStory = async () => {
+        try {
           const {responseData, errorMessage} = await getHook(`api/v3/batch/${batch_id}/day/${todayDate}`)
           setCurrentDate(responseData);
         } catch (error) {
@@ -161,6 +180,7 @@ const BatchDetailsPage =()=>{
     };
     getStory();
 }, []);
+
 const arrayOfObjects =[];
     for (const key in dayWiseProgress) {
       if (dayWiseProgress.hasOwnProperty(key)) {
@@ -264,6 +284,7 @@ return(
               {isLoading&&<><ChartPieShimmer/>
               <ChartPieShimmer/></>}
               {!isLoading&&<>
+                <ChartPie chartName={'Percipio Assesment Score'} excellent={percipioScore.excellent} good={percipioScore.good} poor={percipioScore.poor} option1="Excellent" option2="Good" option3="Poor" incomplete={hai} />
               <ChartPie chartName={'Assesment Score'} excellent={feedList.excellent} good={feedList.good} poor={feedList.poor} option1="Excellent" option2="Good" option3="Poor" incomplete={hai} />
               
               <ChartPie chartName={'Course Completion'} excellent={courseCompletion.onTrack} good={0} poor={courseCompletion.laggingBehind} option1="Completed" option2="Partial" option3="Incomplete" incomplete={()=>{}}/>
@@ -271,9 +292,9 @@ return(
               }
               
               <View style = {styles.graphContainer}>
-              <View style = {{flexDirection : 'row', alignSelf : 'center', width : '100%'}}>
-                  <Text style={{ marginBottom: '5%', fontSize: 17, fontFamily: 'Poppins-Regular', paddingTop: '2%', flexDirection: 'column',width : 70, textAlign : 'center',color : ilpex.darkGrey}}>Days   </Text>
-                  <Text style={{marginTop : '2%', marginBottom:'5%',fontSize:15, fontFamily : 'Poppins-Regular', textAlign : 'center', justifyContent : 'center', color : ilpex.darkGrey, marginLeft : '13%'}}>Percentage of Courses {'\n'}Completed</Text>
+                  <View style = {{flexDirection : 'row', width : '85%', justifyContent: 'space-between', marginBottom: '5%'}}>
+                    <Text style={{ fontSize: 17, fontFamily: 'Poppins-Regular',width : '20%', textAlign : 'left',color : ilpex.darkGrey}}>Days   </Text>
+                    <Text style={{fontSize:15, fontFamily : 'Poppins-Regular', width:'80%' , color : ilpex.darkGrey, textAlign: 'center'}}>Percentage of Courses {'\n'}Completed</Text>
                   </View>    
                   <FlatList 
                     contentContainerStyle = {{paddingBottom : 5}}
@@ -369,7 +390,7 @@ const styles = StyleSheet.create({
 		marginLeft : 30,
 		marginRight : 30,
 		alignItems : 'center',
-		backgroundColor : 'white',
+		backgroundColor : ilpex.white,
 	},
 })
 export default BatchDetailsPage;
