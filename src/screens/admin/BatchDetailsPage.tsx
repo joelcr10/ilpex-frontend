@@ -271,9 +271,9 @@ return(
               }
               
               <View style = {styles.graphContainer}>
-              <View style = {{flexDirection : 'row', alignSelf : 'center', width : '100%'}}>
-                  <Text style={{ marginBottom: '5%', fontSize: 17, fontFamily: 'Poppins-Regular', paddingTop: '2%', flexDirection: 'column',width : 70, textAlign : 'center',color : ilpex.darkGrey}}>Days   </Text>
-                  <Text style={{marginTop : '2%', marginBottom:'5%',fontSize:15, fontFamily : 'Poppins-Regular', textAlign : 'center', justifyContent : 'center', color : ilpex.darkGrey, marginLeft : '13%'}}>Percentage of Courses {'\n'}Completed</Text>
+                  <View style = {{flexDirection : 'row', width : '85%', justifyContent: 'space-between', marginBottom: '5%'}}>
+                    <Text style={{ fontSize: 17, fontFamily: 'Poppins-Regular',width : '20%', textAlign : 'left',color : ilpex.darkGrey}}>Days   </Text>
+                    <Text style={{fontSize:15, fontFamily : 'Poppins-Regular', width:'80%' , color : ilpex.darkGrey, textAlign: 'center'}}>Percentage of Courses {'\n'}Completed</Text>
                   </View>    
                   <FlatList 
                     contentContainerStyle = {{paddingBottom : 5}}
@@ -369,7 +369,7 @@ const styles = StyleSheet.create({
 		marginLeft : 30,
 		marginRight : 30,
 		alignItems : 'center',
-		backgroundColor : 'white',
+		backgroundColor : ilpex.white,
 	},
 })
 export default BatchDetailsPage;

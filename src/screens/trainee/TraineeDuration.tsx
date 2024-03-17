@@ -26,12 +26,15 @@ const TraineeDuration = (props : propsType) => {
         const graphLabel : any = [];
         const graphDataset : any = [
             { //course duration
-            data : [],
-            color:'#00ff00'
+                data : [],
+                color:'#00ff00',
+                legend: 'Course duration',
+            
             },
             {//duration
-            data: [],
-            color:'#ff0000'
+                data: [],
+                color:'#ff0000',
+                legend: "Trainee's duration"
             },
             
         ];
