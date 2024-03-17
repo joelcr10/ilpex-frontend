@@ -11,7 +11,7 @@ type BarGraphProps = {
 const BarGraph = ({data,labels,names} : BarGraphProps)=>{
     const [tooltipVisible, setTooltipVisible] = useState(false);
     const [tooltipData, setTooltipData] = useState<any>(null);
-    const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
+    const [tooltipPosition, setTooltipPosition] = useState({ y: 0 });
     const chartData = Array.isArray(data) ? data.map(value => ({ value })) : [{ value: data }];
     const handleBarPress = ( index : number,value: number) => {
         const name = names[value]; // Get the name corresponding to the pressed bar
@@ -20,7 +20,7 @@ const BarGraph = ({data,labels,names} : BarGraphProps)=>{
         //     value = 1
         // }
         // let i = value * 40;
-        setTooltipPosition({ x: 180, y: 50});
+        setTooltipPosition({ y: 50});
         setTooltipVisible(true);
         console.log(name);
         console.log("value----------------------------",value);
@@ -59,7 +59,7 @@ const BarGraph = ({data,labels,names} : BarGraphProps)=>{
                         color={ilpex.main}
                         frontColor={ilpex.progress1}
                         xAxisLabelTexts={labels}
-                        spacing={30}
+                        spacing={35}
                         barBorderBottomLeftRadius={0}
                         barBorderBottomRightRadius={0}
                         yAxisThickness={0}
@@ -72,7 +72,7 @@ const BarGraph = ({data,labels,names} : BarGraphProps)=>{
                 </View>
             </View>
             {tooltipVisible && (
-                <View style={[styles.tooltipContainer, { left: tooltipPosition.x, top: tooltipPosition.y }]}>
+                <View style={[styles.tooltipContainer, { top: tooltipPosition.y }]}>
                     {/* <Text style={styles.closeButton} onPress={handleTooltipClose}>x</Text> */}
                     <Text style={styles.tooltipText}>{tooltipData}</Text>
                     {/* <Text style={styles.tooltipText}>{tooltipData?.label}</Text> */}
