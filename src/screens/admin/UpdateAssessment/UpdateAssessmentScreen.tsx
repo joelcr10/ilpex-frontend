@@ -20,12 +20,6 @@ const UpdateAssessmentScreen=()=>{
     const route:any = useRoute();
     const assessment_id = route.params.assessment_id;
     const assessment_name = route.params.assessment_name;
-    // const batch_name = route.params.batch_name;
-    // const assessment_start_date = route.params.start_date;
-    // const assessment_end_date = route.params.end_date;
-
-
-    const [assessmentName,setAssessementName] = useState('');
     const [startDate,setStartDate] = useState(new Date());
     const [endDate,setEndDate] = useState(new Date());
     const [isVisible,setIsVisible] = useState(false);
@@ -46,7 +40,6 @@ const UpdateAssessmentScreen=()=>{
     useEffect(()=>{
         const getBatches = async()=>{
             try{
-                setIsLoading(true);
                 const { success,statusCode,responseData,errorMessage} = await getHook('/api/v2/batch');
                 console.log(success,statusCode);
                 if(success){
@@ -124,6 +117,9 @@ const UpdateAssessmentScreen=()=>{
                 console.log(errorMessage);
                 setError(errorMessage);
                 setFailure(true);
+                setTimeout(() => {
+                    setFailure(false);
+                }, 3000); 
                 setIsLoading(false);
             }
         }
