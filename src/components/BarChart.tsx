@@ -64,7 +64,8 @@ const BarGraph = ({data,labels,names} : BarGraphProps)=>{
                         barBorderBottomRightRadius={0}
                         yAxisThickness={0}
                         xAxisThickness={1}
-                        yAxisTextStyle={{ color: 'black' }}
+                        yAxisTextStyle={{ color: ilpex.black }}
+                        xAxisLabelTextStyle={{ color: ilpex.black }}
                         intactTopLabel
                         focusedBarConfig={{ roundedTop: true }}
                         onPress={(index: number, value: number) => handleBarPress(index, value)}
