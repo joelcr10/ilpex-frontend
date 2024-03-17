@@ -70,8 +70,8 @@ const IncompleteTraineesScreen = () => {
       <ScrollView>
         { (!isLoading)?(<View><TraineeCardShimmer></TraineeCardShimmer></View>):
         (<View>
- <IconButtonComponent name={"Send Mail"} onPress={onPress} buttonPressed={false} icon={"mail"}></IconButtonComponent>
- <Text style={styles.traineeText}>Trainees</Text>
+ <IconButtonComponent name={"Send"} onPress={onPress} buttonPressed={false} icon={"mail"}></IconButtonComponent>
+                            <Text style={styles.traineeText}>Trainees</Text>
 
                <FlatList
           scrollEnabled={false}

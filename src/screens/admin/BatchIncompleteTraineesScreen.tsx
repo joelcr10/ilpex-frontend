@@ -8,7 +8,7 @@ import { sendMail } from "../../network/EmailApiHook";
 import { useRoute } from "@react-navigation/native";
 import BackButton from "../../components/BackButton";
 import IconButtonComponent from "../../components/IconButton";
-import IncompleteTraineeCard from "../../components/IncompleteTraineeCard";
+import BatchIncompleteTraineeCard from "../../components/BatchIncompleteTraineeCard";
 
 
 const IncompleteTraineesScreen = () => {
@@ -19,7 +19,6 @@ const IncompleteTraineesScreen = () => {
 
   const TraineesDisplay = () => {
     const [traineeList, setTraineeList] = useState<any>([]);
-    const [list, setList]=useState<any>([]);
 
     const sendMailToTrainees = async () => {
       try {
@@ -44,7 +43,8 @@ const IncompleteTraineesScreen = () => {
       const getDayCards = async () => {
         try {
           const { responseData } = await getHook(
-            `/api/v2/batch/${batch}/pending/day/${day}`,
+            `/api/v2/batch/${batch}/incompleteTrainees/3`,
+            
           );
           if (responseData) {
             
@@ -78,9 +78,9 @@ const IncompleteTraineesScreen = () => {
           showsVerticalScrollIndicator={false}
           data={traineeList.IncompleteTraineeList}
           renderItem={({ item }) => (
-            <IncompleteTraineeCard
-              trainee_name={item.user_name}
-              batch_name={item.Batch} courses_left={item.incomplete_courses} total_number_of_courses={item.total_courses} course_list={[item.incomplete_courses_list]}  />
+            <BatchIncompleteTraineeCard
+                  trainee_name={item.user_name}
+                  batch_name={item.Batch} courses_left={item.incomplete_courses} total_number_of_courses={item.total_courses} course_list={[item.incomplete_courses_list]} currentDay={item.day}  />
           )}
           keyExtractor={item => item.id}
         />
