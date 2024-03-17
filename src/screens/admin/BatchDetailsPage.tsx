@@ -28,6 +28,7 @@ const BatchDetailsPage =()=>{
     
     const [isLoading,setLoading] =useState(true);
     const [feedList, setStoryList] = useState<any>([]);
+    const [percipioScore, setPercipioScore] = useState<any>([]);
     const [batchData,setBatchData] = useState<any>([]);
     const [currentDate,setCurrentDate] = useState<any>([]);
     const [courseCompletion,setCourseCompletion] = useState<any>([]);
@@ -105,6 +106,24 @@ const BatchDetailsPage =()=>{
     useEffect(() => {
       const getStory = async () => {
         try {
+          const {responseData, errorMessage} = await getHook(`api/v2/percipioAssesmentAvg/${batch_id}`)
+          if(responseData)
+          {
+            console.log('this is avg of percipio assesments',responseData)
+            setPercipioScore(responseData);
+          }
+          if(errorMessage)
+            console.log(errorMessage)
+          } catch (error) {
+          console.error('Error:', error);
+        }
+      };
+      getStory();
+  }, []);
+
+    useEffect(() => {
+      const getStory = async () => {
+        try {
           const {responseData, errorMessage} = await getHook(`api/v3/batch/${batch_id}/day/${todayDate}`)
           setCurrentDate(responseData);
         } catch (error) {
@@ -161,6 +180,7 @@ const BatchDetailsPage =()=>{
     };
     getStory();
 }, []);
+
 const arrayOfObjects =[];
     for (const key in dayWiseProgress) {
       if (dayWiseProgress.hasOwnProperty(key)) {
@@ -264,6 +284,7 @@ return(
               {isLoading&&<><ChartPieShimmer/>
               <ChartPieShimmer/></>}
               {!isLoading&&<>
+                <ChartPie chartName={'Percipio Assesment Score'} excellent={percipioScore.excellent} good={percipioScore.good} poor={percipioScore.poor} option1="Excellent" option2="Good" option3="Poor" incomplete={hai} />
               <ChartPie chartName={'Assesment Score'} excellent={feedList.excellent} good={feedList.good} poor={feedList.poor} option1="Excellent" option2="Good" option3="Poor" incomplete={hai} />
               
               <ChartPie chartName={'Course Completion'} excellent={courseCompletion.onTrack} good={0} poor={courseCompletion.laggingBehind} option1="Completed" option2="Partial" option3="Incomplete" incomplete={()=>{}}/>
