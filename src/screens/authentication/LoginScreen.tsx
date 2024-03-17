@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from './AuthenticationHook';
@@ -12,6 +12,7 @@ import Button from '../../components/Button';
 import { userDetails } from '../../context/userDetailsSlice';
 import { Link } from '@react-navigation/native';
 import ilpex from '../../utils/ilpexUI';
+import LoginButton from '../../components/loginbutton';
 
 const LoginScreen = () => {
 
@@ -88,11 +89,12 @@ const LoginScreen = () => {
       }
     };
     return ( 
-        <View >
-            <View style={styles.inputfieldview}>
+        <View style={styles.container}>
+          <ImageBackground source={require('../../../assets/images/login.png')} style={styles.backgroundImage}/>
+            <View style={styles.inputFieldView}>
               <BlackHeading heading='Login'/>
                 <InputField 
-                  label='User' 
+                  label='Email' 
                   isPassword={false} 
                   value={loginEmail}
                   onChangeText={setLoginEmail}
@@ -107,8 +109,8 @@ const LoginScreen = () => {
                     <Link to={{screen:'Forgot Password'}} style={styles.textView}>Forgot Password?</Link>
                   </View>
                   {missingFieldError!=='' ? <Text style={styles.errorText}>{missingFieldError}</Text> : null}
-                  <View style={styles.buttonview}>
-                    <Button 
+                  <View style={styles.buttonView}>
+                    <LoginButton 
                       name='Login'
                       onPress={handleLogin}
                       buttonPressed={buttonpressed}
@@ -122,17 +124,27 @@ const LoginScreen = () => {
 }
 
 const styles = StyleSheet.create({
-  inputfieldview:{
-    justifyContent:'center',
-    alignContent:'center',
-    height:'100%'
+  container: {
+    flex: 1,
   },
-  buttonview:{
-      marginTop:50,
+  backgroundImage: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "center",
+  },
+  inputFieldView:{
+    marginTop:50,
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    justifyContent:'center',
+  },
+  buttonView:{
+      marginTop:10,
       alignSelf:'center',
   },
   textView:{
-    color:ilpex.black,
+    color:ilpex.darkGrey,
     alignItems:'center',
     fontFamily:ilpex.fontMedium,
     fontSize:15,
