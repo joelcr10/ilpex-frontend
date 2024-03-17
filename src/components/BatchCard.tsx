@@ -35,7 +35,7 @@ const BatchCard=({batch_name,traineeNo,date,totalDays,progressDays,onPressFunc} 
     const newDate = new Date(date);
     // Extract day, month, and year from the current date
     const day = newDate.getDate();
-    const month = newDate.getMonth() + 1; // Note: month is zero-based, so we add 1
+    const month = newDate.getMonth(); // Note: month is zero-based, so we add 1
     const year = newDate.getFullYear();
     const monthName = getMonthName(month);
     const formattedDate = `${monthName} ${day} ${year}`;

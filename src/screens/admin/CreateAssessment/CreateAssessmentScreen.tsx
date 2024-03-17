@@ -19,6 +19,7 @@ import DisabledBigButton from "../../../components/DisabledBigButton";
 import ToastDemo from "../../../components/ToastComponent";
 import ConfirmationModal from "../../../components/ConfirmationModal";
 import { useNavigation } from "@react-navigation/native";
+import RNFS from 'react-native-fs';
 
 const CreateAssessmentScreen = ()=>{
     const navigation = useNavigation();
@@ -56,6 +57,31 @@ const CreateAssessmentScreen = ()=>{
         if(selectedBatch==''){
             setMissingBatchName("You need to select the batch name");
         }
+    }
+
+    const copyFileToCache = async () => {
+        const assetsFilePath = '../../../../assets/files/AssessmentTemplate.xlsx'; // Correct path to the Excel file in your assets directory
+        const cacheFilePath = `${RNFS.CachesDirectoryPath}/AssessmentTemplate.xlsx`;
+
+    try {
+        // Check if the file exists
+        const fileExists = await RNFS.exists(assetsFilePath);
+        if (!fileExists) {
+            console.error('Excel file does not exist in assets:', assetsFilePath);
+            return;
+        }
+
+        // Read directory assets
+        const assets = await RNFS.readDirAssets('assets/files');
+        console.log('Assets directory contents:', assets);
+
+        // Copy the file
+        await RNFS.copyFileAssets(assetsFilePath, cacheFilePath);
+        console.log('Excel file copied to cache directory:', cacheFilePath);
+    } catch (error) {
+        console.error('Error copying Excel file to cache:', error);
+        // Handle error
+    }
     }
     const pickDocument = async () => {
         try {
@@ -232,6 +258,7 @@ const CreateAssessmentScreen = ()=>{
                 </View>
                 {success && <ConfirmationModal success={true} message={"Assessment created successfully"}></ConfirmationModal>}
                 {failure && <ToastDemo BgColor={ilpex.failure} message={errorText} textColor={ilpex.white}></ToastDemo>}
+                {/* <Button name={"Download"} onPress={copyFileToCache} buttonPressed={false}></Button> */}
             </View>
         </View>
     </View>

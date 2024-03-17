@@ -5,3 +5,11 @@ module.exports = {
     },
     assets: ['./assets/fonts/Poppins'],
   };
+
+  // module.exports = {
+  //   project: {
+  //     ios: {},
+  //     android: {},
+  //   },
+  //   assets: ['./assets/files'],
+  // };
