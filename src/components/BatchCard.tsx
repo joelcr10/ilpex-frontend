@@ -92,7 +92,8 @@ const styles = StyleSheet.create({
     traineeText:{
         marginStart:20,
         fontSize:15,
-        fontFamily:ilpex.fontMedium
+        fontFamily:ilpex.fontMedium,
+        color:ilpex.inactive
     },
     traineeNo :{
         color:ilpex.secondary,
