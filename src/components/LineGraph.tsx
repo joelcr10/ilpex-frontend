@@ -43,6 +43,8 @@ const LineGraph: React.FC<LineGraphProps> = ({datasets,
       })),
     };
 
+    console.log("inside line graph,",datasets[0].legend);
+
   return (
     <View style={styles.container} >
         <Text style={styles.headertext}>{chartName}</Text>
@@ -105,8 +107,9 @@ const styles = StyleSheet.create({
     backgroundColor:ilpex.white,
     paddingRight : '5%',
     paddingLeft : '1%',
-    overflow: 'hidden',
+    // overflow: 'hidden',
     alignSelf: 'center',
+    
   },
   headertext:{
     fontFamily:ilpex.fontSemiBold,
@@ -140,10 +143,17 @@ const styles = StyleSheet.create({
 
   },
   legendContainer: {
+    position: 'absolute',
+    top: "7%",
+    left: "35%",
+    zIndex: 100,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: '10%',
+    marginTop: '-1%',
+    height: 40,
+    width: 200,
+
   },
   legendItem: {
     flexDirection: 'row',
