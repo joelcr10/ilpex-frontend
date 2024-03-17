@@ -33,6 +33,9 @@ const BatchDetailsPage =()=>{
     const [courseCompletion,setCourseCompletion] = useState<any>([]);
     const [dayWiseProgress,setdayWiseProgress] = useState<any>([]);
     const [traineeList,setTraineeList] = useState<any>([]);
+    const [expanded, setExpanded] = useState(true);
+    const [startDate, setStartDate] = useState<string>('')
+    const [endtDate, setEndDate] = useState<string>('')
     const onPress=(batch_id:number,day_id:number)=>{
       
        navigation.navigate("batchDayWiswDetails",{ batch_id:batch_id, day:day_id});
@@ -87,6 +90,7 @@ const BatchDetailsPage =()=>{
             const {responseData, errorMessage} = await getHook(`api/v2/batchAvg/${batch_id}`)
             if(responseData)
             {
+              console.log('this is avg score',responseData)
               setStoryList(responseData);
             }
             if(errorMessage)
@@ -117,8 +121,21 @@ const BatchDetailsPage =()=>{
            if(responseData){
             console.log('this is batch data',responseData)
             setBatchData(responseData);
-            setLoading(false);
+            
           
+              const {startDate,endtDate} = await changeDate(responseData)
+              console.log('Received start date:', startDate);
+             console.log('Received end date:', endtDate);
+            setStartDate(startDate);
+            setEndDate(endtDate)
+            
+            setLoading(false);
+            
+            // const dateString = batchData.batch_details.start_date.split('T')[0];
+            // const date = new Date(dateString);
+            // const startDate = date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+            // console.log("this is date",startDate)
+            // setStartDate(startDate);
             
           }
           } catch (error) {
@@ -156,8 +173,18 @@ const arrayOfObjects =[];
 const hai =()=>{
   
 }
-const [expanded, setExpanded] = useState(true);
- 
+const changeDate = async(batchData) =>{
+const dateString = batchData.batch_details.start_date.split('T')[0];
+const date = new Date(dateString);
+const startDate = date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+console.log('start date will be',startDate)
+const endDateString = batchData.batch_details.end_date.split('T')[0];
+const endDate = new Date(endDateString);
+const endtDate = endDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+return {startDate,endtDate}
+// setStartDate(startDate);
+// setEndDate(endtDate)
+}
 return(
   <GestureHandlerRootView>
         <ScrollView>
@@ -181,8 +208,8 @@ return(
                     <Text style={{fontFamily : 'Poppins-Regular',color:'black',fontSize:14}}>Current Day </Text> 
                     </View>
                     <View style={{flex:1}}>
-                    <Text style={{fontFamily : 'Poppins-Medium', marginLeft:'24%',color:'#8F00FF', fontSize : 14}}>{batchData.batch_details.start_date.split('T')[0]}</Text>
-                    <Text style={{fontFamily : 'Poppins-Medium', marginLeft:'24%',color:'#8F00FF', fontSize : 14}}>{batchData.batch_details.end_date.split('T')[0]}</Text>
+                    <Text style={{fontFamily : 'Poppins-Medium', marginLeft:'24%',color:'#8F00FF', fontSize : 14}}>{startDate}</Text>
+                    <Text style={{fontFamily : 'Poppins-Medium', marginLeft:'24%',color:'#8F00FF', fontSize : 14}}>{endtDate}</Text>
                     <Text style={{fontFamily : 'Poppins-Medium', marginLeft:'24%',color:'#8F00FF', fontSize : 14}}>{batchData.noOfTrainees}</Text>
                     <Text style={{fontFamily : 'Poppins-Medium', marginLeft:'24%',color:'#8F00FF', fontSize : 14}}>{currentDate.current_day}</Text>
                     </View>
@@ -244,10 +271,10 @@ return(
               }
               
               <View style = {styles.graphContainer}>
-                  <View style = {{flexDirection : 'row'}}>
-                  <Text style={{ marginBottom: '5%', fontSize: 17, fontFamily: 'Poppins-Regular', flex: 0.3, paddingTop: '2%', flexDirection: 'column', paddingLeft : '2.5%'}}>Days</Text>
-                  <Text style={{marginBottom:'5%',fontSize:15, fontFamily : 'Poppins-Regular', flex : 0.7, justifyContent : 'center'}}>Percentage of Courses Completed</Text>
-                  </View>
+              <View style = {{flexDirection : 'row', alignSelf : 'center', width : '100%'}}>
+                  <Text style={{ marginBottom: '5%', fontSize: 17, fontFamily: 'Poppins-Regular', paddingTop: '2%', flexDirection: 'column',width : 70, textAlign : 'center',color : ilpex.darkGrey}}>Days   </Text>
+                  <Text style={{marginTop : '2%', marginBottom:'5%',fontSize:15, fontFamily : 'Poppins-Regular', textAlign : 'center', justifyContent : 'center', color : ilpex.darkGrey, marginLeft : '13%'}}>Percentage of Courses {'\n'}Completed</Text>
+                  </View>    
                   <FlatList 
                     contentContainerStyle = {{paddingBottom : 5}}
                     data = {arrayOfObjects}

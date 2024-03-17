@@ -10,6 +10,7 @@ import Constants from "../../utils/Constants";
 import TraineeProfileShimmer from "../../components/loading/TraineeProfileShimmer";
 import { List } from "react-native-paper";
 import { useFocusEffect } from "@react-navigation/native";
+import TraineeDuration from "./TraineeDuration";
 
 const TraineeProfileScreen = () => {
 
@@ -30,7 +31,8 @@ const TraineeProfileScreen = () => {
     const [expandedAccordion, setExpandedAccordion] = useState(true);
     const [traineeProgressStatus, setTraineeProgressStatus] = useState(false);
     const [assessmentName,setAssessmentName] = useState<any[]>([]);
-    
+    const [user_id, setuserID] = useState('');
+
     const changeExpand=()=>{
         setExpandedAccordion(!expandedAccordion)
         console.log('entered')
@@ -71,6 +73,7 @@ const TraineeProfileScreen = () => {
                 setRoleId(role_id);
             console.log("Profile Role ID : ", role_id);
             const user_id = await getItem(Constants.USER_ID);
+            setuserID(user_id);
             const {responseData, errorMessage} = await getHook(`/api/v3/profile/${user_id}`);
             if(responseData)
             {
@@ -321,9 +324,19 @@ const TraineeProfileScreen = () => {
                             </View>
                         </View>
 
+                        <View  style={{
+                        flexDirection:'column'
+                        }}> 
+                            <View style={{
+                                flex:1,
+                                marginTop : '5%'
+                            }}>
+                                <BarGraph data={highScore} labels={resultID} names={assessmentName} ></BarGraph>
+                            </View>
+                        </View> 
+
                         <View style={{
                             marginBottom : '10%',
-                            marginTop : '5%',
                             flex:1,
                             marginLeft : '1%',
                             marginRight : '1%'
@@ -353,15 +366,10 @@ const TraineeProfileScreen = () => {
                                 </View>
                             </List.Accordion>
                         </View>
-                        <View  style={{
-                        flexDirection:'column'
-                        }}> 
-                            <View style={{
-                                flex:1
-                            }}>
-                                <BarGraph data={highScore} labels={resultID} names={assessmentName} ></BarGraph>
-                            </View>
-                        </View>  
+                        
+                        <View style = {{marginLeft:-20}}>
+                            <TraineeDuration userID = {user_id}/>    
+                        </View> 
                     </View>
                 )
             }

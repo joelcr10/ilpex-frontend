@@ -8,6 +8,7 @@ import CircularProgress from './CircularProgress';
 interface Dataset {
   // labels: string[];
   data: number[];
+  legend:string;
   color:string;
 }
 
@@ -79,6 +80,15 @@ const LineGraph: React.FC<LineGraphProps> = ({datasets,
             style={styles.chart}
         />
         </ScrollView>
+
+        <View style={styles.legendContainer}>
+        {datasets.map((dataset) => (
+          <View style={styles.legendItem}>
+            <View style={[styles.legendColorIndicator, { backgroundColor: dataset.color }]} />
+            <Text style={styles.legendText}>{dataset.legend}</Text>
+          </View>
+        ))}
+      </View>
         </View>
   );
 };
@@ -87,37 +97,33 @@ const styles = StyleSheet.create({
     chartContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
   },
   chart: {
-    marginVertical: 8,
     borderRadius: 16,
   },
   container:{
     backgroundColor:ilpex.white,
-    borderRadius: 10,
-    margin:20,
-    padding:20,
+    paddingRight : '5%',
+    paddingLeft : '1%',
     overflow: 'hidden',
-    shadowColor: '#000',
-    shadowOffset: {
-        width: 5,
-        height: 5,
-      },
-      shadowOpacity: 1,
-      shadowRadius: 5,
-      elevation: 3,
+    alignSelf: 'center',
   },
   headertext:{
     fontFamily:ilpex.fontSemiBold,
-    fontSize:18,
+    fontSize:21,
     color:ilpex.black,
-    margin:20,
+    marginTop : '5%',
+    marginRight : '5%',
+    marginBottom : '5%',
+    marginLeft : '10%'
+
   },
   progressTitle:{
     fontFamily:ilpex.fontRegular,
-    fontSize:16,
+    fontSize:17,
     color:ilpex.black,
+    marginLeft : '1%',
+    textAlignVertical:'center',
   },
   percentage:{
     fontFamily:ilpex.fontSemiBold,
@@ -127,11 +133,33 @@ const styles = StyleSheet.create({
   },
   progress:{
     flexDirection:'row',
-    marginVertical:20,
-    marginHorizontal:40,
-    marginBottom:40,
-    justifyContent:'space-between'
-  }
+    marginVertical:'5%',
+    marginHorizontal:'10%',
+    marginBottom:'10%',
+    justifyContent:'space-between',
+
+  },
+  legendContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: '10%',
+  },
+  legendItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginRight: '8%',
+  },
+  legendColorIndicator: {
+    width: 15,
+    height: 15,
+    borderRadius: 10,
+    marginRight: '5%',
+  },
+  legendText: {
+    fontSize: 14,
+    color: ilpex.black,
+  },
 });
 
 export default LineGraph;

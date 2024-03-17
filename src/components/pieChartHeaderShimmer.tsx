@@ -5,18 +5,13 @@ import ShimmerPlaceholder from "react-native-shimmer-placeholder";
 const ChartPieHeaderShimmer = ( ) => {
     
     return (
-      <ScrollView style={styles.scrollContainer}>
-        
-        <ShimmerPlaceholder 
+    <ScrollView style={styles.scrollContainer}>
+      <ShimmerPlaceholder 
         LinearGradient={LinearGradient}
-            visible={true}
+            // visible={true}
             style={styles.container}>
-
-          
-  
-  
-          </ShimmerPlaceholder>
-      </ScrollView>
+        </ShimmerPlaceholder>
+       </ScrollView>
     );
   };
   
@@ -25,16 +20,14 @@ const ChartPieHeaderShimmer = ( ) => {
       flex: 1,
     },
     container: {
-      
-      // borderColor:'black',
-      // borderWidth:3,
       marginTop:30,
       marginHorizontal:30,
       borderRadius:30,
       elevation:8,
       backgroundColor:"white",
       marginBottom : 20,
-      height:200
+      height:200,
+      width:340
     },
 })
 export default ChartPieHeaderShimmer;

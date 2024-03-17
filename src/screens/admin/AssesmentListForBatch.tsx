@@ -56,6 +56,7 @@ const AssesmentListScreen = ()=>{
                     {isLoading? (
                        <FlatList
                             showsVerticalScrollIndicator={false}
+                    
                             data={assesmentList}
                             renderItem = {({item}) => <AssesmentListCard assessment_name={item.assessment_name} onPressButton={()=>onPressButton(item.assessment_id,item.assessment_name)}/>}
                         />

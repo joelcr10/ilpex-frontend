@@ -11,6 +11,7 @@ import TraineeNameShimmer from "../../components/loading/TraineeNameListShimmer"
 import BackButton from "../../components/BackButton";
 
 import { useFocusEffect } from "@react-navigation/native";
+import LineGraph from "../../components/LineGraph";
 
 const UserManagementScreen=()=>{
 
@@ -65,14 +66,14 @@ const UserManagementScreen=()=>{
                         <SearchField onChangeText={handleSearch as any} value={searchQuery}/>
                         <Text style={styles.subTitle}>Trainees</Text>
                     {isLoading  &&
-                    <View style={{height:'63%'}}>
+                    <View style={{height:'64%'}}>
                       <TraineeNameShimmer/>
                     </View>
                       
                     }
                     {!isLoading &&
                     
-                    <View style={{height:'63%'}}>
+                    <View style={{height:'64%'}}>
                     <FlatList
                         data={filteredData}
                         renderItem={({item})=><TraineeNameCard traineeName={item.user.user_name} user_id={item.user_id} />}
