@@ -4,11 +4,12 @@ import { BarChart} from "react-native-gifted-charts";
 import ilpex from "../utils/ilpexUI";
 
 type BarGraphProps = {
-    data : number[],        //Y axis - number thingy
+    data : number[],       
     labels : string[],
-    names : string[]       //A Axis  - A1, A2, ...
+    names : string[],
+    graphname : string       
 } 
-const BarGraph = ({data,labels,names} : BarGraphProps)=>{
+const BarGraph = ({data,labels,names,graphname} : BarGraphProps)=>{
     const [tooltipVisible, setTooltipVisible] = useState(false);
     const [tooltipData, setTooltipData] = useState<any>(null);
     const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
@@ -38,7 +39,7 @@ const BarGraph = ({data,labels,names} : BarGraphProps)=>{
     return (
         <View style={{ height: '100%' }}>
             <View style={styles.container}>
-                <Text style={styles.head} onPress={handleTooltipClose}>Assessment Score</Text>
+                <Text style={styles.head} onPress={handleTooltipClose}>{graphname}</Text>
                 <View style={{ marginStart: 10, alignItems: 'center' ,marginTop:15}}>
                     <BarChart
                         animationDuration={1000}
