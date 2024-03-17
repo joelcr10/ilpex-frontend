@@ -51,11 +51,12 @@ const styles = StyleSheet.create({
     },
     label:{
         flexDirection:'row',
+        alignSelf:'center',
     },
     icon:{
         color:ilpex.white,
         fontSize:30,
-        marginHorizontal:20,
+        marginRight:10,
         textAlignVertical:'center',
     }
   });
