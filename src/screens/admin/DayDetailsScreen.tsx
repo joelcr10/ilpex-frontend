@@ -81,7 +81,7 @@ return(
             <View style ={styles.body1}>
               <View>
               
-              {isLoading && <ChartPieHeaderShimmer/>} 
+             
               <View style = {{marginTop : '15%', marginBottom : '8%', marginLeft : '4.5%',marginRight : '4.5%'}}>
               <List.Accordion
                     title="Courses"
@@ -110,8 +110,7 @@ return(
                    <IconButtonComponent  name={'Report'} onPress={()=>{}} buttonPressed={false} icon={'description'}/>
                 </View> */}
               </View>
-              {isLoading&&<><ChartPieShimmer/>
-              <ChartPieShimmer/></>}
+              {isLoading && <ChartPieShimmer/>}
               {!isLoading&&<><ChartPie chartName={'Course Completion'} excellent={currentDateCompletion.onTrack} good={0} poor={currentDateCompletion.laggingBehind} option1="Completed" option2="Partial" option3="Incomplete" incomplete={()=>onPress(day,batch)}/></>}
             </View>
         
@@ -172,8 +171,7 @@ const styles = StyleSheet.create({
           marginLeft : '3%',
           marginRight : '3%',
           paddingLeft : '8%',
-          // paddingRight : '8%',
-          },
+    },
       text:{
         fontFamily:'poppins',
         fontWeight:'bold',

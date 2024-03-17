@@ -10,16 +10,21 @@ import Constants from "../../utils/Constants";
 import TraineeProfileShimmer from "../../components/loading/TraineeProfileShimmer";
 import { List } from "react-native-paper";
 import { useFocusEffect } from "@react-navigation/native";
+import TraineeDuration from "./TraineeDuration";
 
 const TraineeProfileScreen = () => {
 
     const [traineeName, setTraineeName] = useState<any[]>([]);
     const [traineeBatch, setTraineeBatch] = useState<any[]>([]);
     const [currentDay, setCurrentDay] = useState(2);
-    const [averageAssessmentScore, setAverageAssessmentScore] = useState<any[]>([]);
+    const [averageAssessmentScore, setAverageAssessmentScore] = useState(0);
+    const [averageAssessmentScorePercipio, setAverageAssessmentScorePercipio] = useState(2);
     const [marksIndicatorColor, setMarkIndicatorColor] = useState('black');
+    const [marksIndicatorColorPercipio, setMarkIndicatorColorPercipio] = useState('black');
     const [resultID, setResultID] = useState<any[]>([]);
+    const [resultIdsPercipio, setResultIDPercipio] = useState<any[]>([]);
     const [highScore, setHighScore] = useState<any[]>([]);
+    const [highScoresPercipio, setHighScorePercipio] = useState<any[]>([]);
     const [isLoadingCurrentDay, setLoadingCurrentDay] = useState(false);
     const [roleId, setRoleId] = useState('roleid');
     const [currentTraineeDay, setCurrentTraineeDay] = useState(3);
@@ -30,7 +35,10 @@ const TraineeProfileScreen = () => {
     const [expandedAccordion, setExpandedAccordion] = useState(true);
     const [traineeProgressStatus, setTraineeProgressStatus] = useState(false);
     const [assessmentName,setAssessmentName] = useState<any[]>([]);
-    
+    const [assessmentNamesPercipio,setAssessmentNamePercipio] = useState<any[]>([]);
+
+    const [user_id, setuserID] = useState('');
+
     const changeExpand=()=>{
         setExpandedAccordion(!expandedAccordion)
         console.log('entered')
@@ -42,6 +50,7 @@ const TraineeProfileScreen = () => {
         React.useCallback(() => {
 
         const traineeProfileLoader = async () =>{
+            await getTraineeScoresFromPercipio();
             await getTraineeScores();
             await getTraineeProfile();
             await getCurrentDay();
@@ -71,6 +80,8 @@ const TraineeProfileScreen = () => {
                 setRoleId(role_id);
             console.log("Profile Role ID : ", role_id);
             const user_id = await getItem(Constants.USER_ID);
+            if(user_id)
+                setuserID(user_id);
             const {responseData, errorMessage} = await getHook(`/api/v3/profile/${user_id}`);
             if(responseData)
             {
@@ -84,6 +95,62 @@ const TraineeProfileScreen = () => {
                 {
                     setTraineeName(responseData.data.user_name);
                 }
+            }
+        } catch(error) {
+            console.log('Error', error);
+        }
+    };
+
+    const getTraineeScoresFromPercipio = async() => {
+        try {
+            let trainee_id = await getItem(Constants.TRAINEE_ID);
+            const {responseData, errorMessage} = await getHook(`/api/v2/trainee/${trainee_id}/percipio/assessment`);
+            console.log('Trainee ID Inside Percipio Trainee Scores Function------', trainee_id)
+            if(responseData)
+            {
+                let averageScorePercipio : number = 0;
+                let totalMarksPercipio : number = 0;
+                let totalNumberOfAssessmentsPercipio : number = 0;
+
+                if(responseData.data.length < 0)
+                    averageScorePercipio = 0;
+                else
+                {
+                    for(const marksObject of responseData.data)
+                    {
+                        totalMarksPercipio = totalMarksPercipio + marksObject.high_score;
+                        totalNumberOfAssessmentsPercipio = totalNumberOfAssessmentsPercipio + 1;
+                    }
+                    averageScorePercipio = Math.ceil(totalMarksPercipio/totalNumberOfAssessmentsPercipio);
+                    console.log("Average Score Percipio :", averageScorePercipio);
+                    setAverageAssessmentScorePercipio(averageScorePercipio);
+
+                }
+
+                const resultIdsPercipio: string[] = [];
+                const highScoresPercipio: string[] = [];
+                const assessmentNamesPercipio:string[] = [];
+                
+                const scores = responseData.data;
+                scores.forEach((score: any, index: number) => {
+                    resultIdsPercipio.push(`A${index + 1}`);
+                    highScoresPercipio.push(score.high_score);
+                    assessmentNamesPercipio.push(score.course_name);
+                    console.log(`RESULT ID IN PERCIPIO: A${index + 1}, HIGH SCORE IN PERCIPIO: ${score.high_score}, 'ASSESSMENT NAME : ${score.course_name}`);
+                });
+
+                setResultIDPercipio(resultIdsPercipio);
+                setHighScorePercipio(highScoresPercipio);
+                setAssessmentNamePercipio(assessmentNamesPercipio);
+                
+                if(averageScorePercipio >= 90)
+                    setMarkIndicatorColorPercipio('green')
+                else if (averageScorePercipio >= 70)
+                    setMarkIndicatorColorPercipio('orange');
+                else if(averageScorePercipio >= 50)
+                    setMarkIndicatorColorPercipio('yellow');
+                else
+                    setMarkIndicatorColorPercipio('red');
             }
         } catch(error) {
             console.log('Error', error);
@@ -105,7 +172,12 @@ const TraineeProfileScreen = () => {
                 if(responseData)
                 {
                     console.log("Marks = ", responseData);
-                    const averageScore = responseData.scoreDetails.scoreAverage;
+                    let averageScore : number;
+                    if(responseData.scoreDetails.scoreAverage === null)
+                        averageScore =0;
+                    else
+                        averageScore = responseData.scoreDetails.scoreAverage;
+                    averageScore = Math.ceil(averageScore)
                     setAverageAssessmentScore(averageScore);
                     const resultIds: string[] = [];
                     const highScores: string[] = [];
@@ -306,24 +378,58 @@ const TraineeProfileScreen = () => {
                             )}                          
                             </View>
                         </View>
-                            <View style = {styles.statsRow}>
-                                <View style = {styles.statsKey}>
-                                    <Text style = {styles.statsKeyLabel}>Average Assessment Score</Text>
-                                </View>
-                                <View style = {styles.statsValue}>
-                                    <View style = {styles.percentageAndColorContainer}>
-                                        <View style = {[styles.colorDot, {backgroundColor : marksIndicatorColor}]}></View>
-                                        <Text style ={styles.percentageLabel}>
-                                        {averageAssessmentScore}%
-                                        </Text>
-                                    </View>
+                        <View style = {styles.statsRow}>
+                            <View style = {styles.statsKey}>
+                                <Text style = {[styles.statsKeyLabel,{width : 220}]}>Average Assessment Score on Percpio</Text>
+                            </View>
+                            <View style = {styles.statsValue}>
+                                <View style = {styles.percentageAndColorContainer}>
+                                    <View style = {[styles.colorDot, {backgroundColor : marksIndicatorColorPercipio}]}></View>
+                                    <Text style ={styles.percentageLabel}>
+                                    {averageAssessmentScorePercipio}%
+                                    </Text>
+                                    
                                 </View>
                             </View>
                         </View>
 
+                        <View style = {styles.statsRow}>
+                            <View style = {styles.statsKey}>
+                                <Text style = {[styles.statsKeyLabel,{width : 220}]}>Average Assessment Score on ILPex</Text>
+                            </View>
+                            <View style = {styles.statsValue}>
+                                <View style = {styles.percentageAndColorContainer}>
+                                    <View style = {[styles.colorDot, {backgroundColor : marksIndicatorColor}]}></View>
+                                    <Text style ={styles.percentageLabel}>
+                                    {averageAssessmentScore}%
+                                    </Text>
+                                    
+                                </View>
+                            </View>
+                        </View>
+                    </View>
+
+                    <View  style={{
+                        flexDirection:'column'
+                     }}> 
+                        <View style={{
+                            flex:1
+                        }}>
+                            <BarGraph data={highScoresPercipio} labels={resultIdsPercipio} names={assessmentNamesPercipio} graphname = {'Assessment Scores - Percipio'}></BarGraph>
+                        </View>
+                    </View> 
+                    
+                     <View  style={{
+                        flexDirection:'column'
+                     }}> 
+                        <View style={{
+                            flex:1
+                        }}>
+                            <BarGraph data={highScore} labels={resultID} names={assessmentName} graphname = {'Assessment Scores - ILPex'}></BarGraph>
+                        </View>
+                    </View>
                         <View style={{
                             marginBottom : '10%',
-                            marginTop : '5%',
                             flex:1,
                             marginLeft : '1%',
                             marginRight : '1%'
@@ -353,15 +459,10 @@ const TraineeProfileScreen = () => {
                                 </View>
                             </List.Accordion>
                         </View>
-                        <View  style={{
-                        flexDirection:'column'
-                        }}> 
-                            <View style={{
-                                flex:1
-                            }}>
-                                <BarGraph data={highScore} labels={resultID} names={assessmentName} ></BarGraph>
-                            </View>
-                        </View>  
+                        
+                        <View style = {{marginLeft:-20}}>
+                            <TraineeDuration userID = {user_id}/>    
+                        </View> 
                     </View>
                 )
             }

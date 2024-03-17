@@ -28,11 +28,15 @@ const BatchDetailsPage =()=>{
     
     const [isLoading,setLoading] =useState(true);
     const [feedList, setStoryList] = useState<any>([]);
+    const [percipioScore, setPercipioScore] = useState<any>([]);
     const [batchData,setBatchData] = useState<any>([]);
     const [currentDate,setCurrentDate] = useState<any>([]);
     const [courseCompletion,setCourseCompletion] = useState<any>([]);
     const [dayWiseProgress,setdayWiseProgress] = useState<any>([]);
     const [traineeList,setTraineeList] = useState<any>([]);
+    const [expanded, setExpanded] = useState(true);
+    const [startDate, setStartDate] = useState<string>('')
+    const [endtDate, setEndDate] = useState<string>('')
     const onPress=(batch_id:number,day_id:number)=>{
       
        navigation.navigate("batchDayWiswDetails",{ batch_id:batch_id, day:day_id});
@@ -87,6 +91,7 @@ const BatchDetailsPage =()=>{
             const {responseData, errorMessage} = await getHook(`api/v2/batchAvg/${batch_id}`)
             if(responseData)
             {
+              console.log('this is avg score',responseData)
               setStoryList(responseData);
             }
             if(errorMessage)
@@ -97,6 +102,24 @@ const BatchDetailsPage =()=>{
         };
         getStory();
     }, []);
+
+    useEffect(() => {
+      const getStory = async () => {
+        try {
+          const {responseData, errorMessage} = await getHook(`api/v2/percipioAssesmentAvg/${batch_id}`)
+          if(responseData)
+          {
+            console.log('this is avg of percipio assesments',responseData)
+            setPercipioScore(responseData);
+          }
+          if(errorMessage)
+            console.log(errorMessage)
+          } catch (error) {
+          console.error('Error:', error);
+        }
+      };
+      getStory();
+  }, []);
 
     useEffect(() => {
       const getStory = async () => {
@@ -117,8 +140,21 @@ const BatchDetailsPage =()=>{
            if(responseData){
             console.log('this is batch data',responseData)
             setBatchData(responseData);
-            setLoading(false);
+            
           
+              const {startDate,endtDate} = await changeDate(responseData)
+              console.log('Received start date:', startDate);
+             console.log('Received end date:', endtDate);
+            setStartDate(startDate);
+            setEndDate(endtDate)
+            
+            setLoading(false);
+            
+            // const dateString = batchData.batch_details.start_date.split('T')[0];
+            // const date = new Date(dateString);
+            // const startDate = date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+            // console.log("this is date",startDate)
+            // setStartDate(startDate);
             
           }
           } catch (error) {
@@ -144,6 +180,7 @@ const BatchDetailsPage =()=>{
     };
     getStory();
 }, []);
+
 const arrayOfObjects =[];
     for (const key in dayWiseProgress) {
       if (dayWiseProgress.hasOwnProperty(key)) {
@@ -156,8 +193,18 @@ const arrayOfObjects =[];
 const hai =()=>{
   
 }
-const [expanded, setExpanded] = useState(true);
- 
+const changeDate = async(batchData) =>{
+const dateString = batchData.batch_details.start_date.split('T')[0];
+const date = new Date(dateString);
+const startDate = date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+console.log('start date will be',startDate)
+const endDateString = batchData.batch_details.end_date.split('T')[0];
+const endDate = new Date(endDateString);
+const endtDate = endDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+return {startDate,endtDate}
+// setStartDate(startDate);
+// setEndDate(endtDate)
+}
 return(
   <GestureHandlerRootView>
         <ScrollView>
@@ -181,8 +228,8 @@ return(
                     <Text style={{fontFamily : 'Poppins-Regular',color:'black',fontSize:14}}>Current Day </Text> 
                     </View>
                     <View style={{flex:1}}>
-                    <Text style={{fontFamily : 'Poppins-Medium', marginLeft:'24%',color:'#8F00FF', fontSize : 14}}>{batchData.batch_details.start_date.split('T')[0]}</Text>
-                    <Text style={{fontFamily : 'Poppins-Medium', marginLeft:'24%',color:'#8F00FF', fontSize : 14}}>{batchData.batch_details.end_date.split('T')[0]}</Text>
+                    <Text style={{fontFamily : 'Poppins-Medium', marginLeft:'24%',color:'#8F00FF', fontSize : 14}}>{startDate}</Text>
+                    <Text style={{fontFamily : 'Poppins-Medium', marginLeft:'24%',color:'#8F00FF', fontSize : 14}}>{endtDate}</Text>
                     <Text style={{fontFamily : 'Poppins-Medium', marginLeft:'24%',color:'#8F00FF', fontSize : 14}}>{batchData.noOfTrainees}</Text>
                     <Text style={{fontFamily : 'Poppins-Medium', marginLeft:'24%',color:'#8F00FF', fontSize : 14}}>{currentDate.current_day}</Text>
                     </View>
@@ -237,6 +284,7 @@ return(
               {isLoading&&<><ChartPieShimmer/>
               <ChartPieShimmer/></>}
               {!isLoading&&<>
+                <ChartPie chartName={'Percipio Assesment Score'} excellent={percipioScore.excellent} good={percipioScore.good} poor={percipioScore.poor} option1="Excellent" option2="Good" option3="Poor" incomplete={hai} />
               <ChartPie chartName={'Assesment Score'} excellent={feedList.excellent} good={feedList.good} poor={feedList.poor} option1="Excellent" option2="Good" option3="Poor" incomplete={hai} />
               
               <ChartPie chartName={'Course Completion'} excellent={courseCompletion.onTrack} good={0} poor={courseCompletion.laggingBehind} option1="Completed" option2="Partial" option3="Incomplete" incomplete={()=>{}}/>
@@ -244,10 +292,10 @@ return(
               }
               
               <View style = {styles.graphContainer}>
-                  <View style = {{flexDirection : 'row'}}>
-                  <Text style={{ marginBottom: '5%', fontSize: 17, fontFamily: 'Poppins-Regular', flex: 0.3, paddingTop: '2%', flexDirection: 'column', paddingLeft : '2.5%', color : ilpex.darkGrey}}>Days</Text>
-                  <Text style={{marginBottom:'5%',fontSize:15, fontFamily : 'Poppins-Regular', flex : 0.7, justifyContent : 'center', color : ilpex.darkGrey}}>Percentage of Courses Completed</Text>
-                  </View>
+                  <View style = {{flexDirection : 'row', width : '85%', justifyContent: 'space-between', marginBottom: '5%'}}>
+                    <Text style={{ fontSize: 17, fontFamily: 'Poppins-Regular',width : '20%', textAlign : 'left',color : ilpex.darkGrey}}>Days   </Text>
+                    <Text style={{fontSize:15, fontFamily : 'Poppins-Regular', width:'80%' , color : ilpex.darkGrey, textAlign: 'center'}}>Percentage of Courses {'\n'}Completed</Text>
+                  </View>    
                   <FlatList 
                     contentContainerStyle = {{paddingBottom : 5}}
                     data = {arrayOfObjects}
@@ -342,7 +390,7 @@ const styles = StyleSheet.create({
 		marginLeft : 30,
 		marginRight : 30,
 		alignItems : 'center',
-		backgroundColor : 'white',
+		backgroundColor : ilpex.white,
 	},
 })
 export default BatchDetailsPage;

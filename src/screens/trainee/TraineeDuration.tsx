@@ -13,6 +13,7 @@ const TraineeDuration = (props : propsType) => {
 
     const {userID} = props;
     // const user_id = useSelector((state: any) => state.userDetailsReducer.user_id);
+    
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [totalDurationProgress, setTotalDurationProgress] = useState(0);
     const [durationDataset, setDurationDataset] = useState([]);
@@ -25,12 +26,15 @@ const TraineeDuration = (props : propsType) => {
         const graphLabel : any = [];
         const graphDataset : any = [
             { //course duration
-            data : [],
-            color:'#00ff00'
+                data : [],
+                color:'#00ff00',
+                legend: 'Course duration',
+            
             },
             {//duration
-            data: [],
-            color:'#ff0000'
+                data: [],
+                color:'#ff0000',
+                legend: "Trainee's duration"
             },
             
         ];
@@ -39,7 +43,7 @@ const TraineeDuration = (props : propsType) => {
         let course_duration = 0; //to get the total course duration
         let trainee_duration = 0; //to get the total duration trainee has watched
         durationData.map((item: any) =>{
-            graphLabel.push("DAY "+count);
+            graphLabel.push("C "+count);
             graphDataset[0].data.push(Math.ceil(Number(item.course_duration)/60));
             course_duration = course_duration + Number(item.course_duration)
             graphDataset[1].data.push(Math.ceil(Number(item.duration)/60));
@@ -80,7 +84,7 @@ const TraineeDuration = (props : propsType) => {
                     <LineGraph 
                         datasets={durationDataset}
                         chartName="Trainee watch time"
-                        progressTitle="course duration"
+                        progressTitle="Course duration"
                         progress={totalDurationProgress}
                         labels={courseLabel}
                     />
