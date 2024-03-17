@@ -10,6 +10,7 @@ import BatchCardShimmer from "../../components/loading/BatchCardShimmer";
 import AssesmentListCard from "../../components/AssesmentListCard";
 import DrawerNavigationHamburger from "../../components/DrawerNavigationHamburger";
 import { ScrollView } from "react-native-gesture-handler";
+import AssessmentListShimmer from "../../components/loading/AssessmentListShimmer";
 
 const AssesmentListScreen = ()=>{
     const navigation : any= useNavigation();
@@ -62,9 +63,17 @@ const AssesmentListScreen = ()=>{
                         />
                     ):(
                     <View>
-                       <BatchCardShimmer isLoading></BatchCardShimmer>
-                       <BatchCardShimmer isLoading></BatchCardShimmer>
-                       <BatchCardShimmer isLoading></BatchCardShimmer>
+                       <AssessmentListShimmer/>
+                       <AssessmentListShimmer/>
+                       <AssessmentListShimmer/>
+                       <AssessmentListShimmer/>
+                       <AssessmentListShimmer/>
+                       <AssessmentListShimmer/>
+                       <AssessmentListShimmer/>
+                       <AssessmentListShimmer/>
+                       <AssessmentListShimmer/>
+                       <AssessmentListShimmer/>
+                       <AssessmentListShimmer/>
                     </View>
                     )}
 

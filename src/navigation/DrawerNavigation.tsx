@@ -16,6 +16,7 @@ import { userDetails } from "../context/userDetailsSlice";
 import { userLogin } from "../context/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import UserManagementScreen from '../screens/admin/UserManagementScreen';
+import AboutScreen from '../screens/admin/AboutScreen';
 
 const CustomDrawerContent : any = (props : any) => {
 
@@ -174,6 +175,19 @@ const DrawerNavigation = () => {
                 component={CreateAssessmentScreen} 
                 options={{
                     title: 'Create Assessment',
+                    drawerIcon: ({focused, size}) => (
+                        <View style = {styles.iconContainer}>
+                            <Image
+                            source={require('../../assets/icons/create_assessment.png')}/>
+                        </View>
+                    ),
+                 }}
+            />
+            <Drawer.Screen 
+                name="About Screen" 
+                component={AboutScreen} 
+                options={{
+                    title: 'About',
                     drawerIcon: ({focused, size}) => (
                         <View style = {styles.iconContainer}>
                             <Image
