@@ -1,15 +1,16 @@
 import { Dimensions, ImageBackground, StyleSheet, Text, View } from "react-native"
 import ilpex from "../utils/ilpexUI";
+import LinearGradient from "react-native-linear-gradient";
 
 const SpalshScreen=()=>{
     return(
+        <LinearGradient colors={['#C318FF', '#9A50EB']} style={{flex:1}}>
         <View style={styles.container}>
-           <ImageBackground style={styles.bg} source={require('../../assets/images/splash.png')}>
             <View>
                     <Text style={styles.text}>ILPex</Text>
             </View>  
-           </ImageBackground>
         </View>
+        </LinearGradient>
     )
 }
 
@@ -37,6 +38,8 @@ const styles = StyleSheet.create({
     // flex:1,
     width:screenWidth,
     height:screenHeight,
+    justifyContent: 'center',
+    alignItems: 'center',
    }
 })
 
