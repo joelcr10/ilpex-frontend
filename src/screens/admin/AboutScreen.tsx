@@ -6,7 +6,7 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 
 const AboutScreen=()=>{
 
-    const desc="Empower your learning journey with our innovative tracking tool designed to support individuals embarking on initial learning programs. Our app provides a comprehensive platform to monitor and manage progress throughout your learning process. Easily track completed modules, set personalized goals, and stay motivated with insightful progress metrics. Whether you're diving into a new language, mastering a skill, or pursuing professional development, our app is your trusted companion for success. Start your learning journey today with our intuitive tracking tool."
+    const desc="The Application focuses on Tracking the ILP trainees' activities based on their courses completed, and assessments conducted. The tracking tool aims to generate a dashboard for L&D team to understand the Batch activities and progress during the E-Learning phase. The mobile application will help analyze the performance of the trainees individually and as a batch. The trainees can also view their progress along with day-wise courses assigned to them. Also, learning admin can create new Batches, create new users and assign roles to the Users."
     const version='1.0.0'
     const email='nodeninjas@experionglobal.com'
     const phoneno='+91-0000000000'
@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
     icon:{
         fontSize:30,
         margin:'4%',
+        color:ilpex.main
     },
     contacts:{
         flexDirection:'row',
