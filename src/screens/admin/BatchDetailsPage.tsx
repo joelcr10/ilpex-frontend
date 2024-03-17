@@ -20,6 +20,11 @@ import TraineeCardShimmer from "../../components/loading/TraineeCardShimmer";
 import TraineeCard from "../../components/TraineeCard";
 import ilpex from "../../utils/ilpexUI";
 import DayChartShimmer from "../../components/DayChartShimmer";
+import NotWatchedScreen from "./NotWatchedScreen";
+import OnePointFiveTimesSpeed from "./OnePointFiveTimesSpeedScreen";
+import OneTimesWatchSpeedScreen from "./OneTimesWatchSpeedScreen";
+import TwoTimesWatchSpeedScreen from "./TwoTimesWatchSpeedScreen";
+import LessThanOneTimesWatchSpeedScreen from "./LessThanOneTimesWatchSpeedScreen";
 
 const BatchDetailsPage =()=>{
    const todayDate = moment().format('YYYY-MM-DD');
@@ -48,6 +53,25 @@ const BatchDetailsPage =()=>{
       console.log('user id ashik',user_id)
        navigation.navigate("TraineeProileAnalysisScreen",{ user_id:user_id, trainee_id : trainee_id});
     }
+
+    const hai =(num:number)=>{
+      if(num == 1){
+        navigation.navigate("OneTimesWatchSpeedScreen",{batch_id:batch_id});
+      }
+      if(num == 2){
+        navigation.navigate("TwoTimesWatchSpeedScreen",{batch_id:batch_id});
+      }
+      if(num == 5){
+        navigation.navigate("LessThanOneTimesWatchSpeedScreen",{batch_id:batch_id});
+      }
+      if(num == 3){
+        navigation.navigate("NotWatchedScreen",{batch_id:batch_id});
+      }
+      if(num == 4){
+        navigation.navigate("OnePointFiveTimesSpeed",{batch_id:batch_id});
+      }
+    }
+
     var count:number =1;
     const loadFunction =()=>{
       setExpanded(!expanded)
@@ -211,9 +235,8 @@ const arrayOfObjects =[];
         // console.log(`${key}: ${value}`);
       }
     }
-const hai =()=>{
-  
-}
+
+
 const changeDate = async(batchData) =>{
 const dateString = batchData.batch_details.start_date.split('T')[0];
 const date = new Date(dateString);
@@ -325,12 +348,14 @@ return(
                   good={speedStats.twoTimesWatchSpeed} 
                   poor={speedStats.haveNotWatchedAnyVideo} 
                   onePointFive={speedStats.onePointFiveWatchSpeed}
-                  LessOnePointFive={speedStats.lessThanOnePointFiveWatchSpeed}
+                  LessOnePointFive={speedStats.lessThanOneWatchSpeed}
+                  option5='< 1x' 
                   option1="1x" 
-                  option2="2x" 
-                  option3="no"
                   option4='1.5x'
-                  option5='<1.5x' 
+                  option2="2x" 
+                  option3="nill"
+                  
+                   
                   incomplete={hai}
                   option={'speed'} />
               <ChartPie 
@@ -345,7 +370,7 @@ return(
                   option3="Poor" 
                   option4='1.5x'
                   option5='<1.5x' 
-                  incomplete={hai} 
+                  incomplete={(num)=>hai} 
                   option={'assesment'}/>
               
               <ChartPie 
@@ -370,7 +395,7 @@ return(
                     <Text style={{ fontSize: 17, fontFamily: 'Poppins-Regular',width : '20%', textAlign : 'left',color : ilpex.darkGrey}}>Days   </Text>
                     <Text style={{fontSize:15, fontFamily : 'Poppins-Regular', width:'80%' , color : ilpex.darkGrey, textAlign: 'center'}}>Percentage of Courses {'\n'}Completed</Text>
                   </View>   
-                  <DayChartShimmer/> 
+                  
                   {isLoading ?
                   <FlatList 
                   contentContainerStyle = {{paddingBottom : 5}}
