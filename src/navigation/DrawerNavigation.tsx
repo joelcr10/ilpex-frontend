@@ -191,7 +191,7 @@ const DrawerNavigation = () => {
                     drawerIcon: ({focused, size}) => (
                         <View style = {styles.iconContainer}>
                             <Image
-                            source={require('../../assets/icons/create_assessment.png')}/>
+                            source={require('../../assets/icons/aboutIcon.png')}/>
                         </View>
                     ),
                  }}
