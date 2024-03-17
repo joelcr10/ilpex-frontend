@@ -43,6 +43,8 @@ const LineGraph: React.FC<LineGraphProps> = ({datasets,
       })),
     };
 
+    console.log("inside line graph,",datasets[0].legend);
+
   return (
     <View style={styles.container} >
         <Text style={styles.headertext}>{chartName}</Text>
@@ -99,24 +101,31 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   chart: {
-    marginVertical: '1%',
     borderRadius: 16,
   },
   container:{
     backgroundColor:ilpex.white,
-    padding:'5%',
-    overflow: 'hidden',
+    paddingRight : '5%',
+    paddingLeft : '1%',
+    // overflow: 'hidden',
+    alignSelf: 'center',
+    
   },
   headertext:{
     fontFamily:ilpex.fontSemiBold,
-    fontSize:18,
+    fontSize:21,
     color:ilpex.black,
-    margin:'5%',
+    marginTop : '5%',
+    marginRight : '5%',
+    marginBottom : '5%',
+    marginLeft : '10%'
+
   },
   progressTitle:{
     fontFamily:ilpex.fontRegular,
-    fontSize:16,
+    fontSize:17,
     color:ilpex.black,
+    marginLeft : '1%',
     textAlignVertical:'center',
   },
   percentage:{
@@ -129,15 +138,22 @@ const styles = StyleSheet.create({
     flexDirection:'row',
     marginVertical:'5%',
     marginHorizontal:'10%',
-    marginBottom:'20%',
+    marginBottom:'10%',
     justifyContent:'space-between',
 
   },
   legendContainer: {
+    position: 'absolute',
+    top: "7%",
+    left: "35%",
+    zIndex: 100,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: '10%',
+    marginTop: '-1%',
+    height: 40,
+    width: 200,
+
   },
   legendItem: {
     flexDirection: 'row',
