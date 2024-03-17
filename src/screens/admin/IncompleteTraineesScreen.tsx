@@ -49,6 +49,7 @@ const IncompleteTraineesScreen = () => {
           if (responseData) {
             
             setTraineeList(responseData);
+            console.log(responseData.IncompleteTraineeList);
 
           }
 
