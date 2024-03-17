@@ -71,6 +71,7 @@ const IncompleteTraineeCard = (props : PropsType) => {
                     <View style={styles.accordionView}>
                     <Text style={styles.accordionViewHeading}>Incomplete Courses</Text>
                         <FlatList
+                        scrollEnabled={false}
                         showsVerticalScrollIndicator={false}
                         data={course_list}
                         renderItem={({ item,index }) => (
