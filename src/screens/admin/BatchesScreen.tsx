@@ -100,7 +100,7 @@ const BatchesScreen = ()=>{
                                 renderItem={({ item }) => <BatchCard 
                                     batch_name={item.batch_name} 
                                     traineeNo={item.noOfTrainees}
-                                    date={item.start_date} 
+                                    date={item.end_date} 
                                     totalDays={'22'}
                                     progressDays={currentDay[item.batch_id]} 
                                     onPressFunc={()=>onPressBatchCard(item.batch_id)}/>}
