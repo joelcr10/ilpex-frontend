@@ -9,6 +9,7 @@ import { useRoute } from "@react-navigation/native";
 import BackButton from "../../components/BackButton";
 import IconButtonComponent from "../../components/IconButton";
 import BatchIncompleteTraineeCard from "../../components/BatchIncompleteTraineeCard";
+import ShimmerBatchIncompleteTraineeCard from "../../components/loading/ShimmerBatchIncompleteTraineeCard";
 
 
 const IncompleteTraineesScreen = () => {
@@ -68,7 +69,7 @@ const IncompleteTraineesScreen = () => {
 
     return (
       <ScrollView>
-        { (!isLoading)?(<View><TraineeCardShimmer></TraineeCardShimmer></View>):
+        { (!isLoading)?(<View><ShimmerBatchIncompleteTraineeCard></ShimmerBatchIncompleteTraineeCard></View>):
         (<View>
  <IconButtonComponent name={"Send Mail"} onPress={onPress} buttonPressed={false} icon={"mail"}></IconButtonComponent>
  <Text style={styles.traineeText}>Trainees</Text>

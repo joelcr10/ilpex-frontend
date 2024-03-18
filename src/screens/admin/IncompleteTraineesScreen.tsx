@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import TraineeCard from "../../components/TraineeCard";
-import TraineeCardShimmer from "../../components/loading/TraineeCardShimmer";
 import ilpex from "../../utils/ilpexUI";
 import { getHook } from "../../network/getHook/getHook";
 import { sendMail } from "../../network/EmailApiHook";
@@ -9,6 +7,8 @@ import { useRoute } from "@react-navigation/native";
 import BackButton from "../../components/BackButton";
 import IconButtonComponent from "../../components/IconButton";
 import IncompleteTraineeCard from "../../components/IncompleteTraineeCard";
+import ShimmerBatchIncompleteTraineeCard from "../../components/loading/ShimmerBatchIncompleteTraineeCard";
+import ToastDemo from "../../components/ToastComponent";
 
 
 const IncompleteTraineesScreen = () => {
@@ -19,7 +19,6 @@ const IncompleteTraineesScreen = () => {
 
   const TraineesDisplay = () => {
     const [traineeList, setTraineeList] = useState<any>([]);
-    const [list, setList]=useState<any>([]);
 
     const sendMailToTrainees = async () => {
       try {
@@ -28,8 +27,10 @@ const IncompleteTraineesScreen = () => {
           day_number: day,
         });
         if (success) {
+          <ToastDemo BgColor={"green"} message={"Mail Sent successfully"} textColor={"black"}></ToastDemo> 
+
           console.log("Mail Sent successfully......................................");
-        }
+               }
       } catch (error) {
         console.error('Error while sending mail:', error);
       }
@@ -68,7 +69,7 @@ const IncompleteTraineesScreen = () => {
 
     return (
       <ScrollView>
-        { (!isLoading)?(<View><TraineeCardShimmer></TraineeCardShimmer></View>):
+        { (!isLoading)?(<View><ShimmerBatchIncompleteTraineeCard></ShimmerBatchIncompleteTraineeCard></View>):
         (<View>
  <IconButtonComponent name={"Send"} onPress={onPress} buttonPressed={false} icon={"mail"}></IconButtonComponent>
                             <Text style={styles.traineeText}>Trainees</Text>
