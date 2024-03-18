@@ -2,6 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 import BackButton from "../../components/BackButton";
 import ilpex from "../../utils/ilpexUI";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import { ScrollView } from "react-native-gesture-handler";
 
 
 const AboutScreen=()=>{
@@ -11,9 +12,10 @@ const AboutScreen=()=>{
     const email='nodeninjas@experionglobal.com'
     const phoneno='+91-0000000000'
     return( 
+        
         <View>
             <BackButton color={"black"}/>
-            
+            <ScrollView>
             <View style={styles.container}>
                 <Text style={styles.title}>ILPex</Text>
                 <Text style={styles.subtitle}>Initial Learning Program Tracking Tool</Text>
@@ -31,6 +33,7 @@ const AboutScreen=()=>{
                     <Text style={styles.contactsText}>{phoneno}</Text>
                 </View>
             </View>
+            </ScrollView>
         </View>
       )  
         
@@ -39,6 +42,7 @@ const AboutScreen=()=>{
 const styles = StyleSheet.create({
     container:{
         marginHorizontal:'10%',
+        marginStart:'15%',
         marginTop:'15%',
         justifyContent:'space-between',
         flexDirection:'column',
