@@ -17,7 +17,7 @@ type chart ={excellent:number,
             option1:string,
             option2:string,
             option3:string,
-            incomplete:()=>void,
+            incomplete:(num:number)=>void,
             option:string
             option4:string,
             option5:string,
@@ -87,54 +87,59 @@ const ChartPie = (props:chart) => {
          </View>}
          {excellent==0 && good==0 && poor==0 ?<Text></Text> :
         <View style={styles.bottom}>
-
+        {option == 'speed' &&
+          <View>
+            <TouchableOpacity onPress={()=>incomplete(5)}>
+            <View style={styles.footer}>
+              <View style={styles.percentage5}></View>
+              <Text style={styles.footPercentage}>{LessOnePointFive}</Text>
+            </View>
+             <Text style={{fontFamily : 'Poppins-Medium',color:'#6D6D6D',fontSize:15}}>{option5}</Text>
+            </TouchableOpacity>
+          </View>
+            }
        <View>
+       <TouchableOpacity onPress={()=>incomplete(1)}>
            <View style={styles.footer}>
                <View style={styles.percentage1} ></View>
                <Text style={styles.footPercentage}>{excellent}</Text>
             </View>
-            <Text style={{fontFamily : 'Poppins-Medium',color:'#6D6D6D',fontSize:15}}>{option1}</Text>
+          <Text style={{fontFamily : 'Poppins-Medium',color:'#6D6D6D',fontSize:15}}>{option1}</Text>
+            </TouchableOpacity>
           </View>
+          {option == 'speed' &&
+          <View>
+            <TouchableOpacity onPress={()=>incomplete(4)}>
+            <View style={styles.footer}>
+              <View style={styles.percentage4}></View>
+              <Text style={styles.footPercentage}>{onePointFive}</Text>
+            </View>
+            <Text style={{fontFamily : 'Poppins-Medium',color:'#6D6D6D',fontSize:15}}>{option4}</Text>
+            </TouchableOpacity>
+          </View>}
           {option !== ''&&<View>
+          <TouchableOpacity onPress={()=>incomplete(2)}>
             <View style={styles.footer}>
               <View style={styles.percentage2}></View>
               <Text style={styles.footPercentage}>{good}</Text>
             </View>
             <Text style={{fontFamily : 'Poppins-Medium',color:'#6D6D6D',fontSize:15}}>{option2}</Text>
+            </TouchableOpacity>
           </View>}
           
   
           <View>
+          <TouchableOpacity onPress={()=>incomplete(3)}>
             <View style={styles.footer}>
               <View style={styles.percentage3}></View>
               <Text style={styles.footPercentage}>{poor}</Text>
             </View>
-            <TouchableOpacity onPress={incomplete}>
             <Text style={{fontFamily : 'Poppins-Medium',color:'#6D6D6D',fontSize:15}}>{option3}</Text>
             </TouchableOpacity>
           </View>
 
-          {option == 'speed' &&
-          <View>
-            <View style={styles.footer}>
-              <View style={styles.percentage4}></View>
-              <Text style={styles.footPercentage}>{onePointFive}</Text>
-            </View>
-            <TouchableOpacity onPress={incomplete}>
-            <Text style={{fontFamily : 'Poppins-Medium',color:'#6D6D6D',fontSize:15}}>{option4}</Text>
-            </TouchableOpacity>
-          </View>}
-          {option == 'speed' &&
-          <View>
-            <View style={styles.footer}>
-              <View style={styles.percentage5}></View>
-              <Text style={styles.footPercentage}>{LessOnePointFive}</Text>
-            </View>
-            <TouchableOpacity onPress={incomplete}>
-            <Text style={{fontFamily : 'Poppins-Medium',color:'#6D6D6D',fontSize:15}}>{option5}</Text>
-            </TouchableOpacity>
-          </View>
-            }
+          
+          
   
           </View>}
         </View>

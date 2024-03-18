@@ -111,7 +111,18 @@ return(
                 </View> */}
               </View>
               {isLoading && <ChartPieShimmer/>}
-              {!isLoading&&<><ChartPie chartName={'Course Completion'} excellent={currentDateCompletion.onTrack} good={0} poor={currentDateCompletion.laggingBehind} option1="Completed" option2="Partial" option3="Incomplete" incomplete={()=>onPress(day,batch)}/></>}
+              {!isLoading&&<>
+              <ChartPie 
+                chartName={'Course Completion'} 
+                excellent={currentDateCompletion.onTrack} 
+                good={0} 
+                poor={currentDateCompletion.laggingBehind} 
+                option1="Completed" 
+                option2="Partial" 
+                option3="Incomplete" 
+                incomplete={()=>onPress(day,batch)}
+                option={''}
+                /></>}
             </View>
         
          </View>
