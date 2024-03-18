@@ -26,6 +26,7 @@ import OneTimesWatchSpeedScreen from "./OneTimesWatchSpeedScreen";
 import TwoTimesWatchSpeedScreen from "./TwoTimesWatchSpeedScreen";
 import LessThanOneTimesWatchSpeedScreen from "./LessThanOneTimesWatchSpeedScreen";
 
+
 const BatchDetailsPage =()=>{
    const todayDate = moment().format('YYYY-MM-DD');
     const route:any = useRoute();
@@ -36,7 +37,6 @@ const BatchDetailsPage =()=>{
     const [feedList, setStoryList] = useState<any>([]);
     const [percipioScore, setPercipioScore] = useState<any>([]);
     const [speedStats, setSpeedStats] = useState<any>([]);
-    console.log('this is stat of not started',speedStats.haveNotWatchedAnyVideo)
     const [batchData,setBatchData] = useState<any>([]);
     const [currentDate,setCurrentDate] = useState<any>([]);
     const [courseCompletion,setCourseCompletion] = useState<any>([]);
@@ -50,8 +50,12 @@ const BatchDetailsPage =()=>{
        navigation.navigate("batchDayWiswDetails",{ batch_id:batch_id, day:day_id});
     }
     const toTrainee=(user_id:number, trainee_id : number)=>{
-      console.log('user id ashik',user_id)
        navigation.navigate("TraineeProileAnalysisScreen",{ user_id:user_id, trainee_id : trainee_id});
+    }
+    const day =currentDate.current_day;
+    
+    const BatchIncompleteTraineList=()=>{
+      navigation.navigate("BatchIncompleteTraineesScreen",{ batch_id:batch_id,day:day});
     }
 
     const hai =(num:number)=>{
@@ -171,6 +175,7 @@ const BatchDetailsPage =()=>{
         try {
           const {responseData, errorMessage} = await getHook(`api/v3/batch/${batch_id}/day/${todayDate}`)
           setCurrentDate(responseData);
+          console.log("this is current date",responseData)
         } catch (error) {
           console.error('Error:', error);
         }
@@ -353,7 +358,7 @@ return(
                   option1="1x" 
                   option4='1.5x'
                   option2="2x" 
-                  option3="nill"
+                  option3="NA"
                   
                    
                   incomplete={hai}
@@ -385,7 +390,7 @@ return(
                   option3="Incomplete" 
                   option4='1.5x'
                   option5='<1.5x' 
-                  incomplete={()=>{}}
+                  incomplete={BatchIncompleteTraineList}
                   option={''}/>
               </>
               }

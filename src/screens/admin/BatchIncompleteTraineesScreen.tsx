@@ -16,11 +16,11 @@ const IncompleteTraineesScreen = () => {
   const [toastVisibility, setToastVisibility] = useState(false);
   const route: any = useRoute();
   const day = route.params.day;
-  const batch = route.params.batch;
-
+  const batch = route.params.batch_id;
+  console.log('this is current day',day)
   const TraineesDisplay = () => {
     const [traineeList, setTraineeList] = useState<any>([]);
-
+     console.log('this is batch list',traineeList)
     const sendMailToTrainees = async () => {
       try {
         const { success } = await sendMail({
@@ -45,7 +45,7 @@ const IncompleteTraineesScreen = () => {
       const getDayCards = async () => {
         try {
           const { responseData } = await getHook(
-            `/api/v2/batch/${batch}/incompleteTrainees/3`,
+            `/api/v2/batch/${batch}/incompleteTrainees/${day}`,
             
           );
           if (responseData) {
