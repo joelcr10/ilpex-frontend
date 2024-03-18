@@ -7,6 +7,7 @@ import ilpex from "../../utils/ilpexUI";
 const ShimmerBatchIncompleteTraineeCard = () => {
   return (
     <View>
+        
     <View style={styles.cardContainer}>
       <View style={styles.dataContainer}>
       <View style={styles.profilePicture}>
