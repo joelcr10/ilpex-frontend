@@ -1,9 +1,9 @@
-import React from "react";
-import { View,Text,StyleSheet } from "react-native";
 import instance from '../../network/api'; 
 interface ManageTraineeProp {
     user_id:number|null;
     status: number|null;
+    user_name:string;
+    email:string;
     JWT_token:string;
 }
  
@@ -17,6 +17,8 @@ interface ManageTraineeResponse {
 export async function UpdateTraineeStatus({
     user_id,
     status,
+    user_name,
+    email,
     JWT_token
 }: ManageTraineeProp): Promise<ManageTraineeResponse> {
   let success: boolean = false;
@@ -25,8 +27,11 @@ export async function UpdateTraineeStatus({
   let manageTraineeResp: any;
  
   const ManageTraineePayload = {
-    user_id: user_id,
-    status: status,
+    user_id,
+    status,
+    user_name,
+    email,
+    JWT_token
   };
  
   try {

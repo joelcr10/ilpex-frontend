@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import TraineeCard from "../../components/TraineeCard";
-import TraineeCardShimmer from "../../components/loading/TraineeCardShimmer";
 import ilpex from "../../utils/ilpexUI";
 import { getHook } from "../../network/getHook/getHook";
 import { sendMail } from "../../network/EmailApiHook";
@@ -9,10 +7,13 @@ import { useRoute } from "@react-navigation/native";
 import BackButton from "../../components/BackButton";
 import IconButtonComponent from "../../components/IconButton";
 import BatchIncompleteTraineeCard from "../../components/BatchIncompleteTraineeCard";
+import ShimmerBatchIncompleteTraineeCard from "../../components/loading/ShimmerBatchIncompleteTraineeCard";
+import ToastDemo from "../../components/ToastComponent";
 
 
 const IncompleteTraineesScreen = () => {
   const [isLoading, setLoading] = useState(false);
+  const [toastVisibility, setToastVisibility] = useState(false);
   const route: any = useRoute();
   const day = route.params.day;
   const batch = route.params.batch_id;
@@ -27,7 +28,8 @@ const IncompleteTraineesScreen = () => {
           day_number: day,
         });
         if (success) {
-          console.log("Mail Sent successfully......................................");
+            console.log("Mail Sent successfully......................................");
+            setToastVisibility(true);
         }
       } catch (error) {
         console.error('Error while sending mail:', error);
@@ -68,10 +70,11 @@ const IncompleteTraineesScreen = () => {
 
     return (
       <ScrollView>
-        { (!isLoading)?(<View><TraineeCardShimmer></TraineeCardShimmer></View>):
+         { toastVisibility && <ToastDemo BgColor={"green"} message={"Mail Sent successfully"} textColor={"black"}></ToastDemo> }
+        { (!isLoading)?(<View><ShimmerBatchIncompleteTraineeCard></ShimmerBatchIncompleteTraineeCard></View>):
         (<View>
- <IconButtonComponent name={"Send Mail"} onPress={onPress} buttonPressed={false} icon={"mail"}></IconButtonComponent>
- <Text style={styles.traineeText}>Trainees</Text>
+    <IconButtonComponent name={"Send Mail"} onPress={onPress} buttonPressed={false} icon={"mail"}></IconButtonComponent>
+    <Text style={styles.traineeText}>Trainees</Text>
 
                <FlatList
           scrollEnabled={false}
@@ -84,8 +87,6 @@ const IncompleteTraineesScreen = () => {
           )}
           keyExtractor={item => item.id}
         />
-
-
         </View>)}
 
       </ScrollView>
