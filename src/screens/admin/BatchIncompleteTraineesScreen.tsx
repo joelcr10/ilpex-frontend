@@ -81,7 +81,7 @@ const IncompleteTraineesScreen = () => {
           renderItem={({ item }) => (
             <BatchIncompleteTraineeCard
                   trainee_name={item.user_name}
-                  batch_name={item.Batch} courses_left={item.incomplete_courses} total_number_of_courses={item.total_courses} course_list={[item.incomplete_courses_list]} currentDay={item.day}  />
+                  batch_name={item.Batch} courses_left={item.incomplete_courses} total_number_of_courses={item.total_courses} course_list={item.incomplete_courses_list} currentDay={item.day}  />
           )}
           keyExtractor={item => item.id}
         />

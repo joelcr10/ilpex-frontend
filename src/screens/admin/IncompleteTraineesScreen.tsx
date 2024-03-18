@@ -50,6 +50,7 @@ const IncompleteTraineesScreen = () => {
           if (responseData) {
             
             setTraineeList(responseData);
+            console.log(responseData.IncompleteTraineeList);
 
           }
 
@@ -81,7 +82,7 @@ const IncompleteTraineesScreen = () => {
           renderItem={({ item }) => (
             <IncompleteTraineeCard
               trainee_name={item.user_name}
-              batch_name={item.Batch} courses_left={item.incomplete_courses} total_number_of_courses={item.total_courses} course_list={[item.incomplete_courses_list]}  />
+              batch_name={item.Batch} courses_left={item.incomplete_courses} total_number_of_courses={item.total_courses} course_list={item.incomplete_courses_list}  />
           )}
           keyExtractor={item => item.id}
         />

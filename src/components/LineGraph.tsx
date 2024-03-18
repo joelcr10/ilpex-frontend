@@ -52,10 +52,18 @@ const LineGraph: React.FC<LineGraphProps> = ({datasets,
             <Text style={styles.progressTitle}>{progressTitle}</Text>
             <CircularProgress completeStatus={progress} color={ilpex.progress2}/>
         </View>
+        <View style={styles.legendContainer}>
+        {datasets.map((dataset) => (
+          <View style={styles.legendItem}>
+            <View style={[styles.legendColorIndicator, { backgroundColor: dataset.color }]} />
+            <Text style={styles.legendText}>{dataset.legend}</Text>
+          </View>
+        ))}
+      </View>
         <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
-        style={{alignSelf:'flex-start'}}>
+        style={{alignSelf:'flex-start',marginTop: 30}}>
         <LineChart
             data={chartData}
             width={chartData.labels.length*70}
@@ -83,14 +91,7 @@ const LineGraph: React.FC<LineGraphProps> = ({datasets,
         />
         </ScrollView>
 
-        <View style={styles.legendContainer}>
-        {datasets.map((dataset) => (
-          <View style={styles.legendItem}>
-            <View style={[styles.legendColorIndicator, { backgroundColor: dataset.color }]} />
-            <Text style={styles.legendText}>{dataset.legend}</Text>
-          </View>
-        ))}
-      </View>
+        
         </View>
   );
 };
@@ -117,8 +118,9 @@ const styles = StyleSheet.create({
     color:ilpex.black,
     marginTop : '5%',
     marginRight : '5%',
-    marginBottom : '5%',
-    marginLeft : '10%'
+    marginBottom : '3%',
+    marginLeft : '10%',
+    // backgroundColor: 'blue'
 
   },
   progressTitle:{
@@ -136,21 +138,22 @@ const styles = StyleSheet.create({
   },
   progress:{
     flexDirection:'row',
-    marginVertical:'5%',
+    marginVertical:'0%',
     marginHorizontal:'10%',
     marginBottom:'10%',
     justifyContent:'space-between',
+    // backgroundColor: 'red'
 
   },
   legendContainer: {
     position: 'absolute',
-    top: "7%",
+    top: "4.3%",
     left: "35%",
     zIndex: 100,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: '-1%',
+    // marginTop: '-1%',
     height: 40,
     width: 200,
 
