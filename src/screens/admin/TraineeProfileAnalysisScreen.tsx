@@ -227,6 +227,7 @@ const TraineeProileAnalysisScreen = () => {
                 
                 setTraineeProgressStatus(true);
                 await courseListFromDatabase(largestDayNumber, trainee_id)
+                console.log(typeof(incompleteCourseList), "LISTTTTTTTT----------------->", incompleteCourseList);
             }
         }catch (error)
         {
