@@ -153,7 +153,8 @@ const ChartPie = (props:chart) => {
 const styles = StyleSheet.create({
   scrollContainer: {
      flex: 1,
-     height : 440,
+    //  height : 440,
+  
   },
   container: {
     marginTop:10,

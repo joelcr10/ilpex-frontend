@@ -330,7 +330,7 @@ return(
                    <IconButtonComponent  name={'Report'} onPress={()=>{}} buttonPressed={false} icon={'description'}/>
                 </View> */}
               </View>
-              {!isLoading&&<><ChartPieShimmer/>
+              {isLoading&&<><ChartPieShimmer/>
               <ChartPieShimmer/></>}
               {!isLoading&&<>
                 <ChartPie 
