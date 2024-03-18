@@ -64,37 +64,43 @@ const ManageTraineeScreen = () => {
   const activateTrainee = () => {
     if (!isActive) {
       setActivateButtonPressed(true);
-      handleManageTrainee();
+      handleManageTrainee(1);
     }
   };
 
   const deactivateTrainee = () => {
     if (isActive) {
       setDeactivateButtonPressed(true);
-      handleManageTrainee();
+      handleManageTrainee(0);
     }
   };
 
-  const handleManageTrainee = async () => {
+  const handleManageTrainee = async (status:number) => {
+    const user_name = traineeName;
+    const email = traineeEmail;
+    setActivateButtonPressed(false);
+    setDeactivateButtonPressed(false);
     console.log(user_id);
     const JWT_token = (await getItem(Constants.TOKEN)) || ''; 
 
     try {
+      
       if (activateButtonPressed) {
-        const response = await UpdateTraineeStatus({ user_id: user_id, status: 1 ,JWT_token,});
+        const {success, statusCode, manageTraineeResp, errorMessage} = await UpdateTraineeStatus({ user_id,status,user_name,email,JWT_token});
+
         // Check the response and update the state accordingly
-        console.log(response);
-        if (response.success) {
+        console.log(manageTraineeResp);
+        if (success) {
           setIsActive(true);
           setActivateButtonPressed(false);
         }
       }
   
-      else if (deactivateButtonPressed) {
-        const response = await UpdateTraineeStatus({ user_id: user_id, status: 0, JWT_token, });
+      if (deactivateButtonPressed) {
+        const {success, statusCode, manageTraineeResp, errorMessage} = await UpdateTraineeStatus({ user_id,status,user_name,email,JWT_token});
         // Check the response and update the state accordingly
-        console.log(response);
-        if (response.success) {
+        console.log(manageTraineeResp);
+        if (success) {
           setIsActive(false);
           setDeactivateButtonPressed(false);
         }
