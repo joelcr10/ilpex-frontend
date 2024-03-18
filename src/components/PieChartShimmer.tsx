@@ -24,12 +24,12 @@ const ChartPieShimmer = ( ) => {
       
       // borderColor:'black',
       // borderWidth:3,
-      marginTop:30,
-      marginHorizontal:30,
+      marginTop:'8%',
+      marginHorizontal:'8%',
       borderRadius:30,
       elevation:8,
       backgroundColor:"white",
-      marginBottom : 20,
+      marginBottom : '4%',
       height:500,
       width:345
     },
