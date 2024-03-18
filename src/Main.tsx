@@ -16,6 +16,7 @@ import TraineeDayScreen from "./screens/trainee/TraineeDayScreen";
 import { getItem } from "./utils/utils";
 import Constants from "./utils/Constants";
 import { userDetails } from "./context/userDetailsSlice";
+import { IP_ADDRESS } from "@env";
 
 
 
@@ -34,7 +35,7 @@ const Main =  () =>{
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
    
-    
+    console.log(IP_ADDRESS);
     console.log('role id ----------',role_id);
     console.log('trainee_id ----------',trainee_id);
     console.log('user_id ----------',user_id);

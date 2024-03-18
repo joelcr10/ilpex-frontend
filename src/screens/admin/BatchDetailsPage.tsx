@@ -19,6 +19,13 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import TraineeCardShimmer from "../../components/loading/TraineeCardShimmer";
 import TraineeCard from "../../components/TraineeCard";
 import ilpex from "../../utils/ilpexUI";
+import DayChartShimmer from "../../components/DayChartShimmer";
+import NotWatchedScreen from "./NotWatchedScreen";
+import OnePointFiveTimesSpeed from "./OnePointFiveTimesSpeedScreen";
+import OneTimesWatchSpeedScreen from "./OneTimesWatchSpeedScreen";
+import TwoTimesWatchSpeedScreen from "./TwoTimesWatchSpeedScreen";
+import LessThanOneTimesWatchSpeedScreen from "./LessThanOneTimesWatchSpeedScreen";
+
 
 const BatchDetailsPage =()=>{
    const todayDate = moment().format('YYYY-MM-DD');
@@ -29,6 +36,7 @@ const BatchDetailsPage =()=>{
     const [isLoading,setLoading] =useState(true);
     const [feedList, setStoryList] = useState<any>([]);
     const [percipioScore, setPercipioScore] = useState<any>([]);
+    const [speedStats, setSpeedStats] = useState<any>([]);
     const [batchData,setBatchData] = useState<any>([]);
     const [currentDate,setCurrentDate] = useState<any>([]);
     const [courseCompletion,setCourseCompletion] = useState<any>([]);
@@ -42,9 +50,32 @@ const BatchDetailsPage =()=>{
        navigation.navigate("batchDayWiswDetails",{ batch_id:batch_id, day:day_id});
     }
     const toTrainee=(user_id:number, trainee_id : number)=>{
-      console.log('user id ashik',user_id)
        navigation.navigate("TraineeProileAnalysisScreen",{ user_id:user_id, trainee_id : trainee_id});
     }
+    const day =currentDate.current_day;
+    
+    const BatchIncompleteTraineList=()=>{
+      navigation.navigate("BatchIncompleteTraineesScreen",{ batch_id:batch_id,day:day});
+    }
+
+    const hai =(num:number)=>{
+      if(num == 1){
+        navigation.navigate("OneTimesWatchSpeedScreen",{batch_id:batch_id});
+      }
+      if(num == 2){
+        navigation.navigate("TwoTimesWatchSpeedScreen",{batch_id:batch_id});
+      }
+      if(num == 5){
+        navigation.navigate("LessThanOneTimesWatchSpeedScreen",{batch_id:batch_id});
+      }
+      if(num == 3){
+        navigation.navigate("NotWatchedScreen",{batch_id:batch_id});
+      }
+      if(num == 4){
+        navigation.navigate("OnePointFiveTimesSpeed",{batch_id:batch_id});
+      }
+    }
+
     var count:number =1;
     const loadFunction =()=>{
       setExpanded(!expanded)
@@ -121,11 +152,30 @@ const BatchDetailsPage =()=>{
       getStory();
   }, []);
 
+  useEffect(() => {
+    const getStory = async () => {
+      try {
+        const {responseData, errorMessage} = await getHook(`api/v2/batch/${batch_id}/watchtime`)
+        if(responseData)
+        {
+          console.log('this is speed stats',responseData.data)
+          setSpeedStats(responseData.data);
+        }
+        if(errorMessage)
+          console.log(errorMessage)
+        } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+    getStory();
+}, []);
+
     useEffect(() => {
       const getStory = async () => {
         try {
           const {responseData, errorMessage} = await getHook(`api/v3/batch/${batch_id}/day/${todayDate}`)
           setCurrentDate(responseData);
+          console.log("this is current date",responseData)
         } catch (error) {
           console.error('Error:', error);
         }
@@ -190,9 +240,8 @@ const arrayOfObjects =[];
         // console.log(`${key}: ${value}`);
       }
     }
-const hai =()=>{
-  
-}
+
+
 const changeDate = async(batchData) =>{
 const dateString = batchData.batch_details.start_date.split('T')[0];
 const date = new Date(dateString);
@@ -284,10 +333,65 @@ return(
               {isLoading&&<><ChartPieShimmer/>
               <ChartPieShimmer/></>}
               {!isLoading&&<>
-                <ChartPie chartName={'Percipio Assesment Score'} excellent={percipioScore.excellent} good={percipioScore.good} poor={percipioScore.poor} option1="Excellent" option2="Good" option3="Poor" incomplete={hai} />
-              <ChartPie chartName={'Assesment Score'} excellent={feedList.excellent} good={feedList.good} poor={feedList.poor} option1="Excellent" option2="Good" option3="Poor" incomplete={hai} />
+                <ChartPie 
+                  chartName={'Percipio Assesment Score'} 
+                  excellent={percipioScore.excellent} 
+                  good={percipioScore.good} 
+                  poor={percipioScore.poor} 
+                  onePointFive={0}
+                  LessOnePointFive={0}
+                  option1="Excellent" 
+                  option2="Good" 
+                  option3="Poor" 
+                  option4='1.5x'
+                  option5='<1.5x' 
+                  incomplete={hai}
+                  option={'assesment'} />
+                <ChartPie 
+                  chartName={'Course Speed'} 
+                  excellent={speedStats.oneWatchSpeed} 
+                  good={speedStats.twoTimesWatchSpeed} 
+                  poor={speedStats.haveNotWatchedAnyVideo} 
+                  onePointFive={speedStats.onePointFiveWatchSpeed}
+                  LessOnePointFive={speedStats.lessThanOneWatchSpeed}
+                  option5='< 1x' 
+                  option1="1x" 
+                  option4='1.5x'
+                  option2="2x" 
+                  option3="NA"
+                  
+                   
+                  incomplete={hai}
+                  option={'speed'} />
+              <ChartPie 
+                  chartName={'Assesment Score'} 
+                  excellent={feedList.excellent} 
+                  good={feedList.good} 
+                  poor={feedList.poor} 
+                  onePointFive={0}
+                  LessOnePointFive={0}
+                  option1="Excellent" 
+                  option2="Good" 
+                  option3="Poor" 
+                  option4='1.5x'
+                  option5='<1.5x' 
+                  incomplete={(num)=>hai} 
+                  option={'assesment'}/>
               
-              <ChartPie chartName={'Course Completion'} excellent={courseCompletion.onTrack} good={0} poor={courseCompletion.laggingBehind} option1="Completed" option2="Partial" option3="Incomplete" incomplete={()=>{}}/>
+              <ChartPie 
+                  chartName={'Course Completion'} 
+                  excellent={courseCompletion.onTrack} 
+                  good={0} 
+                  poor={courseCompletion.laggingBehind} 
+                  onePointFive={0}
+                  LessOnePointFive={0}
+                  option1="Completed" 
+                  option2="Partial" 
+                  option3="Incomplete" 
+                  option4='1.5x'
+                  option5='<1.5x' 
+                  incomplete={BatchIncompleteTraineList}
+                  option={''}/>
               </>
               }
               
@@ -295,15 +399,25 @@ return(
                   <View style = {{flexDirection : 'row', width : '85%', justifyContent: 'space-between', marginBottom: '5%'}}>
                     <Text style={{ fontSize: 17, fontFamily: 'Poppins-Regular',width : '20%', textAlign : 'left',color : ilpex.darkGrey}}>Days   </Text>
                     <Text style={{fontSize:15, fontFamily : 'Poppins-Regular', width:'80%' , color : ilpex.darkGrey, textAlign: 'center'}}>Percentage of Courses {'\n'}Completed</Text>
-                  </View>    
-                  <FlatList 
-                    contentContainerStyle = {{paddingBottom : 5}}
-                    data = {arrayOfObjects}
-                    renderItem = {({item}) => 
-                      <DayWiseProgressBar dayNumber = {parseInt(item.key)} percentage = {item.value} onPress={()=>onPress(batch_id,parseInt(item.key))}/>
-                    }
+                  </View>   
                   
-                  />
+                  {isLoading ?
+                  <FlatList 
+                  contentContainerStyle = {{paddingBottom : 5}}
+                  data = {arrayOfObjects}
+                  renderItem = {({item}) => 
+                  <DayChartShimmer/> 
+                  }
+                />:
+                  <FlatList 
+                  contentContainerStyle = {{paddingBottom : 5}}
+                  data = {arrayOfObjects}
+                  renderItem = {({item}) => 
+                    <DayWiseProgressBar dayNumber = {parseInt(item.key)} percentage = {item.value} onPress={()=>onPress(batch_id,parseInt(item.key))}/>
+                  }
+                />}
+                  
+
                 </View> 
             </View>
         
