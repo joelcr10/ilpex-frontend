@@ -19,19 +19,21 @@ const ChartPieShimmer = ( ) => {
   const styles = StyleSheet.create({
     scrollContainer: {
       flex: 1,
+      alignContent : 'center'
     },
     container: {
       
       // borderColor:'black',
       // borderWidth:3,
       marginTop:'8%',
-      marginHorizontal:'8%',
+      // marginHorizontal:'8%',
       borderRadius:30,
       elevation:8,
       backgroundColor:"white",
       marginBottom : '4%',
       height:500,
-      width:345
+      width:'85%',
+      alignSelf : 'center'
     },
     title: {
       fontSize: 24,
