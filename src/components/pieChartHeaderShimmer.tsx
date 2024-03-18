@@ -20,12 +20,12 @@ const ChartPieHeaderShimmer = ( ) => {
       flex: 1,
     },
     container: {
-      marginTop:30,
-      marginHorizontal:30,
+      marginTop:'8%',
+      marginHorizontal:'9%',
       borderRadius:30,
       elevation:8,
       backgroundColor:"white",
-      marginBottom : 20,
+      marginBottom : '4%',
       height:200,
       width:340
     },
