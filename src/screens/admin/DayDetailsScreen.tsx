@@ -63,10 +63,6 @@ const DayWiseDetailsPage =()=>{
       getStory();
   }, []);
   const onPress =(day:number,batch:number)=>{
-
-    console.log('enetered the function')
-    console.log('this is day',day)
-  console.log('this is batch',batch)
       navigation.navigate('incompleteTraineScreen',{day:day,batch:batch})  
     }
  

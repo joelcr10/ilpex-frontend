@@ -16,6 +16,7 @@ import OnePointFiveTimesSpeed from '../screens/admin/OnePointFiveTimesSpeedScree
 import OneTimesWatchSpeedScreen from '../screens/admin/OneTimesWatchSpeedScreen';
 import TwoTimesWatchSpeedScreen from '../screens/admin/TwoTimesWatchSpeedScreen';
 import LessThanOneTimesWatchSpeedScreen from '../screens/admin/LessThanOneTimesWatchSpeedScreen';
+import BatchIncompleteTraineesScreen from '../screens/admin/BatchIncompleteTraineesScreen';
 
 const Stack = createNativeStackNavigator();
 const AdminNavigation = () =>{
@@ -131,6 +132,13 @@ const AdminNavigation = () =>{
                 <Stack.Screen 
                     name="LessThanOneTimesWatchSpeedScreen"
                     component={LessThanOneTimesWatchSpeedScreen}
+                    options={{
+                        headerShown: false
+                    }}
+                />
+                <Stack.Screen 
+                    name="BatchIncompleteTraineesScreen"
+                    component={BatchIncompleteTraineesScreen}
                     options={{
                         headerShown: false
                     }}
