@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import TraineeCard from "../../components/TraineeCard";
-import TraineeCardShimmer from "../../components/loading/TraineeCardShimmer";
 import ilpex from "../../utils/ilpexUI";
 import { getHook } from "../../network/getHook/getHook";
 import { sendMail } from "../../network/EmailApiHook";
@@ -9,17 +7,20 @@ import { useRoute } from "@react-navigation/native";
 import BackButton from "../../components/BackButton";
 import IconButtonComponent from "../../components/IconButton";
 import BatchIncompleteTraineeCard from "../../components/BatchIncompleteTraineeCard";
+import ShimmerBatchIncompleteTraineeCard from "../../components/loading/ShimmerBatchIncompleteTraineeCard";
+import ToastDemo from "../../components/ToastComponent";
 
 
 const IncompleteTraineesScreen = () => {
   const [isLoading, setLoading] = useState(false);
+  const [toastVisibility, setToastVisibility] = useState(false);
   const route: any = useRoute();
   const day = route.params.day;
-  const batch = route.params.batch;
-
+  const batch = route.params.batch_id;
+  console.log('this is current day',day)
   const TraineesDisplay = () => {
     const [traineeList, setTraineeList] = useState<any>([]);
-
+     console.log('this is batch list',traineeList)
     const sendMailToTrainees = async () => {
       try {
         const { success } = await sendMail({
@@ -27,7 +28,8 @@ const IncompleteTraineesScreen = () => {
           day_number: day,
         });
         if (success) {
-          console.log("Mail Sent successfully......................................");
+            console.log("Mail Sent successfully......................................");
+            setToastVisibility(true);
         }
       } catch (error) {
         console.error('Error while sending mail:', error);
@@ -43,7 +45,7 @@ const IncompleteTraineesScreen = () => {
       const getDayCards = async () => {
         try {
           const { responseData } = await getHook(
-            `/api/v2/batch/${batch}/incompleteTrainees/3`,
+            `/api/v2/batch/${batch}/incompleteTrainees/${day}`,
             
           );
           if (responseData) {
@@ -68,10 +70,11 @@ const IncompleteTraineesScreen = () => {
 
     return (
       <ScrollView>
-        { (!isLoading)?(<View><TraineeCardShimmer></TraineeCardShimmer></View>):
+         { toastVisibility && <ToastDemo BgColor={"green"} message={"Mail Sent successfully"} textColor={"black"}></ToastDemo> }
+        { (!isLoading)?(<View><ShimmerBatchIncompleteTraineeCard></ShimmerBatchIncompleteTraineeCard></View>):
         (<View>
- <IconButtonComponent name={"Send Mail"} onPress={onPress} buttonPressed={false} icon={"mail"}></IconButtonComponent>
- <Text style={styles.traineeText}>Trainees</Text>
+    <IconButtonComponent name={"Send Mail"} onPress={onPress} buttonPressed={false} icon={"mail"}></IconButtonComponent>
+    <Text style={styles.traineeText}>Trainees</Text>
 
                <FlatList
           scrollEnabled={false}
@@ -80,12 +83,10 @@ const IncompleteTraineesScreen = () => {
           renderItem={({ item }) => (
             <BatchIncompleteTraineeCard
                   trainee_name={item.user_name}
-                  batch_name={item.Batch} courses_left={item.incomplete_courses} total_number_of_courses={item.total_courses} course_list={[item.incomplete_courses_list]} currentDay={item.day}  />
+                  batch_name={item.Batch} courses_left={item.incomplete_courses} total_number_of_courses={item.total_courses} course_list={item.incomplete_courses_list} currentDay={item.day}  />
           )}
           keyExtractor={item => item.id}
         />
-
-
         </View>)}
 
       </ScrollView>
