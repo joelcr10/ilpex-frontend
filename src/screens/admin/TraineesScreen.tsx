@@ -63,7 +63,7 @@ const TraineeScreen = () => {
                         setBatchesName(
                             [{label:'All Batches',
                             value:'All'}]); 
-                        setBatchesName(prevBatches => [
+                        setBatchesName((prevBatches: any) => [
                             ...prevBatches,
                             ...responseData.batches.map((batch: { batch_id: number; batch_name: string; }) => ({
                                 label: batch.batch_name,
