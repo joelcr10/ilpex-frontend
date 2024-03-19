@@ -503,6 +503,7 @@ const styles = StyleSheet.create({
 		marginTop : 10,
 		marginLeft : 30,
 		marginRight : 30,
+    marginBottom : 150,
 		alignItems : 'center',
 		backgroundColor : ilpex.white,
 	},
