@@ -33,6 +33,8 @@ export async function UpdateTraineeStatus({
     email,
     JWT_token
   };
+
+  console.log("inside patch ")
  
   try {
     const manageTraineeResponse = await instance.patch(
