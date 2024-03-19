@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
 import TraineeCard from "../../components/TraineeCard";
 import TraineeCardShimmer from "../../components/loading/TraineeCardShimmer";
 import ilpex from "../../utils/ilpexUI";
@@ -13,8 +13,7 @@ const LessThanOneTimesWatchSpeedScreen = () => {
     const [batchName, setBatchName] = useState('BATCH NAME');
     const [lessThanOneWatchSpeedTraineesList, setLessThanOneWatchSpeedTraineesList] = useState<any[]>([]);
     const route: any = useRoute();
-    // const batch_id = route.params.batch_id;
-    const batch_id = 2;
+    const batch_id = route.params.batch_id;
     useEffect(() => {
         const getNotWatchedList = async () => {
             try {
@@ -127,6 +126,5 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
 })
-
 
 export default LessThanOneTimesWatchSpeedScreen;

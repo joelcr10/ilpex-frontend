@@ -19,7 +19,6 @@ const IncompleteTraineeCard = (props : PropsType) => {
 
     const changeExpand=()=>{
         setExpandedAccordion(!expandedAccordion)
-        console.log('entered')
     }
 
     const colorArray = [

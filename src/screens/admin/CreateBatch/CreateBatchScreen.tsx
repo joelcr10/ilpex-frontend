@@ -13,7 +13,6 @@ import FileUploadField from "../../../components/FileUploadField";
 import Button from "../../../components/Button";
 import DisabledBigButton from "../../../components/DisabledBigButton";
 import BackButton from "../../../components/BackButton";
-import { useNavigation } from "@react-navigation/native";
 import ToastDemo from "../../../components/ToastComponent";
 import ConfirmationModal from "../../../components/ConfirmationModal";
 
@@ -96,8 +95,6 @@ const CreateBatchScreen = () => {
             console.log("Error : ", error);
         }
     }
-
-    
 
     return(
         <View style = {styles.pageContainer}>

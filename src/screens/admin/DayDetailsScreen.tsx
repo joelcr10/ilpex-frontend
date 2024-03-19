@@ -8,6 +8,8 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { List } from "react-native-paper";
 import ilpex from "../../utils/ilpexUI";
+import React from "react";
+
 const DayWiseDetailsPage =()=>{
     const route:any = useRoute();
     const navigation : any = useNavigation();
@@ -55,7 +57,6 @@ const DayWiseDetailsPage =()=>{
     }
 
   return(
-    <GestureHandlerRootView>
         <ScrollView>
         <View style={styles.container1}>
           <BackButton color = 'white'/>
@@ -107,7 +108,6 @@ const DayWiseDetailsPage =()=>{
             </View>
         </View>
      </ScrollView>
-     </GestureHandlerRootView>
      )
     }
 const styles = StyleSheet.create({
@@ -188,6 +188,7 @@ const styles = StyleSheet.create({
       right:6
   },
 })
+
 export default DayWiseDetailsPage;
 
 
