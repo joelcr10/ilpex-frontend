@@ -7,7 +7,6 @@ import Button from "../../components/Button";
 import { useNavigation } from '@react-navigation/native';
 import { forgotPassword } from "./ForgotPasswordHook";
 
-
 const ForgotPasswordScreen = ()=>{
 
     const [email,setEmail] = useState('');
@@ -51,15 +50,13 @@ const ForgotPasswordScreen = ()=>{
                 onPress={handleForgotPassword} 
                 buttonPressed={buttonPressed}
             />
-        </View>
-        
+        </View>      
     </View>
    );
-
-
 };
 
 const styles = StyleSheet.create({
+    
     mainView:{
         alignContent:'center',
         justifyContent:'center',

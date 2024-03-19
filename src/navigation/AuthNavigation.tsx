@@ -5,8 +5,6 @@ import { ForgotPasswordScreen } from "../screens/authentication/ForgotPasswordSc
 import ResetPasswordScreen from "../screens/authentication/ResetPasswordScreen";
 import VerificationScreen from "../screens/authentication/VerificationScreen";
 
-
-
 const Stack = createNativeStackNavigator();
 
 const AuthNavigation = () =>{
@@ -42,8 +40,7 @@ const AuthNavigation = () =>{
                 />
                
             </Stack.Navigator>
-    )
-}
-
+    );
+};
 
 export default AuthNavigation;

@@ -1,4 +1,4 @@
-import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ImageBackground, StyleSheet, Text, View } from 'react-native';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from './AuthenticationHook';
@@ -8,7 +8,6 @@ import { userLogin } from '../../context/userSlice';
 import { useState } from 'react';
 import BlackHeading from '../../components/BlackHeading';
 import InputField from '../../components/InputField';
-import Button from '../../components/Button';
 import { userDetails } from '../../context/userDetailsSlice';
 import { Link } from '@react-navigation/native';
 import ilpex from '../../utils/ilpexUI';
@@ -22,27 +21,23 @@ const LoginScreen = () => {
     const [buttonpressed, setButtonpressed] = useState(false);
     const [missingFieldError, setMissingFieldError] = useState("");
 
-  
     const handleLogin = async () => {
       try {
 
         if(loginEmail==''||loginPassword==''){
           setMissingFieldError("You need to enter your email and password");
           return;
-        
-      }
+        }
         
         setButtonpressed(true)
         const { success, statusCode, loginResp, errorMessage } = await loginUser({
           loginEmail,
           loginPassword,
         });
-        console.log(success,loginResp);
   
         if (success) {
           setStringItem(Constants.IS_LOGIN,'true')
           dispatch(userLogin(true));
-
 
           dispatch(userDetails(loginResp));
           console.log(loginResp);
@@ -68,14 +63,13 @@ const LoginScreen = () => {
           setStringItem(Constants.USER_NAME,loginResp.user_name);
           const user_name = await getItem(Constants.USER_NAME);
           console.log('trainee id is',user_name);
-
           
-           const userTokenString = await getItem(Constants.TOKEN)
-           console.log(`token as string`,userTokenString);
+          const userTokenString = await getItem(Constants.TOKEN)
+          console.log(`token as string`,userTokenString);
   
            if (userTokenString) {
             console.log('User details stored.');
-          } else {
+            } else {
             console.error('User details not found.');
           }
         } if(!success) {
@@ -88,6 +82,7 @@ const LoginScreen = () => {
         console.error('Error during login:', error);
       }
     };
+
     return ( 
         <View style={styles.container}>
           <ImageBackground source={require('../../../assets/images/login.png')} style={styles.backgroundImage}/>
@@ -116,14 +111,13 @@ const LoginScreen = () => {
                       buttonPressed={buttonpressed}
                     />
                   </View>
-                  
             </View>
-            
         </View>
      );
-}
+};
 
 const styles = StyleSheet.create({
+
   container: {
     flex: 1,
   },
@@ -156,6 +150,6 @@ const styles = StyleSheet.create({
     textAlign:'center'
   },
   
-})
+});
  
 export default LoginScreen;

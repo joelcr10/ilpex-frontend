@@ -18,8 +18,10 @@ import FileUploadField from "../../../components/FileUploadField";
 import DisabledBigButton from "../../../components/DisabledBigButton";
 import ToastDemo from "../../../components/ToastComponent";
 import ConfirmationModal from "../../../components/ConfirmationModal";
+import { useNavigation } from "@react-navigation/native";
 
 const CreateAssessmentScreen = ()=>{
+    const navigation = useNavigation();
     const [assessmentName,setAssessementName] = useState('');
     const [startDate,setStartDate] = useState(new Date());
     const [endDate,setEndDate] = useState(new Date());
@@ -136,6 +138,28 @@ const CreateAssessmentScreen = ()=>{
           }
     }
 
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            resetFields();
+        });
+        return unsubscribe;
+    }, [navigation]);
+
+    const resetFields = () => {
+        setAssessementName('');
+        setStartDate(new Date());
+        setEndDate(new Date());
+        setIsVisible(false);
+        setBatch('');
+        setMissingAssessmentName('');
+        setMissingBatchName('');
+        setSelectedFile(null);
+        setSuccess(false);
+        setFailure(false);
+        setError('');
+        setIsLoading(false);
+    }
+
     const batch_id = getBatchId(selectedBatch);
     const start_date = getBatchStartDate(selectedBatch);
     const end_date = getBatchEndDate(selectedBatch);
@@ -157,11 +181,6 @@ const CreateAssessmentScreen = ()=>{
         const {success, responseData, statusCode,errorMessage} = await createAssessmentAPI(formData);
         if(success){
             console.log(responseData);
-            setBatch('');
-            setAssessementName('');
-            setStartDate(today);
-            setEndDate(today);
-            setSelectedFile(null);
             setIsLoading(false);
             setSuccess(true);
         }
@@ -170,12 +189,11 @@ const CreateAssessmentScreen = ()=>{
             setError(errorMessage);
             console.log(errorText);
             setFailure(true);
+            setTimeout(() => {
+                setFailure(false);
+            }, 3000);
             setIsLoading(false);
-            setBatch('');
-            setAssessementName('');
-            setStartDate(today);
-            setEndDate(today);
-            setSelectedFile(null);
+            
         }
         }
         }

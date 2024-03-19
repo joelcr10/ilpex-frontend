@@ -1,9 +1,7 @@
 import instance from '../../network/api';
- 
 interface ForgotPasswordProp {
     email:string;
 }
- 
 interface ForgotPasswordResponse {
   success: boolean;
   errorMessage: string;
@@ -36,12 +34,10 @@ export async function forgotPassword({
     forgotPasswordResp = forgotPasswordResponse.data;
     console.log("forgotPasswordResponse resp",forgotPasswordResp);
  
-
-
   } catch (error: any) {
     console.log('Error while user creation in:', error);
     errorMessage = error.message;
   }
  
   return {success, statusCode, forgotPasswordResp, errorMessage};
-}
+};
