@@ -21,7 +21,7 @@ const TraineeDayScreen=()=>{
 
     const [isLoading, setLoading] = useState(true);
 
-    const [courselist, setCourse] = useState<any[]>([]);
+    const [courselist, setCourse] = useState<any>([]);
 
 
     useEffect(() => {
