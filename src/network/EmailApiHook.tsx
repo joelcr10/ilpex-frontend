@@ -45,12 +45,10 @@ export async function sendMail({
  
   try {
     console.log(incompleteTraineeList);
-    console.log("Hiiiiii 1111111111111")
     const sendMailResponse = await instance.post(
       '/api/v2/pending/day/mail',sendMailPayload, authorization
   
     );
-    console.log("Hiiiiii 222222222222222222")
 
     statusCode = sendMailResponse.status.toString();
     {

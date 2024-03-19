@@ -14,7 +14,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import DrawerNavigationHamburger from "../../components/DrawerNavigationHamburger";
 const BatchesScreen = ()=>{
 
-    const navigation = useNavigation();
+    const navigation : any = useNavigation();
     const [allBatchesList,setBatchesList] = useState<any>([]);
     const [isLoading,setLoading] = useState(false);
     const [currentDay,setCurrentDay] = useState<any>([]);

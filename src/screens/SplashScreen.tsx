@@ -1,4 +1,4 @@
-import { Dimensions, ImageBackground, StyleSheet, Text, View } from "react-native"
+import { Dimensions, StyleSheet, Text, View } from "react-native"
 import ilpex from "../utils/ilpexUI";
 import LinearGradient from "react-native-linear-gradient";
 

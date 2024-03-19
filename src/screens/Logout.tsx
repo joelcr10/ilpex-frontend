@@ -15,14 +15,8 @@ import { userDetails } from "../context/userDetailsSlice";
 const Logout = () => {
 
     const navigation : any = useNavigation();
-    // const [isPopupVisible, setPopupVisible] = useState(false);
     const [isLogoutBottomSheet, setLogoutBottomSheet] = useState(false);
     const dispatch = useDispatch();
-
-    // const togglePopup = () => {
-    //     // setPopupVisible(!isPopupVisible);
-    //     setLogoutBottomSheet(true);
-    // };
 
     const toggleLogoutBottomsheet = () => {
         setLogoutBottomSheet(!isLogoutBottomSheet);
@@ -35,10 +29,11 @@ const Logout = () => {
         setStringItem(Constants.TRAINEE_ID, '');
         setStringItem(Constants.USER_ID,'');
         dispatch(userDetails({
-            token : '',
+            token: '',
             user_id: '',
             role_id: '',
-            trainee_id:'',
+            trainee_id: '',
+            user_name: ''
         }));
         dispatch(userLogin(false));
     }

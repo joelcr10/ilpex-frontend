@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux";
 import api from "../../../network/api";
 import Constants from "../../../utils/Constants";
 import { getItem } from "../../../utils/utils";

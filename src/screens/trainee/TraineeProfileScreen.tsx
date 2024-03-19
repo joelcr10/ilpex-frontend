@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { FlatList, Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import ilpex from "../../utils/ilpexUI";
 import BackButton from "../../components/BackButton";
@@ -187,9 +187,7 @@ const TraineeProfileScreen = () => {
                         highScores.push(score.high_score);
                         console.log(`RESULT ID : A${index + 1}, HIGH SCORE : ${score.high_score}`);
                         const assessments = score.assessmentDetails.assessment.assessment_name
-                    // assessments.forEach((assessment: any, index: number) => {
                         assessmentNames.push(assessments);
-                    // })
                     });
                     
                     setResultID(resultIds);
