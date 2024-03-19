@@ -7,7 +7,7 @@ type CardProps={name : string,batchName : string}
  
 const AssessmentCard =({name,batchName} : CardProps)=>{
     return (
-            <View style={styles.container}>
+            <View style={styles.container} testID='assessment-card'>
                 <View style={{
                     flex:1
                 }}>
