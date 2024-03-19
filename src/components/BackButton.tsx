@@ -9,25 +9,25 @@ const BackButton = (props : PropsType) => {
     const {color} = props;
     if(color === 'white')
         return(
-            <View style = {styles.backButtonContainer}>
-                <TouchableOpacity onPress = {navigation.goBack}>
-                    <Image 
-                    style = {styles.backButton}
-                    source = {require('../../assets/icons/backWhite.png')}
-                    />
-                </TouchableOpacity>
-            </View>
+        <View style = {styles.backButtonContainer}>
+            <TouchableOpacity onPress = {navigation.goBack}>
+                <Image 
+                style = {styles.backButton}
+                source = {require('../../assets/icons/backWhite.png')}
+                />
+            </TouchableOpacity>
+        </View>
         )
     else
         return(
-            <View style = {styles.backButtonContainer}>
-                <TouchableOpacity onPress = {navigation.goBack}>
-                    <Image 
-                    style = {styles.backButton}
-                    source = {require('../../assets/icons/backBlack.png')}
-                    />
-                </TouchableOpacity>
-            </View>
+        <View style = {styles.backButtonContainer}>
+            <TouchableOpacity onPress = {navigation.goBack}>
+                <Image 
+                style = {styles.backButton}
+                source = {require('../../assets/icons/backBlack.png')}
+                />
+            </TouchableOpacity>
+        </View>
     );
 }
 

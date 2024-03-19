@@ -1,8 +1,6 @@
-import { DocumentPickerResponse } from 'react-native-document-picker';
 import instance from '../../../network/api';
 import Constants from '../../../utils/Constants';
 import { getItem } from '../../../utils/utils';
-import axios from 'axios';
  
 interface CreateBatchResponse {
   success: boolean;

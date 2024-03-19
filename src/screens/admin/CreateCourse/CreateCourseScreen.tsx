@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import TopBlackHeading from "../../../components/TopBlackHeading";
-import Modal from "react-native-modal";
 import ilpex from "../../../utils/ilpexUI";
 import DocumentPicker from 'react-native-document-picker';
 import { getItem } from "../../../utils/utils";
