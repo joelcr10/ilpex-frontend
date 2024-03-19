@@ -18,6 +18,7 @@ const BatchIncompleteTraineeCard = (props : PropsType) => {
 
     const {trainee_name, batch_name, courses_left, total_number_of_courses, course_list, currentDay} = props;
 
+    console.log("List------------->", course_list)
     const changeExpand=()=>{
         setExpandedAccordion(!expandedAccordion)
         console.log('entered')
@@ -76,17 +77,13 @@ const BatchIncompleteTraineeCard = (props : PropsType) => {
                     >
                         <View style={styles.accordionView}>
                         <Text style={styles.accordionViewHeading}>Incomplete Courses</Text>
-                            <FlatList
-                            showsVerticalScrollIndicator={false}
-                            data={course_list}
-                            renderItem={({ item,index }) => (
-                            <View style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
-                                <Text style={styles.accordionText}>
-                                {index + 1} .  {item}</Text>
+                        {course_list.map( (item,index) =>{
+                            return(
+                                <View style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
+                                    <Text style={styles.accordionText}>{index+1 }. {item}</Text>
                                 </View>
-                            )}
-                            keyExtractor={item => item.id}
-                            />
+                            )
+                        })}
                         </View>
                     </List.Accordion>
                 </View>
