@@ -5,6 +5,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import ilpex from "../utils/ilpexUI";
 import { useNavigation } from "@react-navigation/native";
 
+
 type PropsType = { Day: number, duration: string,progressValue: number, status: boolean;  };
 
 const Daywise = (props: PropsType) => {
