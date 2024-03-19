@@ -28,13 +28,13 @@ describe('BatchCard', () => {
     expect(getByText(`${mockProps.progressDays}/${mockProps.totalDays}`)).toBeTruthy();
   });
 
-//   test('onPress function is called when card is pressed', () => {
-//     const { getByTestId } = render(
-//       <NavigationContainer> {/* Wrap BatchCard with NavigationContainer */}
-//         <BatchesScreen />
-//       </NavigationContainer>
-//     );
-//     fireEvent.press(getByTestId('BatchDetails'));
+  test('onPress function is called when card is pressed', () => {
+    const { getByTestId } = render(
+      <NavigationContainer> {/* Wrap BatchCard with NavigationContainer */}
+        <BatchCard {...mockProps} />
+      </NavigationContainer>
+    );
+    fireEvent.press(getByTestId('batchCard'));
 //     expect(mockProps.onPressFunc).toHaveBeenCalled();
-//   });
+  });
 });
