@@ -31,7 +31,7 @@ const DateSelector = (props : PropsType) => {
     return(
         <View style = {styles.dateFieldContainer}>
             <Text style = {styles.dateSelectFieldNameLabel}>Start and End Date</Text>
-            <TouchableOpacity onPress={handleDateClicker} style={styles.selectDateField}>
+            <TouchableOpacity onPress={handleDateClicker} style={styles.selectDateField} testID="selectDate">
                 {startDate === null && endDate === null ? (
                 <View style = {styles.beforeDateSelectedContainer}>
                     <View style = {styles.beforeDateCaptionContainer}>
@@ -50,7 +50,7 @@ const DateSelector = (props : PropsType) => {
                         <Text style = {styles.selectedDatesCaption}>
                             Selected Dates
                         </Text>
-                        <Text style = {styles.datesDisplay}>{startDate && endDate ? `${formatDate(startDate)} - ${formatDate(endDate)}` : 'Select start and end date'}</Text>
+                        <Text testID="selectedDateText" style = {styles.datesDisplay}>{startDate && endDate ? `${formatDate(startDate)} - ${formatDate(endDate)}` : 'Select start and end date'}</Text>
                     </View>
                     <View style = {styles.afterDateIconContainer}>
                         <Image 
