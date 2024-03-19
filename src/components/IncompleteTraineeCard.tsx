@@ -19,7 +19,6 @@ const IncompleteTraineeCard = (props : PropsType) => {
 
     const changeExpand=()=>{
         setExpandedAccordion(!expandedAccordion)
-        console.log('entered')
     }
 
     const colorArray = [
@@ -36,7 +35,7 @@ const IncompleteTraineeCard = (props : PropsType) => {
     return(
         <View style = {styles.cardContainer}>
             <View style = {styles.dataContainer}>
-                <View style = {styles.profilePicture}>
+                <View style = {styles.profilePicture} testID="profile-picture">
                     <View style = {[styles.circleContainer, {backgroundColor: circleBackgroundColor}]}>
                         <Image 
                         style = {styles.imageLogo}
@@ -67,9 +66,10 @@ const IncompleteTraineeCard = (props : PropsType) => {
                 onPress={changeExpand}
                 style={styles.accordion}
                 titleStyle={styles.accordionTitle}
+                testID="accordion-container"
                 >
                     <View style={styles.accordionView}>
-                    <Text style={styles.accordionViewHeading}>Incomplete Courses</Text>
+                    <Text testID="incompleteCoursesTest" style={styles.accordionViewHeading}>Incomplete Courses</Text>
                        
                         {course_list.map( (item,index) =>{
                             return(
