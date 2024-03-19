@@ -39,7 +39,7 @@ const BarGraph = ({data,labels,names,graphname} : BarGraphProps)=>{
     return (
         <View style={{ height: '100%' }}>
             <View style={styles.container}>
-                <Text style={styles.head} onPress={handleTooltipClose}>{graphname}</Text>
+                <Text style={styles.head}>{graphname}</Text>
                 <View style={{ marginStart: 10, alignItems: 'center' ,marginTop:15}}>
                     <BarChart
                         animationDuration={1000}
@@ -76,7 +76,7 @@ const BarGraph = ({data,labels,names,graphname} : BarGraphProps)=>{
             {tooltipVisible && (
                 <View style={[styles.tooltipContainer, { top: tooltipPosition.y }]}>
                     {/* <Text style={styles.closeButton} onPress={handleTooltipClose}>x</Text> */}
-                    <Text style={styles.tooltipText}>{tooltipData}</Text>
+                    <Text style={styles.tooltipText} onPress={handleTooltipClose}>{tooltipData}</Text>
                     {/* <Text style={styles.tooltipText}>{tooltipData?.label}</Text> */}
                 </View>
             )}

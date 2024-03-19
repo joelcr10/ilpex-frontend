@@ -9,6 +9,7 @@ type ButtonProps = {name:string ;
   };
 
 const LoginButton = ({name,onPress,buttonPressed}:ButtonProps) => {
+
   return (
     <TouchableOpacity onPress={onPress}>
         {buttonPressed ? (
@@ -26,9 +27,11 @@ const LoginButton = ({name,onPress,buttonPressed}:ButtonProps) => {
       </LinearGradient>
     </TouchableOpacity>
   );
+
 };
 
 const styles = StyleSheet.create({
+
   button: {
     width: 200,
     height: 50,
@@ -41,6 +44,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
+  
 });
 
 export default LoginButton;

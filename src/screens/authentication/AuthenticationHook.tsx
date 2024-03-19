@@ -1,10 +1,8 @@
 import instance from '../../network/api';
- 
 interface LogInUserProp {
     loginEmail: string;
   loginPassword: string;
 }
- 
 interface LoginUserResponse {
   success: boolean;
   errorMessage: string;
@@ -16,6 +14,7 @@ export async function loginUser({
     loginEmail,
   loginPassword,
 }: LogInUserProp): Promise<LoginUserResponse> {
+
   let success: boolean = false;
   let errorMessage: string = '';
   let statusCode: string = '';
@@ -38,9 +37,6 @@ export async function loginUser({
     
     loginResp = logInResponse.data;
     console.log("login resp",loginResp.id);
- 
-    // if (statusCode === '200') setStringItem(Constants.IS_LOGIN, 'true');
-
 
   } catch (error: any) {
     console.log('Error while logging in:', error);
@@ -48,4 +44,4 @@ export async function loginUser({
   }
  
   return {success, statusCode, loginResp, errorMessage};
-}
+};

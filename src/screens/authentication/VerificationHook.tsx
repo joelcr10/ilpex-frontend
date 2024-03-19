@@ -1,10 +1,8 @@
-import instance from '../../network/api';
- 
+import instance from '../../network/api'; 
 interface VerificationProp {
     email:string;
     enteredOtp:string;
 }
- 
 interface VerificationResponse {
   success: boolean;
   errorMessage: string;
@@ -38,12 +36,11 @@ export async function verification({
     verificationResp = verificationResponse.data;
     console.log("verificationResp resp",verificationResp);
  
-
-
   } catch (error: any) {
     console.log('Error while user creation in:', error);
     errorMessage = error.message;
   }
  
   return {success, statusCode, verificationResp, errorMessage};
-}
+
+};

@@ -1,11 +1,9 @@
 import instance from '../../network/api';
- 
 interface ResetPasswordProp {
     email:string;
     newPassword: string;
     confirmPassword: string;
 }
- 
 interface ResetPasswordResponse {
   success: boolean;
   errorMessage: string;
@@ -42,12 +40,10 @@ export async function ResetPassword({
     resetPasswordResp = resetPasswordResponse.data;
     console.log("resetPasswordResp resp",resetPasswordResp);
  
-
-
   } catch (error: any) {
     console.log('Error while user creation in:', error);
     errorMessage = error.message;
   }
  
   return {success, statusCode, resetPasswordResp, errorMessage};
-}
+};
