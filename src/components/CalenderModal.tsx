@@ -10,7 +10,7 @@ type CalenderModalProps = {
     setEndDate : (date : Date) =>void,
     closeModal: () => void
 }
-const CalenderModal = (
+const CalenderModal: React.FC<CalenderModalProps> = (
     {minDate,
     maxDate,
     isVisible,

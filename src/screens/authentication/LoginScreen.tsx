@@ -11,7 +11,7 @@ import InputField from '../../components/InputField';
 import { userDetails } from '../../context/userDetailsSlice';
 import { Link } from '@react-navigation/native';
 import ilpex from '../../utils/ilpexUI';
-import LoginButton from '../../components/LoginButton';
+import LoginButton from '../../components/loginbutton';
 
 const LoginScreen = () => {
 
