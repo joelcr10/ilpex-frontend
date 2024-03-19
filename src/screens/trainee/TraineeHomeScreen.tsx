@@ -56,6 +56,7 @@ const TraineeHomeScreen = () => {
     </ScrollView>
   );
 }
+
 const UserName = () => {
   const dispatch = useDispatch();
 

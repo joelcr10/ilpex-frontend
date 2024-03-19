@@ -112,7 +112,7 @@ const DayWiseDetailsPage =()=>{
     }
 const styles = StyleSheet.create({
       container1:{
-        minHeight : 800,
+        minHeight : 1000,
         backgroundColor:'#8518FF'
       },
       body1:{
