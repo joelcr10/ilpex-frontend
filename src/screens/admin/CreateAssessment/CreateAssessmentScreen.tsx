@@ -297,7 +297,6 @@ const styles = StyleSheet.create ({
         textAlign:'center'
       },   
       fileUploadContainer : {
-        // paddingTop : '12%',
         alignSelf : 'center'
     } 
 })

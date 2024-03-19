@@ -3,14 +3,14 @@ import CalendarPicker from "react-native-calendar-picker"
 import ilpex from "../utils/ilpexUI";
 
 type CalenderModalProps = {
-    minDate : Date,
+    minDate : any,
     maxDate : Date,
     isVisible : boolean,
     setStartDate : (date : Date) =>void,
     setEndDate : (date : Date) =>void,
     closeModal: () => void
 }
-const CalenderModal = (
+const CalenderModal: React.FC<CalenderModalProps> = (
     {minDate,
     maxDate,
     isVisible,

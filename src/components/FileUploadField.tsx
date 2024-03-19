@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 type FileUploadProps = {
   onSelect: () => void;
-  selectedFile:string
+  selectedFile:any
 };
 const FileUploadField = ({onSelect,selectedFile}:FileUploadProps) => {
 
