@@ -12,6 +12,7 @@ import { UpdateTraineeStatus } from "./ManageTraineeHook";
 import BackButton from "../../components/BackButton";
 
 const ManageTraineeScreen = () => {
+
   const route: any = useRoute();
   const user_id = route.params?.user_id;
 
@@ -76,6 +77,7 @@ const ManageTraineeScreen = () => {
   };
 
   const handleManageTrainee = async (status:number) => {
+
     const user_name = traineeName;
     const email = traineeEmail;
     setActivateButtonPressed(false);
@@ -161,6 +163,7 @@ const ManageTraineeScreen = () => {
 };
 
 const styles = StyleSheet.create({
+
   title: {
     fontFamily: ilpex.fontRegular,
     fontSize: 20,
@@ -176,6 +179,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     margin: 30,
   },
+  
 });
 
 export default ManageTraineeScreen;

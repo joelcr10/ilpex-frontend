@@ -42,20 +42,20 @@ export async function createUser({
         },
       }
     );
+    
     statusCode = createUserResponse.status.toString();
     {
       statusCode === '200' ? (success = true) : (success = false);
     }
-    
+
     createUserResp = createUserResponse.data;
     console.log("createUserResp resp",createUserResp);
  
-
-
   } catch (error: any) {
     console.log('Error while user creation in:', error);
     errorMessage = error.message;
   }
  
   return {success, statusCode, createUserResp, errorMessage};
-}
+
+};
