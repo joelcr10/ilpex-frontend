@@ -187,10 +187,10 @@ const TraineeProfileScreen = () => {
                         resultIds.push(`A${index + 1}`);
                         highScores.push(score.high_score);
                         console.log(`RESULT ID : A${index + 1}, HIGH SCORE : ${score.high_score}`);
-                        const assessments = score.assessmentName.assessments
-                    assessments.forEach((assessment: any, index: number) => {
-                        assessmentNames.push(assessment.assessment_name);
-                    })
+                        const assessments = score.assessmentName
+                    // assessments.forEach((assessment: any, index: number) => {
+                        assessmentNames.push(assessments);
+                    // })
                     });
                     
                     setResultID(resultIds);
