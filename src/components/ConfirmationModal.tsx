@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Modal from "react-native-modal";
 import { useNavigation } from "@react-navigation/native";
@@ -11,14 +11,16 @@ type PropsType = {
 const ConfirmationModal = (props : PropsType) => {
     
     const navigation = useNavigation();
-    const {success, message} = props;
+    let {success, message} = props;
+    const [successTest, setSuccessTest] = useState(success);
 
     const toggleBottomSheet = () => {
+        setSuccessTest(!success);
         navigation.goBack();
     }
 
     return (
-        <Modal isVisible={success} style = {styles.modalStyle}>
+        <Modal isVisible={successTest} style = {styles.modalStyle}>
             <View style={styles.confirmationModal}>
             <Text style={styles.modalText}>{message}</Text>
                 <View style = {styles.modalButtonContainer}>

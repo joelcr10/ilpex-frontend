@@ -8,6 +8,7 @@ import CircularProgress from './CircularProgress';
 interface Dataset {
   // labels: string[];
   data: number[];
+  legend:string;
   color:string;
 }
 
@@ -42,6 +43,8 @@ const LineGraph: React.FC<LineGraphProps> = ({datasets,
       })),
     };
 
+    console.log("inside line graph,",datasets[0].legend);
+
   return (
     <View style={styles.container} >
         <Text style={styles.headertext}>{chartName}</Text>
@@ -49,10 +52,18 @@ const LineGraph: React.FC<LineGraphProps> = ({datasets,
             <Text style={styles.progressTitle}>{progressTitle}</Text>
             <CircularProgress completeStatus={progress} color={ilpex.progress2}/>
         </View>
+        <View style={styles.legendContainer}>
+        {datasets.map((dataset) => (
+          <View style={styles.legendItem}>
+            <View style={[styles.legendColorIndicator, { backgroundColor: dataset.color }]} />
+            <Text style={styles.legendText}>{dataset.legend}</Text>
+          </View>
+        ))}
+      </View>
         <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
-        style={{alignSelf:'flex-start'}}>
+        style={{alignSelf:'flex-start',marginTop: 30}}>
         <LineChart
             data={chartData}
             width={chartData.labels.length*70}
@@ -79,6 +90,8 @@ const LineGraph: React.FC<LineGraphProps> = ({datasets,
             style={styles.chart}
         />
         </ScrollView>
+
+        
         </View>
   );
 };
@@ -87,37 +100,35 @@ const styles = StyleSheet.create({
     chartContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
   },
   chart: {
-    marginVertical: 8,
     borderRadius: 16,
   },
   container:{
     backgroundColor:ilpex.white,
-    borderRadius: 10,
-    margin:20,
-    padding:20,
-    overflow: 'hidden',
-    shadowColor: '#000',
-    shadowOffset: {
-        width: 5,
-        height: 5,
-      },
-      shadowOpacity: 1,
-      shadowRadius: 5,
-      elevation: 3,
+    paddingRight : '5%',
+    paddingLeft : '1%',
+    // overflow: 'hidden',
+    alignSelf: 'center',
+    
   },
   headertext:{
     fontFamily:ilpex.fontSemiBold,
-    fontSize:18,
+    fontSize:21,
     color:ilpex.black,
-    margin:20,
+    marginTop : '5%',
+    marginRight : '5%',
+    marginBottom : '3%',
+    marginLeft : '10%',
+    // backgroundColor: 'blue'
+
   },
   progressTitle:{
     fontFamily:ilpex.fontRegular,
-    fontSize:16,
+    fontSize:17,
     color:ilpex.black,
+    marginLeft : '1%',
+    textAlignVertical:'center',
   },
   percentage:{
     fontFamily:ilpex.fontSemiBold,
@@ -127,11 +138,41 @@ const styles = StyleSheet.create({
   },
   progress:{
     flexDirection:'row',
-    marginVertical:20,
-    marginHorizontal:40,
-    marginBottom:40,
-    justifyContent:'space-between'
-  }
+    marginVertical:'0%',
+    marginHorizontal:'10%',
+    marginBottom:'10%',
+    justifyContent:'space-between',
+    // backgroundColor: 'red'
+
+  },
+  legendContainer: {
+    position: 'absolute',
+    top: "4.3%",
+    left: "35%",
+    zIndex: 100,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    // marginTop: '-1%',
+    height: 40,
+    width: 200,
+
+  },
+  legendItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginRight: '8%',
+  },
+  legendColorIndicator: {
+    width: 15,
+    height: 15,
+    borderRadius: 10,
+    marginRight: '5%',
+  },
+  legendText: {
+    fontSize: 14,
+    color: ilpex.black,
+  },
 });
 
 export default LineGraph;

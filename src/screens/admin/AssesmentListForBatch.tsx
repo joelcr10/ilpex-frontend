@@ -9,6 +9,8 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import BatchCardShimmer from "../../components/loading/BatchCardShimmer";
 import AssesmentListCard from "../../components/AssesmentListCard";
 import DrawerNavigationHamburger from "../../components/DrawerNavigationHamburger";
+import { ScrollView } from "react-native-gesture-handler";
+import AssessmentListShimmer from "../../components/loading/AssessmentListShimmer";
 
 const AssesmentListScreen = ()=>{
     const navigation : any= useNavigation();
@@ -45,6 +47,7 @@ const AssesmentListScreen = ()=>{
     )
 
     return(
+        <ScrollView>
         <View style={styles.container}>
             <DrawerNavigationHamburger/>
             <Text style = {styles.text}>Assesments</Text>
@@ -54,14 +57,23 @@ const AssesmentListScreen = ()=>{
                     {isLoading? (
                        <FlatList
                             showsVerticalScrollIndicator={false}
+                    
                             data={assesmentList}
                             renderItem = {({item}) => <AssesmentListCard assessment_name={item.assessment_name} onPressButton={()=>onPressButton(item.assessment_id,item.assessment_name)}/>}
                         />
                     ):(
                     <View>
-                       <BatchCardShimmer isLoading></BatchCardShimmer>
-                       <BatchCardShimmer isLoading></BatchCardShimmer>
-                       <BatchCardShimmer isLoading></BatchCardShimmer>
+                       <AssessmentListShimmer/>
+                       <AssessmentListShimmer/>
+                       <AssessmentListShimmer/>
+                       <AssessmentListShimmer/>
+                       <AssessmentListShimmer/>
+                       <AssessmentListShimmer/>
+                       <AssessmentListShimmer/>
+                       <AssessmentListShimmer/>
+                       <AssessmentListShimmer/>
+                       <AssessmentListShimmer/>
+                       <AssessmentListShimmer/>
                     </View>
                     )}
 
@@ -71,6 +83,7 @@ const AssesmentListScreen = ()=>{
                 </View>
             </View>
         </View>
+        </ScrollView>
     )
 };
 

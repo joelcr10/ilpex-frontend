@@ -19,6 +19,13 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import TraineeCardShimmer from "../../components/loading/TraineeCardShimmer";
 import TraineeCard from "../../components/TraineeCard";
 import ilpex from "../../utils/ilpexUI";
+import DayChartShimmer from "../../components/DayChartShimmer";
+import NotWatchedScreen from "./NotWatchedScreen";
+import OnePointFiveTimesSpeed from "./OnePointFiveTimesSpeedScreen";
+import OneTimesWatchSpeedScreen from "./OneTimesWatchSpeedScreen";
+import TwoTimesWatchSpeedScreen from "./TwoTimesWatchSpeedScreen";
+import LessThanOneTimesWatchSpeedScreen from "./LessThanOneTimesWatchSpeedScreen";
+
 
 const BatchDetailsPage =()=>{
    const todayDate = moment().format('YYYY-MM-DD');
@@ -28,19 +35,47 @@ const BatchDetailsPage =()=>{
     
     const [isLoading,setLoading] =useState(true);
     const [feedList, setStoryList] = useState<any>([]);
+    const [percipioScore, setPercipioScore] = useState<any>([]);
+    const [speedStats, setSpeedStats] = useState<any>([]);
     const [batchData,setBatchData] = useState<any>([]);
     const [currentDate,setCurrentDate] = useState<any>([]);
     const [courseCompletion,setCourseCompletion] = useState<any>([]);
     const [dayWiseProgress,setdayWiseProgress] = useState<any>([]);
     const [traineeList,setTraineeList] = useState<any>([]);
+    const [expanded, setExpanded] = useState(true);
+    const [startDate, setStartDate] = useState<string>('')
+    const [endtDate, setEndDate] = useState<string>('')
     const onPress=(batch_id:number,day_id:number)=>{
       
        navigation.navigate("batchDayWiswDetails",{ batch_id:batch_id, day:day_id});
     }
-    const toTrainee=(user_id:number)=>{
-      console.log('user id ashik',user_id)
-       navigation.navigate("TraineeProileAnalysisScreen",{ user_id:user_id});
+    const toTrainee=(user_id:number, trainee_id : number)=>{
+       navigation.navigate("TraineeProileAnalysisScreen",{ user_id:user_id, trainee_id : trainee_id});
     }
+    const day =currentDate.current_day;
+    
+    const BatchIncompleteTraineList=()=>{
+      navigation.navigate("BatchIncompleteTraineesScreen",{ batch_id:batch_id,day:day});
+    }
+
+    const hai =(num:number)=>{
+      if(num == 1){
+        navigation.navigate("OneTimesWatchSpeedScreen",{batch_id:batch_id});
+      }
+      if(num == 2){
+        navigation.navigate("TwoTimesWatchSpeedScreen",{batch_id:batch_id});
+      }
+      if(num == 5){
+        navigation.navigate("LessThanOneTimesWatchSpeedScreen",{batch_id:batch_id});
+      }
+      if(num == 3){
+        navigation.navigate("NotWatchedScreen",{batch_id:batch_id});
+      }
+      if(num == 4){
+        navigation.navigate("OnePointFiveTimesSpeed",{batch_id:batch_id});
+      }
+    }
+
     var count:number =1;
     const loadFunction =()=>{
       setExpanded(!expanded)
@@ -87,6 +122,7 @@ const BatchDetailsPage =()=>{
             const {responseData, errorMessage} = await getHook(`api/v2/batchAvg/${batch_id}`)
             if(responseData)
             {
+              console.log('this is avg score',responseData)
               setStoryList(responseData);
             }
             if(errorMessage)
@@ -101,8 +137,45 @@ const BatchDetailsPage =()=>{
     useEffect(() => {
       const getStory = async () => {
         try {
+          const {responseData, errorMessage} = await getHook(`api/v2/percipioAssesmentAvg/${batch_id}`)
+          if(responseData)
+          {
+            console.log('this is avg of percipio assesments',responseData)
+            setPercipioScore(responseData);
+          }
+          if(errorMessage)
+            console.log(errorMessage)
+          } catch (error) {
+          console.error('Error:', error);
+        }
+      };
+      getStory();
+  }, []);
+
+  useEffect(() => {
+    const getStory = async () => {
+      try {
+        const {responseData, errorMessage} = await getHook(`api/v2/batch/${batch_id}/watchtime`)
+        if(responseData)
+        {
+          console.log('this is speed stats',responseData.data)
+          setSpeedStats(responseData.data);
+        }
+        if(errorMessage)
+          console.log(errorMessage)
+        } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+    getStory();
+}, []);
+
+    useEffect(() => {
+      const getStory = async () => {
+        try {
           const {responseData, errorMessage} = await getHook(`api/v3/batch/${batch_id}/day/${todayDate}`)
           setCurrentDate(responseData);
+          console.log("this is current date",responseData)
         } catch (error) {
           console.error('Error:', error);
         }
@@ -117,8 +190,21 @@ const BatchDetailsPage =()=>{
            if(responseData){
             console.log('this is batch data',responseData)
             setBatchData(responseData);
-            setLoading(false);
+            
           
+              const {startDate,endtDate} = await changeDate(responseData)
+              console.log('Received start date:', startDate);
+             console.log('Received end date:', endtDate);
+            setStartDate(startDate);
+            setEndDate(endtDate)
+            
+            setLoading(false);
+            
+            // const dateString = batchData.batch_details.start_date.split('T')[0];
+            // const date = new Date(dateString);
+            // const startDate = date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+            // console.log("this is date",startDate)
+            // setStartDate(startDate);
             
           }
           } catch (error) {
@@ -144,6 +230,7 @@ const BatchDetailsPage =()=>{
     };
     getStory();
 }, []);
+
 const arrayOfObjects =[];
     for (const key in dayWiseProgress) {
       if (dayWiseProgress.hasOwnProperty(key)) {
@@ -153,11 +240,20 @@ const arrayOfObjects =[];
         // console.log(`${key}: ${value}`);
       }
     }
-const hai =()=>{
-  
+
+
+const changeDate = async(batchData) =>{
+const dateString = batchData.batch_details.start_date.split('T')[0];
+const date = new Date(dateString);
+const startDate = date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+console.log('start date will be',startDate)
+const endDateString = batchData.batch_details.end_date.split('T')[0];
+const endDate = new Date(endDateString);
+const endtDate = endDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+return {startDate,endtDate}
+// setStartDate(startDate);
+// setEndDate(endtDate)
 }
-const [expanded, setExpanded] = useState(true);
- 
 return(
   <GestureHandlerRootView>
         <ScrollView>
@@ -172,19 +268,19 @@ return(
               {isLoading && <ChartPieHeaderShimmer/>} 
                {!isLoading && <View style ={styles.detail}>
                     
-                    <Text style={{fontWeight:'700',color:'black',fontSize:28,marginBottom:20}}>{batchData.batch_details.batch_name}</Text>
-                    <View style={{justifyContent:'flex-start',display:'flex',flexDirection:'row',marginLeft:55}}>
+                    <Text style={{fontFamily : 'Poppins-SemiBold',color:'black',fontSize:24,marginBottom:20}}>{batchData.batch_details.batch_name}</Text>
+                    <View style={{justifyContent:'flex-start',display:'flex',flexDirection:'row',marginLeft : '10%'}}>
                     <View style={{flex:1}}>
-                    <Text style={{fontWeight:'500',color:'black',fontSize:15}}>Start Date </Text> 
-                    <Text style={{fontWeight:'500',color:'black',fontSize:15}}>End Date </Text> 
-                    <Text style={{fontWeight:'500',color:'black',fontSize:15}}>Trainees </Text> 
-                    <Text style={{fontWeight:'500',color:'black',fontSize:15}}>Current Date </Text> 
+                    <Text style={{fontFamily : 'Poppins-Regular',color:'black',fontSize:14}}>Start Date </Text> 
+                    <Text style={{fontFamily : 'Poppins-Regular',color:'black',fontSize:14}}>End Date </Text> 
+                    <Text style={{fontFamily : 'Poppins-Regular',color:'black',fontSize:14}}>Trainees </Text> 
+                    <Text style={{fontFamily : 'Poppins-Regular',color:'black',fontSize:14}}>Current Day </Text> 
                     </View>
                     <View style={{flex:1}}>
-                    <Text style={{marginLeft:30,color:'#8F00FF',fontWeight:'500'}}>{batchData.batch_details.start_date.split('T')[0]}</Text>
-                    <Text style={{marginLeft:30,color:'#8F00FF',fontWeight:'500'}}>{batchData.batch_details.end_date.split('T')[0]}</Text>
-                    <Text style={{marginLeft:30,color:'#8F00FF',fontWeight:'500'}}>{batchData.noOfTrainees}</Text>
-                    <Text style={{marginLeft:30,color:'#8F00FF',fontWeight:'500'}}>{currentDate.current_day}</Text>
+                    <Text style={{fontFamily : 'Poppins-Medium', marginLeft:'24%',color:'#8F00FF', fontSize : 14}}>{startDate}</Text>
+                    <Text style={{fontFamily : 'Poppins-Medium', marginLeft:'24%',color:'#8F00FF', fontSize : 14}}>{endtDate}</Text>
+                    <Text style={{fontFamily : 'Poppins-Medium', marginLeft:'24%',color:'#8F00FF', fontSize : 14}}>{batchData.noOfTrainees}</Text>
+                    <Text style={{fontFamily : 'Poppins-Medium', marginLeft:'24%',color:'#8F00FF', fontSize : 14}}>{currentDate.current_day}</Text>
                     </View>
                   </View>
                 </View>
@@ -192,33 +288,35 @@ return(
 
 
               
-                <List.Accordion
-                    title="Trainees"
-                    left={props => <List.Icon {...props} icon="folder" />}
-                    expanded={!expanded}
-                    onPress={loadFunction}
-                    style={styles.accordian}
-                    titleStyle={styles.accordianTitle}
-                    >
-                     <View style={styles.accordianView}>
-                    
-                        <FlatList
-                        showsVerticalScrollIndicator={false}
-                        // contentContainerStyle = {{paddingBottom : 30}}
-                        data={traineeList}
-                        renderItem={({ item,index }) => (
-                          <TouchableOpacity onPress={()=>toTrainee(item.user_id)}>
-                          <View style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
-                              <Text style={styles.accordianText}>
-                              {index + 1} .  {item.user.user_name}</Text>
-                            </View>
-                            </TouchableOpacity>
-                        )}
-                        keyExtractor={item => item.id}
-                        />
-                        
-                   </View>
-                </List.Accordion>
+                <View style ={{marginBottom : '5%'}}>
+                  <List.Accordion
+                      title="List of Trainees"
+                      left={props => <List.Icon {...props} icon="account" />}
+                      expanded={!expanded}
+                      onPress={loadFunction}
+                      style={styles.accordian}
+                      titleStyle={styles.accordianTitle}
+                      >
+                      <View style={styles.accordianView}>
+                      
+                          <FlatList
+                          showsVerticalScrollIndicator={false}
+                          // contentContainerStyle = {{paddingBottom : 30}}
+                          data={traineeList}
+                          renderItem={({ item,index }) => (
+                            <TouchableOpacity onPress={()=>toTrainee(item.user_id, item.trainee_id)}>
+                            <View style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
+                                <Text style={styles.accordianText}>
+                                {index + 1} .  {item.user.user_name}</Text>
+                              </View>
+                              </TouchableOpacity>
+                          )}
+                          keyExtractor={item => item.id}
+                          />
+                          
+                    </View>
+                  </List.Accordion>
+                </View>
             
 
 
@@ -235,27 +333,92 @@ return(
               {isLoading&&<><ChartPieShimmer/>
               <ChartPieShimmer/></>}
               {!isLoading&&<>
-              <ChartPie chartName={'Assesment Score'} excellent={feedList.excellent} good={feedList.good} poor={feedList.poor} option1="Excellent" option2="Good" option3="Poor" incomplete={hai} />
+                <ChartPie 
+                  chartName={'Percipio Assesment Score'} 
+                  excellent={percipioScore.excellent} 
+                  good={percipioScore.good} 
+                  poor={percipioScore.poor} 
+                  onePointFive={0}
+                  LessOnePointFive={0}
+                  option1="Excellent" 
+                  option2="Good" 
+                  option3="Poor" 
+                  option4='1.5x'
+                  option5='<1.5x' 
+                  incomplete={hai}
+                  option={'assesment'} />
+                <ChartPie 
+                  chartName={'Course Speed'} 
+                  excellent={speedStats.oneWatchSpeed} 
+                  good={speedStats.twoTimesWatchSpeed} 
+                  poor={speedStats.haveNotWatchedAnyVideo} 
+                  onePointFive={speedStats.onePointFiveWatchSpeed}
+                  LessOnePointFive={speedStats.lessThanOneWatchSpeed}
+                  option5='< 1x' 
+                  option1="1x" 
+                  option4='1.5x'
+                  option2="2x" 
+                  option3="NA"
+                  
+                   
+                  incomplete={hai}
+                  option={'speed'} />
+              <ChartPie 
+                  chartName={'Assesment Score'} 
+                  excellent={feedList.excellent} 
+                  good={feedList.good} 
+                  poor={feedList.poor} 
+                  onePointFive={0}
+                  LessOnePointFive={0}
+                  option1="Excellent" 
+                  option2="Good" 
+                  option3="Poor" 
+                  option4='1.5x'
+                  option5='<1.5x' 
+                  incomplete={(num)=>hai} 
+                  option={'assesment'}/>
               
-              <ChartPie chartName={'Course Completion'} excellent={courseCompletion.onTrack} good={0} poor={courseCompletion.laggingBehind} option1="Completed" option2="Partial" option3="Incomplete" incomplete={()=>{}}/>
+              <ChartPie 
+                  chartName={'Course Completion'} 
+                  excellent={courseCompletion.onTrack} 
+                  good={0} 
+                  poor={courseCompletion.laggingBehind} 
+                  onePointFive={0}
+                  LessOnePointFive={0}
+                  option1="Completed" 
+                  option2="Partial" 
+                  option3="Incomplete" 
+                  option4='1.5x'
+                  option5='<1.5x' 
+                  incomplete={BatchIncompleteTraineList}
+                  option={''}/>
               </>
               }
               
-                <View style = {styles.graphContainer}>
-                  <Text style={{marginRight:255,marginBottom:20,fontSize:25}}>Days</Text>
-                  <FlatList 
-                    contentContainerStyle = {{paddingBottom : 5}}
-                    data = {arrayOfObjects}
-                    renderItem = {({item}) => 
-                      
-                      <DayWiseProgressBar dayNumber = {parseInt(item.key)} percentage = {item.value} onPress={()=>onPress(batch_id,parseInt(item.key))}/>
-                    }
+              <View style = {styles.graphContainer}>
+                  <View style = {{flexDirection : 'row', width : '85%', justifyContent: 'space-between', marginBottom: '5%'}}>
+                    <Text style={{ fontSize: 17, fontFamily: 'Poppins-Regular',width : '20%', textAlign : 'left',color : ilpex.darkGrey}}>Days   </Text>
+                    <Text style={{fontSize:15, fontFamily : 'Poppins-Regular', width:'80%' , color : ilpex.darkGrey, textAlign: 'center'}}>Percentage of Courses {'\n'}Completed</Text>
+                  </View>   
                   
-                  />
+                  {isLoading ?
+                  <FlatList 
+                  contentContainerStyle = {{paddingBottom : 5}}
+                  data = {arrayOfObjects}
+                  renderItem = {({item}) => 
+                  <DayChartShimmer/> 
+                  }
+                />:
+                  <FlatList 
+                  contentContainerStyle = {{paddingBottom : 5}}
+                  data = {arrayOfObjects}
+                  renderItem = {({item}) => 
+                    <DayWiseProgressBar dayNumber = {parseInt(item.key)} percentage = {item.value} onPress={()=>onPress(batch_id,parseInt(item.key))}/>
+                  }
+                />}
+                  
+
                 </View> 
-              
-               
-  
             </View>
         
         </View>
@@ -269,54 +432,50 @@ const styles = StyleSheet.create({
     backgroundColor:'#8518FF',
     
   },
+  accordianTitle:{
+    fontFamily : ilpex.fontRegular,
+    fontSize: 17
+},
   accordianText:{
+    paddingTop : '4%',
     fontFamily : ilpex.fontMedium,
-    fontSize : 21,
+    fontSize : 16,
     color : 'black',
   },
   accordian:{
-        borderRadius:20,
-        marginHorizontal:30,
-        backgroundColor:'white',
-        // elevation:5,
+    borderTopLeftRadius : 10, 
+    borderTopRightRadius : 10,
+    backgroundColor:'white',
+    elevation:5,
+    marginLeft : '9%',
+    marginRight : '9%',
        
       },
       accordianView:{
-        borderRadius:20,
-        marginHorizontal:10,
+        borderBottomLeftRadius : 10,
+        borderBottomRightRadius : 10,
         backgroundColor:'white',
         elevation:5,
-        marginTop:10,
-        // position: 'absolute',
-        // zIndex: 1,
-        left:20,
-        width:350,
-        paddingBottom : 30
+        paddingBottom : 30,
+        marginLeft : '9%',
+        marginRight : '9%',
+        paddingLeft : '8%',
+        paddingRight : '8%',
         },
 
       body1:{
         height:'100%',
         backgroundColor:'white',
-        borderTopEndRadius:50,
-        borderTopLeftRadius:50,
-        marginTop:30,
-        // flex: 1,
-        position: 'relative'
-        //  justifyContent:'center'
-        
+        borderTopEndRadius : 30,
+        borderTopStartRadius : 30,
+        marginTop : '5%',
     },
-    accordianTitle:{
-      marginLeft:20,
-      fontWeight:'700',
-      fontSize:20
-      
-  },
       text:{
-        fontFamily:'poppins',
-        fontWeight:'bold',
-        fontSize:45,
+        fontFamily:'Poppins-SemiBold',
+        // fontWeight:'bold',
+        fontSize:35,
         color:'white',
-        marginTop:45
+        marginTop:'17%'
     },
     textData:{
         
@@ -345,7 +504,7 @@ const styles = StyleSheet.create({
 		marginLeft : 30,
 		marginRight : 30,
 		alignItems : 'center',
-		backgroundColor : 'white',
+		backgroundColor : ilpex.white,
 	},
 })
 export default BatchDetailsPage;

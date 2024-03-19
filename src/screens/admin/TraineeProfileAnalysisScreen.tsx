@@ -5,8 +5,9 @@ import BackButton from "../../components/BackButton";
 import BarGraph from "../../components/BarChart";
 import { getHook } from "../../network/getHook/getHook";
 import TraineeProfileShimmer from "../../components/loading/TraineeProfileShimmer";
-import { useRoute } from "@react-navigation/native";
+import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { List } from 'react-native-paper';
+import TraineeDuration from "../trainee/TraineeDuration";
 const TraineeProileAnalysisScreen = () => {
 
     const route:any = useRoute();
@@ -15,10 +16,14 @@ const TraineeProileAnalysisScreen = () => {
     const [traineeBatch, setTraineeBatch] = useState<string[]>([]);
     const [currentDay, setCurrentDay] = useState(2);
     const [currentTraineeDay, setCurrentTraineeDay] = useState(3);
-    const [averageAssessmentScore, setAverageAssessmentScore] = useState<number[]>([]) ;
+    const [averageAssessmentScore, setAverageAssessmentScore] = useState(2);
+    const [averageAssessmentScorePercipio, setAverageAssessmentScorePercipio] = useState(2);
     const [marksIndicatorColor, setMarkIndicatorColor] = useState('black');
+    const [marksIndicatorColorPercipio, setMarkIndicatorColorPercipio] = useState('black');
     const [resultID, setResultID] = useState<any[]>([]);
+    const [resultIdsPercipio, setResultIDPercipio] = useState<any[]>([]);
     const [highScore, setHighScore] = useState<any[]>([]);
+    const [highScoresPercipio, setHighScorePercipio] = useState<any[]>([]);
     const [isLoadingCurrentDay, setLoadingCurrentDay] = useState(false);
     const [traineeProgress, setTraineeProgress] = useState('PENDING');
     const [incompleteCourseList, setIncompleteCourseList] = useState<string[]>([]);
@@ -26,6 +31,8 @@ const TraineeProileAnalysisScreen = () => {
     const [traineeCurrentDay, setTraineeCurrentDay] = useState(false);
     const [expandedAccordion, setExpandedAccordion] = useState(true);
     const [traineeProgressStatus, setTraineeProgressStatus] = useState(false);
+    const [assessmentName,setAssessmentName] = useState<any[]>([]);
+    const [assessmentNamesPercipio,setAssessmentNamePercipio] = useState<any[]>([]);
 
     const changeExpand=()=>{
         setExpandedAccordion(!expandedAccordion)
@@ -35,18 +42,20 @@ const TraineeProileAnalysisScreen = () => {
     let batchId : number = 0; 
     const user_id = route.params.user_id;
     const trainee_id = route.params.trainee_id;
-    useEffect(() => {
+    useFocusEffect(
+        React.useCallback(() => {
 
-        const traineeProfileLoader = async () =>{
-            await getTraineeScores();
-            await getTraineeProfile();
-            await getCurrentDay();
-            await getTraineeProgress();
-            // setFinalLoading(true);
-        }
+            const traineeProfileLoader = async () =>{
+                await getTraineeScoresFromPercipio();
+                await getTraineeScores();
+                await getTraineeProfile();
+                await getCurrentDay();
+                await getTraineeProgress();
+            }
 
-        traineeProfileLoader();        
-    }, []);
+            traineeProfileLoader();        
+        }, [])
+    )
 
     useEffect(() => {
 
@@ -74,29 +83,36 @@ const TraineeProileAnalysisScreen = () => {
 
     const getTraineeScores = async() => {
         try {
-            setTraineeProgress('PENDING');
             const {responseData, errorMessage} = await getHook(`/api/v2/trainee/${trainee_id}/scores`);
             console.log('Trainee ID Inside Trainee Scores Function------', trainee_id)
             if(responseData)
             {
                 console.log("Marks = ", responseData);
-                let averageScore;
+                let averageScore : number;
                 if(responseData.scoreDetails.scoreAverage === null)
                     averageScore =0;
                 else
                     averageScore = responseData.scoreDetails.scoreAverage;
+                averageScore = Math.ceil(averageScore)
                 setAverageAssessmentScore(averageScore);
                 const resultIds: string[] = [];
                 const highScores: string[] = [];
+                const assessmentNames:string[] = [];
                 const scores = responseData.scoreDetails.scores;
                 scores.forEach((score: any, index: number) => {
                     resultIds.push(`A${index + 1}`);
                     highScores.push(score.high_score);
                     console.log(`RESULT ID : A${index + 1}, HIGH SCORE : ${score.high_score}`);
+                    const assessments = score.assessmentName.assessments
+                    assessments.forEach((assessment: any, index: number) => {
+                        assessmentNames.push(assessment.assessment_name);
+                    })
                 });
                 
                 setResultID(resultIds);
                 setHighScore(highScores);
+                setAssessmentName(assessmentNames);
+
                 
                 if(averageScore >= 90)
                     setMarkIndicatorColor('green')
@@ -112,19 +128,73 @@ const TraineeProileAnalysisScreen = () => {
         }
     };
 
+    const getTraineeScoresFromPercipio = async() => {
+        try {
+            const {responseData, errorMessage} = await getHook(`/api/v2/trainee/${trainee_id}/percipio/assessment`);
+            console.log('Trainee ID Inside Percipio Trainee Scores Function------', trainee_id)
+            if(responseData)
+            {
+                let averageScorePercipio : number = 0;
+                let totalMarksPercipio : number = 0;
+                let totalNumberOfAssessmentsPercipio : number = 0;
+
+                if(responseData.data.length < 0)
+                    averageScorePercipio = 0;
+                else
+                {
+                    for(const marksObject of responseData.data)
+                    {
+                        totalMarksPercipio = totalMarksPercipio + marksObject.high_score;
+                        totalNumberOfAssessmentsPercipio = totalNumberOfAssessmentsPercipio + 1;
+                    }
+                    averageScorePercipio = Math.ceil(totalMarksPercipio/totalNumberOfAssessmentsPercipio);
+                    console.log("Average Score Percipio :", averageScorePercipio);
+                    setAverageAssessmentScorePercipio(averageScorePercipio);
+
+                }
+
+                const resultIdsPercipio: string[] = [];
+                const highScoresPercipio: string[] = [];
+                const assessmentNamesPercipio:string[] = [];
+                
+                const scores = responseData.data;
+                scores.forEach((score: any, index: number) => {
+                    resultIdsPercipio.push(`A${index + 1}`);
+                    highScoresPercipio.push(score.high_score);
+                    assessmentNamesPercipio.push(score.course_name);
+                    console.log(`RESULT ID IN PERCIPIO: A${index + 1}, HIGH SCORE IN PERCIPIO: ${score.high_score}, 'ASSESSMENT NAME : ${score.course_name}`);
+                });
+
+                setResultIDPercipio(resultIdsPercipio);
+                setHighScorePercipio(highScoresPercipio);
+                setAssessmentNamePercipio(assessmentNamesPercipio);
+                
+                if(averageScorePercipio >= 90)
+                    setMarkIndicatorColorPercipio('green')
+                else if (averageScorePercipio >= 70)
+                    setMarkIndicatorColorPercipio('orange');
+                else if(averageScorePercipio >= 50)
+                    setMarkIndicatorColorPercipio('yellow');
+                else
+                    setMarkIndicatorColorPercipio('red');
+            }
+        } catch(error) {
+            console.log('Error', error);
+        }
+    };
+
     const getCurrentDay = async() => {
         try {
             const currentDate = new Date();
-            currentDate.setDate(currentDate.getDate() + 1);
+            currentDate.setHours(currentDate.getHours() + 5);
+            currentDate.setMinutes(currentDate.getMinutes() + 30);
+            console.log("Current DATE --------------", currentDate);
             const isoString = currentDate.toISOString();
             const dateString = isoString.substring(0, isoString.indexOf('T'));
-            console.log("CurrentDate = ", dateString);
-            console.log("Batch ID = ", batchId);
             const {responseData, errorMessage} = await getHook(`/api/v3/batch/${batchId}/day/${dateString}`);
             if(responseData)
             {
                 setCurrentDay(responseData.current_day);
-                console.log("Current Day Is ---------->",responseData.current_day )
                 setLoadingCurrentDay(true);
             }
         } catch(error) {
@@ -157,6 +227,7 @@ const TraineeProileAnalysisScreen = () => {
                 
                 setTraineeProgressStatus(true);
                 await courseListFromDatabase(largestDayNumber, trainee_id)
+                console.log(typeof(incompleteCourseList), "LISTTTTTTTT----------------->", incompleteCourseList);
             }
         }catch (error)
         {
@@ -265,9 +336,25 @@ const TraineeProileAnalysisScreen = () => {
                             
                             </View>
                         </View>
+
                         <View style = {styles.statsRow}>
                             <View style = {styles.statsKey}>
-                                <Text style = {styles.statsKeyLabel}>Average Assessment Score</Text>
+                                <Text style = {[styles.statsKeyLabel,{width : 220}]}>Average Assessment Score on Percpio</Text>
+                            </View>
+                            <View style = {styles.statsValue}>
+                                <View style = {styles.percentageAndColorContainer}>
+                                    <View style = {[styles.colorDot, {backgroundColor : marksIndicatorColorPercipio}]}></View>
+                                    <Text style ={styles.percentageLabel}>
+                                    {averageAssessmentScorePercipio}%
+                                    </Text>
+                                    
+                                </View>
+                            </View>
+                        </View>
+
+                        <View style = {styles.statsRow}>
+                            <View style = {styles.statsKey}>
+                                <Text style = {[styles.statsKeyLabel,{width : 220}]}>Average Assessment Score on ILPex</Text>
                             </View>
                             <View style = {styles.statsValue}>
                                 <View style = {styles.percentageAndColorContainer}>
@@ -279,12 +366,34 @@ const TraineeProileAnalysisScreen = () => {
                                 </View>
                             </View>
                         </View>
+
                     </View>
+
+                    <View  style={{
+                        flexDirection:'column'
+                     }}> 
+                        <View style={{
+                            flex:1
+                        }}>
+                            <BarGraph data={highScoresPercipio} labels={resultIdsPercipio} names={assessmentNamesPercipio} graphname = {'Assessment Scores - Percipio'}></BarGraph>
+                        </View>
+                    </View> 
+                    
+                     <View  style={{
+                        flexDirection:'column'
+                     }}> 
+                        <View style={{
+                            flex:1
+                        }}>
+                            <BarGraph data={highScore} labels={resultID} names={assessmentName} graphname = {'Assessment Scores - ILPex'}></BarGraph>
+                        </View>
+                    </View> 
 
                     <View style={{
                             marginBottom : '10%',
-                            marginTop : '5%',
-                            flex:1
+                            flex:1,
+                            marginLeft : '1%',
+                            marginRight : '1%'
                         }}>
                             <List.Accordion
                             title="Courses left for the day"
@@ -305,21 +414,16 @@ const TraineeProileAnalysisScreen = () => {
                                         {index + 1} .  {item}</Text>
                                         </View>
                                     )}
-                                    keyExtractor={item => item.id}
+                                    keyExtractor={item => item}
                                     />
                                 
                                 </View>
                             </List.Accordion>
                     </View>
-                     <View  style={{
-                        flexDirection:'column'
-                     }}> 
-                        <View style={{
-                            flex:1
-                        }}>
-                            <BarGraph data={highScore} labels={resultID}></BarGraph>
-                        </View>
-                    </View>  
+                    
+                    <View style = {{marginLeft:-20}}>
+                        <TraineeDuration userID = {user_id}/>    
+                    </View> 
                 </View>
             )
         }

@@ -2,39 +2,55 @@ import { ScrollView, StyleSheet, Text, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import ShimmerPlaceholder from "react-native-shimmer-placeholder";
 
-const ChartPieShimmer = ( ) => {
+const DayChartShimmer = ( ) => {
     
     return (
-      <ScrollView style={styles.scrollContainer}>
+        <View style={{display:'flex',flexDirection:'row'}}>
+
         
+        <ShimmerPlaceholder 
+        LinearGradient={LinearGradient}
+            // visible={true}
+            style={styles.day}>
+        </ShimmerPlaceholder>
+
+
+      <ScrollView style={styles.scrollContainer}>
         <ShimmerPlaceholder 
         LinearGradient={LinearGradient}
             // visible={true}
             style={styles.container}>
         </ShimmerPlaceholder>
       </ScrollView>
+      </View>
     );
   };
   
   const styles = StyleSheet.create({
     scrollContainer: {
       flex: 1,
-      alignContent : 'center'
     },
     container: {
       
       // borderColor:'black',
       // borderWidth:3,
-      marginTop:'8%',
-      // marginHorizontal:'8%',
+      marginTop:30,
+      marginHorizontal:30,
       borderRadius:30,
       elevation:8,
-      backgroundColor:"white",
-      marginBottom : '4%',
-      height:500,
-      width:'85%',
-      alignSelf : 'center'
+      marginBottom : 20,
+      height:15,
+      width:200
     },
+    day: {
+        marginTop:30,
+        marginHorizontal:30,
+        borderRadius:30,
+        elevation:8,
+        marginBottom : 20,
+        height:15,
+        width:50
+      },
     title: {
       fontSize: 24,
       margin: 10,
@@ -101,5 +117,5 @@ const ChartPieShimmer = ( ) => {
     },
   });
   
-  export default ChartPieShimmer;
+  export default DayChartShimmer;
   

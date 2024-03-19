@@ -24,6 +24,7 @@ import ilpex from '../utils/ilpexUI';
           maxHeight={300}
           labelField="label"
           valueField="value"
+          itemTextStyle={{color:ilpex.black}}
           placeholder={!isFocus ? `${placeholder}` : ''}
           searchPlaceholder="Search..."
           value={value}
@@ -58,17 +59,8 @@ import ilpex from '../utils/ilpexUI';
       marginRight: 5,
       height:20
     },
-    // label: {
-    //   position: 'absolute',
-    //   backgroundColor: 'white',
-    //   left: 22,
-    //   top: 8,
-    //   zIndex: 999,
-    //   paddingHorizontal: 8,
-    //   fontSize: 14,
-    // },
     placeholderStyle: {
-      fontSize: 20,
+      fontSize: 18,
       fontFamily:ilpex.fontRegular,
       color : 'gray'
     },

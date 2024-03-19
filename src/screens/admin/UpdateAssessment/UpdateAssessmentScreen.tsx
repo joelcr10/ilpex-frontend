@@ -20,12 +20,6 @@ const UpdateAssessmentScreen=()=>{
     const route:any = useRoute();
     const assessment_id = route.params.assessment_id;
     const assessment_name = route.params.assessment_name;
-    // const batch_name = route.params.batch_name;
-    // const assessment_start_date = route.params.start_date;
-    // const assessment_end_date = route.params.end_date;
-
-
-    const [assessmentName,setAssessementName] = useState('');
     const [startDate,setStartDate] = useState(new Date());
     const [endDate,setEndDate] = useState(new Date());
     const [isVisible,setIsVisible] = useState(false);
@@ -46,7 +40,6 @@ const UpdateAssessmentScreen=()=>{
     useEffect(()=>{
         const getBatches = async()=>{
             try{
-                setIsLoading(true);
                 const { success,statusCode,responseData,errorMessage} = await getHook('/api/v2/batch');
                 console.log(success,statusCode);
                 if(success){
@@ -124,6 +117,9 @@ const UpdateAssessmentScreen=()=>{
                 console.log(errorMessage);
                 setError(errorMessage);
                 setFailure(true);
+                setTimeout(() => {
+                    setFailure(false);
+                }, 3000); 
                 setIsLoading(false);
             }
         }
@@ -147,8 +143,10 @@ const UpdateAssessmentScreen=()=>{
                         <DateSelector startDate={startDate} endDate={endDate} onPress={handleOpen}></DateSelector>
                     </View>
                     <CalenderModal minDate={start_date} maxDate={end_date} isVisible={isVisible}  setStartDate={setStartDate} setEndDate={setEndDate} closeModal={handleClose}></CalenderModal>
-                    {(startDate === null || endDate === null)? (
+                    {(startDate === null || endDate === null || selectedBatch === '')? (
+                        <View style={styles.button}>
                         <DisabledBigButton name="Save Changes"/>
+                        </View>
                             ) : (
                         <View style={styles.button}>
                             <Button name={'Save Changes'} onPress={updateAssessment} buttonPressed={false}></Button>
@@ -223,7 +221,8 @@ const styles = StyleSheet.create ({
         marginTop : '-5%'
     },
     button : {
-        marginTop : '30%'
+        marginTop : '30%',
+        alignSelf : 'center'
     },
     errorText: {
         color: ilpex.failure,

@@ -11,6 +11,13 @@ import ManageTraineeScreen from '../screens/admin/ManageTrainee';
 import DayWiseDetailsPage from "../screens/admin/DayDetailsScreen";
 import IncompleteTraineesScreen from '../screens/admin/IncompleteTraineesScreen';
 import UpdateAssessmentScreen from '../screens/admin/UpdateAssessment/UpdateAssessmentScreen';
+import NotWatchedScreen from '../screens/admin/NotWatchedScreen';
+import OnePointFiveTimesSpeed from '../screens/admin/OnePointFiveTimesSpeedScreen';
+import OneTimesWatchSpeedScreen from '../screens/admin/OneTimesWatchSpeedScreen';
+import TwoTimesWatchSpeedScreen from '../screens/admin/TwoTimesWatchSpeedScreen';
+import LessThanOneTimesWatchSpeedScreen from '../screens/admin/LessThanOneTimesWatchSpeedScreen';
+import BatchIncompleteTraineesScreen from '../screens/admin/BatchIncompleteTraineesScreen';
+
 const Stack = createNativeStackNavigator();
 const AdminNavigation = () =>{
         return(
@@ -90,6 +97,48 @@ const AdminNavigation = () =>{
                 <Stack.Screen 
                     name="updateAssesments"
                     component={UpdateAssessmentScreen}
+                    options={{
+                        headerShown: false
+                    }}
+                />
+                <Stack.Screen 
+                    name="NotWatchedScreen"
+                    component={NotWatchedScreen}
+                    options={{
+                        headerShown: false
+                    }}
+                />
+                <Stack.Screen 
+                    name="OnePointFiveTimesSpeed"
+                    component={OnePointFiveTimesSpeed}
+                    options={{
+                        headerShown: false
+                    }}
+                />
+                <Stack.Screen 
+                    name="OneTimesWatchSpeedScreen"
+                    component={OneTimesWatchSpeedScreen}
+                    options={{
+                        headerShown: false
+                    }}
+                />
+                <Stack.Screen 
+                    name="TwoTimesWatchSpeedScreen"
+                    component={TwoTimesWatchSpeedScreen}
+                    options={{
+                        headerShown: false
+                    }}
+                />
+                <Stack.Screen 
+                    name="LessThanOneTimesWatchSpeedScreen"
+                    component={LessThanOneTimesWatchSpeedScreen}
+                    options={{
+                        headerShown: false
+                    }}
+                />
+                <Stack.Screen 
+                    name="BatchIncompleteTraineesScreen"
+                    component={BatchIncompleteTraineesScreen}
                     options={{
                         headerShown: false
                     }}

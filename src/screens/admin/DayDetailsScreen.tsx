@@ -63,10 +63,6 @@ const DayWiseDetailsPage =()=>{
       getStory();
   }, []);
   const onPress =(day:number,batch:number)=>{
-
-    console.log('enetered the function')
-    console.log('this is day',day)
-  console.log('this is batch',batch)
       navigation.navigate('incompleteTraineScreen',{day:day,batch:batch})  
     }
  
@@ -81,7 +77,8 @@ return(
             <View style ={styles.body1}>
               <View>
               
-              {isLoading && <ChartPieHeaderShimmer/>} 
+             
+              <View style = {{marginTop : '15%', marginBottom : '8%', marginLeft : '4.5%',marginRight : '4.5%'}}>
               <List.Accordion
                     title="Courses"
                     left={props => <List.Icon {...props} icon="folder" />}
@@ -95,22 +92,33 @@ return(
                      <FlatList
                         data={dayWiseCourseList}
                         renderItem = {({item,index}) =><View style ={styles.eachDetail}>
-                        <Text style={{fontWeight:'500',color:'black',fontSize:15}}>{index+1} . {item.course_name.substring(0,20)}...</Text> 
-                        <Text style={{marginLeft:30,fontWeight:'500'}}>{item.course_duration}</Text>
+                        <Text style={styles.accordionText}>{index+1} . {item.course_name.substring(0,20)}...</Text> 
+                        <Text style={styles.accordionTextTime}>{item.course_duration}</Text>
                         </View>}
+                        keyExtractor={item => item.id}
                         />
                         
                    </View>
                 </List.Accordion>
-               
+                </View>
               
                  {/* <View>
                    <IconButtonComponent  name={'Report'} onPress={()=>{}} buttonPressed={false} icon={'description'}/>
                 </View> */}
               </View>
-              {isLoading&&<><ChartPieShimmer/>
-              <ChartPieShimmer/></>}
-              {!isLoading&&<><ChartPie chartName={'Course Completion'} excellent={currentDateCompletion.onTrack} good={0} poor={currentDateCompletion.laggingBehind} option1="Completed" option2="Partial" option3="Incomplete" incomplete={()=>onPress(day,batch)}/></>}
+              {isLoading && <ChartPieShimmer/>}
+              {!isLoading&&<>
+              <ChartPie 
+                chartName={'Course Completion'} 
+                excellent={currentDateCompletion.onTrack} 
+                good={0} 
+                poor={currentDateCompletion.laggingBehind} 
+                option1="Completed" 
+                option2="Partial" 
+                option3="Incomplete" 
+                incomplete={()=>onPress(day,batch)}
+                option={''}
+                /></>}
             </View>
         
          </View>
@@ -120,56 +128,67 @@ return(
     }
 const styles = StyleSheet.create({
       container1:{
-        height:'100%',
+        minHeight : 800,
         backgroundColor:'#8518FF'
       },
       body1:{
         height:'100%',
         backgroundColor:'white',
-        borderTopEndRadius:50,
-        borderTopLeftRadius:50,
-        marginTop:30,
+        borderTopEndRadius:30,
+        borderTopLeftRadius:30,
+        marginTop:'5%',
         //  justifyContent:'center'
         
     },
+    accordionText : {
+      fontFamily : ilpex.fontMedium,
+      color : ilpex.darkGrey
+    },
+
+    accordionTextTime : {
+      fontFamily : ilpex.fontMedium,
+      color : ilpex.darkGrey
+    },
     accordianTitle:{
-      marginLeft:20,
-      fontWeight:'700',
-      fontSize:20
+      fontFamily : ilpex.fontRegular,
+      fontSize: 17,
+      paddingTop : '3%'
       
   },
     accordianText:{
+      paddingTop : '4%',
       fontFamily : ilpex.fontMedium,
-      fontSize : 21,
+      fontSize : 16,
       color : 'black',
     },
     accordian:{
-          borderRadius:20,
-          marginHorizontal:30,
-          backgroundColor:'white',
-          // elevation:5,
-         
+      borderTopLeftRadius : 10, 
+      borderTopRightRadius : 10,
+      backgroundColor:'white',
+      elevation:5,
+      marginLeft : '3%',
+      marginRight : '3%',
         },
         accordianView:{
-          borderRadius:20,
-          marginHorizontal:10,
+          borderBottomLeftRadius : 10,
+          borderBottomRightRadius : 10,
           backgroundColor:'white',
           elevation:5,
-          marginTop:10,
-          // position: 'absolute',
-          // zIndex: 1,
-          left:20,
-          width:350
-          },
+          paddingBottom : 30,
+          marginLeft : '3%',
+          marginRight : '3%',
+          paddingLeft : '8%',
+    },
       text:{
         fontFamily:'poppins',
         fontWeight:'bold',
-        fontSize:45,
+        fontSize:35,
         color:'white',
         marginTop:45
     },
     textData:{
-        
+        marginTop : '3%',
+        marginBottom : '6%',
         alignItems:'center'
     },
     detail: {
