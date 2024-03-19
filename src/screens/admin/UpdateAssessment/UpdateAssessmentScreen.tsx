@@ -30,13 +30,17 @@ const UpdateAssessmentScreen=()=>{
     const [success, setSuccess] = useState(false);
     const [failure,setFailure] = useState(false);
     const [isloading, setIsLoading] = useState(false);
+
     const today = new Date();
+
     const handleOpen=()=>{
         setIsVisible(true);
     }
+
     const handleClose=()=>{
         setIsVisible(false);
     }
+
     useEffect(()=>{
         const getBatches = async()=>{
             try{
@@ -65,6 +69,7 @@ const UpdateAssessmentScreen=()=>{
         }
         getBatches();
     },[]);
+
     const getBatchId = (selectedBatch : string) => {
         for (const batch of allBatches) {
             if (batch.batch_name === selectedBatch) {
@@ -72,6 +77,7 @@ const UpdateAssessmentScreen=()=>{
             }
           }
     }
+
     const getBatchStartDate = (selectedBatch : string) => {
         for (const batch of allBatches) {
             if (batch.batch_name === selectedBatch) {
@@ -90,6 +96,7 @@ const UpdateAssessmentScreen=()=>{
             }
           }
     }
+
     const getBatchEndDate = (selectedBatch : string) => {
         for (const batch of allBatches) {
             if (batch.batch_name === selectedBatch) {
@@ -127,6 +134,7 @@ const UpdateAssessmentScreen=()=>{
         console.log('Error while updating assessment', err);
     }
 }
+
     return (
         <View style={styles.container}>
             <BackButton color={"white"}></BackButton>

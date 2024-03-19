@@ -3,7 +3,7 @@ import { render, fireEvent } from '@testing-library/react-native';
 import DropdownComponent from '../src/components/Dropdown';
 
 describe("Testing Dropdown component", () => {
-    it("renders dropdown with placeholder 'Select Batch'", () => {
+    it("renders dropdown with placeholder", () => {
         const placeholder = "Select Batch"
         const mockFunction = jest.fn();
         const mockData = [
