@@ -8,8 +8,6 @@ import { ResetPassword } from "./ResetPasswordHook";
 import ilpex from "../../utils/ilpexUI";
 import ModalComponent from "../../components/ModalComponent";
 
-
-
 const ResetPasswordScreen = ()=> {
 
         const [newPassword,setNewPassword]=useState('');
@@ -26,14 +24,14 @@ const ResetPasswordScreen = ()=> {
 
         const showModal = () => {
             setModalVisible(true);
-          };
+        };
         
-          const hideModal = () => {
+        const hideModal = () => {
             setModalVisible(false);
             navigation.navigate('Login');
-          };
+        };
 
-          const handleResetPassword = async () => {
+        const handleResetPassword = async () => {
             setButtonpressed(true);
         
             try {
@@ -90,8 +88,6 @@ const ResetPasswordScreen = ()=> {
             }
         };
         
-
-
     return(
         <View style={styles.mainView}>
             <BlackHeading heading={"Reset Password"}/>
@@ -117,8 +113,6 @@ const ResetPasswordScreen = ()=> {
                 buttonPressed={buttonPressed}
             />
              </View>
-            
-            {/* Conditionally render the ModalComponent with dynamic text */}
             <ModalComponent
                 isVisible={isModalVisible}
                 closeModal={hideModal}
@@ -126,13 +120,12 @@ const ResetPasswordScreen = ()=> {
                 failureText={ "Please try again."}
                 setMessageVisible={setModalVisible}
             />
-
         </View>
-    )
-
-}
+    );
+};
 
 const styles = StyleSheet.create({
+
     mainView:{
         justifyContent:'center',
         height:'100%',
@@ -146,7 +139,7 @@ const styles = StyleSheet.create({
       buttonview:{
         alignSelf:'center',
     },
-})
+});
 
 
 export default ResetPasswordScreen;

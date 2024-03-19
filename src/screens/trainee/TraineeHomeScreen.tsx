@@ -10,7 +10,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { percipioReportAPI } from "./percipioReportAPI";
 import ShimmerDaywise from "../../components/loading/DayWiseCardShimmer";
 import ShimmerAssessmentCard from "../../components/loading/AssessmentCardShimmer";
-import { userNames } from "../../context/userNameSlice";
 import { useFocusEffect } from "@react-navigation/native";
 
 const TraineeHomeScreen = () => {
@@ -72,7 +71,6 @@ const UserName = () => {
         );
 
         setUserName(responseData.data.user_name);
-        dispatch(userNames(responseData.data.user_name));
 
 
       } catch (error) {
