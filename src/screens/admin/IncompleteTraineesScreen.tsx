@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
 import ilpex from "../../utils/ilpexUI";
 import { getHook } from "../../network/getHook/getHook";
 import { sendMail } from "../../network/EmailApiHook";
@@ -45,14 +45,10 @@ const IncompleteTraineesScreen = () => {
           const { responseData } = await getHook(
             `api/v2/batch/${batch}/incompleteTrainees/day/${day}`,
           );
-          if (responseData) {
-            
+          if (responseData) {          
             setTraineeList(responseData);
             console.log(responseData.data);
-
           }
-
-
         } catch (error) {
           console.error('Error:', error);
         }
@@ -84,12 +80,9 @@ const IncompleteTraineesScreen = () => {
           )}
           keyExtractor={item => item.id}
         />
-
-
-        </View>)}
-
+        </View>)
+        }
       </ScrollView>
-
     );
   }
 

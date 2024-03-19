@@ -36,7 +36,6 @@ const TraineeProfileScreen = () => {
     const [traineeProgressStatus, setTraineeProgressStatus] = useState(false);
     const [assessmentName,setAssessmentName] = useState<any[]>([]);
     const [assessmentNamesPercipio,setAssessmentNamePercipio] = useState<any[]>([]);
-
     const [user_id, setuserID] = useState('');
 
     const changeExpand=()=>{

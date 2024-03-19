@@ -5,13 +5,11 @@ import TraineeDayScreen from "../screens/trainee/TraineeDayScreen";
 import TraineeProfile from "../screens/trainee/TraineeProfileScreen";
 import TraineeDuration from "../screens/trainee/TraineeDuration";
 
-
 const Stack = createNativeStackNavigator();
+
 const TraineeNavigation = () =>{
         return(
             <Stack.Navigator>
-               
-
                 <Stack.Screen 
                     name="TraineeHome"
                     component={TraineeHomeScreen}

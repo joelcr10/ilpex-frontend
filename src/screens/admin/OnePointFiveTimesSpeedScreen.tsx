@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
 import TraineeCard from "../../components/TraineeCard";
 import TraineeCardShimmer from "../../components/loading/TraineeCardShimmer";
 import ilpex from "../../utils/ilpexUI";

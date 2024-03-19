@@ -1,5 +1,4 @@
-import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, View } from "react-native"
-import Icon from "react-native-vector-icons/MaterialIcons";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import ilpex from "../utils/ilpexUI";
 import React from "react";
 

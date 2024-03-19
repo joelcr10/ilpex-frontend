@@ -50,8 +50,6 @@ const TraineeScreen = () => {
     )
 
     //get Batches 
-
-
     useEffect(()=>{
         const getBatches = async()=>{
             try{
@@ -79,7 +77,6 @@ const TraineeScreen = () => {
         }
         getBatches();
     },[]);
-
 
     const getBatchId = (selectedBatch : string) => {
         for (const batch of allBatches) {
@@ -141,7 +138,6 @@ const TraineeScreen = () => {
             </View>
         </ScrollView>
     );
-
 }
 
 const styles = StyleSheet.create({
