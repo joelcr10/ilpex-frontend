@@ -14,7 +14,7 @@ describe("Testing Dropdown component", () => {
 
         const { getByPlaceholderText } = render(
             <DropdownComponent
-                placeholder={"Select Batch"}
+                placeholder={placeholder}
                 data={mockData}
                 setBatch={mockFunction}
             />
