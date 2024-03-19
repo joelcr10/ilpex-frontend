@@ -14,12 +14,10 @@ const VerificationScreen = () => {
   const email = (route.params as { email?: string })?.email || "";
 
   const handleVerification = async () => {
+    
     try {
-
-       const {success, statusCode, verificationResp, errorMessage} = await verification({email,enteredOtp,})
-
+      const {success, statusCode, verificationResp, errorMessage} = await verification({email,enteredOtp,});1
       if (success) {
-        // OTP verification successful, navigate to the reset password screen
         navigation.navigate("Reset Password", { email: email });
       } else {
         Alert.alert("Invalid OTP", "Please enter the correct OTP.");
@@ -60,6 +58,7 @@ const VerificationScreen = () => {
 };
 
 const styles = StyleSheet.create({
+
   mainView: {
     alignContent: "center",
     justifyContent: "center",
@@ -84,6 +83,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
     paddingLeft: 10,
   },
+  
 });
 
 export default VerificationScreen;

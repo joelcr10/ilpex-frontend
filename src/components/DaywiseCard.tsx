@@ -10,18 +10,17 @@ type PropsType = { Day: number, duration: string,progressValue: number, status: 
 const Daywise = (props: PropsType) => {
 
   const navigation: any = useNavigation();
+
   const goToDay = (Day: number) =>{
     if(status){
       navigation.navigate("Day",{Day});
     }
-  }
+  };
 
   const { Day, duration, progressValue, status } = props;
 
   // Logic to determine the day label
   const dayLabel = Day === 15 ? "Day 15 & 16" : `Day ${Day}`;
-
-  console.log(dayLabel, duration, progressValue, status);
 
   return (
     <View style={styles.container}>
@@ -61,16 +60,15 @@ const Daywise = (props: PropsType) => {
 };
 
 const styles = StyleSheet.create({
+
   cardContainer:{
     display: 'flex',
     flexDirection: 'row',
     justifyContent:'space-between',
     alignItems: 'center',
   },
-
   container: {
     maxWidth: "100%",
-
   },
   learningDay: {
     backgroundColor: ilpex.white,
@@ -109,6 +107,7 @@ const styles = StyleSheet.create({
     color: ilpex.success ,
     position:'relative',
   },
+
 });
 
 export default Daywise;
