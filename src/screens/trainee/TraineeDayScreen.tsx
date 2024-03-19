@@ -1,4 +1,4 @@
-import { Dimensions, FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
+import { FlatList, StyleSheet, Text, View } from "react-native";
 import { useEffect, useState } from "react";
 import CourseCard from "../../components/CourseCard";
 import { useRoute } from "@react-navigation/native";
@@ -43,7 +43,6 @@ const TraineeDayScreen=()=>{
 
 
     return(
-        // <ScrollView >
         <View >
             
             <View style={{backgroundColor:ilpex.main}}>
@@ -83,7 +82,6 @@ const TraineeDayScreen=()=>{
             </View>
             
         </View>
-        //  </ScrollView>
     )
 }
 
