@@ -10,7 +10,6 @@ import IncompleteTraineeCard from "../../components/IncompleteTraineeCard";
 import ShimmerBatchIncompleteTraineeCard from "../../components/loading/ShimmerBatchIncompleteTraineeCard";
 import ToastDemo from "../../components/ToastComponent";
 
-
 const IncompleteTraineesScreen = () => {
   const [isLoading, setLoading] = useState(false);
   const route: any = useRoute();
@@ -35,7 +34,6 @@ const IncompleteTraineesScreen = () => {
         console.error('Error while sending mail:', error);
       }
     };
-
 
     const onPress = () => {
       sendMailToTrainees();
