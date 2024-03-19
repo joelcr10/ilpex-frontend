@@ -6,12 +6,9 @@ import { getHook } from "../../network/getHook/getHook";
 import ThreeDots from "../../components/ThreeDots";
 import TraineeNameCard from "../../components/TraineeNameCard";
 import SearchField from "../../components/SearchField";
-import TraineeNameCardShimmer from "../../components/loading/TraineeNameListShimmer";
 import TraineeNameShimmer from "../../components/loading/TraineeNameListShimmer";
 import BackButton from "../../components/BackButton";
-
 import { useFocusEffect } from "@react-navigation/native";
-import LineGraph from "../../components/LineGraph";
 
 const UserManagementScreen=()=>{
 
@@ -52,7 +49,6 @@ const UserManagementScreen=()=>{
       )
 
     return(
-        // <ScrollView>
         <View>
             <View style={{backgroundColor:ilpex.main}}>
                 <BackButton color='white'/>
@@ -86,8 +82,7 @@ const UserManagementScreen=()=>{
                     </View>
                 <ThreeDots color='white'/>
             </View>
-        </View>
-        //  </ScrollView>
+        </View> 
     )
 }
 
