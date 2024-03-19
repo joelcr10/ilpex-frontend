@@ -1,12 +1,8 @@
-import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native"
-import { batchDetails } from "../../network/ApiHook";
+import { FlatList, ScrollView, StyleSheet, Text,View } from "react-native"
 import ChartPie from "../../components/PieChartComponent";
 import { useEffect, useState } from "react";
 import { getHook } from "../../network/getHook/getHook";
 import ChartPieShimmer from "../../components/PieChartShimmer";
-import IconButtonComponent from "../../components/IconButton";
-import ChartPieHeaderShimmer from "../../components/pieChartHeaderShimmer";
-import ThreeDots from "../../components/ThreeDots";
 import BackButton from "../../components/BackButton";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -17,17 +13,12 @@ const DayWiseDetailsPage =()=>{
     const navigation : any = useNavigation();
     const day = route.params.day;
     const batch = route.params.batch_id;
-    // console.log('this is day',day)
-    // console.log('this is batch',batch)
     const [isLoading,setLoading] =useState(true);
     const [currentDateCompletion, setCurrentDateCompletion] = useState<any>([]);
     const [dayWiseCourseList,setDayWiseCourseList] = useState<any>([]);
     const [expanded, setExpanded] = useState(true);
-    
-
     const loadFunction =()=>{
       setExpanded(!expanded)
-      
     }
     useEffect(() => {
       console.log('effect activated');
@@ -41,8 +32,7 @@ const DayWiseDetailsPage =()=>{
         }
       };
       getStory();
-  }, []);
-
+    }, []);
     useEffect(() => {
       console.log('effect activated');
       const getStory = async () => {
@@ -54,9 +44,7 @@ const DayWiseDetailsPage =()=>{
             setDayWiseCourseList(responseData.message);
             setLoading(false);
           }
-          // setBatchData(responseData);
-          
-        } catch (error) {
+          } catch (error) {
           console.error('Error:', error);
         }
       };
@@ -65,8 +53,8 @@ const DayWiseDetailsPage =()=>{
   const onPress =(day:number,batch:number)=>{
       navigation.navigate('incompleteTraineScreen',{day:day,batch:batch})  
     }
- 
-return(
+
+  return(
     <GestureHandlerRootView>
         <ScrollView>
         <View style={styles.container1}>
@@ -76,8 +64,6 @@ return(
             </View>
             <View style ={styles.body1}>
               <View>
-              
-             
               <View style = {{marginTop : '15%', marginBottom : '8%', marginLeft : '4.5%',marginRight : '4.5%'}}>
               <List.Accordion
                     title="Courses"
@@ -97,14 +83,9 @@ return(
                         </View>}
                         keyExtractor={item => item.id}
                         />
-                        
-                   </View>
+                  </View>
                 </List.Accordion>
                 </View>
-              
-                 {/* <View>
-                   <IconButtonComponent  name={'Report'} onPress={()=>{}} buttonPressed={false} icon={'description'}/>
-                </View> */}
               </View>
               {isLoading && <ChartPieShimmer/>}
               {!isLoading&&<>
@@ -118,17 +99,20 @@ return(
                 option3="Incomplete" 
                 incomplete={()=>onPress(day,batch)}
                 option={''}
+                option4=''
+                option5='' 
+                onePointFive={0}
+                LessOnePointFive={0}
                 /></>}
             </View>
-        
-         </View>
+        </View>
      </ScrollView>
      </GestureHandlerRootView>
      )
     }
 const styles = StyleSheet.create({
       container1:{
-        minHeight : 800,
+        minHeight : 1000,
         backgroundColor:'#8518FF'
       },
       body1:{
@@ -137,14 +121,11 @@ const styles = StyleSheet.create({
         borderTopEndRadius:30,
         borderTopLeftRadius:30,
         marginTop:'5%',
-        //  justifyContent:'center'
-        
     },
     accordionText : {
       fontFamily : ilpex.fontMedium,
       color : ilpex.darkGrey
     },
-
     accordionTextTime : {
       fontFamily : ilpex.fontMedium,
       color : ilpex.darkGrey
@@ -153,8 +134,7 @@ const styles = StyleSheet.create({
       fontFamily : ilpex.fontRegular,
       fontSize: 17,
       paddingTop : '3%'
-      
-  },
+    },
     accordianText:{
       paddingTop : '4%',
       fontFamily : ilpex.fontMedium,
@@ -168,32 +148,31 @@ const styles = StyleSheet.create({
       elevation:5,
       marginLeft : '3%',
       marginRight : '3%',
-        },
-        accordianView:{
-          borderBottomLeftRadius : 10,
-          borderBottomRightRadius : 10,
-          backgroundColor:'white',
-          elevation:5,
-          paddingBottom : 30,
-          marginLeft : '3%',
-          marginRight : '3%',
-          paddingLeft : '8%',
     },
-      text:{
-        fontFamily:'poppins',
-        fontWeight:'bold',
-        fontSize:35,
-        color:'white',
-        marginTop:45
+    accordianView:{
+      borderBottomLeftRadius : 10,
+      borderBottomRightRadius : 10,
+      backgroundColor:'white',
+      elevation:5,
+      paddingBottom : 30,
+      marginLeft : '3%',
+      marginRight : '3%',
+      paddingLeft : '8%',
+    },
+    text:{
+      fontFamily:'poppins',
+      fontWeight:'bold',
+      fontSize:35,
+      color:'white',
+      marginTop:45
     },
     textData:{
-        marginTop : '3%',
-        marginBottom : '6%',
-        alignItems:'center'
+      marginTop : '3%',
+      marginBottom : '6%',
+      alignItems:'center'
     },
     detail: {
       alignItems:'center',
-      
       marginTop:40,
       marginHorizontal:30,
       borderRadius:30,
