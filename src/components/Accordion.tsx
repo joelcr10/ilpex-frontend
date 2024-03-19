@@ -1,11 +1,10 @@
 import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
 import Chevron from "./Chevron";
 
 type PropsType = {value : any}
 const Accordion = ({value} : PropsType) => {
-    // const{value} = props;
+    
     return(
         <View>
             <Text style ={styles.accordion}>{value}</Text>
