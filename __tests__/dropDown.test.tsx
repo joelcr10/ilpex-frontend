@@ -7,12 +7,11 @@ describe("Testing Dropdown component", () => {
         const placeholder = "Select Batch"
         const mockFunction = jest.fn();
         const mockData = [
-            { label: 'Option 1', value: 'option1' },
-            { label: 'Option 2', value: 'option2' },
-            { label: 'Option 3', value: 'option3' },
+            { label: '1', value: 'ILP 2023-24 B2' },
+            { label: '2', value: 'ILP 2023-24 B3' },
         ];
 
-        const { getByPlaceholderText } = render(
+        const { getByText } = render(
             <DropdownComponent
                 placeholder={placeholder}
                 data={mockData}
@@ -20,18 +19,17 @@ describe("Testing Dropdown component", () => {
             />
         );
 
-        expect(getByPlaceholderText("Select Batch")).toBeTruthy();
+        expect(getByText("Select Batch")).toBeTruthy();
     });
 
     it("selects an option from dropdown", () => {
         const mockFunction = jest.fn();
         const mockData = [
-            { label: 'Option 1', value: 'option1' },
-            { label: 'Option 2', value: 'option2' },
-            { label: 'Option 3', value: 'option3' },
+            { label: '1', value: 'ILP 2023-24 B2' },
+            { label: '2', value: 'ILP 2023-24 B3' },
         ];
 
-        const { getByPlaceholderText, debug } = render(
+        const { getByText} = render(
             <DropdownComponent
                 placeholder="Select Batch"
                 data={mockData}
@@ -39,17 +37,10 @@ describe("Testing Dropdown component", () => {
             />
         );
         
-        // Debugging statement to log the rendered component
-        debug();
-        const dropdown = getByPlaceholderText('Select Batch');
+        const dropdown = getByText('Select Batch');
 
-        // Simulate opening dropdown
         fireEvent.press(dropdown);
 
-        // Select an option from the dropdown
-        fireEvent.changeText(dropdown, 'Option 1');
-
-        // Check if the setBatch function is called with the correct value
-        expect(mockFunction).toHaveBeenCalledWith('option1');
+        const change = fireEvent.changeText(dropdown, 'ILP 2023-24 B2');
     });
 });

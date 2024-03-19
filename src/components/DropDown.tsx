@@ -13,7 +13,7 @@ import ilpex from '../utils/ilpexUI';
     const [isFocus, setIsFocus] = useState(false);
     return (
       <View style={styles.container}>
-        <Dropdown
+        <Dropdown testID='dropdown'
           style={[styles.dropdown,{ borderColor: ilpex.darkGrey }]}
           placeholderStyle={styles.placeholderStyle}
           selectedTextStyle={styles.selectedTextStyle}
