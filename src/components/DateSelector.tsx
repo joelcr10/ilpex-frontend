@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import CalenderModal from "./CalenderModal";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import ilpex from "../utils/ilpexUI";
-
 
 type PropsType = {
     startDate : Date | null,
@@ -13,7 +11,6 @@ type PropsType = {
 const DateSelector = (props : PropsType) => {
 
     const {startDate, endDate, onPress} = props;
-
     const [isVisible,setIsVisible] = useState(false);
 
     const formatDate = (date: Date | null): string => {
@@ -33,39 +30,38 @@ const DateSelector = (props : PropsType) => {
 
     return(
         <View style = {styles.dateFieldContainer}>
-                <Text style = {styles.dateSelectFieldNameLabel}>Start and End Date</Text>
-                <TouchableOpacity onPress={handleDateClicker} style={styles.selectDateField}>
-                    {startDate === null && endDate === null ? (
-                    <View style = {styles.beforeDateSelectedContainer}>
-                        <View style = {styles.beforeDateCaptionContainer}>
-                            <Text style={styles.selectDateLabel}>Select start and end date</Text>
-                        </View>
-                        <View style = {styles.beforeDateIconContainer}>
-                            <Image 
-                            source = {require('../../assets/icons/calendar.png')}
-                            style = {styles.calendarStyle}
-                            />
-                        </View>
+            <Text style = {styles.dateSelectFieldNameLabel}>Start and End Date</Text>
+            <TouchableOpacity onPress={handleDateClicker} style={styles.selectDateField}>
+                {startDate === null && endDate === null ? (
+                <View style = {styles.beforeDateSelectedContainer}>
+                    <View style = {styles.beforeDateCaptionContainer}>
+                        <Text style={styles.selectDateLabel}>Select start and end date</Text>
                     </View>
-                    ) : (
-                    <View style = {styles.selectedDatesContainer}>
-                        <View style = {styles.dateDataContainer}>
-                            <Text style = {styles.selectedDatesCaption}>
-                                Selected Dates
-                            </Text>
-                            <Text style = {styles.datesDisplay}>{startDate && endDate ? `${formatDate(startDate)} - ${formatDate(endDate)}` : 'Select start and end date'}</Text>
-                        </View>
-                        <View style = {styles.afterDateIconContainer}>
-                            <Image 
-                            source = {require('../../assets/icons/calendar.png')}
-                            style = {styles.calendarStyle}
-                            />
-                        </View>
+                    <View style = {styles.beforeDateIconContainer}>
+                        <Image 
+                        source = {require('../../assets/icons/calendar.png')}
+                        style = {styles.calendarStyle}
+                        />
                     </View>
-                    )}
-                </TouchableOpacity>
-
-            </View>
+                </View>
+                ) : (
+                <View style = {styles.selectedDatesContainer}>
+                    <View style = {styles.dateDataContainer}>
+                        <Text style = {styles.selectedDatesCaption}>
+                            Selected Dates
+                        </Text>
+                        <Text style = {styles.datesDisplay}>{startDate && endDate ? `${formatDate(startDate)} - ${formatDate(endDate)}` : 'Select start and end date'}</Text>
+                    </View>
+                    <View style = {styles.afterDateIconContainer}>
+                        <Image 
+                        source = {require('../../assets/icons/calendar.png')}
+                        style = {styles.calendarStyle}
+                        />
+                    </View>
+                </View>
+                )}
+            </TouchableOpacity>
+        </View>
     );
 }
 
@@ -99,7 +95,6 @@ const styles = StyleSheet.create({
         flexDirection : 'column',
         marginLeft : '5%',
         justifyContent : 'center',
-        // width : 260,
     },
     beforeDateSelectedContainer : {
         alignSelf : 'center',

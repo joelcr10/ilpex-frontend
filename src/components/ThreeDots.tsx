@@ -220,7 +220,6 @@ const styles = StyleSheet.create({
         margin:0,
     },
     logoutModal:{
-        // height:150,
         borderColor:'black',
         backgroundColor:'white',
         height : '22%'
