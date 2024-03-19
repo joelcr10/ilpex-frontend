@@ -17,10 +17,6 @@ const BarGraph = ({data,labels,names,graphname} : BarGraphProps)=>{
     const handleBarPress = ( index : number,value: number) => {
         const name = names[value]; // Get the name corresponding to the pressed bar
         setTooltipData(name);
-        // if(value>4){
-        //     value = 1
-        // }
-        // let i = value * 40;
         setTooltipPosition({ y: 50});
         setTooltipVisible(true);
         console.log(name);
@@ -75,9 +71,7 @@ const BarGraph = ({data,labels,names,graphname} : BarGraphProps)=>{
             </View>
             {tooltipVisible && (
                 <View style={[styles.tooltipContainer, { top: tooltipPosition.y }]}>
-                    {/* <Text style={styles.closeButton} onPress={handleTooltipClose}>x</Text> */}
                     <Text style={styles.tooltipText} onPress={handleTooltipClose}>{tooltipData}</Text>
-                    {/* <Text style={styles.tooltipText}>{tooltipData?.label}</Text> */}
                 </View>
             )}
         </View>
@@ -111,7 +105,7 @@ const styles = StyleSheet.create({
         height: 30,
         marginBottom:10,
         borderColor: 'gray',
-        zIndex: 10, //// Ensure tooltip appears above the chart
+        zIndex: 10
     },
     tooltipText: {
         color: 'black',

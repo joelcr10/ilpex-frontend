@@ -10,6 +10,7 @@ interface Response{
     statusCode: string;
     responseData: responseType;
 }
+
 const UpdateAssessmentAPIHook=async(batch_id : number,assessment_id : number,user_id : string | null,start_date : Date | undefined,end_date : Date) : Promise<Response>=>{
     let success: boolean = false;
     let errorMessage: string = '';
@@ -17,11 +18,8 @@ const UpdateAssessmentAPIHook=async(batch_id : number,assessment_id : number,use
     let responseData: any;
     
     try{
-
         const token = await getItem(Constants.TOKEN);
-    
         console.log("--------------:"+token+":-------------------------");
-    
         const authorization =  {
             headers: {
               'Authorization': 'Bearer ' + token,
@@ -36,11 +34,9 @@ const UpdateAssessmentAPIHook=async(batch_id : number,assessment_id : number,use
             start_date : start_date,
             end_date : end_date
         }
-    
-    
             const updateAssessmentResponse = await api.patch(url,payload,authorization);
             
-                console.log(updateAssessmentResponse);
+            console.log(updateAssessmentResponse);
             statusCode = updateAssessmentResponse.status.toString();
             {
                 statusCode === '200' || '202' ? (success = true) : (success = false);
@@ -49,13 +45,14 @@ const UpdateAssessmentAPIHook=async(batch_id : number,assessment_id : number,use
             responseData = updateAssessmentResponse.data;
     
     
-        }catch(error: any){
+        }
+    catch(error: any){
             console.log('Error while updating assessment', error);
     
             errorMessage = error.response.data.error;
         }
     
-        return {success, statusCode, responseData, errorMessage};
+    return {success, statusCode, responseData, errorMessage};
     }
     
 export default UpdateAssessmentAPIHook;
