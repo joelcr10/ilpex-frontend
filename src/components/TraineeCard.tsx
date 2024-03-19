@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     traineeName : {
         fontFamily : ilpex.fontMedium,
         fontSize : 17,
-        color : 'black',
+        color : ilpex.black,
         // backgroundColor : 'red',
         marginTop : '-2%'
     },
