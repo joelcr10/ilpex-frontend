@@ -14,18 +14,20 @@ const InputField: React.FC<Props> = ({label, isPassword, value, onChangeText}) =
 
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>{label}</Text>
+      <Text style={styles.label} testID='label'>{label}</Text>
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
           secureTextEntry={isPassword && !isVisible}
           value={value}
           onChangeText={onChangeText}
+          testID='input'
         />
         {isPassword && (
           <TouchableOpacity
             style={styles.eyeIcon}
             onPress={() => setIsVisible(!isVisible)}
+            testID='touchableOpacity'
           >
             <Image
               source={isVisible ? require('../../assets/icons/view.png') : require('../../assets/icons/hidden.png')}
