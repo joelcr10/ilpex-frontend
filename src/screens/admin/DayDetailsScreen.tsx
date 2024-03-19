@@ -58,6 +58,7 @@ const DayWiseDetailsPage =()=>{
 
   return(
         <ScrollView>
+        <GestureHandlerRootView>
         <View style={styles.container1}>
           <BackButton color = 'white'/>
             <View style ={styles.textData}>
@@ -107,6 +108,7 @@ const DayWiseDetailsPage =()=>{
                 /></>}
             </View>
         </View>
+        </GestureHandlerRootView>
      </ScrollView>
      )
     }
