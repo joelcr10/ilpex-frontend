@@ -1,6 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
 export async function getItem(key: string) {
   try {
     const value = await AsyncStorage.getItem(key);
@@ -9,8 +8,7 @@ export async function getItem(key: string) {
     // read error
     return '';
   }
-  // console.log('local fetch.');
-}
+};
 
 export async function setStringItem(key: string, value: string) {
   try {
@@ -20,5 +18,4 @@ export async function setStringItem(key: string, value: string) {
     // read error
     return false;
   }
-  // console.log('local fetch.');
-}
+};

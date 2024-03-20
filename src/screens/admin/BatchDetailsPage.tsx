@@ -1,38 +1,22 @@
 import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native"
-import { batchDetails } from "../../network/ApiHook";
 import ChartPie from "../../components/PieChartComponent";
 import { useEffect, useState } from "react";
 import { getHook } from "../../network/getHook/getHook";
 import ChartPieShimmer from "../../components/PieChartShimmer";
-import IconButtonComponent from "../../components/IconButton";
 import ChartPieHeaderShimmer from "../../components/pieChartHeaderShimmer";
-import ThreeDots from "../../components/ThreeDots";
 import BackButton from "../../components/BackButton";
 import DayWiseProgressBar from "../../components/DayWiseProgressBar";
-import DayWiseProgressBarShimmer from "../../components/loading/DayWiseProgressBarShimmer";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import DayWiseDetailsPage from "./DayDetailsScreen";
-import TraineeProileAnalysisScreen from "./TraineeProfileAnalysisScreen";
 import { List } from 'react-native-paper';
 import moment from 'moment'
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import TraineeCardShimmer from "../../components/loading/TraineeCardShimmer";
-import TraineeCard from "../../components/TraineeCard";
 import ilpex from "../../utils/ilpexUI";
 import DayChartShimmer from "../../components/DayChartShimmer";
-import NotWatchedScreen from "./NotWatchedScreen";
-import OnePointFiveTimesSpeed from "./OnePointFiveTimesSpeedScreen";
-import OneTimesWatchSpeedScreen from "./OneTimesWatchSpeedScreen";
-import TwoTimesWatchSpeedScreen from "./TwoTimesWatchSpeedScreen";
-import LessThanOneTimesWatchSpeedScreen from "./LessThanOneTimesWatchSpeedScreen";
-
-
 const BatchDetailsPage =()=>{
    const todayDate = moment().format('YYYY-MM-DD');
     const route:any = useRoute();
     const navigation : any = useNavigation();
     const batch_id = route.params.batch_id;
-    
     const [isLoading,setLoading] =useState(true);
     const [feedList, setStoryList] = useState<any>([]);
     const [percipioScore, setPercipioScore] = useState<any>([]);
@@ -46,19 +30,19 @@ const BatchDetailsPage =()=>{
     const [startDate, setStartDate] = useState<string>('')
     const [endtDate, setEndDate] = useState<string>('')
     const onPress=(batch_id:number,day_id:number)=>{
-      
-       navigation.navigate("batchDayWiswDetails",{ batch_id:batch_id, day:day_id});
+      navigation.navigate("batchDayWiswDetails",{ batch_id:batch_id, day:day_id});
     }
     const toTrainee=(user_id:number, trainee_id : number)=>{
        navigation.navigate("TraineeProileAnalysisScreen",{ user_id:user_id, trainee_id : trainee_id});
     }
     const day =currentDate.current_day;
-    
-    const BatchIncompleteTraineList=()=>{
-      navigation.navigate("BatchIncompleteTraineesScreen",{ batch_id:batch_id,day:day});
+    const noNavigation=()=>{}
+    const BatchIncompleteTraineList=(num:number)=>{
+      if(num ==3){
+        navigation.navigate("BatchIncompleteTraineesScreen",{ batch_id:batch_id,day:day});
+      }
     }
-
-    const hai =(num:number)=>{
+    const multipleNavigation =(num:number)=>{
       if(num == 1){
         navigation.navigate("OneTimesWatchSpeedScreen",{batch_id:batch_id});
       }
@@ -175,7 +159,6 @@ const BatchDetailsPage =()=>{
         try {
           const {responseData, errorMessage} = await getHook(`api/v3/batch/${batch_id}/day/${todayDate}`)
           setCurrentDate(responseData);
-          console.log("this is current date",responseData)
         } catch (error) {
           console.error('Error:', error);
         }
@@ -190,23 +173,13 @@ const BatchDetailsPage =()=>{
            if(responseData){
             console.log('this is batch data',responseData)
             setBatchData(responseData);
-            
-          
-              const {startDate,endtDate} = await changeDate(responseData)
-              console.log('Received start date:', startDate);
-             console.log('Received end date:', endtDate);
+            const {startDate,endtDate} = await changeDate(responseData)
+            console.log('Received start date:', startDate);
+            console.log('Received end date:', endtDate);
             setStartDate(startDate);
             setEndDate(endtDate)
-            
             setLoading(false);
-            
-            // const dateString = batchData.batch_details.start_date.split('T')[0];
-            // const date = new Date(dateString);
-            // const startDate = date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
-            // console.log("this is date",startDate)
-            // setStartDate(startDate);
-            
-          }
+            }
           } catch (error) {
           console.error('Error:', error);
         }
@@ -230,19 +203,15 @@ const BatchDetailsPage =()=>{
     };
     getStory();
 }, []);
-
 const arrayOfObjects =[];
     for (const key in dayWiseProgress) {
       if (dayWiseProgress.hasOwnProperty(key)) {
         const value = dayWiseProgress[key];
         arrayOfObjects.push({ key, value });
         console.log(value)
-        // console.log(`${key}: ${value}`);
       }
     }
-
-
-const changeDate = async(batchData) =>{
+const changeDate = async(batchData:any) =>{
 const dateString = batchData.batch_details.start_date.split('T')[0];
 const date = new Date(dateString);
 const startDate = date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
@@ -251,8 +220,6 @@ const endDateString = batchData.batch_details.end_date.split('T')[0];
 const endDate = new Date(endDateString);
 const endtDate = endDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 return {startDate,endtDate}
-// setStartDate(startDate);
-// setEndDate(endtDate)
 }
 return(
   <GestureHandlerRootView>
@@ -264,10 +231,8 @@ return(
             </View>
             <View style ={styles.body1}>
               <View>
-
-              {isLoading && <ChartPieHeaderShimmer/>} 
+               {isLoading && <ChartPieHeaderShimmer/>} 
                {!isLoading && <View style ={styles.detail}>
-                    
                     <Text style={{fontFamily : 'Poppins-SemiBold',color:'black',fontSize:24,marginBottom:20}}>{batchData.batch_details.batch_name}</Text>
                     <View style={{justifyContent:'flex-start',display:'flex',flexDirection:'row',marginLeft : '10%'}}>
                     <View style={{flex:1}}>
@@ -285,10 +250,7 @@ return(
                   </View>
                 </View>
                 }
-
-
-              
-                <View style ={{marginBottom : '5%'}}>
+          <View style ={{marginBottom : '5%'}}>
                   <List.Accordion
                       title="List of Trainees"
                       left={props => <List.Icon {...props} icon="account" />}
@@ -298,8 +260,7 @@ return(
                       titleStyle={styles.accordianTitle}
                       >
                       <View style={styles.accordianView}>
-                      
-                          <FlatList
+                         <FlatList
                           showsVerticalScrollIndicator={false}
                           // contentContainerStyle = {{paddingBottom : 30}}
                           data={traineeList}
@@ -313,28 +274,15 @@ return(
                           )}
                           keyExtractor={item => item.id}
                           />
-                          
-                    </View>
+                      </View>
                   </List.Accordion>
                 </View>
-            
-
-
-
-
-
-
-
-              
-                 {/* <View>
-                   <IconButtonComponent  name={'Report'} onPress={()=>{}} buttonPressed={false} icon={'description'}/>
-                </View> */}
-              </View>
+                </View>
               {isLoading&&<><ChartPieShimmer/>
               <ChartPieShimmer/></>}
               {!isLoading&&<>
                 <ChartPie 
-                  chartName={'Percipio Assesment Score'} 
+                  chartName={'Percipio Assessment Score'} 
                   excellent={percipioScore.excellent} 
                   good={percipioScore.good} 
                   poor={percipioScore.poor} 
@@ -345,7 +293,7 @@ return(
                   option3="Poor" 
                   option4='1.5x'
                   option5='<1.5x' 
-                  incomplete={hai}
+                  incomplete={noNavigation}
                   option={'assesment'} />
                 <ChartPie 
                   chartName={'Course Speed'} 
@@ -359,12 +307,10 @@ return(
                   option4='1.5x'
                   option2="2x" 
                   option3="NA"
-                  
-                   
-                  incomplete={hai}
+                  incomplete={multipleNavigation}
                   option={'speed'} />
               <ChartPie 
-                  chartName={'Assesment Score'} 
+                  chartName={'Assessment Score'} 
                   excellent={feedList.excellent} 
                   good={feedList.good} 
                   poor={feedList.poor} 
@@ -375,9 +321,8 @@ return(
                   option3="Poor" 
                   option4='1.5x'
                   option5='<1.5x' 
-                  incomplete={(num)=>hai} 
+                  incomplete={noNavigation} 
                   option={'assesment'}/>
-              
               <ChartPie 
                   chartName={'Course Completion'} 
                   excellent={courseCompletion.onTrack} 
@@ -394,13 +339,11 @@ return(
                   option={''}/>
               </>
               }
-              
               <View style = {styles.graphContainer}>
                   <View style = {{flexDirection : 'row', width : '85%', justifyContent: 'space-between', marginBottom: '5%'}}>
                     <Text style={{ fontSize: 17, fontFamily: 'Poppins-Regular',width : '20%', textAlign : 'left',color : ilpex.darkGrey}}>Days   </Text>
                     <Text style={{fontSize:15, fontFamily : 'Poppins-Regular', width:'80%' , color : ilpex.darkGrey, textAlign: 'center'}}>Percentage of Courses {'\n'}Completed</Text>
                   </View>   
-                  
                   {isLoading ?
                   <FlatList 
                   contentContainerStyle = {{paddingBottom : 5}}
@@ -416,11 +359,8 @@ return(
                     <DayWiseProgressBar dayNumber = {parseInt(item.key)} percentage = {item.value} onPress={()=>onPress(batch_id,parseInt(item.key))}/>
                   }
                 />}
-                  
-
                 </View> 
             </View>
-        
         </View>
         </ScrollView>
         </GestureHandlerRootView>
@@ -449,60 +389,53 @@ const styles = StyleSheet.create({
     elevation:5,
     marginLeft : '9%',
     marginRight : '9%',
-       
-      },
-      accordianView:{
-        borderBottomLeftRadius : 10,
-        borderBottomRightRadius : 10,
-        backgroundColor:'white',
-        elevation:5,
-        paddingBottom : 30,
-        marginLeft : '9%',
-        marginRight : '9%',
-        paddingLeft : '8%',
-        paddingRight : '8%',
-        },
-
-      body1:{
-        height:'100%',
-        backgroundColor:'white',
-        borderTopEndRadius : 30,
-        borderTopStartRadius : 30,
-        marginTop : '5%',
-    },
-      text:{
-        fontFamily:'Poppins-SemiBold',
-        // fontWeight:'bold',
-        fontSize:35,
-        color:'white',
-        marginTop:'17%'
-    },
-    textData:{
-        
-        alignItems:'center'
-    },
-    detail: {
-      alignItems:'center',
-      // borderColor:'black',
-       //borderWidth:3,
-      marginTop:25,
-      marginHorizontal:30,
-      borderRadius:30,
-      // elevation:8,
-      backgroundColor:"white",
-      marginBottom : 20
-    },
-    eachDetail:{
-      display:'flex',
-      flexDirection:'row',
-      justifyContent:'space-between',
-      margin:3,
-      
+  },
+  accordianView:{
+    borderBottomLeftRadius : 10,
+    borderBottomRightRadius : 10,
+    backgroundColor:'white',
+    elevation:5,
+    paddingBottom : 30,
+    marginLeft : '9%',
+    marginRight : '9%',
+    paddingLeft : '8%',
+    paddingRight : '8%',
+  },
+  body1:{
+    height:'100%',
+    backgroundColor:'white',
+    borderTopEndRadius : 30,
+    borderTopStartRadius : 30,
+    marginTop : '5%',
+  },
+  text:{
+    fontFamily:'Poppins-SemiBold',
+    fontSize:35,
+    color:'white',
+    marginTop:'17%'
+  },
+  textData:{
+    alignItems:'center'
+  },
+  detail: {
+    alignItems:'center',
+    marginTop:25,
+    marginHorizontal:30,
+    borderRadius:30,
+    backgroundColor:"white",
+    marginBottom : 20
+  },
+  eachDetail:{
+    display:'flex',
+    flexDirection:'row',
+    justifyContent:'space-between',
+    margin:3,
   },
   graphContainer : {
 		marginTop : 10,
 		marginLeft : 30,
 		marginRight : 30,
+    marginBottom : 150,
 		alignItems : 'center',
 		backgroundColor : ilpex.white,
 	},

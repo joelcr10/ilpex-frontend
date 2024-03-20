@@ -41,7 +41,7 @@ const BatchCard=({batch_name,traineeNo,date,totalDays,progressDays,onPressFunc} 
     const formattedDate = `${monthName} ${day} ${year}`;
 
     return(
-        <TouchableOpacity onPress={onPressFunc} activeOpacity={1}>
+        <TouchableOpacity onPress={onPressFunc} activeOpacity={1} testID="batchCard">
             <View style={styles.container}>
                 <View style={styles.dataContainer}>
                     <Text style={styles.batch_name}>{batch_name}</Text>
@@ -59,7 +59,6 @@ const BatchCard=({batch_name,traineeNo,date,totalDays,progressDays,onPressFunc} 
                     <View style={styles.dayTextContainer}>
                     <Text style={styles.dayText}>Day</Text>
                     <Text style={styles.dayText}>{progressDays}/{totalDays}</Text>
-                    {/* <CircularProgress completeStatus={progress} color={ilpex.main}></CircularProgress> */}
                     </View>
                 </View>
             </View>

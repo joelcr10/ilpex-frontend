@@ -50,8 +50,6 @@ const TraineeScreen = () => {
     )
 
     //get Batches 
-
-
     useEffect(()=>{
         const getBatches = async()=>{
             try{
@@ -63,7 +61,7 @@ const TraineeScreen = () => {
                         setBatchesName(
                             [{label:'All Batches',
                             value:'All'}]); 
-                        setBatchesName(prevBatches => [
+                        setBatchesName((prevBatches: any) => [
                             ...prevBatches,
                             ...responseData.batches.map((batch: { batch_id: number; batch_name: string; }) => ({
                                 label: batch.batch_name,
@@ -79,7 +77,6 @@ const TraineeScreen = () => {
         }
         getBatches();
     },[]);
-
 
     const getBatchId = (selectedBatch : string) => {
         for (const batch of allBatches) {
@@ -141,7 +138,6 @@ const TraineeScreen = () => {
             </View>
         </ScrollView>
     );
-
 }
 
 const styles = StyleSheet.create({

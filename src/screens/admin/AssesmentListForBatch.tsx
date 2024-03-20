@@ -11,29 +11,22 @@ import AssesmentListCard from "../../components/AssesmentListCard";
 import DrawerNavigationHamburger from "../../components/DrawerNavigationHamburger";
 import { ScrollView } from "react-native-gesture-handler";
 import AssessmentListShimmer from "../../components/loading/AssessmentListShimmer";
-
 const AssesmentListScreen = ()=>{
     const navigation : any= useNavigation();
     const [assesmentList,setAssesmentList] = useState<any>([]);
-
     const [isLoading,setLoading] = useState(false);
-   
     const onPressButton=(assessment_id:any,assessment_name:any)=>{
         console.log('hello')
         navigation.navigate("updateAssesments",{assessment_id:assessment_id,assessment_name:assessment_name});
     }
-
     useFocusEffect(
         React.useCallback(() => {
             const getBatches = async()=>{
                 try{
-                    
                     const { success,statusCode,responseData,errorMessage} = await getHook('/api/v2/assessment');
                     if(success){
                         if(responseData){
                             setAssesmentList(responseData.assessments);
-                            console.log('this is data',responseData)
-                            // assessList = responseData.assessments;
                             setLoading(true); 
                         }
                     }
@@ -50,14 +43,12 @@ const AssesmentListScreen = ()=>{
         <ScrollView>
         <View style={styles.container}>
             <DrawerNavigationHamburger/>
-            <Text style = {styles.text}>Assesments</Text>
+            <Text style = {styles.text}>Assessments</Text>
             <View style={styles.box}>
                 <View style = {styles.dataContainer}>
-                
-                    {isLoading? (
+                     {isLoading? (
                        <FlatList
                             showsVerticalScrollIndicator={false}
-                    
                             data={assesmentList}
                             renderItem = {({item}) => <AssesmentListCard assessment_name={item.assessment_name} onPressButton={()=>onPressButton(item.assessment_id,item.assessment_name)}/>}
                         />
@@ -76,10 +67,6 @@ const AssesmentListScreen = ()=>{
                        <AssessmentListShimmer/>
                     </View>
                     )}
-
-                    <View style={styles.createButton}>
-                        {/* <CreateButton onPress={onPressButton}></CreateButton> */}
-                    </View>
                 </View>
             </View>
         </View>

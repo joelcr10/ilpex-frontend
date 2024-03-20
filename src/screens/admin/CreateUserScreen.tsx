@@ -11,13 +11,13 @@ import BackButton from "../../components/BackButton";
 import ModalComponent from "../../components/ModalComponent";
 
 const CreateUserScreen = () => {
+  
   const [createUserName, setcreateUserName] = useState("");
   const [createEmail, setcreateEmail] = useState("");
   const [password, setPassword] = useState("");
   const [createPassword, setcreatePassword] = useState("");
   const [buttonpressed, setButtonpressed] = useState(false);
   const [passwordMatchError, setPasswordMatchError] = useState("");
-  const [isCreated, setIsCreated] = useState(true);
   const [isModalVisible, setModalVisible] = useState(false);
   const [successText, setSuccessText] = useState("");
   const [failureText, setFailureText] = useState("");
@@ -37,11 +37,8 @@ const CreateUserScreen = () => {
       handlecreateUser();
   };
 
-
-
   const handlecreateUser = async () => {
     setButtonpressed(true);
-  
     const JWT_token = (await getItem(Constants.TOKEN)) || '';
 
      // Password validation criteria
@@ -86,10 +83,8 @@ const CreateUserScreen = () => {
   
       if (success) {
         setSuccessText("New L&D user created");
-        setIsCreated(false);
       } else {
         setFailureText("This user already exists");
-        setIsCreated(true);
       }
   
       showModal();
@@ -100,8 +95,6 @@ const CreateUserScreen = () => {
     }
   };
   
-  
-
   return (
     <View style={styles.mainView}>
       <BackButton color = 'black'/>
@@ -152,6 +145,7 @@ const CreateUserScreen = () => {
 };
 
 const styles = StyleSheet.create({
+
   mainView:{
     justifyContent:'center',
     alignContent:'center',
@@ -163,6 +157,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
     textAlign:'center'
   },
+
 });
 
 export default CreateUserScreen;
