@@ -12,7 +12,6 @@ type propsType = {
 const TraineeDuration = (props : propsType) => {
 
     const {userID} = props;
-    // const user_id = useSelector((state: any) => state.userDetailsReducer.user_id);
     
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [totalDurationProgress, setTotalDurationProgress] = useState(0);

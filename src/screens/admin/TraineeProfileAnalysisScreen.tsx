@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { FlatList, Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import ilpex from "../../utils/ilpexUI";
 import BackButton from "../../components/BackButton";
 import BarGraph from "../../components/BarChart";
