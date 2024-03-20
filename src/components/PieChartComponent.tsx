@@ -32,17 +32,17 @@ const ChartPie = (props:chart) => {
           <View>
           {option == 'assesment' &&
           <View style={styles.head}>
-          <View style={styles.headPercentage}>
+          <View style={[styles.headPercentage, {marginLeft:60}]}>
              <View style={styles.percentage1}>
              </View>
              <Text style={{marginLeft:5}}> &gt; 95%</Text>
              </View>
-             {good !== 0 &&<View style={styles.headPercentage}>
+             {good !== 0 &&<View style={[styles.headPercentage,{marginLeft:40}]}>
              <View style={styles.percentage2}>
             </View>
             <Text style={{marginLeft:5}}> &gt; 25%</Text>
             </View>}
-            <View style={styles.headPercentage}>
+            <View style={[styles.headPercentage,{marginLeft:30}]}>
             <View style={styles.percentage3}>
            </View>
             <Text style={{marginLeft:5}}> &lt; 25%</Text>
@@ -192,12 +192,12 @@ const styles = StyleSheet.create({
   head:{
     display:'flex',
     flexDirection:'row',
-    justifyContent:'space-evenly',
   },
   headPercentage:{
     display:'flex',
     flexDirection:'row',
     marginBottom:5,
+    
   },
 });
 export default ChartPie;
