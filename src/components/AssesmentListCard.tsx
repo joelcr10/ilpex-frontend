@@ -7,7 +7,6 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 type BatchComponentProps = {assessment_name : string,onPressButton:()=>void};
 const AssesmentListCard=(props: BatchComponentProps)=>{
     const {assessment_name,onPressButton} = props;
-    console.log("asseement list card: ",assessment_name);
     return(
         <TouchableOpacity onPress={onPressButton} activeOpacity={1} testID="touchable-opacity">
             <View style={styles.container}>
@@ -17,7 +16,7 @@ const AssesmentListCard=(props: BatchComponentProps)=>{
                     flexDirection:'row',
                     alignItems:'center'
                 }}>
-                    <Icon name="edit" size={28}/>
+                    <Icon name="edit" size={28} color ={ilpex.black}/>
                     <Text style={styles.batchName}>{assessment_name}</Text>
                     
                     </View>

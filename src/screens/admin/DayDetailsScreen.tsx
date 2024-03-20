@@ -52,8 +52,11 @@ const DayWiseDetailsPage =()=>{
       };
       getStory();
   }, []);
-  const onPress =(day:number,batch:number)=>{
-      navigation.navigate('incompleteTraineScreen',{day:day,batch:batch})  
+  const onPress =(num:number)=>{
+    if(num == 3){
+      navigation.navigate('incompleteTraineScreen',{day:day,batch:batch})
+    }
+        
     }
 
   return(
@@ -99,7 +102,7 @@ const DayWiseDetailsPage =()=>{
                 option1="Completed" 
                 option2="Partial" 
                 option3="Incomplete" 
-                incomplete={()=>onPress(day,batch)}
+                incomplete={onPress}
                 option={''}
                 option4=''
                 option5='' 
