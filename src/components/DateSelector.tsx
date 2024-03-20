@@ -75,8 +75,8 @@ const styles = StyleSheet.create({
         borderWidth : 1,
         marginLeft : '10%',
         marginRight : '10%',
-        width : '80%',
-        height : 70,
+        width : '90%',
+        height : 80,
         flexDirection : 'row',
         paddingTop : 7,
         borderRadius : 10,
@@ -84,7 +84,8 @@ const styles = StyleSheet.create({
     selectedDatesCaption : {
         fontFamily : ilpex.fontRegular,
         color : ilpex.black,
-        fontSize : 15
+        fontSize : 14,
+        height : 17,
     },
     selectDateField : {
         width : '80%',
@@ -113,7 +114,7 @@ const styles = StyleSheet.create({
         fontFamily : ilpex.fontRegular,
         fontSize : 13,
         color : ilpex.darkGrey,
-        marginLeft : '5%'
+        marginLeft : '5%',
     },
     beforeDateIconContainer : {
         flexDirection : 'row',
@@ -145,6 +146,7 @@ const styles = StyleSheet.create({
         color : ilpex.black,
         fontSize : 16,
         flex : 0.8,
+        width : '80%',
         alignContent : 'flex-start',
     }
 })

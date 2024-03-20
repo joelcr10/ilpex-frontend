@@ -135,7 +135,7 @@ const ManageTraineeScreen = () => {
         <Text style={styles.title}>Percepio Mail</Text>
         <Text style={styles.props}>{percepioEmail}</Text>
       </View>
-      <View>
+      <View style = {{justifyContent : 'center', alignSelf : 'center'}}>
         {isActive ? (
           <Button
             name={"Deactivate"}
@@ -167,6 +167,7 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: ilpex.fontRegular,
     fontSize: 20,
+    color:ilpex.darkGrey,
   },
   props: {
     fontFamily: ilpex.fontRegular,
