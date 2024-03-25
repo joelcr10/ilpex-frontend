@@ -138,12 +138,9 @@ const CreateAssessmentScreen = ()=>{
           }
     }
 
-    useEffect(() => {
-        const unsubscribe = navigation.addListener('focus', () => {
-            resetFields();
-        });
-        return unsubscribe;
-    }, [navigation]);
+    const handleReset = (): void => {
+        resetFields();
+    }
 
     const resetFields = () => {
         setAssessementName('');
@@ -230,7 +227,7 @@ const CreateAssessmentScreen = ()=>{
                     )
                     }
                 </View>
-                {success && <ConfirmationModal success={true} message={"Assessment created successfully"}></ConfirmationModal>}
+                {success && <ConfirmationModal success={true} onPress = {handleReset} message={"Assessment created successfully"}></ConfirmationModal>}
                 {failure && <ToastDemo BgColor={ilpex.failure} message={errorText} textColor={ilpex.white}></ToastDemo>}
             </View>
         </View>
