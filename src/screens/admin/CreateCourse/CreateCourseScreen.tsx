@@ -20,6 +20,13 @@ const CreateCourseScreen = () => {
     const [buttonLoaded, setButtonLoaded] = useState(false);
     const [failure, setFailure] = useState(false);
 
+    const inititalState = () => {
+        setSelectedFile(null);
+        setSuccess(false);
+        setButtonLoaded(false);
+        setFailure(false);
+    }
+
     const pickDocument = async () => {
         try {
             const result = await DocumentPicker.pickSingle({
@@ -67,6 +74,10 @@ const CreateCourseScreen = () => {
         }
     }
 
+    const handleReset = (): void => {
+        inititalState();
+    }
+
     return(
         <View style = {styles.pageContainer}>
             <BackButton color = "black"/>
@@ -84,7 +95,7 @@ const CreateCourseScreen = () => {
             )
             }
            </View>
-            {success && <ConfirmationModal success = {success} message = "Course has been created Successfully!" />}
+            {success && <ConfirmationModal success = {success} onPress = {handleReset} message = "Course has been created Successfully!" />}
             {failure && <ToastDemo BgColor="red" message="Failed To create Course" textColor="white"/>}
         </View>
     );

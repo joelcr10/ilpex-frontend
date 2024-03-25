@@ -1,6 +1,6 @@
 import React from "react";
 import { render } from "@testing-library/react-native";
-import AssessmentCard from "../../ilpex-frontend/src/components/AssessmentCardLandD";
+import AssessmentCard from "../src/components/AssessmentCardLandD";
 
 
 describe("AssessmentCard component", () => {
