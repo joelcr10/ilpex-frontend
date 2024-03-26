@@ -282,7 +282,7 @@ return(
               <ChartPieShimmer/></>}
               {!isLoading&&<>
                 <ChartPie 
-                  chartName={'Percipio Assesment Score'} 
+                  chartName={'Percipio Assessment Score'} 
                   excellent={percipioScore.excellent} 
                   good={percipioScore.good} 
                   poor={percipioScore.poor} 
@@ -310,7 +310,7 @@ return(
                   incomplete={multipleNavigation}
                   option={'speed'} />
               <ChartPie 
-                  chartName={'Assesment Score'} 
+                  chartName={'Assessment Score'} 
                   excellent={feedList.excellent} 
                   good={feedList.good} 
                   poor={feedList.poor} 

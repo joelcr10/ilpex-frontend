@@ -14,7 +14,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import DrawerNavigationHamburger from "../../components/DrawerNavigationHamburger";
 const BatchesScreen = ()=>{
 
-    const navigation = useNavigation();
+    const navigation : any = useNavigation();
     const [allBatchesList,setBatchesList] = useState<any>([]);
     const [isLoading,setLoading] = useState(false);
     const [currentDay,setCurrentDay] = useState<any>([]);
@@ -23,9 +23,6 @@ const BatchesScreen = ()=>{
         navigation.navigate("BatchDetails",{batch_id:batch_id});
     }
 
-    const onPressButton=()=>{
-        console.log("Button pressed");
-    }
     const today = new Date();
     const newDateTime = new Date(today.getTime() + (5.5 * 60 * 60 * 1000));
     const todayString = newDateTime.toISOString().substring(0, 10);
@@ -54,6 +51,7 @@ const BatchesScreen = ()=>{
         getBatches();
     },[])
     );
+
     useFocusEffect(
         React.useCallback(() => {
             const getDay = async () => {
@@ -79,6 +77,7 @@ const BatchesScreen = ()=>{
             }
         }, [allBatchesList])
     );
+
     return(
         <ScrollView
         showsVerticalScrollIndicator={false}>
@@ -115,9 +114,6 @@ const BatchesScreen = ()=>{
                         <BatchCardShimmer isLoading></BatchCardShimmer>
                         </View>
                         )}
-                        {/* <View style={styles.createButton}>
-                            <CreateButton onPress={onPressButton}></CreateButton>
-                        </View> */}
                     </View>
                 </View>
             </View>

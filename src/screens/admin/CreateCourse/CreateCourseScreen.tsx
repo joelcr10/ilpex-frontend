@@ -20,6 +20,13 @@ const CreateCourseScreen = () => {
     const [buttonLoaded, setButtonLoaded] = useState(false);
     const [failure, setFailure] = useState(false);
 
+    const inititalState = () => {
+        setSelectedFile(null);
+        setSuccess(false);
+        setButtonLoaded(false);
+        setFailure(false);
+    }
+
     const pickDocument = async () => {
         try {
             const result = await DocumentPicker.pickSingle({
@@ -48,23 +55,27 @@ const CreateCourseScreen = () => {
             const {success, statusCode, errorMessage} = await createCourse(formData);
             if(success)
             {
-                setButtonLoaded(false);
                 setSuccess(true);
                 console.log("statusCode - ", statusCode);
                 console.log("Success - ", success);
                 setSelectedFile(null);
+                setButtonLoaded(false);
             }
             else
             {
-                setButtonLoaded(false);
                 setFailure(true);
                 console.log("statusCode - ", statusCode);
                 console.log("Error Message - ", errorMessage);
+                setButtonLoaded(false);
             }
         } catch(error) 
         {
             console.log("Error : ", error);
         }
+    }
+
+    const handleReset = (): void => {
+        inititalState();
     }
 
     return(
@@ -84,7 +95,7 @@ const CreateCourseScreen = () => {
             )
             }
            </View>
-            {success && <ConfirmationModal success = {success} message = "Course has been created Successfully!" />}
+            {success && <ConfirmationModal success = {success} onPress = {handleReset} message = "Course has been created Successfully!" />}
             {failure && <ToastDemo BgColor="red" message="Failed To create Course" textColor="white"/>}
         </View>
     );

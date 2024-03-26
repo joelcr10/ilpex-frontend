@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
 import ilpex from "../../utils/ilpexUI";
 import { getHook } from "../../network/getHook/getHook";
 import { sendMail } from "../../network/EmailApiHook";
@@ -10,183 +10,162 @@ import BatchIncompleteTraineeCard from "../../components/BatchIncompleteTraineeC
 import ShimmerBatchIncompleteTraineeCard from "../../components/loading/ShimmerBatchIncompleteTraineeCard";
 import ToastDemo from "../../components/ToastComponent";
 
-
 const IncompleteTraineesScreen = () => {
-  const [isLoading, setLoading] = useState(false);
-  const [toastVisibility, setToastVisibility] = useState(false);
-  const route: any = useRoute();
-  const day = route.params.day;
-  const batch = route.params.batch_id;
-  console.log('this is current day',day)
-  const TraineesDisplay = () => {
+    
+    const [isLoading, setLoading] = useState(false);
+    const [toastVisibility, setToastVisibility] = useState(false);
+    const route: any = useRoute();
+    const day = route.params.day;
+    const batch = route.params.batch_id;
+
     const [traineeList, setTraineeList] = useState<any>([]);
-     console.log('this is batch list',traineeList)
-    const sendMailToTrainees = async () => {
-      try {
-        const { success } = await sendMail({
-          incompleteTraineeList: traineeList.IncompleteTraineeList,
-          day_number: day,
-        });
-        if (success) {
-            console.log("Mail Sent successfully......................................");
-            setToastVisibility(true);
-        }
-      } catch (error) {
-        console.error('Error while sending mail:', error);
-      }
-    };
 
+    useEffect(() => {
+        const getDayCards = async () => {
+            try {
+                const { responseData } = await getHook(
+                    `/api/v2/batch/${batch}/incompleteTrainees/${day}`,
 
-    const onPress = () => {
-      sendMailToTrainees();
-    };
+                );
+                if (responseData) {
+                    setTraineeList(responseData);
+                    setLoading(true);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        };
 
- useEffect(() => {
-      const getDayCards = async () => {
-        try {
-          const { responseData } = await getHook(
-            `/api/v2/batch/${batch}/incompleteTrainees/${day}`,
-            
-          );
-          if (responseData) {
-            
-            setTraineeList(responseData);
-
-          }
-
-
-        } catch (error) {
-          console.error('Error:', error);
-        }
-        finally{
-          setLoading(true);
-        }
-      };
-
-      getDayCards();
-
-
+        getDayCards();
     }, []);
 
+    const sendMailToTrainees = async () => {
+        try {
+            const { success } = await sendMail({
+                incompleteTraineeList: traineeList.IncompleteTraineeList,
+                day_number: day,
+            });
+            if (success) {
+                console.log("Mail Sent successfully......................................");
+                setToastVisibility(true);
+            }
+        } catch (error) {
+            console.error('Error while sending mail:', error);
+        }
+    };
+
+    const onPress = () => {
+        sendMailToTrainees();
+    };
+
     return (
-      <ScrollView>
-         { toastVisibility && <ToastDemo BgColor={"green"} message={"Mail Sent successfully"} textColor={"black"}></ToastDemo> }
-        { (!isLoading)?(<View><ShimmerBatchIncompleteTraineeCard></ShimmerBatchIncompleteTraineeCard></View>):
-        (<View>
-    <IconButtonComponent name={"Send Mail"} onPress={onPress} buttonPressed={false} icon={"mail"}></IconButtonComponent>
-    <Text style={styles.traineeText}>Trainees</Text>
+        <View>
+            <ScrollView>
+                <View style={styles.pageContainer}>
+                    <BackButton color={"white"}></BackButton>
+                    <View style={styles.innerContainer}>
+                        <Text style={styles.incompleteText}>Incomplete</Text>
 
-               <FlatList
-          scrollEnabled={false}
-          showsVerticalScrollIndicator={false}
-          data={traineeList.IncompleteTraineeList}
-          renderItem={({ item }) => (
-            <BatchIncompleteTraineeCard
-                  trainee_name={item.user_name}
-                  batch_name={item.Batch} courses_left={item.incomplete_courses_count} total_number_of_courses={item.total_courses} course_list={item.incomplete_courses} currentDay={item.day}  />
-          )}
-          keyExtractor={item => item.id}
-        />
-        </View>)}
-
-      </ScrollView>
-
-    );
-  }
-
-return (
-    <View>
-      <ScrollView>
-        <View style={styles.pageContainer}>
-          <BackButton color={"white"}></BackButton>
-          <View style={styles.innerContainer}>
-             <Text style={styles.incompleteText}>Incomplete</Text>
-
-             <View style={styles.dayCard}><TraineesDisplay></TraineesDisplay></View>
-          </View>
+                        <View style={styles.dayCard}>
+                            {!isLoading ? (
+                               <View>
+                                    <ShimmerBatchIncompleteTraineeCard></ShimmerBatchIncompleteTraineeCard>
+                                </View> 
+                            ) : (
+                                <View>
+                                <IconButtonComponent name={"Send Mail"} onPress={onPress} buttonPressed={false} icon={"mail"}></IconButtonComponent>
+                                <Text style={styles.traineeText}>Trainees</Text>
+        
+                                <FlatList
+                                    scrollEnabled={false}
+                                    showsVerticalScrollIndicator={false}
+                                    data={traineeList.IncompleteTraineeList}
+                                    renderItem={({ item }) => (
+                                        <BatchIncompleteTraineeCard
+                                            trainee_name={item.user_name}
+                                            batch_name={item.Batch} courses_left={item.incomplete_courses_count} total_number_of_courses={item.total_courses} course_list={item.incomplete_courses} currentDay={item.day} />
+                                    )}
+                                    keyExtractor={item => item.id}
+                                />
+                            </View>   
+                            )}
+                        </View>
+                    </View>
+                </View>
+            </ScrollView>
         </View>
-      </ScrollView>
-    </View>
-  );
+    );
 
 }
 
 const styles = StyleSheet.create({
-  pageContainer: {
-    backgroundColor: '#8518FF',
-    height: '100%',
-  },
-  sendStyle:{
-    color:'white',
-  },
-  textSendMail:{
-    // flexDirection:'row',
-  },
-  dayCard:{
-    paddingLeft: '-10%',
-    paddingRight: '-10%',
+    pageContainer: {
+        backgroundColor: '#8518FF',
+        height: '100%',
+    },
+    sendStyle: {
+        color: 'white',
+    },
 
-  },
-  box: {
-    flexDirection:'row',
-    height: 44,
-    width: 84,
-    backgroundColor: ilpex.main,
-    borderRadius: 5,
-    elevation: 5,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  fixedButton: {
-    // position: 'absolute',
-    // bottom: 40,
-    // right: 20,
-    // zIndex: 10,
-  },
-  innerContainer: {
-    backgroundColor: 'white',
-    height: '100%',
-    marginTop: '25%',
-    borderTopStartRadius: 50,
-    borderTopEndRadius: 50,
-    paddingTop: '10%',
- 
-    flex: 1,
-    minHeight:800
-  },
-  containerHeading: {
-    color: 'white',
-    textAlign: 'center',
-    fontSize: 50,
-    marginTop: 80,
-    fontFamily: 'Poppins-SemiBold',
-  },
-  traineeText: {
-    fontFamily: ilpex.fontRegular,
-    color: ilpex.black,
-    fontSize: 17,
-    paddingLeft: '10%',
-    paddingRight: '10%',
+    dayCard: {
+        paddingLeft: '-10%',
+        paddingRight: '-10%',
 
-  },
-  incompleteText: {
-    fontFamily: ilpex.fontSemiBold,
-    color: ilpex.black,
-    fontSize: 27,
-    textAlign: 'center',
-    marginBottom: 5,
-    paddingLeft: '10%',
-    paddingRight: '10%',
+    },
+    box: {
+        flexDirection: 'row',
+        height: 44,
+        width: 84,
+        backgroundColor: ilpex.main,
+        borderRadius: 5,
+        elevation: 5,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    innerContainer: {
+        backgroundColor: 'white',
+        height: '100%',
+        marginTop: '25%',
+        borderTopStartRadius: 50,
+        borderTopEndRadius: 50,
+        paddingTop: '10%',
+
+        flex: 1,
+        minHeight: 800
+    },
+    containerHeading: {
+        color: 'white',
+        textAlign: 'center',
+        fontSize: 50,
+        marginTop: 80,
+        fontFamily: 'Poppins-SemiBold',
+    },
+    traineeText: {
+        fontFamily: ilpex.fontRegular,
+        color: ilpex.black,
+        fontSize: 17,
+        paddingLeft: '10%',
+        paddingRight: '10%',
+
+    },
+    incompleteText: {
+        fontFamily: ilpex.fontSemiBold,
+        color: ilpex.black,
+        fontSize: 27,
+        textAlign: 'center',
+        marginBottom: 5,
+        paddingLeft: '10%',
+        paddingRight: '10%',
 
 
-  },
-  shimmer: {
-    height: 90,
-    borderRadius: 17,
-    width: 350,
-    marginBottom: 25,
-    elevation: 4,
-  },
+    },
+    shimmer: {
+        height: 90,
+        borderRadius: 17,
+        width: 350,
+        marginBottom: 25,
+        elevation: 4,
+    },
 })
 
 

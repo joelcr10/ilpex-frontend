@@ -4,16 +4,11 @@ import { Text } from "react-native";
 import { StyleSheet } from "react-native";
 import ilpex from "../utils/ilpexUI";
 import Icon from 'react-native-vector-icons/FontAwesome';
-import CircularProgress from "./CircularProgress";
-import { assets } from "../../react-native.config";
-
 type BatchComponentProps = {assessment_name : string,onPressButton:()=>void};
-
 const AssesmentListCard=(props: BatchComponentProps)=>{
     const {assessment_name,onPressButton} = props;
-    console.log("asseement list card: ",assessment_name);
     return(
-        <TouchableOpacity onPress={onPressButton} activeOpacity={1}>
+        <TouchableOpacity onPress={onPressButton} activeOpacity={1} testID="touchable-opacity">
             <View style={styles.container}>
                 <View style={{
                     marginStart:10,
@@ -21,17 +16,14 @@ const AssesmentListCard=(props: BatchComponentProps)=>{
                     flexDirection:'row',
                     alignItems:'center'
                 }}>
-                    <Icon name="edit" size={28}/>
+                    <Icon name="edit" size={28} color ={ilpex.black}/>
                     <Text style={styles.batchName}>{assessment_name}</Text>
                     
                     </View>
-                    
                 </View>
         </TouchableOpacity>
     )
 }
-
-
 const styles = StyleSheet.create({
     container:{
         height:50,

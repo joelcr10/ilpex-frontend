@@ -7,15 +7,17 @@ import ilpex from "../utils/ilpexUI";
 type PropsType = {
     success : boolean,
     message : string,
+    onPress() : void
 }
 const ConfirmationModal = (props : PropsType) => {
     
     const navigation = useNavigation();
-    let {success, message} = props;
+    let {success, message, onPress} = props;
     const [successTest, setSuccessTest] = useState(success);
 
     const toggleBottomSheet = () => {
         setSuccessTest(!success);
+        onPress();
         navigation.goBack();
     }
 

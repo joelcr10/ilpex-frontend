@@ -43,7 +43,7 @@ const AssesmentListScreen = ()=>{
         <ScrollView>
         <View style={styles.container}>
             <DrawerNavigationHamburger/>
-            <Text style = {styles.text}>Assesments</Text>
+            <Text style = {styles.text}>Assessments</Text>
             <View style={styles.box}>
                 <View style = {styles.dataContainer}>
                      {isLoading? (

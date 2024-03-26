@@ -1,19 +1,14 @@
 import { StyleSheet, Text, View, Modal, TouchableOpacity } from "react-native";
 import BarProgress from "../../../components/BarProgress";
 import QuestionCard from "../../../components/QuestionCard";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { getHook } from "../../../network/getHook/getHook";
 import ilpex from "../../../utils/ilpexUI";
 import SmallButton from "../../../components/SmallButton";
-import TraineeCardShimmer from "../../../components/loading/TraineeCardShimmer";
 import QuestionCardShimmer from "../../../components/loading/QuestionCardShimmer";
 import { updateScoreAPI } from "./updateScoreAPI";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { getItem } from "../../../utils/utils";
-import Constants from "../../../utils/Constants";
 import { useSelector } from "react-redux";
-import { Circle } from "react-native-progress";
-import CircularProgress from "../../../components/CircularProgress";
 import DisabledButton from "../../../components/DisabledButton";
 import ModalComponent from "../../../components/ResultModalComponent";
 
@@ -98,10 +93,6 @@ const AssessmentScreen = () => {
 
         let testScore : number = score;
         if(selectedId===questionList[index].correct_answer){
-            console.log("+++++++++++++++++++");
-            // console.log(score);
-            // setScore(prevScore => prevScore+1);
-            // console.log(score);
             testScore++;
             setScore(score+1);
         }
@@ -157,7 +148,6 @@ const AssessmentScreen = () => {
 
 const styles = StyleSheet.create({
     OuterButtonContainer:{
-        // backgroundColor: 'blue',
         display: 'flex',
         flexDirection: 'row',
 
@@ -166,7 +156,6 @@ const styles = StyleSheet.create({
     },
 
     buttonContainer:{
-        // backgroundColor: 'red',
         width: '60%',
         margin: 'auto'
     },

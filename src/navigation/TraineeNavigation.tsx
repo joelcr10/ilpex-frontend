@@ -38,15 +38,6 @@ const TraineeNavigation = () =>{
                         headerShown: false
                     }}
                 />
-
-                <Stack.Screen 
-                    name="TraineeDuration"
-                    component={TraineeDuration}
-                    options={{
-                        headerShown: false
-                    }}
-                />
-
             </Stack.Navigator>
         )
 }

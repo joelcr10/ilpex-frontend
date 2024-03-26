@@ -8,7 +8,7 @@ type PropsType = {traineeName : string,  batchName: string, traineeId : number, 
 
 const TraineeCard = (props : PropsType) => {
     
-    const navigation = useNavigation();
+    const navigation : any = useNavigation();
     const{traineeName, batchName, traineeId, userId} = props;
     const [circleBackgroundColor, setCircleBackgroundColor] = useState(getRandomColor());
     

@@ -20,8 +20,9 @@ const CircularProgress= (Props :ProgressProps) => {
     color={color}
     shadowColor="#FAFAFA"
     bgColor="#FAFAFA"
+   
 >
-    <Text style={{ fontSize: 17,fontWeight:"700", color: ilpex.black }}>{completeStatus}%</Text>
+    <Text testID="progress-circle" style={{ fontSize: 17,fontWeight:"700", color: ilpex.black }}>{completeStatus}%</Text>
 </ProgressCircle>
   );
 };

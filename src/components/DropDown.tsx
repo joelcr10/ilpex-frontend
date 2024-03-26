@@ -13,8 +13,8 @@ import ilpex from '../utils/ilpexUI';
     const [isFocus, setIsFocus] = useState(false);
     return (
       <View style={styles.container}>
-        <Dropdown
-          style={[styles.dropdown, isFocus && { borderColor: ilpex.darkGrey }]}
+        <Dropdown testID='dropdown'
+          style={[styles.dropdown,{ borderColor: ilpex.darkGrey }]}
           placeholderStyle={styles.placeholderStyle}
           selectedTextStyle={styles.selectedTextStyle}
           inputSearchStyle={styles.inputSearchStyle}
@@ -25,14 +25,14 @@ import ilpex from '../utils/ilpexUI';
           labelField="label"
           valueField="value"
           itemTextStyle={{color:ilpex.black}}
-          placeholder={!isFocus ? `${placeholder}` : ''}
+          placeholder={placeholder}
           searchPlaceholder="Search..."
           value={value}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={item => {
+            setValue(item.value);
             setBatch(item.value);
-            setIsFocus(false);
           }}
         />
       </View>

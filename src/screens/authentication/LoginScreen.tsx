@@ -23,19 +23,21 @@ const LoginScreen = () => {
 
     const handleLogin = async () => {
       try {
+        setButtonpressed(true);
 
         if(loginEmail==''||loginPassword==''){
+          setButtonpressed(false);
           setMissingFieldError("You need to enter your email and password");
           return;
         }
         
-        setButtonpressed(true)
         const { success, statusCode, loginResp, errorMessage } = await loginUser({
           loginEmail,
           loginPassword,
         });
   
         if (success) {
+          setButtonpressed(false);
           setStringItem(Constants.IS_LOGIN,'true')
           dispatch(userLogin(true));
 
@@ -85,7 +87,10 @@ const LoginScreen = () => {
 
     return ( 
         <View style={styles.container}>
-          <ImageBackground source={require('../../../assets/images/login.png')} style={styles.backgroundImage}/>
+            <View style={styles.ilpexContainer}>
+              <Text style={styles.ilpex}>ILPex</Text>
+            </View>
+          <ImageBackground source={require('../../../assets/images/Background.png')} style={styles.backgroundImage}/>
             <View style={styles.inputFieldView}>
               <BlackHeading heading='Login'/>
                 <InputField 
@@ -117,7 +122,20 @@ const LoginScreen = () => {
 };
 
 const styles = StyleSheet.create({
-
+  ilpexContainer:{
+    position: 'absolute',
+    zIndex: 10,
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop:"15%",
+  },
+  ilpex :{
+    color: ilpex.white,
+    fontFamily:ilpex.fontSemiBold,
+    fontSize:55,
+  },
   container: {
     flex: 1,
   },

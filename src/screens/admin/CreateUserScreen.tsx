@@ -10,7 +10,8 @@ import ilpex from "../../utils/ilpexUI";
 import BackButton from "../../components/BackButton";
 import ModalComponent from "../../components/ModalComponent";
 
-const CreateUserScreen = () => {
+const CreateUserScreen = () => { 
+  
   
   const [createUserName, setcreateUserName] = useState("");
   const [createEmail, setcreateEmail] = useState("");
@@ -22,6 +23,18 @@ const CreateUserScreen = () => {
   const [successText, setSuccessText] = useState("");
   const [failureText, setFailureText] = useState("");
 
+  const inititalState = () => {
+    setcreateUserName("");
+    setcreateEmail("");
+    setPassword("");
+    setcreatePassword("");
+    setButtonpressed(false);
+    setPasswordMatchError("");
+    setModalVisible(false);
+    setSuccessText("");
+    setFailureText("");
+  };
+
   const showModal = () => {
     setModalVisible(true);
   };
@@ -30,6 +43,7 @@ const CreateUserScreen = () => {
     setModalVisible(false);
     setSuccessText("");
     setFailureText("");
+    inititalState();
   };
 
   const createAdmin = () => {
@@ -45,8 +59,6 @@ const CreateUserScreen = () => {
      const symbolRegex = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
      const capitalRegex = /[A-Z]/;
      const numberRegex = /[0-9]/;
-
-     setButtonpressed(false);
 
      let validationErrorMessage = ""; // Renamed variable
 
@@ -65,7 +77,9 @@ const CreateUserScreen = () => {
 
      if (validationErrorMessage !== "") {
          setPasswordMatchError(validationErrorMessage);
-         return;
+         
+      setButtonpressed(false);
+      return;
      }
   
     try {

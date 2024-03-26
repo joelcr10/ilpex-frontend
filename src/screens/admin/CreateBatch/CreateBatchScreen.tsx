@@ -35,6 +35,17 @@ const CreateBatchScreen = () => {
         setModalIsVisible(false);
     }
 
+    const inititalState = () => {
+        setBatchName('');
+        setStartDate(null);
+        setEndDate(null);
+        setSelectedFile(null);
+        setModalIsVisible(false);
+        setSuccess(false);
+        setButtonLoaded(false);
+        setFailure(false);
+        setErrorMessage('');
+    }
     const handleDateSelector = () => {
         setModalIsVisible(!modalIsVisible);
     }
@@ -73,27 +84,27 @@ const CreateBatchScreen = () => {
             const {success, statusCode, errorMessage} = await createBatch(formData);
             if(success)
             {
-                setButtonLoaded(false);
                 setSuccess(true);
                 console.log("statusCode - ", statusCode);
                 console.log("Success - ", success);
-                setBatchName('');
-                setStartDate(null);
-                setEndDate(null);
-                setSelectedFile(null);
+                setButtonLoaded(false);
             }
             else
             {
-                setButtonLoaded(false);
                 setErrorMessage(errorMessage);
                 setFailure(true);
                 console.log("statusCode - ", statusCode);
                 console.log("Error Message - ", errorMessage);
+                setButtonLoaded(false);
             }
         } catch(error) 
         {
             console.log("Error : ", error);
         }
+    }
+
+    const handleReset = (): void => {
+        inititalState();
     }
 
     return(
@@ -120,7 +131,7 @@ const CreateBatchScreen = () => {
                     <Button name="Create Batch" onPress={handleFileUpload} buttonPressed={buttonLoaded} />
                 )
                 }
-                {success && <ConfirmationModal success = {success} message = {"Batch has been created Successfully!"} />}
+                {success && <ConfirmationModal success = {success} onPress = {handleReset} message = {"Batch has been created Successfully!"}/>}
                 {failure && <ToastDemo BgColor="red" message={errorMessage} textColor="white"/>}
             </View>
         </View>
