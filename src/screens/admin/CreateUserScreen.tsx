@@ -42,6 +42,7 @@ const CreateUserScreen = () => {
     setModalVisible(false);
     setSuccessText("");
     setFailureText("");
+    inititalState();
   };
 
   const createAdmin = () => {
@@ -95,7 +96,6 @@ const CreateUserScreen = () => {
   
       if (success) {
         setSuccessText("New L&D user created");
-        inititalState();
       } else {
         setFailureText("This user already exists");
       }
