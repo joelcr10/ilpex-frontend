@@ -60,8 +60,6 @@ const CreateUserScreen = () => {
      const capitalRegex = /[A-Z]/;
      const numberRegex = /[0-9]/;
 
-     setButtonpressed(false);
-
      let validationErrorMessage = ""; // Renamed variable
 
      if (!symbolRegex.test(password)) {
@@ -79,7 +77,9 @@ const CreateUserScreen = () => {
 
      if (validationErrorMessage !== "") {
          setPasswordMatchError(validationErrorMessage);
-         return;
+         
+      setButtonpressed(false);
+      return;
      }
   
     try {

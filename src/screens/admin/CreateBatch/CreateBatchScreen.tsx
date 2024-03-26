@@ -84,18 +84,18 @@ const CreateBatchScreen = () => {
             const {success, statusCode, errorMessage} = await createBatch(formData);
             if(success)
             {
-                setButtonLoaded(false);
                 setSuccess(true);
                 console.log("statusCode - ", statusCode);
                 console.log("Success - ", success);
+                setButtonLoaded(false);
             }
             else
             {
-                setButtonLoaded(false);
                 setErrorMessage(errorMessage);
                 setFailure(true);
                 console.log("statusCode - ", statusCode);
                 console.log("Error Message - ", errorMessage);
+                setButtonLoaded(false);
             }
         } catch(error) 
         {

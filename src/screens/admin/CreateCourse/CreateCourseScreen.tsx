@@ -55,18 +55,18 @@ const CreateCourseScreen = () => {
             const {success, statusCode, errorMessage} = await createCourse(formData);
             if(success)
             {
-                setButtonLoaded(false);
                 setSuccess(true);
                 console.log("statusCode - ", statusCode);
                 console.log("Success - ", success);
                 setSelectedFile(null);
+                setButtonLoaded(false);
             }
             else
             {
-                setButtonLoaded(false);
                 setFailure(true);
                 console.log("statusCode - ", statusCode);
                 console.log("Error Message - ", errorMessage);
+                setButtonLoaded(false);
             }
         } catch(error) 
         {
