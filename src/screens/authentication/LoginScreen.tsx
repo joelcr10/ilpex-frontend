@@ -26,6 +26,7 @@ const LoginScreen = () => {
         setButtonpressed(true);
 
         if(loginEmail==''||loginPassword==''){
+          setButtonpressed(false);
           setMissingFieldError("You need to enter your email and password");
           return;
         }
@@ -36,6 +37,7 @@ const LoginScreen = () => {
         });
   
         if (success) {
+          setButtonpressed(false);
           setStringItem(Constants.IS_LOGIN,'true')
           dispatch(userLogin(true));
 

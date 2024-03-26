@@ -10,7 +10,8 @@ import ilpex from "../../utils/ilpexUI";
 import BackButton from "../../components/BackButton";
 import ModalComponent from "../../components/ModalComponent";
 
-const CreateUserScreen = () => {
+const CreateUserScreen = () => { 
+  
   
   const [createUserName, setcreateUserName] = useState("");
   const [createEmail, setcreateEmail] = useState("");
@@ -42,6 +43,7 @@ const CreateUserScreen = () => {
     setModalVisible(false);
     setSuccessText("");
     setFailureText("");
+    inititalState();
   };
 
   const createAdmin = () => {
@@ -95,7 +97,6 @@ const CreateUserScreen = () => {
   
       if (success) {
         setSuccessText("New L&D user created");
-        inititalState();
       } else {
         setFailureText("This user already exists");
       }
