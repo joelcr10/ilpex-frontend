@@ -10,89 +10,53 @@ import BatchIncompleteTraineeCard from "../../components/BatchIncompleteTraineeC
 import ShimmerBatchIncompleteTraineeCard from "../../components/loading/ShimmerBatchIncompleteTraineeCard";
 import ToastDemo from "../../components/ToastComponent";
 
-
 const IncompleteTraineesScreen = () => {
+    
     const [isLoading, setLoading] = useState(false);
     const [toastVisibility, setToastVisibility] = useState(false);
     const route: any = useRoute();
     const day = route.params.day;
     const batch = route.params.batch_id;
-  console.log('this is current day',day)
-    const TraineesDisplay = () => {
-        const [traineeList, setTraineeList] = useState<any>([]);
-     console.log('this is batch list',traineeList)
-        const sendMailToTrainees = async () => {
+
+    const [traineeList, setTraineeList] = useState<any>([]);
+
+    useEffect(() => {
+        const getDayCards = async () => {
             try {
-                const { success } = await sendMail({
-                    incompleteTraineeList: traineeList.IncompleteTraineeList,
-                    day_number: day,
-                });
-                if (success) {
-                    console.log("Mail Sent successfully......................................");
-                    setToastVisibility(true);
+                const { responseData } = await getHook(
+                    `/api/v2/batch/${batch}/incompleteTrainees/${day}`,
+
+                );
+                if (responseData) {
+                    setTraineeList(responseData);
+                    setLoading(true);
                 }
             } catch (error) {
-                console.error('Error while sending mail:', error);
+                console.error('Error:', error);
             }
         };
 
+        getDayCards();
+    }, []);
 
-        const onPress = () => {
-            sendMailToTrainees();
-        };
+    const sendMailToTrainees = async () => {
+        try {
+            const { success } = await sendMail({
+                incompleteTraineeList: traineeList.IncompleteTraineeList,
+                day_number: day,
+            });
+            if (success) {
+                console.log("Mail Sent successfully......................................");
+                setToastVisibility(true);
+            }
+        } catch (error) {
+            console.error('Error while sending mail:', error);
+        }
+    };
 
-        useEffect(() => {
-            const getDayCards = async () => {
-                try {
-                    const { responseData } = await getHook(
-                        `/api/v2/batch/${batch}/incompleteTrainees/${day}`,
-
-                    );
-                    if (responseData) {
-
-                        setTraineeList(responseData);
-
-                    }
-
-
-                } catch (error) {
-                    console.error('Error:', error);
-                }
-                finally {
-                    setLoading(true);
-                }
-            };
-
-            getDayCards();
-
-
-        }, []);
-
-        return (
-            <ScrollView>
-                {toastVisibility && <ToastDemo BgColor={"green"} message={"Mail Sent successfully"} textColor={"black"}></ToastDemo>}
-                {(!isLoading) ? (<View><ShimmerBatchIncompleteTraineeCard></ShimmerBatchIncompleteTraineeCard></View>) :
-                    (<View>
-                        <IconButtonComponent name={"Send Mail"} onPress={onPress} buttonPressed={false} icon={"mail"}></IconButtonComponent>
-                        <Text style={styles.traineeText}>Trainees</Text>
-
-                        <FlatList
-                            scrollEnabled={false}
-                            showsVerticalScrollIndicator={false}
-                            data={traineeList.IncompleteTraineeList}
-                            renderItem={({ item }) => (
-                                <BatchIncompleteTraineeCard
-                                    trainee_name={item.user_name}
-                                    batch_name={item.Batch} courses_left={item.incomplete_courses_count} total_number_of_courses={item.total_courses} course_list={item.incomplete_courses} currentDay={item.day} />
-                            )}
-                            keyExtractor={item => item.id}
-                        />
-                    </View>)}
-
-            </ScrollView>
-
-        );
-    }
+    const onPress = () => {
+        sendMailToTrainees();
+    };
 
     return (
         <View>
@@ -102,7 +66,30 @@ const IncompleteTraineesScreen = () => {
                     <View style={styles.innerContainer}>
                         <Text style={styles.incompleteText}>Incomplete</Text>
 
-                        <View style={styles.dayCard}><TraineesDisplay></TraineesDisplay></View>
+                        <View style={styles.dayCard}>
+                            {!isLoading ? (
+                               <View>
+                                    <ShimmerBatchIncompleteTraineeCard></ShimmerBatchIncompleteTraineeCard>
+                                </View> 
+                            ) : (
+                                <View>
+                                <IconButtonComponent name={"Send Mail"} onPress={onPress} buttonPressed={false} icon={"mail"}></IconButtonComponent>
+                                <Text style={styles.traineeText}>Trainees</Text>
+        
+                                <FlatList
+                                    scrollEnabled={false}
+                                    showsVerticalScrollIndicator={false}
+                                    data={traineeList.IncompleteTraineeList}
+                                    renderItem={({ item }) => (
+                                        <BatchIncompleteTraineeCard
+                                            trainee_name={item.user_name}
+                                            batch_name={item.Batch} courses_left={item.incomplete_courses_count} total_number_of_courses={item.total_courses} course_list={item.incomplete_courses} currentDay={item.day} />
+                                    )}
+                                    keyExtractor={item => item.id}
+                                />
+                            </View>   
+                            )}
+                        </View>
                     </View>
                 </View>
             </ScrollView>

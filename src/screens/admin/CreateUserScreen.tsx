@@ -22,6 +22,18 @@ const CreateUserScreen = () => {
   const [successText, setSuccessText] = useState("");
   const [failureText, setFailureText] = useState("");
 
+  const inititalState = () => {
+    setcreateUserName("");
+    setcreateEmail("");
+    setPassword("");
+    setcreatePassword("");
+    setButtonpressed(false);
+    setPasswordMatchError("");
+    setModalVisible(false);
+    setSuccessText("");
+    setFailureText("");
+  };
+
   const showModal = () => {
     setModalVisible(true);
   };
@@ -83,6 +95,7 @@ const CreateUserScreen = () => {
   
       if (success) {
         setSuccessText("New L&D user created");
+        inititalState();
       } else {
         setFailureText("This user already exists");
       }
