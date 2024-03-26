@@ -80,11 +80,11 @@ const IncompleteTraineesScreen = () => {
                     <FlatList
                   scrollEnabled={false}
                   showsVerticalScrollIndicator={false}
-                  data={traineeList.data}
+                  data={traineeList.IncompleteTraineeList}
                   renderItem={({ item }) => (
                     <IncompleteTraineeCard
-                      trainee_name={item.traineeName}
-                      batch_name={item.batchName} courses_left={item.coursesLeft} total_number_of_courses={item.totalNumberOfCourses} course_list={item.incompleteCourseList}  />
+                    trainee_name={item.user_name}
+                    batch_name={item.Batch} courses_left={item.incomplete_courses_count} total_number_of_courses={item.total_courses} course_list={item.incomplete_courses}   />
                   )}
                   keyExtractor={item => item.id}
                 />
