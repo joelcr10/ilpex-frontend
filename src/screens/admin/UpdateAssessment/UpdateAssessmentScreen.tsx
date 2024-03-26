@@ -14,6 +14,7 @@ import UpdateAssessmentAPIHook from "./UpdateAssessmentAPIHook"
 import ConfirmationModal from "../../../components/ConfirmationModal"
 import ToastDemo from "../../../components/ToastComponent"
 import DisabledBigButton from "../../../components/DisabledBigButton"
+import { SendAssessmentEmailHook } from "../CreateAssessment/sendAssessmentEMailHook"
 
 const UpdateAssessmentScreen=()=>{
     const navigation = useNavigation();
@@ -122,6 +123,9 @@ const UpdateAssessmentScreen=()=>{
                 console.log(responseData);
                 setSuccess(true);
                 setIsLoading(false);
+                const formattedStartDate = startDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+                const formattedEndDate = endDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+                sendAssessmentEmail(batch_id, assessment_name, formattedStartDate, formattedEndDate);
             }
             else{
                 console.log(errorMessage);
@@ -136,6 +140,17 @@ const UpdateAssessmentScreen=()=>{
     catch(err){
         console.log('Error while updating assessment', err);
     }
+}
+
+const sendAssessmentEmail = async (batch_id : number, assessmentName : string, formattedStartDate : string, formattedEndDate : string) => {
+    try {
+        const { success } = await SendAssessmentEmailHook({
+          batch_id : batch_id, assessmentName : assessmentName, formattedStartDate : formattedStartDate, formattedEndDate : formattedEndDate
+        });  
+        console.log("Assessment Mail Has Been Sent successfully-----------");
+      } catch (error) {
+        console.error('Error while sending Assessment Mail:', error);
+      }
 }
 
     return (
