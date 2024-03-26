@@ -12,6 +12,15 @@ type Props = {
 const InputField: React.FC<Props> = ({label, isPassword, value, onChangeText}) => {
   const [isVisible, setIsVisible] = useState(!isPassword);
 
+  const handleTextChange = (text: string) => {
+    // Remove spaces only if it's the email field
+    if (label === 'Email') {
+      onChangeText(text.replace(/\s/g, ''));
+    } else {
+      onChangeText(text);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.label} testID='label'>{label}</Text>
@@ -20,7 +29,7 @@ const InputField: React.FC<Props> = ({label, isPassword, value, onChangeText}) =
           style={styles.input}
           secureTextEntry={isPassword && !isVisible}
           value={value}
-          onChangeText={onChangeText}
+          onChangeText={handleTextChange} // Use the custom handler
           testID='input'
         />
         {isPassword && (
