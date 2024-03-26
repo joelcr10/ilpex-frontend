@@ -11,82 +11,56 @@ import ShimmerBatchIncompleteTraineeCard from "../../components/loading/ShimmerB
 import ToastDemo from "../../components/ToastComponent";
 
 const IncompleteTraineesScreen = () => {
-  const [isLoading, setLoading] = useState(false);
+  
   const route: any = useRoute();
   const day = route.params.day;
   const batch = route.params.batch;
 
-  const TraineesDisplay = () => {
-    const [traineeList, setTraineeList] = useState<any>([]);
+  const [isLoading, setLoading] = useState(false);
 
-    const sendMailToTrainees = async () => {
+  const [traineeList, setTraineeList] = useState<any>([]);
+
+  useEffect(() => {
+    const getDayCards = async () => {
       try {
-        const { success } = await sendMail({
-          incompleteTraineeList: traineeList.IncompleteTraineeList,
-          day_number: day,
-        });
-        if (success) {
-          <ToastDemo BgColor={"green"} message={"Mail Sent successfully"} textColor={"black"}></ToastDemo> 
-
-          console.log("Mail Sent successfully......................................");
-               }
+        const { responseData } = await getHook(
+          `api/v2/batch/${batch}/incompleteTrainees/day/${day}`,
+        );
+        if (responseData) {          
+          setTraineeList(responseData);
+          console.log(responseData.data);
+          setLoading(true);
+        }
       } catch (error) {
-        console.error('Error while sending mail:', error);
+        console.error('Error:', error);
       }
     };
 
-    const onPress = () => {
-      sendMailToTrainees();
-    };
+    getDayCards();
 
- useEffect(() => {
-      const getDayCards = async () => {
-        try {
-          const { responseData } = await getHook(
-            `api/v2/batch/${batch}/incompleteTrainees/day/${day}`,
-          );
-          if (responseData) {          
-            setTraineeList(responseData);
-            console.log(responseData.data);
-          }
-        } catch (error) {
-          console.error('Error:', error);
-        }
-        finally{
-          setLoading(true);
-        }
-      };
+  }, []);
 
-      getDayCards();
+  const sendMailToTrainees = async () => {
+    try {
+      const { success } = await sendMail({
+        incompleteTraineeList: traineeList.IncompleteTraineeList,
+        day_number: day,
+      });
+      if (success) {
+        <ToastDemo BgColor={"green"} message={"Mail Sent successfully"} textColor={"black"}></ToastDemo> 
 
+        console.log("Mail Sent successfully......................................");
+             }
+    } catch (error) {
+      console.error('Error while sending mail:', error);
+    }
+  };
 
-    }, []);
+  const onPress = () => {
+    sendMailToTrainees();
+  };
 
-    return (
-      <ScrollView>
-        { (!isLoading)?(<View><ShimmerBatchIncompleteTraineeCard></ShimmerBatchIncompleteTraineeCard></View>):
-        (<View>
- <IconButtonComponent name={"Send"} onPress={onPress} buttonPressed={false} icon={"mail"}></IconButtonComponent>
-                            <Text style={styles.traineeText}>Trainees</Text>
-
-               <FlatList
-          scrollEnabled={false}
-          showsVerticalScrollIndicator={false}
-          data={traineeList.data}
-          renderItem={({ item }) => (
-            <IncompleteTraineeCard
-              trainee_name={item.traineeName}
-              batch_name={item.batchName} courses_left={item.coursesLeft} total_number_of_courses={item.totalNumberOfCourses} course_list={item.incompleteCourseList}  />
-          )}
-          keyExtractor={item => item.id}
-        />
-        </View>)
-        }
-      </ScrollView>
-    );
-  }
-
-return (
+  return (
     <View>
       <ScrollView>
         <View style={styles.pageContainer}>
@@ -94,7 +68,29 @@ return (
           <View style={styles.innerContainer}>
              <Text style={styles.incompleteText}>Incomplete</Text>
 
-             <View style={styles.dayCard}><TraineesDisplay></TraineesDisplay></View>
+             <View style={styles.dayCard}>
+              {!isLoading ? (
+                <View>
+                  <ShimmerBatchIncompleteTraineeCard></ShimmerBatchIncompleteTraineeCard>
+                </View>
+              ) : (
+                <View>
+                  <IconButtonComponent name={"Send"} onPress={onPress} buttonPressed={false} icon={"mail"}></IconButtonComponent>
+                  <Text style={styles.traineeText}>Trainees</Text>
+                    <FlatList
+                  scrollEnabled={false}
+                  showsVerticalScrollIndicator={false}
+                  data={traineeList.data}
+                  renderItem={({ item }) => (
+                    <IncompleteTraineeCard
+                      trainee_name={item.traineeName}
+                      batch_name={item.batchName} courses_left={item.coursesLeft} total_number_of_courses={item.totalNumberOfCourses} course_list={item.incompleteCourseList}  />
+                  )}
+                  keyExtractor={item => item.id}
+                />
+              </View>
+              )}
+             </View>
           </View>
         </View>
       </ScrollView>
