@@ -32,6 +32,9 @@ const UpdateAssessmentScreen=()=>{
     const [isloading, setIsLoading] = useState(false);
 
     const today = new Date();
+    const onPress=()=>{
+        console.log("button....");
+    }
 
     const handleOpen=()=>{
         setIsVisible(true);
@@ -161,7 +164,7 @@ const UpdateAssessmentScreen=()=>{
                         </View>
                         )
                     }
-                    {success && <ConfirmationModal success={true} message={"Assessment updated successfully"}></ConfirmationModal>}
+                    {success && <ConfirmationModal success={true} message={"Assessment updated successfully"} onPress={onPress}></ConfirmationModal>}
                     {failure && <ToastDemo BgColor={ilpex.failure} message={error} textColor={ilpex.white}></ToastDemo>}
                 </View>
             </View>

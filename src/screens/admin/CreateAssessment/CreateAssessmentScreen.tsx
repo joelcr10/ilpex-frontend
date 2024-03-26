@@ -190,6 +190,7 @@ const CreateAssessmentScreen = ()=>{
                 setFailure(false);
             }, 3000);
             setIsLoading(false);
+            resetFields();
             
         }
         }
