@@ -19,6 +19,7 @@ import DisabledBigButton from "../../../components/DisabledBigButton";
 import ToastDemo from "../../../components/ToastComponent";
 import ConfirmationModal from "../../../components/ConfirmationModal";
 import { useNavigation } from "@react-navigation/native";
+import { SendAssessmentEmailHook } from "./sendAssessmentEMailHook";
 
 const CreateAssessmentScreen = ()=>{
     const navigation = useNavigation();
@@ -180,6 +181,10 @@ const CreateAssessmentScreen = ()=>{
             console.log(responseData);
             setIsLoading(false);
             setSuccess(true);
+
+            const formattedStartDate = startDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+            const formattedEndDate = endDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+            sendAssessmentEmail(batch_id, assessmentName, formattedStartDate, formattedEndDate);
         }
         else{
             console.log(errorMessage);
@@ -198,6 +203,17 @@ const CreateAssessmentScreen = ()=>{
         catch(err){
             console.log("Error",err);
         }
+    }
+
+    const sendAssessmentEmail = async (batch_id : number, assessmentName : string, formattedStartDate : string, formattedEndDate : string) => {
+        try {
+            const { success } = await SendAssessmentEmailHook({
+              batch_id : batch_id, assessmentName : assessmentName, formattedStartDate : formattedStartDate, formattedEndDate : formattedEndDate
+            });  
+            console.log("Assessment Mail Has Been Sent successfully-----------");
+          } catch (error) {
+            console.error('Error while sending Assessment Mail:', error);
+          }
     }
  return (
     <View style={styles.container}>
