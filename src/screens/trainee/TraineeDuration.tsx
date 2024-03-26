@@ -89,7 +89,7 @@ const TraineeDuration = (props : propsType) => {
                     ) :(  
                         <LineGraph 
                             datasets={durationDataset}
-                            chartName="Trainee watch time"
+                            chartName="Trainee watch time "
                             progressTitle="Course duration"
                             progress={totalDurationProgress}
                             labels={courseLabel}
