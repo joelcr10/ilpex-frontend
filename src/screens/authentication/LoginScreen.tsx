@@ -11,7 +11,7 @@ import InputField from '../../components/InputField';
 import { userDetails } from '../../context/userDetailsSlice';
 import { Link } from '@react-navigation/native';
 import ilpex from '../../utils/ilpexUI';
-import LoginButton from '../../components/loginbutton';
+import LoginButton from '../../components/LoginButton';
 
 const LoginScreen = () => {
 
@@ -23,13 +23,13 @@ const LoginScreen = () => {
 
     const handleLogin = async () => {
       try {
+        setButtonpressed(true);
 
         if(loginEmail==''||loginPassword==''){
           setMissingFieldError("You need to enter your email and password");
           return;
         }
         
-        setButtonpressed(true)
         const { success, statusCode, loginResp, errorMessage } = await loginUser({
           loginEmail,
           loginPassword,
@@ -85,7 +85,10 @@ const LoginScreen = () => {
 
     return ( 
         <View style={styles.container}>
-          <ImageBackground source={require('../../../assets/images/login.png')} style={styles.backgroundImage}/>
+            <View style={styles.ilpexContainer}>
+              <Text style={styles.ilpex}>ILPex</Text>
+            </View>
+          <ImageBackground source={require('../../../assets/images/Background.png')} style={styles.backgroundImage}/>
             <View style={styles.inputFieldView}>
               <BlackHeading heading='Login'/>
                 <InputField 
@@ -117,7 +120,20 @@ const LoginScreen = () => {
 };
 
 const styles = StyleSheet.create({
-
+  ilpexContainer:{
+    position: 'absolute',
+    zIndex: 10,
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop:"15%",
+  },
+  ilpex :{
+    color: ilpex.white,
+    fontFamily:ilpex.fontSemiBold,
+    fontSize:55,
+  },
   container: {
     flex: 1,
   },
