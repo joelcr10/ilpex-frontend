@@ -43,7 +43,6 @@ const LineGraph: React.FC<LineGraphProps> = ({datasets,
       })),
     };
 
-    console.log("inside line graph,",datasets[0].legend);
 
   return (
     <View style={styles.container} >
@@ -68,8 +67,9 @@ const LineGraph: React.FC<LineGraphProps> = ({datasets,
             data={chartData}
             width={chartData.labels.length*70}
             withVerticalLines={false}
+            withHorizontalLabels = {true}
             height={230}
-            withOuterLines={false}
+            withOuterLines={true}
             chartConfig={{
             backgroundColor: '#ffffff',
             backgroundGradientFrom: '#ffffff',
@@ -98,8 +98,8 @@ const LineGraph: React.FC<LineGraphProps> = ({datasets,
 
 const styles = StyleSheet.create({
     chartContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    // justifyContent: 'center',
+    // alignItems: 'center',
   },
   chart: {
     borderRadius: 16,
@@ -107,9 +107,10 @@ const styles = StyleSheet.create({
   container:{
     backgroundColor:ilpex.white,
     paddingRight : '5%',
-    paddingLeft : '1%',
+    // paddingLeft : '4%',
+    marginLeft: '4%'
     // overflow: 'hidden',
-    alignSelf: 'center',
+    // alignSelf: 'center',
     
   },
   headertext:{
@@ -140,28 +141,29 @@ const styles = StyleSheet.create({
     flexDirection:'row',
     marginVertical:'0%',
     marginHorizontal:'10%',
-    marginBottom:'10%',
+    marginBottom:'3%',
     justifyContent:'space-between',
     // backgroundColor: 'red'
 
   },
   legendContainer: {
-    position: 'absolute',
-    top: "4.3%",
-    left: "35%",
-    zIndex: 100,
+    // position: 'absolute',
+    // top: "4.3%",
+    // left: "35%",
+    // zIndex: 100,
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center',
+    // alignItems: 'center',
     // marginTop: '-1%',
+    marginLeft: '4%',
     height: 40,
-    width: 200,
+    width: '100%',
 
   },
   legendItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginRight: '8%',
+    // marginRight: '8%',
   },
   legendColorIndicator: {
     width: 15,

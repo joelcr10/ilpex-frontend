@@ -35,7 +35,7 @@ const formatDate = (end_date: string): string =>{
 }
 
 const AssessmentCard = (props: propsType) =>{
-    const navigation: any = useNavigation();
+    const navigation : any = useNavigation();
 
     const {assessment_id,assessmentName,batchName,dueDate,status} = props;
 

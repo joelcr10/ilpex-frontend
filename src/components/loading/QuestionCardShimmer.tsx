@@ -7,16 +7,17 @@ import ilpex from '../../utils/ilpexUI';
 
 const QuestionCardShimmer = () =>{
     return(
-        <View style={styles.assessmentContainer}>
-            <View style={styles.questionContainer}>
+        <View style={styles.assessmentContainer} testID="assessment-container">
+            <View style={styles.questionContainer} testID="question-text-shimmer">
                 <ShimmerPlaceholder
                     LinearGradient={LinearGradient}
                     style={styles.questionText}
                     visible={false}
+
                 />
             </View>
 
-            <View style={styles.options}>
+            <View style={styles.options} testID="option-shimmer">
                 <ShimmerPlaceholder
                     LinearGradient={LinearGradient}
                     style={styles.radioLabel}
