@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { useSelector } from "react-redux";
 import { getHook } from "../../network/getHook/getHook";
 import LineGraph from "../../components/LineGraph";
-import ShimmerDaywise from "../../components/loading/DayWiseCardShimmer";
 import BarChartShimmer from "../../components/loading/BarChartShimmer";
+import ilpex from "../../utils/ilpexUI";
 
 type propsType = {
     userID : string
@@ -12,12 +12,12 @@ type propsType = {
 const TraineeDuration = (props : propsType) => {
 
     const {userID} = props;
-    // const user_id = useSelector((state: any) => state.userDetailsReducer.user_id);
     
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [totalDurationProgress, setTotalDurationProgress] = useState(0);
     const [durationDataset, setDurationDataset] = useState([]);
     const [courseLabel, setCourseLabel] = useState([]);
+    const [noData, setNoData] = useState<boolean>(true);
         
     
 
@@ -63,10 +63,12 @@ const TraineeDuration = (props : propsType) => {
             const {success, responseData, errorMessage} = await getHook(`/api/v3/trainee/${userID}/duration`);
 
             if(success){
-                // console.log(responseData.data);
-                await populateDatasets(responseData.data);
+                if(responseData.data.length !== 0){
+                    await populateDatasets(responseData.data);
+                    setNoData(false);    
+                }
+                
                 setIsLoading(false);
-
             }
 
         }
@@ -75,23 +77,58 @@ const TraineeDuration = (props : propsType) => {
       }, []);
 
     return ( 
-        <View>
+        <View style={styles.durationContainer}>
             {
                 (isLoading) ? (
                     <BarChartShimmer />
-                ) : (
-                       
-                    <LineGraph 
-                        datasets={durationDataset}
-                        chartName="Trainee watch time"
-                        progressTitle="Course duration"
-                        progress={totalDurationProgress}
-                        labels={courseLabel}
-                    />
-                )
+                ) :  (noData) ? (
+                        <View style={styles.noDataContainer}>
+                            <Text style={styles.headertext}>Trainee Watch Time</Text>
+                            <Text style={styles.noDataText}>No Data</Text>
+                        </View>
+                    ) :(  
+                        <LineGraph 
+                            datasets={durationDataset}
+                            chartName="Trainee watch time"
+                            progressTitle="Course duration"
+                            progress={totalDurationProgress}
+                            labels={courseLabel}
+                        />
+                    )
             }
         </View>
      );
 }
+
+const styles = StyleSheet.create({
+    durationContainer:{
+        marginBottom: 20,
+    },
+
+    noDataContainer:{
+        // backgroundColor: 'blue'
+        height: 200
+    },
+
+    noDataText:{
+        // backgroundColor: 'red',
+        textAlign: 'center',
+        fontFamily: ilpex.fontRegular,
+        fontSize: 20,
+        color:ilpex.darkGrey,
+    },
+
+    headertext:{
+        fontFamily:ilpex.fontSemiBold,
+        fontSize:21,
+        color:ilpex.black,
+        marginTop : '5%',
+        marginRight : '5%',
+        marginBottom : '3%',
+        marginLeft : '12%',
+        // backgroundColor: 'blue'
+    
+    },
+})
  
 export default TraineeDuration;
