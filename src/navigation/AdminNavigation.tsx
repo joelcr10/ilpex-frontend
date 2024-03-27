@@ -15,6 +15,8 @@ import OneTimesWatchSpeedScreen from '../screens/admin/OneTimesWatchSpeedScreen'
 import TwoTimesWatchSpeedScreen from '../screens/admin/TwoTimesWatchSpeedScreen';
 import LessThanOneTimesWatchSpeedScreen from '../screens/admin/LessThanOneTimesWatchSpeedScreen';
 import BatchIncompleteTraineesScreen from '../screens/admin/BatchIncompleteTraineesScreen';
+import PercipioAssessmentTraineeList from '../screens/admin/PercipioAssessmentTraineeListScreen';
+import AssessmentTraineeList from '../screens/admin/AssessmentTraineeList';
 
 const Stack = createNativeStackNavigator();
 const AdminNavigation = () =>{
@@ -121,6 +123,20 @@ const AdminNavigation = () =>{
                 <Stack.Screen 
                     name="BatchIncompleteTraineesScreen"
                     component={BatchIncompleteTraineesScreen}
+                    options={{
+                        headerShown: false
+                    }}
+                />
+                 <Stack.Screen 
+                    name="PercipioAssessmentTraineeList"
+                    component={PercipioAssessmentTraineeList}
+                    options={{
+                        headerShown: false
+                    }}
+                />
+                 <Stack.Screen 
+                    name="AssessmentTraineeList"
+                    component={AssessmentTraineeList}
                     options={{
                         headerShown: false
                     }}

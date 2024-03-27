@@ -18,7 +18,7 @@ const BatchDetailsPage =()=>{
     const navigation : any = useNavigation();
     const batch_id = route.params.batch_id;
     const [isLoading,setLoading] =useState(true);
-    const [feedList, setStoryList] = useState<any>([]);
+    const [score, setScore] = useState<any>([]);
     const [percipioScore, setPercipioScore] = useState<any>([]);
     const [speedStats, setSpeedStats] = useState<any>([]);
     const [batchData,setBatchData] = useState<any>([]);
@@ -37,6 +37,57 @@ const BatchDetailsPage =()=>{
     }
     const day =currentDate.current_day;
     const noNavigation=()=>{}
+
+//percipio assessment report trainee list
+    const percipioAssessmentNav=(num:number)=>{
+      if(num == 1){
+        navigation.navigate("PercipioAssessmentTraineeList",
+          {trainee_list:percipioScore.excellentTraineesList,
+            batch_name:batchData.batch_details.batch_name,
+            title:'Excellent'
+        });
+      }
+      if(num == 2){
+        navigation.navigate("PercipioAssessmentTraineeList",
+        {trainee_list:percipioScore.goodTraineesList,
+          batch_name:batchData.batch_details.batch_name,
+          title:'Good'
+        });
+      }
+      if(num == 3){
+        navigation.navigate("PercipioAssessmentTraineeList",
+        {trainee_list:percipioScore.poorTraineesList,
+          batch_name:batchData.batch_details.batch_name,
+          title:'Poor'
+        });
+      }
+    }
+
+    //assessment report trainee list
+    const assessmentNav=(num:number)=>{
+      if(num == 1){
+        navigation.navigate("AssessmentTraineeList",
+          {trainee_list:score.excellentTraineesList,
+            batch_name:batchData.batch_details.batch_name,
+            title:'Excellent'
+        });
+      }
+      if(num == 2){
+        navigation.navigate("AssessmentTraineeList",
+        {trainee_list:score.goodTraineesList,
+          batch_name:batchData.batch_details.batch_name,
+          title:'Good'
+        });
+      }
+      if(num == 3){
+        navigation.navigate("AssessmentTraineeList",
+        {trainee_list:score.poorTraineesList,
+          batch_name:batchData.batch_details.batch_name,
+          title:'Poor'
+        });
+      }
+    }
+
     const BatchIncompleteTraineList=(num:number)=>{
       if(num ==3){
         navigation.navigate("BatchIncompleteTraineesScreen",{ batch_id:batch_id,day:day});
@@ -101,13 +152,13 @@ const BatchDetailsPage =()=>{
 }, []);
 
     useEffect(() => {
-        const getStory = async () => {
+        const getScore = async () => {
           try {
             const {responseData, errorMessage} = await getHook(`api/v2/batchAvg/${batch_id}`)
             if(responseData)
             {
               console.log('this is avg score',responseData)
-              setStoryList(responseData);
+              setScore(responseData);
             }
             if(errorMessage)
               console.log(errorMessage)
@@ -115,7 +166,7 @@ const BatchDetailsPage =()=>{
             console.error('Error:', error);
           }
         };
-        getStory();
+        getScore();
     }, []);
 
     useEffect(() => {
@@ -293,7 +344,7 @@ return(
                   option3="Poor" 
                   option4='1.5x'
                   option5='<1.5x' 
-                  incomplete={noNavigation}
+                  incomplete={percipioAssessmentNav}
                   option={'assesment'} />
                 <ChartPie 
                   chartName={'Course Speed'} 
@@ -311,9 +362,9 @@ return(
                   option={'speed'} />
               <ChartPie 
                   chartName={'Assessment Score'} 
-                  excellent={feedList.excellent} 
-                  good={feedList.good} 
-                  poor={feedList.poor} 
+                  excellent={score.excellent} 
+                  good={score.good} 
+                  poor={score.poor} 
                   onePointFive={0}
                   LessOnePointFive={0}
                   option1="Excellent" 
@@ -321,7 +372,7 @@ return(
                   option3="Poor" 
                   option4='1.5x'
                   option5='<1.5x' 
-                  incomplete={noNavigation} 
+                  incomplete={assessmentNav} 
                   option={'assesment'}/>
               <ChartPie 
                   chartName={'Course Completion'} 
