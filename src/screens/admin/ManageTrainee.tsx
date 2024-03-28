@@ -1,6 +1,5 @@
-
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import ilpex from "../../utils/ilpexUI";
 import TopBlackHeading from "../../components/TopBlackHeading";
 import Button from "../../components/Button";
@@ -9,13 +8,12 @@ import { getItem } from "../../utils/utils";
 import Constants from "../../utils/Constants";
 import { getHook } from "../../network/getHook/getHook";
 import { useRoute } from "@react-navigation/native";
-import { UpdateTraineeStatus, ManageTraineeProp, ManageTraineeResponse } from "./ManageTraineeHook";
+import { UpdateTraineeStatus, ManageTraineeResponse } from "./ManageTraineeHook";
 import BackButton from "../../components/BackButton";
 
 const ManageTraineeScreen = () => {
   const route: any = useRoute();
   const user_id = route.params?.user_id;
-
   const [traineeName, setTraineeName] = useState("");
   const [traineeBatch, setTraineeBatch] = useState("");
   const [traineeEmail, setTraineeEmail] = useState("");
@@ -24,12 +22,14 @@ const ManageTraineeScreen = () => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [successText, setSuccessText] = useState("");
   const [failureText, setFailureText] = useState("");
+  const [editMode, setEditMode] = useState(false); // State to manage edit mode
   const [response, setResponse] = useState<ManageTraineeResponse>({
     success: false,
     errorMessage: '',
     statusCode: '',
     manageTraineeResp: null
   });
+  
 
   useEffect(() => {
     const getTraineeDetails = async () => {
@@ -83,7 +83,6 @@ const ManageTraineeScreen = () => {
     }
 };
 
-
   const activateTrainee = () => {
       handleManageTrainee(1); 
   };
@@ -92,20 +91,75 @@ const ManageTraineeScreen = () => {
       handleManageTrainee(0); 
   };
 
+  const handleEdit = () => {
+    setEditMode(true);
+  };
+
+  const handleSaveChanges = () => {
+    // Save changes logic here
+    setEditMode(false);
+  };
+
   return (
     <View>
       <TopBlackHeading heading={"Manage Trainee"} />
       <View style={styles.detailsView}>
         <Text style={styles.title}>Trainee Name</Text>
-        <Text style={styles.props}>{traineeName}</Text>
+        {editMode ? (
+          <TextInput
+            style={styles.input}
+            value={traineeName}
+            onChangeText={setTraineeName}
+          />
+        ) : (
+          <Text style={styles.props}>{traineeName}</Text>
+        )}
         <Text style={styles.title}>Batch Name</Text>
-        <Text style={styles.props}>{traineeBatch}</Text>
+        {editMode ? (
+          <TextInput
+            style={styles.input}
+            value={traineeBatch}
+            onChangeText={setTraineeBatch}
+          />
+        ) : (
+          <Text style={styles.props}>{traineeBatch}</Text>
+        )}
         <Text style={styles.title}>Email</Text>
-        <Text style={styles.props}>{traineeEmail}</Text>
+        {editMode ? (
+          <TextInput
+            style={styles.input}
+            value={traineeEmail}
+            onChangeText={setTraineeEmail}
+          />
+        ) : (
+          <Text style={styles.props}>{traineeEmail}</Text>
+        )}
         <Text style={styles.title}>Percepio Mail</Text>
-        <Text style={styles.props}>{percepioEmail}</Text>
+        {editMode ? (
+          <TextInput
+            style={styles.input}
+            value={percepioEmail}
+            onChangeText={setPercepioEmail}
+          />
+        ) : (
+          <Text style={styles.props}>{percepioEmail}</Text>
+        )}
       </View>
-      <View style={{ justifyContent: 'center', alignSelf: 'center' }}>
+      {editMode ? (
+        <Button
+          name={"Save Changes"}
+          onPress={handleSaveChanges}
+          buttonPressed={false}
+        />
+      ) : (
+        <TouchableOpacity
+          onPress={handleEdit}
+          
+        >
+          <Text style={{color: ilpex.main, textAlign:'center', fontSize:20}}>Edit</Text>
+        </TouchableOpacity>
+      )}
+      <View style={{ justifyContent: 'center', alignSelf: 'center', marginTop: 20 }}>
         {isActive ? (
           <Button
             name={"Deactivate"}
@@ -142,6 +196,14 @@ const styles = StyleSheet.create({
     fontFamily: ilpex.fontRegular,
     fontSize: 20,
     color: ilpex.black,
+  },
+  input: {
+    fontFamily: ilpex.fontRegular,
+    fontSize: 20,
+    color: ilpex.black,
+    borderBottomWidth: 1,
+    borderBottomColor: ilpex.darkGrey,
+    marginBottom: 10,
   },
   detailsView: {
     display: "flex",
