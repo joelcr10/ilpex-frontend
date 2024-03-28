@@ -12,6 +12,7 @@ import DisabledBigButton from "../../../components/DisabledBigButton";
 import BackButton from "../../../components/BackButton";
 import ToastDemo from "../../../components/ToastComponent";
 import ConfirmationModal from "../../../components/ConfirmationModal";
+import InputField from "../../../components/InputField";
 
 const CreateCourseScreen = () => {
 
@@ -19,12 +20,14 @@ const CreateCourseScreen = () => {
     const [success, setSuccess] = useState(false);
     const [buttonLoaded, setButtonLoaded] = useState(false);
     const [failure, setFailure] = useState(false);
+    const [courseCollectionName, setCourseCollectionName] = useState('');
 
     const inititalState = () => {
         setSelectedFile(null);
         setSuccess(false);
         setButtonLoaded(false);
         setFailure(false);
+        setCourseCollectionName('');
     }
 
     const pickDocument = async () => {
@@ -50,6 +53,7 @@ const CreateCourseScreen = () => {
             console.log('user_id', user_id)
             const formData = new FormData();
             formData.append('createdBy', user_id?.toString());
+            formData.append('course_name', courseCollectionName);
             formData.append('file', selectedFile);
 
             const {success, statusCode, errorMessage} = await createCourse(formData);
@@ -84,6 +88,12 @@ const CreateCourseScreen = () => {
             <TopBlackHeading 
                 heading={"Create Course"} 
             />
+            <InputField 
+                  label='Name of the Course Collection' 
+                  isPassword={false} 
+                  value={courseCollectionName}
+                  onChangeText={setCourseCollectionName}
+                  />
             <View style = {styles.fileUploadContainer}>
                 <FileUploadField onSelect={pickDocument} selectedFile={selectedFile}/>
             </View>
