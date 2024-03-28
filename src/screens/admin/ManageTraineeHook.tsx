@@ -1,5 +1,5 @@
 import instance from '../../network/api'; 
-interface ManageTraineeProp {
+export interface ManageTraineeProp {
     user_id:number|null;
     status: number|null;
     user_name:string;
@@ -7,7 +7,7 @@ interface ManageTraineeProp {
     JWT_token:string;
 }
  
-interface ManageTraineeResponse {
+export interface ManageTraineeResponse {
   success: boolean;
   errorMessage: string;
   statusCode: string;
